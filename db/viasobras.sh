@@ -17,3 +17,4 @@ psql -h localhost -p 5432 -U postgres vias_obras < datos/inventario/inventario.s
 # Linear referencing: calibrate road, event points & dynamic segmentation
 #psql -h localhost -p 5432 -U postgres vias_obras < calibrar_carreteras.sql
 psql -h localhost -p 5432 -U postgres vias_obras < create_event_points.sql
+psql -h localhost -p 5432 -U postgres vias_obras < create_segments_dynamically.sql
