@@ -1,7 +1,5 @@
 
-SELECT AddGeometryColumn('inventario', 'accidentes', 'the_geom', 23029, 'POINT', 2);
-ALTER TABLE inventario.accidentes DROP CONSTRAINT enforce_geotype_the_geom;
-ALTER TABLE inventario.accidentes DROP CONSTRAINT enforce_dims_the_geom;
+SELECT AddGeometryColumn('inventario', 'accidentes', 'the_geom', 23029, 'POINTM', 3);
 
 UPDATE inventario.accidentes AS a2 SET the_geom = (
        SELECT (ST_Dump(the_geom)).geom
