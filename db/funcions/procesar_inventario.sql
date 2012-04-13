@@ -38,3 +38,42 @@ INSERT INTO inventario.ancho_plataforma (
        FROM inventario.inventario
        WHERE anchoplat3 IS NOT NULL
 );
+
+-- TIPO PAVIMENTO
+DROP TABLE IF EXISTS inventario.tipo_pavimento;
+CREATE TABLE inventario.tipo_pavimento (
+       "gid" serial PRIMARY KEY,
+       "municipio" varchar(17),
+       "numeromuni" float8,
+       "numeroinve" varchar(4),
+       "tramo" varchar(1),
+       "tipopavime" varchar(4),
+       "origenpavi" float8,
+       "finalpavim" float8
+);
+
+INSERT INTO inventario.tipo_pavimento(
+       SELECT nextval('inventario.tipo_pavimento_gid_seq'),
+              municipio, numeromuni, numeroinve, tramo,
+              tipopavime, origenpavi, finalpavim
+       FROM inventario.inventario
+       WHERE tipopavime IS NOT NULL
+);
+
+INSERT INTO inventario.tipo_pavimento(
+       SELECT nextval('inventario.tipo_pavimento_gid_seq'),
+              municipio, numeromuni, numeroinve, tramo,
+              tipopavim2, origenpav2, finalpavi2
+       FROM inventario.inventario
+       WHERE tipopavim2 IS NOT NULL
+);
+
+INSERT INTO inventario.tipo_pavimento(
+       SELECT nextval('inventario.tipo_pavimento_gid_seq'),
+              municipio, numeromuni, numeroinve, tramo,
+              tipopavim3,
+              to_number(origenpav3, '999D999'),
+              to_number(finalpavi3, '999D999')
+       FROM inventario.inventario
+       WHERE tipopavim3 IS NOT NULL
+);
