@@ -16,6 +16,7 @@ INSERT INTO inventario.ancho_plataforma (
               municipio, numeromuni, numeroinve, tramo,
               anchoplata, origentram, finaltramo
        FROM inventario.inventario
+       WHERE anchoplata IS NOT NULL
 );
 
 INSERT INTO inventario.ancho_plataforma (
@@ -29,7 +30,7 @@ INSERT INTO inventario.ancho_plataforma (
 );
 
 INSERT INTO inventario.ancho_plataforma (
-       SELECT NULL,
+       SELECT nextval('inventario.ancho_plataforma_gid_seq'),
               municipio, numeromuni, numeroinve, tramo,
               to_number(anchoplat3, '999'),
               to_number(origentra3, '999D999'),
