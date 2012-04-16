@@ -29,8 +29,8 @@ public class Example1Form extends JPanel implements IWindow {
 	    viewInfo = new WindowInfo(WindowInfo.MODELESSDIALOG
 		    | WindowInfo.RESIZABLE | WindowInfo.PALETTE);
 	    viewInfo.setTitle("Vias Obras");
-	    viewInfo.setWidth(450);
-	    viewInfo.setHeight(350);
+	    viewInfo.setWidth(850);
+	    viewInfo.setHeight(380);
 	}
 	return viewInfo;
     }
