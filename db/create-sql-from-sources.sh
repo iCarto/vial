@@ -6,6 +6,7 @@ path_data=/home/amaneiro/03_proxectos_abertos/viasobras/piloto
 
 # info_base
 shp2pgsql -d -g the_geom -W iso-8859-1 -s 23029 -I ${path_data}/Limites_POL/Concellos info_base.concellos > datos/info_base/concellos.sql
+shp2pgsql -d -g the_geom -W iso-8859-1 -s 23029 -I ${path_data}/pKs info_base.pks  > datos/info_base/pks.sql
 
 # inventario
 shp2pgsql -d -g the_geom -W iso-8859-1 -s 23029 -I ${path_data}/Vias inventario.carreteras > datos/inventario/carreteras.sql

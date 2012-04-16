@@ -6,6 +6,7 @@ createdb -h localhost -p 5432 -U postgres -O postgres -T template_postgis vias_o
 # Info base
 psql -h localhost -p 5432 -U postgres vias_obras < funcions/create_schema_infobase.sql
 psql -h localhost -p 5432 -U postgres vias_obras < datos/info_base/concellos.sql
+psql -h localhost -p 5432 -U postgres vias_obras < datos/info_base/pks.sql
 
 # Inventario
 psql -h localhost -p 5432 -U postgres vias_obras < funcions/create_schema_inventario.sql
