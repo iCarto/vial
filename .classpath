@@ -9,5 +9,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/extNavTable"/>
 	<classpathentry kind="lib" path="lib/formsrt.jar"/>
 	<classpathentry kind="lib" path="lib/es.icarto.gvsig.navtableforms.jar"/>
+	<classpathentry kind="src" path="/extDBConnection"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

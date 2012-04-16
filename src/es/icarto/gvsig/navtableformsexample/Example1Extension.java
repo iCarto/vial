@@ -2,35 +2,16 @@ package es.icarto.gvsig.navtableformsexample;
 
 import com.iver.andami.PluginServices;
 import com.iver.andami.plugins.Extension;
-import com.iver.andami.ui.mdiManager.IWindow;
-import com.iver.cit.gvsig.fmap.layers.FLyrVect;
-import com.iver.cit.gvsig.project.documents.view.gui.BaseView;
+import com.iver.andami.plugins.IExtension;
 
-import es.icarto.gvsig.navtableforms.ormlite.ORMLite;
-import es.icarto.gvsig.navtableforms.utils.TOCLayerManager;
+import es.udc.cartolab.gvsig.users.DBConnectionExtension;
+import es.udc.cartolab.gvsig.users.utils.DBSession;
 
 public class Example1Extension extends Extension {
 
-    private FLyrVect layer;
-
     public void execute(String actionCommand) {
-	layer = getLayerFromTOC();
-	Example1Form dialog = new Example1Form(layer);
-	if (dialog.init()) {
-	    PluginServices.getMDIManager().addWindow(dialog);
-	}
-    }
-
-    private FLyrVect getLayerFromTOC() {
-	IWindow window = PluginServices.getMDIManager().getActiveWindow();
-	if (window instanceof BaseView) {
-	    String layerName = ORMLite
-		    .getDataBaseObject(Preferences.XMLDATAFILE_PATH)
-		    .getTable("Example 1").getTableName();
-	    TOCLayerManager toc = new TOCLayerManager();
-	    return toc.getLayerByName(layerName);
-	}
-	return null;
+	Example1Form dialog = new Example1Form();
+	PluginServices.getMDIManager().addWindow(dialog);
     }
 
     protected void registerIcons() {
@@ -44,18 +25,16 @@ public class Example1Extension extends Extension {
 	registerIcons();
     }
 
-    public boolean isEnabled() {
-	if (isExampleDataSetLoaded()) {
-	    return true;
-	}
-	return false;
+    public void postInitialize() {
+	PluginServices.getMDIManager().closeAllWindows();
+	IExtension dbconnection = PluginServices
+		.getExtension(DBConnectionExtension.class);
+	dbconnection.execute(null);
     }
 
-    private boolean isExampleDataSetLoaded() {
-	if (getLayerFromTOC() == null) {
-	    return false;
-	}
-	return true;
+    public boolean isEnabled() {
+	DBSession dbs = DBSession.getCurrentSession();
+	return dbs != null;
     }
 
     public boolean isVisible() {

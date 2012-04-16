@@ -1,39 +1,22 @@
 package es.icarto.gvsig.navtableformsexample;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.HashMap;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JTextField;
-
-import org.apache.log4j.Logger;
-
-import com.iver.cit.gvsig.fmap.layers.FLyrVect;
+import com.iver.andami.ui.mdiManager.IWindow;
+import com.iver.andami.ui.mdiManager.WindowInfo;
 import com.jeta.forms.components.panel.FormPanel;
 
-import es.icarto.gvsig.navtableforms.AbstractForm;
-
-public class Example1Form extends AbstractForm {
+public class Example1Form extends JPanel implements IWindow {
 
     private FormPanel form;
-    private JCheckBox chb;
-    private JTextField cmp;
-    private ComponentEnablerListener componentEnablerListener;
+    protected WindowInfo viewInfo = null;
 
-    public Example1Form(FLyrVect layer) {
-	super(layer);
-	initWindow();
+    public Example1Form() {
+	JScrollPane form = new JScrollPane(getFormBody());
+	this.add(form);
     }
 
-    private void initWindow() {
-	viewInfo.setHeight(350);
-	viewInfo.setWidth(450);
-	viewInfo.setTitle("Example 1");
-    }
-
-    @Override
     public FormPanel getFormBody() {
 	if (form == null) {
 	    return new FormPanel("exampleform1.xml");
@@ -41,56 +24,19 @@ public class Example1Form extends AbstractForm {
 	return form;
     }
 
-    @Override
-    public String getXMLPath() {
-	return Preferences.XMLDATAFILE_PATH;
-    }
-
-    @Override
-    public Logger getLoggerName() {
-	return Logger.getLogger("Example1Form");
-    }
-
-    @Override
-    protected void fillSpecificValues() {
-	enableComponentIfCheckBoxIsSelected("hay_anali", "resultado");
-    }
-
-    private void enableComponentIfCheckBoxIsSelected(String chbName,
-	    String cmpName) {
-
-	if (chb.isSelected()) {
-	    cmp.setEnabled(true);
-	} else {
-	    cmp.setEnabled(false);
+    public WindowInfo getWindowInfo() {
+	if (viewInfo == null) {
+	    viewInfo = new WindowInfo(WindowInfo.MODELESSDIALOG
+		    | WindowInfo.RESIZABLE | WindowInfo.PALETTE);
+	    viewInfo.setTitle("Vias Obras");
+	    viewInfo.setWidth(450);
+	    viewInfo.setHeight(350);
 	}
+	return viewInfo;
     }
 
-    @Override
-    protected void setListeners() {
-	super.setListeners();
-
-	HashMap<String, JComponent> widgets = getWidgetComponents();
-
-	cmp = (JTextField) widgets.get("resultado");
-	chb = (JCheckBox) widgets.get("hay_anali");
-
-	componentEnablerListener = new ComponentEnablerListener();
-	chb.addActionListener(componentEnablerListener);
-    }
-
-    @Override
-    protected void removeListeners() {
-	chb.removeActionListener(componentEnablerListener);
-	super.removeListeners();
-    }
-
-    public class ComponentEnablerListener implements ActionListener {
-
-	public void actionPerformed(ActionEvent e) {
-	    enableComponentIfCheckBoxIsSelected("hay_anali", "resultado");
-	}
-
+    public Object getWindowProfile() {
+	return null;
     }
 
 }
