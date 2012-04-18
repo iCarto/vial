@@ -7,6 +7,8 @@ createdb -h localhost -p 5432 -U postgres -O postgres -T template_postgis vias_o
 psql -h localhost -p 5432 -U postgres vias_obras < funcions/create_schema_infobase.sql
 psql -h localhost -p 5432 -U postgres vias_obras < datos/info_base/concellos.sql
 psql -h localhost -p 5432 -U postgres vias_obras < datos/info_base/pks.sql
+psql -h localhost -p 5432 -U postgres vias_obras < datos/info_base/nucleos.sql
+psql -h localhost -p 5432 -U postgres vias_obras < datos/info_base/rede_carreteras.sql
 
 # Inventario
 psql -h localhost -p 5432 -U postgres vias_obras < funcions/create_schema_inventario.sql
@@ -25,3 +27,5 @@ psql -h localhost -p 5432 -U postgres vias_obras < funcions/create_accidentes_ev
 psql -h localhost -p 5432 -U postgres vias_obras < funcions/create_aforos_event_points.sql
 psql -h localhost -p 5432 -U postgres vias_obras < funcions/create_dynamic_segments_from_inventario.sql
 
+# Grant permissions
+psql -h localhost -p 5432 -U postgres vias_obras -c "GRANT ALL PRIVILEGES ON DATABASE vias_obras TO postgres;"

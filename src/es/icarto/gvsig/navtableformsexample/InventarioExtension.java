@@ -7,7 +7,7 @@ import com.iver.andami.plugins.IExtension;
 import es.udc.cartolab.gvsig.users.DBConnectionExtension;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
-public class Example1Extension extends Extension {
+public class InventarioExtension extends Extension {
 
     public void execute(String actionCommand) {
 	Example1Form dialog = new Example1Form();
