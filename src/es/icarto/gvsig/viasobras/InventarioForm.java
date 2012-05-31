@@ -1,4 +1,4 @@
-package es.icarto.gvsig.navtableformsexample;
+package es.icarto.gvsig.viasobras;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -7,19 +7,19 @@ import com.iver.andami.ui.mdiManager.IWindow;
 import com.iver.andami.ui.mdiManager.WindowInfo;
 import com.jeta.forms.components.panel.FormPanel;
 
-public class Example1Form extends JPanel implements IWindow {
+public class InventarioForm extends JPanel implements IWindow {
 
     private FormPanel form;
     protected WindowInfo viewInfo = null;
 
-    public Example1Form() {
+    public InventarioForm() {
 	JScrollPane form = new JScrollPane(getFormBody());
 	this.add(form);
     }
 
     public FormPanel getFormBody() {
 	if (form == null) {
-	    return new FormPanel("exampleform1.xml");
+	    return new FormPanel("inventarioform.xml");
 	}
 	return form;
     }

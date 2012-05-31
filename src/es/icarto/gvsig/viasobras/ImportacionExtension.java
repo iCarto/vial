@@ -1,4 +1,4 @@
-package es.icarto.gvsig.navtableformsexample;
+package es.icarto.gvsig.viasobras;
 
 import com.iver.andami.plugins.Extension;
 
