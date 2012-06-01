@@ -1,15 +1,19 @@
 package es.icarto.gvsig.viasobras;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
-import org.javalite.activejdbc.Base;
-import org.javalite.activejdbc.LazyList;
-import org.javalite.activejdbc.Model;
 
 import com.iver.andami.ui.mdiManager.IWindow;
 import com.iver.andami.ui.mdiManager.WindowInfo;
 import com.jeta.forms.components.panel.FormPanel;
+
+import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
 
 public class InventarioForm extends JPanel implements IWindow {
 
@@ -17,24 +21,25 @@ public class InventarioForm extends JPanel implements IWindow {
     protected WindowInfo viewInfo = null;
 
     public InventarioForm() {
-	JScrollPane form = new JScrollPane(getFormBody());
-	this.add(form);
-	Base.open("org.postgresql.Driver",
-		"jdbc:postgresql://localhost/vias_obras", "postgres",
-		"postgres");
-	LazyList<Model> a = Accidente
-		.findBySQL(
-			"SELECT * FROM inventario.accidentes WHERE  codigo = ?",
-			"4606");
-	Base.close();
-	System.out.println(a);
+	form = new FormPanel("inventarioform.xml");
+	JScrollPane scrolledForm = new JScrollPane(form);
+	this.add(scrolledForm);
+	fillComboBoxes();
     }
 
-    public FormPanel getFormBody() {
-	if (form == null) {
-	    return new FormPanel("inventarioform.xml");
+    private void fillComboBoxes() {
+	HashMap<String, JComponent> widgets = AbeilleParser
+		.getWidgetsFromContainer(form);
+	JComboBox cbConcello = (JComboBox) widgets.get("concello");
+	cbConcello.removeAllItems();
+	ResultSet rs = Concellos.findAll();
+	try {
+	    while (rs.next()) {
+		cbConcello.addItem(rs.getString("concellos1"));
+	    }
+	} catch (SQLException e) {
+	    e.printStackTrace();
 	}
-	return form;
     }
 
     public WindowInfo getWindowInfo() {
