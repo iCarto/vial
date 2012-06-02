@@ -4,6 +4,7 @@ import com.iver.andami.PluginServices;
 import com.iver.andami.plugins.Extension;
 import com.iver.andami.plugins.IExtension;
 
+import es.icarto.gvsig.viasobras.catalog.InventarioForm;
 import es.udc.cartolab.gvsig.users.DBConnectionExtension;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 

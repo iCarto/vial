@@ -1,7 +1,5 @@
-package es.icarto.gvsig.viasobras;
+package es.icarto.gvsig.viasobras.catalog;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 
 import javax.swing.JComboBox;
@@ -37,26 +35,18 @@ public class InventarioForm extends JPanel implements IWindow {
     private void fillCarreteras() {
 	JComboBox cbCarreteras = (JComboBox) widgets.get("carretera");
 	cbCarreteras.removeAllItems();
-	ResultSet rs = Carreteras.findAll();
-	try {
-	    while (rs.next()) {
-		cbCarreteras.addItem(rs.getString("denominaci"));
-	    }
-	} catch (SQLException e) {
-	    e.printStackTrace();
+	Carreteras cs = Carreteras.findAll();
+	for (Carretera c : cs) {
+	    cbCarreteras.addItem(c.getName());
 	}
     }
 
     private void fillConcellos() {
 	JComboBox cbConcellos = (JComboBox) widgets.get("concello");
 	cbConcellos.removeAllItems();
-	ResultSet rs = Concellos.findAll();
-	try {
-	    while (rs.next()) {
-		cbConcellos.addItem(rs.getString("concellos1"));
-	    }
-	} catch (SQLException e) {
-	    e.printStackTrace();
+	Concellos cs = Concellos.findAll();
+	for (Concello c : cs) {
+	    cbConcellos.addItem(c.getName());
 	}
     }
 
