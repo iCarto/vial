@@ -1,11 +1,16 @@
 package es.icarto.gvsig.viasobras.catalog;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.TableModel;
 
 import com.iver.andami.ui.mdiManager.IWindow;
 import com.iver.andami.ui.mdiManager.WindowInfo;
@@ -23,8 +28,28 @@ public class InventarioForm extends JPanel implements IWindow {
 	form = new FormPanel("inventarioform.xml");
 	JScrollPane scrolledForm = new JScrollPane(form);
 	this.add(scrolledForm);
+	init();
+    }
+
+    private void init() {
 	widgets = AbeilleParser.getWidgetsFromContainer(form);
 	fillComboBoxes();
+	connectButtonsToActions();
+    }
+
+    private void connectButtonsToActions() {
+	JButton search = (JButton) widgets.get("buscar");
+	search.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent arg0) {
+		fillTables();
+	    }
+	});
+    }
+
+    private void fillTables() {
+	JTable tbTipoPavimento = (JTable) widgets.get("tabla_tipo_pavimento");
+	TableModel tipoPavimento = TipoPavimento.findAll();
+	tbTipoPavimento.setModel(tipoPavimento);
     }
 
     private void fillComboBoxes() {
@@ -33,20 +58,20 @@ public class InventarioForm extends JPanel implements IWindow {
     }
 
     private void fillCarreteras() {
-	JComboBox cbCarreteras = (JComboBox) widgets.get("carretera");
-	cbCarreteras.removeAllItems();
+	JComboBox carreteras = (JComboBox) widgets.get("carretera");
+	carreteras.removeAllItems();
 	Carreteras cs = Carreteras.findAll();
 	for (Carretera c : cs) {
-	    cbCarreteras.addItem(c.getName());
+	    carreteras.addItem(c.getName());
 	}
     }
 
     private void fillConcellos() {
-	JComboBox cbConcellos = (JComboBox) widgets.get("concello");
-	cbConcellos.removeAllItems();
+	JComboBox concellos = (JComboBox) widgets.get("concello");
+	concellos.removeAllItems();
 	Concellos cs = Concellos.findAll();
 	for (Concello c : cs) {
-	    cbConcellos.addItem(c.getName());
+	    concellos.addItem(c.getName());
 	}
     }
 
