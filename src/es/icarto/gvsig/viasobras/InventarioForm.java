@@ -19,23 +19,41 @@ public class InventarioForm extends JPanel implements IWindow {
 
     private FormPanel form;
     protected WindowInfo viewInfo = null;
+    private HashMap<String, JComponent> widgets;
 
     public InventarioForm() {
 	form = new FormPanel("inventarioform.xml");
 	JScrollPane scrolledForm = new JScrollPane(form);
 	this.add(scrolledForm);
+	widgets = AbeilleParser.getWidgetsFromContainer(form);
 	fillComboBoxes();
     }
 
     private void fillComboBoxes() {
-	HashMap<String, JComponent> widgets = AbeilleParser
-		.getWidgetsFromContainer(form);
-	JComboBox cbConcello = (JComboBox) widgets.get("concello");
-	cbConcello.removeAllItems();
+	fillConcellos();
+	fillCarreteras();
+    }
+
+    private void fillCarreteras() {
+	JComboBox cbCarreteras = (JComboBox) widgets.get("carretera");
+	cbCarreteras.removeAllItems();
+	ResultSet rs = Carreteras.findAll();
+	try {
+	    while (rs.next()) {
+		cbCarreteras.addItem(rs.getString("denominaci"));
+	    }
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
+    }
+
+    private void fillConcellos() {
+	JComboBox cbConcellos = (JComboBox) widgets.get("concello");
+	cbConcellos.removeAllItems();
 	ResultSet rs = Concellos.findAll();
 	try {
 	    while (rs.next()) {
-		cbConcello.addItem(rs.getString("concellos1"));
+		cbConcellos.addItem(rs.getString("concellos1"));
 	    }
 	} catch (SQLException e) {
 	    e.printStackTrace();
