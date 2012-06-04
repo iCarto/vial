@@ -1,4 +1,4 @@
-package es.icarto.gvsig.viasobras.catalog;
+package es.icarto.gvsig.viasobras.catalog.domain;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -6,9 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Iterator;
 
-import es.udc.cartolab.gvsig.users.utils.DBSession;
-
-public class Carreteras implements Iterable<Carretera> {
+public class Carreteras extends DomainMapper implements Iterable<Carretera> {
 
     private ResultSet rs;
 
@@ -17,8 +15,7 @@ public class Carreteras implements Iterable<Carretera> {
     }
 
     public static Carreteras findAll() {
-	DBSession dbs = DBSession.getCurrentSession();
-	Connection c = dbs.getJavaConnection();
+	Connection c = DomainMapper.getConnection();
 	Statement stmt;
 	try {
 	    stmt = c.createStatement();

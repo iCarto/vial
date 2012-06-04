@@ -1,4 +1,4 @@
-package es.icarto.gvsig.viasobras.catalog;
+package es.icarto.gvsig.viasobras.catalog.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,12 +17,18 @@ import com.iver.andami.ui.mdiManager.WindowInfo;
 import com.jeta.forms.components.panel.FormPanel;
 
 import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
+import es.icarto.gvsig.viasobras.catalog.domain.Carretera;
+import es.icarto.gvsig.viasobras.catalog.domain.Carreteras;
+import es.icarto.gvsig.viasobras.catalog.domain.Concello;
+import es.icarto.gvsig.viasobras.catalog.domain.Concellos;
+import es.icarto.gvsig.viasobras.catalog.domain.TipoPavimento;
 
 public class InventarioForm extends JPanel implements IWindow {
 
     private FormPanel form;
     protected WindowInfo viewInfo = null;
     private HashMap<String, JComponent> widgets;
+    private HashMap<String, JButton> buttons;
 
     public InventarioForm() {
 	form = new FormPanel("inventarioform.xml");
@@ -33,12 +39,13 @@ public class InventarioForm extends JPanel implements IWindow {
 
     private void init() {
 	widgets = AbeilleParser.getWidgetsFromContainer(form);
+	buttons = AbeilleParser.getButtonsFromContainer(form);
 	fillComboBoxes();
 	connectButtonsToActions();
     }
 
     private void connectButtonsToActions() {
-	JButton search = (JButton) widgets.get("buscar");
+	JButton search = (JButton) buttons.get("buscar");
 	search.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent arg0) {
 		fillTables();
@@ -48,7 +55,7 @@ public class InventarioForm extends JPanel implements IWindow {
 
     private void fillTables() {
 	JTable tbTipoPavimento = (JTable) widgets.get("tabla_tipo_pavimento");
-	TableModel tipoPavimento = TipoPavimento.findAll();
+	TableModel tipoPavimento = TipoPavimento.findAll().getTableModel();
 	tbTipoPavimento.setModel(tipoPavimento);
     }
 

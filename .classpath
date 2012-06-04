@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="src-test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/libFMap"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/_fwAndami"/>
@@ -8,12 +9,12 @@
 	<classpathentry kind="lib" path="lib/log4j-1.2.8.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/extNavTable"/>
 	<classpathentry kind="lib" path="lib/formsrt.jar"/>
-	<classpathentry kind="lib" path="lib/es.icarto.gvsig.navtableforms.jar"/>
 	<classpathentry kind="src" path="/extDBConnection"/>
 	<classpathentry kind="lib" path="lib/activejdbc-1.2-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="lib/javalite-common-1.2-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="lib/postgresql-8.4-703.jdbc4.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-api-1.5.10.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-simple-1.5.10.jar"/>
+	<classpathentry kind="lib" path="lib/es.icarto.gvsig.navtableforms.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

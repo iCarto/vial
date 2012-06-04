@@ -1,4 +1,4 @@
-package es.icarto.gvsig.viasobras.catalog;
+package es.icarto.gvsig.viasobras.catalog.domain;
 
 public class Concello {
 
