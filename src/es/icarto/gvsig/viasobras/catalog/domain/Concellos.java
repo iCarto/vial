@@ -20,7 +20,7 @@ public class Concellos extends DomainMapper implements Iterable<Concello> {
 	try {
 	    stmt = c.createStatement();
 	    ResultSet rs = stmt
-		    .executeQuery("SELECT * FROM info_base.concellos");
+		    .executeQuery("SELECT codigo, nombre FROM info_base.concellos");
 	    return new Concellos(rs);
 	} catch (SQLException e) {
 	    e.printStackTrace();
@@ -52,8 +52,8 @@ public class Concellos extends DomainMapper implements Iterable<Concello> {
 
 	    public Concello next() {
 		try {
-		    return new Concello(rs.getInt("concellos_"),
-			    rs.getString("concellos1"));
+		    return new Concello(rs.getString("codigo"),
+			    rs.getString("nombre"));
 		} catch (SQLException e) {
 		    return null;
 		}

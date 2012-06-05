@@ -32,13 +32,9 @@ public class ViasObras {
     }
 
     @Test
-    public void testLoad() {
+    public void testNotNullResults() {
 	assertNotNull(Carreteras.findAll());
 	assertNotNull(Concellos.findAll());
-    }
-
-    @Test
-    public void testLoadPavimento() {
 	assertNotNull(TipoPavimento.findAll());
     }
 
@@ -47,17 +43,12 @@ public class ViasObras {
 	    throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT * FROM inventario.tipo_pavimento WHERE numeroinve = '4606'");
-	// Retrieve the number of rows.
-	rs.beforeFirst();
-	int numrows = 0;
-	while (rs.next()) {
-	    numrows++;
-	}
-	rs.beforeFirst();
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.tipo_pavimento WHERE numeroinve = '4606'");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
 
 	TipoPavimento tp = TipoPavimento.findWhereCarretera("4606");
-	assertEquals(numrows, tp.getTableModel().getRowCount());
+	assertEquals(numRows, tp.getTableModel().getRowCount());
     }
 
     @Test
@@ -65,14 +56,9 @@ public class ViasObras {
 	    throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT * FROM inventario.tipo_pavimento WHERE numeromuni = 46");
-	// Retrieve the number of rows.
-	rs.beforeFirst();
-	int numrows = 0;
-	while (rs.next()) {
-	    numrows++;
-	}
-	rs.beforeFirst();
+		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.tipo_pavimento WHERE numeromuni = 46");
+	rs.next();
+	int numrows = rs.getInt("num_rows");
 
 	TipoPavimento tp = TipoPavimento.findWhereConcello(46);
 	assertEquals(numrows, tp.getTableModel().getRowCount());
@@ -83,14 +69,9 @@ public class ViasObras {
 	    throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT * FROM inventario.tipo_pavimento WHERE numeroinve = '4606' AND numeromuni = 46");
-	// Retrieve the number of rows.
-	rs.beforeFirst();
-	int numrows = 0;
-	while (rs.next()) {
-	    numrows++;
-	}
-	rs.beforeFirst();
+		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.tipo_pavimento WHERE numeroinve = '4606' AND numeromuni = 46");
+	rs.next();
+	int numrows = rs.getInt("num_rows");
 
 	TipoPavimento tp = TipoPavimento.findWhereCarretraAndConcello("4606", 46);
 	assertEquals(numrows, tp.getTableModel().getRowCount());

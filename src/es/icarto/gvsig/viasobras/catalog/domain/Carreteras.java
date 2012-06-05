@@ -20,7 +20,7 @@ public class Carreteras extends DomainMapper implements Iterable<Carretera> {
 	try {
 	    stmt = c.createStatement();
 	    ResultSet rs = stmt
-		    .executeQuery("SELECT * FROM inventario.carreteras");
+		    .executeQuery("SELECT codigo, código_pr FROM inventario.rede_carreteras");
 	    return new Carreteras(rs);
 	} catch (SQLException e) {
 	    e.printStackTrace();
@@ -41,7 +41,7 @@ public class Carreteras extends DomainMapper implements Iterable<Carretera> {
 
 	    public Carretera next() {
 		try {
-		    return new Carretera(rs.getString("código"),
+		    return new Carretera(rs.getString("codigo"),
 			    rs.getString("código_pr"));
 		} catch (SQLException e) {
 		    return null;
