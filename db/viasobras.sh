@@ -1,31 +1,59 @@
 #!/bin/bash
 
-dropdb -h localhost -p 5432 -U postgres vias_obras;
-createdb -h localhost -p 5432 -U postgres -O postgres -T template_postgis vias_obras;
+. db_config
+
+dropdb -h $viasobras_server -p $viasobras_port -U $viasobras_pguser $viasobras_dbname;
+createdb -h $viasobras_server -p $viasobras_port -U $viasobras_pguser -O $viasobras_pguser \
+    -T $viasobras_template $viasobras_dbname;
 
 # Info base
-psql -h localhost -p 5432 -U postgres vias_obras < funcions/create_schema_infobase.sql
-psql -h localhost -p 5432 -U postgres vias_obras < datos/info_base/concellos.sql
-psql -h localhost -p 5432 -U postgres vias_obras < datos/info_base/pks.sql
-psql -h localhost -p 5432 -U postgres vias_obras < datos/info_base/nucleos.sql
-psql -h localhost -p 5432 -U postgres vias_obras < datos/info_base/rede_carreteras.sql
+# ---------
+
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname < funcions/create_schema_infobase.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname < datos/info_base/concellos.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname < datos/info_base/nucleos.sql
 
 # Inventario
-psql -h localhost -p 5432 -U postgres vias_obras < funcions/create_schema_inventario.sql
-psql -h localhost -p 5432 -U postgres vias_obras < datos/inventario/carreteras.sql
-psql -h localhost -p 5432 -U postgres vias_obras < datos/inventario/accidentes.sql
-psql -h localhost -p 5432 -U postgres vias_obras < datos/inventario/aforos.sql
-psql -h localhost -p 5432 -U postgres vias_obras < datos/inventario/inventario.sql
+# ----------
 
-# Post-procesado to create final tables
-psql -h localhost -p 5432 -U postgres vias_obras < funcions/procesar_aforos.sql
-psql -h localhost -p 5432 -U postgres vias_obras < funcions/procesar_inventario.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname < funcions/create_schema_inventario.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname < datos/inventario/rede_carreteras.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname < datos/inventario/accidentes.sql
+
+# Post-procesado to create final tables from aforos.sql & inventario.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname < datos/inventario/aforos.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+   $viasobras_dbname < funcions/procesar_aforos.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname < datos/inventario/inventario.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+   $viasobras_dbname < funcions/procesar_inventario.sql
+
+# Import data from CSV
+csv_path=`pwd`/datos/inventario/carreteras_concellos.csv #COPY command needs absolute path
+sql_query="\COPY inventario.carreteras_concellos (codigo_carretera, codigo_concello) FROM '$csv_path' WITH DELIMITER ','"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname -c "$sql_query"
 
 # Linear referencing: calibrate road, event points & dynamic segmentation
-psql -h localhost -p 5432 -U postgres vias_obras < funcions/calibrate_carreteras.sql
-psql -h localhost -p 5432 -U postgres vias_obras < funcions/create_accidentes_event_points.sql
-psql -h localhost -p 5432 -U postgres vias_obras < funcions/create_aforos_event_points.sql
-psql -h localhost -p 5432 -U postgres vias_obras < funcions/create_dynamic_segments_from_inventario.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname < funcions/calibrate_carreteras.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname < funcions/create_accidentes_event_points.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname < funcions/create_aforos_event_points.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname < funcions/create_dynamic_segments_from_inventario.sql
 
 # Grant permissions
-psql -h localhost -p 5432 -U postgres vias_obras -c "GRANT ALL PRIVILEGES ON DATABASE vias_obras TO postgres;"
+# -----------------
+
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname -c "GRANT ALL PRIVILEGES ON DATABASE $viasobras_dbname TO $viasobras_pguser;"

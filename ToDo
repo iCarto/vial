@@ -1,4 +1,4 @@
-[] Limita-los campos pedidos nunha consulta SQL
-[] Ver a maneira de crear un RecordSet para as tÃ¡boas
-[] Filtrar comboboxes concellos/carreteras
-[] Engadir os comboboxes concellos/carreteras o valor vacÃ­o
+[ ] Limita-los campos pedidos nunha consulta SQL
+[ ] Filtrar comboboxes concellos/carreteras de modo dependente
+[ ] Engadir nos comboboxes concellos/carreteras o valor vacío
+[ ] Crear táboa tramos_carretera (relación carretera/concello), incluindo pk inicial e final

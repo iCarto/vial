@@ -41,21 +41,13 @@ INSERT INTO inventario.imds (
        FROM inventario.aforos
 );
 
-INSERT INTO inventario.imds (
-       SELECT nextval('inventario.aforos_gid_seq'),
-              municipio, numeroinve, tramo, nombredela, longitudmu, longitudto,
-              imd2 AS imd, fecha4 AS fecha, a_oimd2 AS a_o, imd2pk AS pk,
-              observacio
-       FROM inventario.aforos
-);
-
-INSERT INTO inventario.imds (
-       SELECT nextval('inventario.aforos_gid_seq'),
-              municipio, numeroinve, tramo, nombredela, longitudmu, longitudto,
-              imd3 AS imd, fecha5 AS fecha, a_oimd3 AS a_o, imd3pk AS pk,
-              observacio
-       FROM inventario.aforos
-);
+-- INSERT INTO inventario.imds (
+--        SELECT nextval('inventario.aforos_gid_seq'),
+--               municipio, numeroinve, tramo, nombredela, longitudmu, longitudto,
+--               imd2 AS imd, fecha4 AS fecha, a_oimd2 AS a_o, imd2pk AS pk,
+--               observacio
+--        FROM inventario.aforos
+-- );
 
 DELETE FROM inventario.imds
        WHERE imd = '0' AND a_o = '0' AND pk = '0';

@@ -1,25 +1,25 @@
 #!/bin/bash
 
-# ToDo: see how to filter previously the shapes with ogr2ogr
-
-path_data=/home/amaneiro/03_proxectos_abertos/viasobras/piloto/datos
+. db_config
 
 # info_base
 shp2pgsql -d -g the_geom -W iso-8859-1 -s 23029 -I\
-    ${path_data}/info_base/concellos/Concellos info_base.concellos > datos/info_base/concellos.sql
-shp2pgsql -d -g the_geom -W iso-8859-1 -s 23029 -I \
-    ${path_data}/inventario/pKs info_base.pks  > datos/info_base/pks.sql
+    ${viasobras_data_orig}/info_base/municipios/municipios_lugo_text \
+    info_base.concellos > datos/info_base/concellos.sql
 shp2pgsql -d -g the_geom -W iso-8859-1 -s 23029 -I\
-    ${path_data}/info_base/nucleos/Nuc_INE_99_09 info_base.nucleos > datos/info_base/nucleos.sql
-shp2pgsql -d -g the_geom -W iso-8859-1 -s 23029 -I \
-    ${path_data}/info_base/rede_carreteras/Vias_Provinciales_datos info_base.rede_carreteras > datos/info_base/rede_carreteras.sql
+    ${viasobras_data_orig}/info_base/nucleos/Nuc_INE_99_09 \
+    info_base.nucleos > datos/info_base/nucleos.sql
 
 # inventario
-shp2pgsql -d -g the_geom -W iso-8859-1 -s 23029 -I\
-    ${path_data}/inventario/Vias inventario.carreteras > datos/inventario/carreteras.sql
 shp2pgsql -d -W iso-8859-1 \
-    ${path_data}/inventario/accidentes.dbf inventario.accidentes > datos/inventario/accidentes.sql
+    ${viasobras_data_orig}/inventario/accidentes/accidentes_2006_2012.dbf \
+    inventario.accidentes > datos/inventario/accidentes.sql
 shp2pgsql -d -W iso-8859-1 \
-    ${path_data}/inventario/aforos.dbf inventario.aforos > datos/inventario/aforos.sql
+    ${viasobras_data_orig}/inventario/aforos/aforos.dbf \
+    inventario.aforos > datos/inventario/aforos.sql
 shp2pgsql -d -W iso-8859-1 \
-    ${path_data}/inventario/inventario.dbf inventario.inventario > datos/inventario/inventario.sql
+    ${viasobras_data_orig}/inventario/inventario/inventario.dbf \
+    inventario.inventario > datos/inventario/inventario.sql
+shp2pgsql -d -g the_geom -W iso-8859-1 -s 23029 -I \
+    ${viasobras_data_orig}/inventario/rede_carreteras/Vias_Provinciales_datos \
+    inventario.rede_carreteras > datos/inventario/rede_carreteras.sql

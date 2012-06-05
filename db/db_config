@@ -1,0 +1,8 @@
+viasobras_server=localhost
+viasobras_port=5432
+viasobras_pguser=postgres
+
+viasobras_template=template_postgis
+viasobras_dbname=vias_obras
+
+viasobras_data_orig=/home/amaneiro/03_proxectos_abertos/viasobras/datos/
