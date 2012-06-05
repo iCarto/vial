@@ -13,7 +13,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import es.icarto.gvsig.viasobras.catalog.domain.Carreteras;
+import es.icarto.gvsig.viasobras.catalog.domain.Catalog;
 import es.icarto.gvsig.viasobras.catalog.domain.Concellos;
 import es.icarto.gvsig.viasobras.catalog.domain.DomainMapper;
 import es.icarto.gvsig.viasobras.catalog.domain.TipoPavimento;
@@ -32,14 +32,20 @@ public class ViasObras {
     }
 
     @Test
-    public void testNotNullResults() {
-	assertNotNull(Carreteras.findAll());
-	assertNotNull(Concellos.findAll());
-	assertNotNull(TipoPavimento.findAll());
+    public void testVarsAreNull() {
+	assertEquals(null, Catalog.getCarreteraSelected());
+	assertEquals(null, Catalog.getConcelloSelected());
     }
 
     @Test
-    public void testLoadPavimentoDependingOnCarretera()
+    public void testNotNullResults() {
+	assertNotNull(Catalog.getCarreteras());
+	assertNotNull(Catalog.getConcellos());
+	assertNotNull(Catalog.getTramosTipoPavimento());
+    }
+
+    @Test
+    public void testFindPavimentoDependingOnCarretera()
 	    throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
@@ -52,29 +58,47 @@ public class ViasObras {
     }
 
     @Test
-    public void testLoadPavimentoDependingOnConcello()
+    public void testFindPavimentoDependingOnConcello()
 	    throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
 		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.tipo_pavimento WHERE numeromuni = 46");
 	rs.next();
-	int numrows = rs.getInt("num_rows");
+	int numRows = rs.getInt("num_rows");
 
 	TipoPavimento tp = TipoPavimento.findWhereConcello(46);
-	assertEquals(numrows, tp.getTableModel().getRowCount());
+	assertEquals(numRows, tp.getTableModel().getRowCount());
     }
 
     @Test
-    public void testLoadPavimentoDependingOnCarreteraAndConcello()
+    public void testFindPavimentoDependingOnCarreteraAndConcello()
 	    throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
 		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.tipo_pavimento WHERE numeroinve = '4606' AND numeromuni = 46");
 	rs.next();
-	int numrows = rs.getInt("num_rows");
+	int numRows = rs.getInt("num_rows");
 
 	TipoPavimento tp = TipoPavimento.findWhereCarretraAndConcello("4606", 46);
-	assertEquals(numrows, tp.getTableModel().getRowCount());
+	assertEquals(numRows, tp.getTableModel().getRowCount());
+    }
+
+    @Test
+    public void testFilterConcelloDependingOnCarretera() throws SQLException {
+	Catalog.setCarretera("4606");
+	Concellos cs = Catalog.getConcellos();
+	int numConcellos = 0;
+	while(cs.next()) {
+	    numConcellos++;
+	}
+
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.carreteras_concellos WHERE codigo_carretera = '4606'");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	assertEquals(numRows, numConcellos);
     }
 
     @AfterClass

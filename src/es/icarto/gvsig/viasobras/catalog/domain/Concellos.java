@@ -1,6 +1,7 @@
 package es.icarto.gvsig.viasobras.catalog.domain;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -64,6 +65,21 @@ public class Concellos extends DomainMapper implements Iterable<Concello> {
 	    }
 
 	};
+    }
+
+    public static Concellos findWhereCarretera(String carretera) {
+	Connection c = DomainMapper.getConnection();
+	PreparedStatement stmt;
+	try {
+	    String sql = "SELECT codigo_concello, nombre FROM info_base.concellos, inventario.carreteras_concellos WHERE codigo_concello = codigo AND codigo_carretera = ?";
+	    stmt = c.prepareStatement(sql);
+	    stmt.setString(1, carretera);
+	    ResultSet rs = stmt.executeQuery();
+	    return new Concellos(rs);
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	    return null;
+	}
     }
 
 }
