@@ -29,4 +29,12 @@ public class Concello {
     public String toString() {
 	return this.name;
     }
+
+    public static String getDBNameCode() {
+	return "codigo";
+    }
+
+    public static String getDBNameName() {
+	return "nombre";
+    }
 }

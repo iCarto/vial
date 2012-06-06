@@ -31,16 +31,21 @@ public class ViasObras {
     }
 
     @Test
-    public void testVarsAreNull() {
-	assertEquals(null, Catalog.getCarreteraSelected());
-	assertEquals(null, Catalog.getConcelloSelected());
-    }
-
-    @Test
     public void testNotNullResults() {
 	assertNotNull(Catalog.getCarreteras());
 	assertNotNull(Catalog.getConcellos());
 	assertNotNull(Catalog.getTramosTipoPavimento());
+    }
+
+    @Test
+    public void testCarreterasLoaded() {
+	boolean ok;
+	if (Catalog.getCarreteras().size() > 0) {
+	    ok = true;
+	} else {
+	    ok = false;
+	}
+	assertEquals(true, ok);
     }
 
     @Test

@@ -39,7 +39,7 @@ public class Concellos extends DomainMapper implements Iterable<Concello> {
 	try {
 	    stmt = c.createStatement();
 	    ResultSet rs = stmt
-		    .executeQuery("SELECT codigo, nombre FROM info_base.concellos");
+		    .executeQuery("SELECT codigo, nombre FROM info_base.concellos ORDER BY nombre");
 	    concellosAll = new CachedRowSetImpl();
 	    concellosAll.populate(rs);
 	    return new Concellos(concellosAll);

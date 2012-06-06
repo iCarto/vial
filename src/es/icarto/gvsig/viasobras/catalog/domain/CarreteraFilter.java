@@ -7,12 +7,25 @@ import javax.sql.rowset.Predicate;
 
 public class CarreteraFilter implements Predicate {
 
+    private String carretera;
     public CarreteraFilter(String carretera) {
-
+	this.carretera = carretera;
     }
 
     public boolean evaluate(RowSet rs) {
-	return true;
+	try {
+	    if ((rs.getRow() == 0) || (rs == null)) {
+		return false;
+	    }
+	    String concelloCode = rs.getString(Concello.getDBNameCode());
+	    if (Carreteras.getCarretera(carretera).isIn(concelloCode)) {
+		return true;
+	    }
+	    return false;
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	    return false;
+	}
     }
 
     public boolean evaluate(Object value, int colIndex) throws SQLException {
