@@ -45,6 +45,8 @@ public class InventarioForm extends JPanel implements IWindow {
     private void initForm() {
 	widgets = AbeilleParser.getWidgetsFromContainer(form);
 	buttons = AbeilleParser.getButtonsFromContainer(form);
+	carreteras = (JComboBox) widgets.get("carretera");
+	concellos = (JComboBox) widgets.get("concello");
 	fillComboBoxes();
 	connectButtonsToActions();
     }
@@ -53,12 +55,19 @@ public class InventarioForm extends JPanel implements IWindow {
 	catalogUpdater = new ItemListener() {
 
 	    public void itemStateChanged(ItemEvent e) {
-		if (carreteras.getSelectedItem().equals(VOID_ITEM)) {
-		    Catalog.setCarretera(null);
+		if (e.getStateChange() == ItemEvent.SELECTED) {
+		    if (carreteras.getSelectedItem().equals(VOID_ITEM)) {
+			Catalog.setCarretera(null);
+		    } else {
+			Carretera c = (Carretera) carreteras.getSelectedItem();
+			Catalog.setCarretera(c.getCode());
+		    }
+		    fillConcellos();
 		}
-		Catalog.setCarretera((String) carreteras.getSelectedItem());
 	    }
 	};
+
+	carreteras.addItemListener(catalogUpdater);
     }
 
     private void connectButtonsToActions() {
@@ -83,22 +92,18 @@ public class InventarioForm extends JPanel implements IWindow {
     }
 
     private void fillCarreteras() {
-	carreteras = (JComboBox) widgets.get("carretera");
-	carreteras.removeItemListener(catalogUpdater);
 	carreteras.removeAllItems();
 	carreteras.addItem(VOID_ITEM);
 	for (Carretera c : Catalog.getCarreteras()) {
-	    carreteras.addItem(c.getName());
+	    carreteras.addItem(c);
 	}
-	carreteras.addItemListener(catalogUpdater);
     }
 
     private void fillConcellos() {
-	concellos = (JComboBox) widgets.get("concello");
 	concellos.removeAllItems();
 	concellos.addItem(VOID_ITEM);
 	for (Concello c : Catalog.getConcellos()) {
-	    concellos.addItem(c.getName());
+	    concellos.addItem(c);
 	}
     }
 

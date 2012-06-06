@@ -25,8 +25,7 @@ public class ViasObras {
     @BeforeClass
     public static void connectToDatabase() throws SQLException {
 	c = DriverManager.getConnection(
-		"jdbc:postgresql://localhost:5432/vias_obras",
-		"postgres",
+		"jdbc:postgresql://localhost:5432/vias_obras", "postgres",
 		"postgres");
 	DomainMapper.setConnection(c);
     }
@@ -45,8 +44,7 @@ public class ViasObras {
     }
 
     @Test
-    public void testFindPavimentoDependingOnCarretera()
-	    throws SQLException {
+    public void testFindPavimentoDependingOnCarretera() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
 		.executeQuery("SELECT Count(*) As num_rows FROM inventario.tipo_pavimento WHERE numeroinve = '4606'");
@@ -58,8 +56,7 @@ public class ViasObras {
     }
 
     @Test
-    public void testFindPavimentoDependingOnConcello()
-	    throws SQLException {
+    public void testFindPavimentoDependingOnConcello() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
 		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.tipo_pavimento WHERE numeromuni = 46");
@@ -79,7 +76,8 @@ public class ViasObras {
 	rs.next();
 	int numRows = rs.getInt("num_rows");
 
-	TipoPavimento tp = TipoPavimento.findWhereCarretraAndConcello("4606", 46);
+	TipoPavimento tp = TipoPavimento.findWhereCarretraAndConcello("4606",
+		46);
 	assertEquals(numRows, tp.getTableModel().getRowCount());
     }
 
@@ -88,15 +86,33 @@ public class ViasObras {
 	Catalog.setCarretera("4606");
 	Concellos cs = Catalog.getConcellos();
 	int numConcellos = 0;
-	while(cs.next()) {
+	while (cs.next()) {
 	    numConcellos++;
 	}
-
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
 		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.carreteras_concellos WHERE codigo_carretera = '4606'");
 	rs.next();
 	int numRows = rs.getInt("num_rows");
+
+	assertEquals(numRows, numConcellos);
+    }
+
+    @Test
+    public void testConsecutiveQuery() throws SQLException {
+	Concellos cs1 = Catalog.getConcellos();
+
+	Catalog.setCarretera("4606");
+	Concellos cs2 = Catalog.getConcellos();
+	int numConcellos = 0;
+	while (cs2.next()) {
+	    numConcellos++;
+	}
+	Statement stmt2 = c.createStatement();
+	ResultSet rs2 = stmt2
+		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.carreteras_concellos WHERE codigo_carretera = '4606'");
+	rs2.next();
+	int numRows = rs2.getInt("num_rows");
 
 	assertEquals(numRows, numConcellos);
     }

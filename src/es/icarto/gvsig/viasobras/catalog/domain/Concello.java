@@ -25,4 +25,8 @@ public class Concello {
     public String getCode() {
 	return this.code;
     }
+
+    public String toString() {
+	return this.name;
+    }
 }

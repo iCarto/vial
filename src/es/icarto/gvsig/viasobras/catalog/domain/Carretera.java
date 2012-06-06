@@ -26,4 +26,7 @@ public class Carretera {
 	this.name = name;
     }
 
+    public String toString() {
+	return this.name;
+    }
 }
