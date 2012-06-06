@@ -21,7 +21,18 @@ public class Catalog {
     }
 
     public static TipoPavimento getTramosTipoPavimento() {
-	return TipoPavimento.findAll();
+	TipoPavimento pv;
+	if ((carreteraSelected == null) && (concelloSelected == null)) {
+	    pv = TipoPavimento.findAll();
+	} else if ((carreteraSelected == null) && (concelloSelected != null)) {
+	    pv = TipoPavimento.findWhereConcello(concelloSelected);
+	} else if ((carreteraSelected != null) && (concelloSelected == null)) {
+	    pv = TipoPavimento.findWhereCarretera(carreteraSelected);
+	} else {
+	    pv = TipoPavimento.findWhereCarreteraAndConcello(carreteraSelected,
+		    concelloSelected);
+	}
+	return pv;
     }
 
     public static String getCarreteraSelected() {
@@ -40,4 +51,8 @@ public class Catalog {
 	concelloSelected = concello;
     }
 
+    public static void clear() {
+	carreteraSelected = null;
+	concelloSelected = null;
+    }
 }

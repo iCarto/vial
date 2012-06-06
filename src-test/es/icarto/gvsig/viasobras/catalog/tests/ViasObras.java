@@ -56,7 +56,9 @@ public class ViasObras {
 	rs.next();
 	int numRows = rs.getInt("num_rows");
 
-	TipoPavimento tp = TipoPavimento.findWhereCarretera("4606");
+	Catalog.clear();
+	Catalog.setCarretera("4606");
+	TipoPavimento tp = Catalog.getTramosTipoPavimento();
 	assertEquals(numRows, tp.getTableModel().getRowCount());
     }
 
@@ -64,11 +66,13 @@ public class ViasObras {
     public void testFindPavimentoDependingOnConcello() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.tipo_pavimento WHERE numeromuni = 46");
+		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.tipo_pavimento WHERE municipio = 'FONSAGRADA (A)'");
 	rs.next();
 	int numRows = rs.getInt("num_rows");
 
-	TipoPavimento tp = TipoPavimento.findWhereConcello(46);
+	Catalog.clear();
+	Catalog.setConcello("19");
+	TipoPavimento tp = Catalog.getTramosTipoPavimento();
 	assertEquals(numRows, tp.getTableModel().getRowCount());
     }
 
@@ -81,8 +85,10 @@ public class ViasObras {
 	rs.next();
 	int numRows = rs.getInt("num_rows");
 
-	TipoPavimento tp = TipoPavimento.findWhereCarretraAndConcello("4606",
-		46);
+	Catalog.clear();
+	Catalog.setCarretera("4606");
+	Catalog.setConcello("46"); // concello = Pol
+	TipoPavimento tp = Catalog.getTramosTipoPavimento();
 	assertEquals(numRows, tp.getTableModel().getRowCount());
     }
 

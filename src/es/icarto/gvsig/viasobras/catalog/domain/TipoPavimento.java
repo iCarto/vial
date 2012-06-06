@@ -46,13 +46,13 @@ public class TipoPavimento extends DomainMapper {
 	}
     }
 
-    public static TipoPavimento findWhereConcello(double concello) {
+    public static TipoPavimento findWhereConcello(String concello) {
 	Connection c = DomainMapper.getConnection();
 	PreparedStatement stmt;
 	try {
 	    String sql = "SELECT gid, tipopavime, origenpavi, finalpavim FROM inventario.tipo_pavimento WHERE numeromuni = ?";
 	    stmt = c.prepareStatement(sql);
-	    stmt.setDouble(1, concello);
+	    stmt.setString(1, concello);
 	    ResultSet rs = stmt.executeQuery();
 	    return new TipoPavimento(rs);
 	} catch (SQLException e) {
@@ -61,14 +61,15 @@ public class TipoPavimento extends DomainMapper {
 	}
     }
 
-    public static TipoPavimento findWhereCarretraAndConcello(String carretera, double concello) {
+    public static TipoPavimento findWhereCarreteraAndConcello(String carretera,
+	    String concello) {
 	Connection c = DomainMapper.getConnection();
 	PreparedStatement stmt;
 	try {
 	    String sql = "SELECT gid, tipopavime, origenpavi, finalpavim FROM inventario.tipo_pavimento WHERE numeroinve = ? AND numeromuni = ?";
 	    stmt = c.prepareStatement(sql);
 	    stmt.setString(1, carretera);
-	    stmt.setDouble(2, concello);
+	    stmt.setString(2, concello);
 	    ResultSet rs = stmt.executeQuery();
 	    return new TipoPavimento(rs);
 	} catch (SQLException e) {
