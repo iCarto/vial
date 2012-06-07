@@ -22,11 +22,12 @@ public class MapLoader {
     public static String MAP_NAME = "Vías Obras Lugo";
 
     public static void load() {
-	createMap();
-	loadMapInView();
+	if (createMap()) {
+	    loadMapInView();
+	}
     }
 
-    private static void createMap() {
+    public static boolean createMap() {
 	List<Object[]> rows = new ArrayList<Object[]>();
 	Object[] row = {"Carreteras",
 		"rede_carreteras",
@@ -44,9 +45,10 @@ public class MapLoader {
 	    }
 	    MapDAO.getInstance().saveMap(rows.toArray(new Object[0][0]),
 		    MAP_NAME);
-
+	    return true;
 	} catch (SQLException e) {
 	    e.printStackTrace();
+	    return false;
 	}
     }
 
