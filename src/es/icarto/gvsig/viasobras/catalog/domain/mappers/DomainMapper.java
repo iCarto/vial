@@ -1,4 +1,4 @@
-package es.icarto.gvsig.viasobras.catalog.domain;
+package es.icarto.gvsig.viasobras.catalog.domain.mappers;
 
 import java.sql.Connection;
 import java.sql.SQLException;

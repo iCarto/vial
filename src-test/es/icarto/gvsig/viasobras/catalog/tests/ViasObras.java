@@ -15,8 +15,8 @@ import org.junit.Test;
 
 import es.icarto.gvsig.viasobras.catalog.domain.Catalog;
 import es.icarto.gvsig.viasobras.catalog.domain.Concellos;
-import es.icarto.gvsig.viasobras.catalog.domain.DomainMapper;
-import es.icarto.gvsig.viasobras.catalog.domain.TipoPavimento;
+import es.icarto.gvsig.viasobras.catalog.domain.TramosPavimento;
+import es.icarto.gvsig.viasobras.catalog.domain.mappers.DomainMapper;
 
 public class ViasObras {
 
@@ -58,7 +58,8 @@ public class ViasObras {
 
 	Catalog.clear();
 	Catalog.setCarretera("4606");
-	TipoPavimento tp = Catalog.getTramosTipoPavimento();
+	TramosPavimento tp = Catalog.getTramosTipoPavimento();
+
 	assertEquals(numRows, tp.getTableModel().getRowCount());
     }
 
@@ -72,7 +73,8 @@ public class ViasObras {
 
 	Catalog.clear();
 	Catalog.setConcello("19");
-	TipoPavimento tp = Catalog.getTramosTipoPavimento();
+	TramosPavimento tp = Catalog.getTramosTipoPavimento();
+
 	assertEquals(numRows, tp.getTableModel().getRowCount());
     }
 
@@ -88,7 +90,8 @@ public class ViasObras {
 	Catalog.clear();
 	Catalog.setCarretera("4606");
 	Catalog.setConcello("46"); // concello = Pol
-	TipoPavimento tp = Catalog.getTramosTipoPavimento();
+	TramosPavimento tp = Catalog.getTramosTipoPavimento();
+
 	assertEquals(numRows, tp.getTableModel().getRowCount());
     }
 
@@ -96,10 +99,8 @@ public class ViasObras {
     public void testFilterConcelloDependingOnCarretera() throws SQLException {
 	Catalog.setCarretera("4606");
 	Concellos cs = Catalog.getConcellos();
-	int numConcellos = 0;
-	while (cs.next()) {
-	    numConcellos++;
-	}
+	int numConcellos = cs.size();
+
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
 		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.carreteras_concellos WHERE codigo_carretera = '4606'");
@@ -115,10 +116,7 @@ public class ViasObras {
 
 	Catalog.setCarretera("4606");
 	Concellos cs2 = Catalog.getConcellos();
-	int numConcellos = 0;
-	while (cs2.next()) {
-	    numConcellos++;
-	}
+	int numConcellos = cs2.size();
 	Statement stmt2 = c.createStatement();
 	ResultSet rs2 = stmt2
 		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.carreteras_concellos WHERE codigo_carretera = '4606'");

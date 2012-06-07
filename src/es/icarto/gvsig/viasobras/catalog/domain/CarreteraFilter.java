@@ -5,11 +5,17 @@ import java.sql.SQLException;
 import javax.sql.RowSet;
 import javax.sql.rowset.Predicate;
 
+import es.icarto.gvsig.viasobras.catalog.domain.mappers.CarreterasMapper;
+import es.icarto.gvsig.viasobras.catalog.domain.mappers.ConcellosMapper;
+
 public class CarreteraFilter implements Predicate {
 
     private String carretera;
+    private Carreteras carreteras;
+
     public CarreteraFilter(String carretera) {
 	this.carretera = carretera;
+	carreteras = CarreterasMapper.findAll();
     }
 
     public boolean evaluate(RowSet rs) {
@@ -17,8 +23,8 @@ public class CarreteraFilter implements Predicate {
 	    if ((rs.getRow() == 0) || (rs == null)) {
 		return false;
 	    }
-	    String concelloCode = rs.getString(Concello.getDBNameCode());
-	    if (Carreteras.getCarretera(carretera).isIn(concelloCode)) {
+	    String concelloCode = rs.getString(ConcellosMapper.CODE);
+	    if (carreteras.getCarretera(carretera).isIn(concelloCode)) {
 		return true;
 	    }
 	    return false;

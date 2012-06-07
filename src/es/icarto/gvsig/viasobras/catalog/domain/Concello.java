@@ -26,15 +26,11 @@ public class Concello {
 	return this.code;
     }
 
+    /**
+     * This method allow us to use the object as a parameter to a combobox.
+     */
     public String toString() {
 	return this.name;
     }
 
-    public static String getDBNameCode() {
-	return "codigo";
-    }
-
-    public static String getDBNameName() {
-	return "nombre";
-    }
 }

@@ -1,5 +1,9 @@
 package es.icarto.gvsig.viasobras.catalog.domain;
 
+import es.icarto.gvsig.viasobras.catalog.domain.mappers.CarreterasMapper;
+import es.icarto.gvsig.viasobras.catalog.domain.mappers.ConcellosMapper;
+import es.icarto.gvsig.viasobras.catalog.domain.mappers.TramosPavimentoMapper;
+
 
 public class Catalog {
 
@@ -7,29 +11,30 @@ public class Catalog {
     private static String concelloSelected;
 
     public static Carreteras getCarreteras() {
-	return Carreteras.findAll();
+	return CarreterasMapper.findAll();
     }
 
     public static Concellos getConcellos() {
 	Concellos cs;
 	if (carreteraSelected == null) {
-	    cs = Concellos.findAll();
+	    cs = ConcellosMapper.findAll();
 	} else {
-	    cs = Concellos.findWhereCarretera(carreteraSelected);
+	    cs = ConcellosMapper.findWhereCarretera(carreteraSelected);
 	}
 	return cs;
     }
 
-    public static TipoPavimento getTramosTipoPavimento() {
-	TipoPavimento pv;
+    public static TramosPavimento getTramosTipoPavimento() {
+	TramosPavimento pv;
 	if ((carreteraSelected == null) && (concelloSelected == null)) {
-	    pv = TipoPavimento.findAll();
+	    pv = TramosPavimentoMapper.findAll();
 	} else if ((carreteraSelected == null) && (concelloSelected != null)) {
-	    pv = TipoPavimento.findWhereConcello(concelloSelected);
+	    pv = TramosPavimentoMapper.findWhereConcello(concelloSelected);
 	} else if ((carreteraSelected != null) && (concelloSelected == null)) {
-	    pv = TipoPavimento.findWhereCarretera(carreteraSelected);
+	    pv = TramosPavimentoMapper.findWhereCarretera(carreteraSelected);
 	} else {
-	    pv = TipoPavimento.findWhereCarreteraAndConcello(carreteraSelected,
+	    pv = TramosPavimentoMapper.findWhereCarreteraAndConcello(
+		    carreteraSelected,
 		    concelloSelected);
 	}
 	return pv;
