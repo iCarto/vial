@@ -4,12 +4,12 @@ import java.sql.ResultSet;
 
 import javax.swing.table.TableModel;
 
-public class TramosPavimento {
+public class TramosPlataforma {
 
     private ResultSet rs;
     private TableModel tm;
 
-    public TramosPavimento(ResultSet rs) {
+    public TramosPlataforma(ResultSet rs) {
 	this.rs = rs;
     }
 

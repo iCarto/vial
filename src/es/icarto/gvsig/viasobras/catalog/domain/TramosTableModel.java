@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
-public class TramosPavimentoTableModel extends AbstractTableModel {
+public class TramosTableModel extends AbstractTableModel {
 
     private ResultSet rs;
     private ResultSetMetaData metadata;
@@ -16,7 +16,7 @@ public class TramosPavimentoTableModel extends AbstractTableModel {
     public static int NO_COL_NUMBER = -1;
     public static int NO_ROW_NUMBER = -1;
 
-    public TramosPavimentoTableModel(ResultSet rs) {
+    public TramosTableModel(ResultSet rs) {
 	super();
 	this.rs = rs;
 	initMetaData();

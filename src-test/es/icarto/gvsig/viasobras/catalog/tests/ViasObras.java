@@ -16,6 +16,7 @@ import org.junit.Test;
 import es.icarto.gvsig.viasobras.catalog.domain.Catalog;
 import es.icarto.gvsig.viasobras.catalog.domain.Concellos;
 import es.icarto.gvsig.viasobras.catalog.domain.TramosPavimento;
+import es.icarto.gvsig.viasobras.catalog.domain.TramosPlataforma;
 import es.icarto.gvsig.viasobras.catalog.domain.mappers.DomainMapper;
 
 public class ViasObras {
@@ -64,6 +65,21 @@ public class ViasObras {
     }
 
     @Test
+    public void testFindPlataformaDependingOnCarretera() throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.ancho_plataforma WHERE carretera = '4606'");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Catalog.setCarretera("4606");
+	TramosPlataforma tc = Catalog.getTramosAnchoPlataforma();
+
+	assertEquals(numRows, tc.getTableModel().getRowCount());
+    }
+
+    @Test
     public void testFindPavimentoDependingOnConcello() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
@@ -74,6 +90,21 @@ public class ViasObras {
 	Catalog.clear();
 	Catalog.setConcello("27018"); // Fonsagrada
 	TramosPavimento tp = Catalog.getTramosTipoPavimento();
+
+	assertEquals(numRows, tp.getTableModel().getRowCount());
+    }
+
+    @Test
+    public void testFindPlataformaDependingOnConcello() throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.ancho_plataforma WHERE municipio = '27018'");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Catalog.setConcello("27018"); // Fonsagrada
+	TramosPlataforma tp = Catalog.getTramosAnchoPlataforma();
 
 	assertEquals(numRows, tp.getTableModel().getRowCount());
     }
@@ -91,6 +122,23 @@ public class ViasObras {
 	Catalog.setCarretera("4606");
 	Catalog.setConcello("27018"); // Fonsagrada
 	TramosPavimento tp = Catalog.getTramosTipoPavimento();
+
+	assertEquals(numRows, tp.getTableModel().getRowCount());
+    }
+
+    @Test
+    public void testFindPlataformaDependingOnCarreteraAndConcello()
+	    throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.ancho_plataforma WHERE carretera = '4606' AND municipio = '27018'");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Catalog.setCarretera("4606");
+	Catalog.setConcello("27018"); // Fonsagrada
+	TramosPlataforma tp = Catalog.getTramosAnchoPlataforma();
 
 	assertEquals(numRows, tp.getTableModel().getRowCount());
     }
