@@ -19,7 +19,7 @@ import es.icarto.gvsig.viasobras.catalog.domain.TramosPavimento;
 import es.icarto.gvsig.viasobras.catalog.domain.TramosPlataforma;
 import es.icarto.gvsig.viasobras.catalog.domain.mappers.DomainMapper;
 
-public class ViasObras {
+public class CatalogSearchTests {
 
     static Connection c;
 
