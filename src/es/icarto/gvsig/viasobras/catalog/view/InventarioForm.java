@@ -30,7 +30,8 @@ public class InventarioForm extends JPanel implements IWindow {
     protected WindowInfo viewInfo = null;
     private HashMap<String, JComponent> widgets;
     private HashMap<String, JButton> buttons;
-    private ItemListener catalogUpdater;
+    private ItemListener carreteraUpdater;
+    private ItemListener concelloUpdater;
     private JComboBox carreteras;
     private JComboBox concellos;
 
@@ -52,7 +53,7 @@ public class InventarioForm extends JPanel implements IWindow {
     }
 
     private void initListeners() {
-	catalogUpdater = new ItemListener() {
+	carreteraUpdater = new ItemListener() {
 
 	    public void itemStateChanged(ItemEvent e) {
 		if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -67,7 +68,23 @@ public class InventarioForm extends JPanel implements IWindow {
 	    }
 	};
 
-	carreteras.addItemListener(catalogUpdater);
+	concelloUpdater = new ItemListener() {
+
+	    public void itemStateChanged(ItemEvent e) {
+		if (e.getStateChange() == ItemEvent.SELECTED) {
+		    if (concellos.getSelectedItem().equals(VOID_ITEM)) {
+			Catalog.setConcello(null);
+		    } else {
+			Concello c = (Concello) concellos.getSelectedItem();
+			Catalog.setConcello(c.getCode());
+		    }
+		}
+	    }
+
+	};
+
+	carreteras.addItemListener(carreteraUpdater);
+	concellos.addItemListener(concelloUpdater);
     }
 
     private void connectButtonsToActions() {

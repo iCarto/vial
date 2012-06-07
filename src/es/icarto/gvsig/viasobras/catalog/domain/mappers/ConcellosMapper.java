@@ -62,6 +62,7 @@ public class ConcellosMapper extends DomainMapper {
     private static List<Concello> toList(ResultSet rs) {
 	List<Concello> cs = new ArrayList<Concello>();
 	try {
+	    rs.beforeFirst();
 	    while (rs.next()) {
 		Concello concello = new Concello(rs.getString("codigo"),
 			rs.getString("nombre"));
