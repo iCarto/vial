@@ -30,7 +30,7 @@ public class CatalogLoadTests {
     }
 
     @Test
-    public void loadMap() throws SQLException {
+    public void createMap() throws SQLException {
 	MapLoader.load();
 	assertEquals(true, MapDAO.getInstance().mapExists(MapLoader.MAP_NAME));
     }
