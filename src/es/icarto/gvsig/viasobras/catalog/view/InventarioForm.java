@@ -94,6 +94,14 @@ public class InventarioForm extends JPanel implements IWindow {
 		fillTables();
 	    }
 	});
+	JButton load = (JButton) buttons.get("cargar");
+	load.addActionListener(new ActionListener() {
+
+	    public void actionPerformed(ActionEvent arg0) {
+		MapLoader.load();
+	    }
+
+	});
     }
 
     private void fillTables() {

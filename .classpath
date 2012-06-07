@@ -17,5 +17,7 @@
 	<classpathentry kind="lib" path="lib/slf4j-simple-1.5.10.jar"/>
 	<classpathentry kind="lib" path="lib/es.icarto.gvsig.navtableforms.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/extELLE"/>
+	<classpathentry kind="lib" path="/libFMap/lib/driver-manager-1.1.jar" sourcepath="/libDriverManager"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
