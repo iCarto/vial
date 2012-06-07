@@ -101,6 +101,11 @@ public class InventarioForm extends JPanel implements IWindow {
 	TableModel tipoPavimento = Catalog.getTramosTipoPavimento()
 		.getTableModel();
 	tbTipoPavimento.setModel(tipoPavimento);
+	JTable tbAnchoPlataforma = (JTable) widgets
+		.get("tabla_ancho_plataforma");
+	TableModel anchoPlataforma = Catalog.getTramosAnchoPlataforma()
+		.getTableModel();
+	tbAnchoPlataforma.setModel(anchoPlataforma);
     }
 
     private void fillComboBoxes() {
