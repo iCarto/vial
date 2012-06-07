@@ -2,9 +2,9 @@
 DROP TABLE IF EXISTS inventario.ancho_plataforma;
 CREATE TABLE inventario.ancho_plataforma (
        "gid" serial PRIMARY KEY,
-       "municipio" varchar(21),
-       "numeromuni" float8,
-       "numeroinve" varchar(4),
+       "carretera" varchar(4),
+       "nombre" varchar(21),
+       "municipio" varchar(5),
        "tramo" varchar(1),
        "ancho_plataforma" float8,
        "origentram" float8,
@@ -13,11 +13,14 @@ CREATE TABLE inventario.ancho_plataforma (
 
 INSERT INTO inventario.ancho_plataforma (
        SELECT nextval('inventario.ancho_plataforma_gid_seq'),
-              municipio, numeromuni, numeroinve, tramo,
+              numeroinve, municipio, '', tramo,
               anchoplata, origentram, finaltramo
        FROM inventario.inventario
        WHERE anchoplata IS NOT NULL
 );
+UPDATE inventario.ancho_plataforma SET municipio = c.codigo
+       FROM inventario.municipio_codigo AS c
+       WHERE inventario.ancho_plataforma.nombre = c.nombre;
 
 -- INSERT INTO inventario.ancho_plataforma (
 --        SELECT nextval('inventario.ancho_plataforma_gid_seq'),
@@ -43,9 +46,9 @@ INSERT INTO inventario.ancho_plataforma (
 DROP TABLE IF EXISTS inventario.tipo_pavimento;
 CREATE TABLE inventario.tipo_pavimento (
        "gid" serial PRIMARY KEY,
-       "municipio" varchar(21),
-       "numeromuni" float8,
-       "numeroinve" varchar(4),
+       "carretera" varchar(4),
+       "nombre" varchar(21),
+       "municipio" varchar(5),
        "tramo" varchar(1),
        "tipopavime" varchar(5),
        "origenpavi" float8,
@@ -54,13 +57,16 @@ CREATE TABLE inventario.tipo_pavimento (
 
 INSERT INTO inventario.tipo_pavimento(
        SELECT nextval('inventario.tipo_pavimento_gid_seq'),
-              municipio, numeromuni, numeroinve, tramo,
+              numeroinve, municipio, '', tramo,
               tipopavime,
               to_number(origenpavi, '999D999'),
               to_number(finalpavim, '999D999')
        FROM inventario.inventario
        WHERE tipopavime IS NOT NULL
 );
+UPDATE inventario.tipo_pavimento SET municipio = c.codigo
+       FROM inventario.municipio_codigo AS c
+       WHERE inventario.tipo_pavimento.nombre = c.nombre;
 
 -- INSERT INTO inventario.tipo_pavimento(
 --        SELECT nextval('inventario.tipo_pavimento_gid_seq'),

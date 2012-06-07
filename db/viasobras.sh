@@ -33,10 +33,17 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
    $viasobras_dbname < funcions/procesar_aforos.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
     $viasobras_dbname < datos/inventario/inventario.sql
+
+# Import from CSV aux data to process inventario
+csv_path=`pwd`/datos/inventario/municipio_codigo.csv #COPY command needs absolute path
+sql_query="\COPY inventario.municipio_codigo (nombre, codigo) FROM '$csv_path' WITH DELIMITER ','"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname -c "$sql_query"
+
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
    $viasobras_dbname < funcions/procesar_inventario.sql
 
-# Import data from CSV
+# Import from CSV link data between carreteras-concellos
 csv_path=`pwd`/datos/inventario/carreteras_concellos.csv #COPY command needs absolute path
 sql_query="\COPY inventario.carreteras_concellos (codigo_carretera, codigo_concello) FROM '$csv_path' WITH DELIMITER ','"
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \

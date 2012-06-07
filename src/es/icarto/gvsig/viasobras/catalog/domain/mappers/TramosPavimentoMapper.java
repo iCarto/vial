@@ -28,7 +28,7 @@ public class TramosPavimentoMapper extends DomainMapper {
 	Connection c = DomainMapper.getConnection();
 	PreparedStatement stmt;
 	try {
-	    String sql = "SELECT gid, tipopavime, origenpavi, finalpavim FROM inventario.tipo_pavimento WHERE numeroinve = ?";
+	    String sql = "SELECT gid, tipopavime, origenpavi, finalpavim FROM inventario.tipo_pavimento WHERE carretera = ?";
 	    stmt = c.prepareStatement(sql);
 	    stmt.setString(1, carretera);
 	    ResultSet rs = stmt.executeQuery();
@@ -43,7 +43,7 @@ public class TramosPavimentoMapper extends DomainMapper {
 	Connection c = DomainMapper.getConnection();
 	PreparedStatement stmt;
 	try {
-	    String sql = "SELECT gid, tipopavime, origenpavi, finalpavim FROM inventario.tipo_pavimento WHERE numeromuni = ?";
+	    String sql = "SELECT gid, tipopavime, origenpavi, finalpavim FROM inventario.tipo_pavimento WHERE municipio = ?";
 	    stmt = c.prepareStatement(sql);
 	    stmt.setString(1, concello);
 	    ResultSet rs = stmt.executeQuery();
@@ -59,7 +59,7 @@ public class TramosPavimentoMapper extends DomainMapper {
 	Connection c = DomainMapper.getConnection();
 	PreparedStatement stmt;
 	try {
-	    String sql = "SELECT gid, tipopavime, origenpavi, finalpavim FROM inventario.tipo_pavimento WHERE numeroinve = ? AND numeromuni = ?";
+	    String sql = "SELECT gid, tipopavime, origenpavi, finalpavim FROM inventario.tipo_pavimento WHERE carretera = ? AND municipio = ?";
 	    stmt = c.prepareStatement(sql);
 	    stmt.setString(1, carretera);
 	    stmt.setString(2, concello);

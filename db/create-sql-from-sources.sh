@@ -18,7 +18,7 @@ shp2pgsql -d -W iso-8859-1 \
     ${viasobras_data_orig}/inventario/aforos/aforos.dbf \
     inventario.aforos > datos/inventario/aforos.sql
 shp2pgsql -d -W iso-8859-1 \
-    ${viasobras_data_orig}/inventario/inventario/inventario.dbf \
+    ${viasobras_data_orig}/inventario/inventario/Inventario.dbf \
     inventario.inventario > datos/inventario/inventario.sql
 shp2pgsql -d -g the_geom -W iso-8859-1 -s 23029 -I \
     ${viasobras_data_orig}/inventario/rede_carreteras/Vias_Provinciales_datos \
