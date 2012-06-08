@@ -12,6 +12,9 @@ import java.sql.Statement;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.postgresql.util.PSQLException;
+
+import com.iver.cit.gvsig.fmap.drivers.DBException;
 
 import es.icarto.gvsig.viasobras.catalog.domain.Catalog;
 import es.icarto.gvsig.viasobras.catalog.domain.Concellos;
@@ -32,14 +35,14 @@ public class CatalogSearchTests {
     }
 
     @Test
-    public void testNotNullResults() {
+    public void testNotNullResults() throws SQLException, DBException {
 	assertNotNull(Catalog.getCarreteras());
 	assertNotNull(Catalog.getConcellos());
 	assertNotNull(Catalog.getTramosTipoPavimento());
     }
 
     @Test
-    public void testCarreterasLoaded() {
+    public void testCarreterasLoaded() throws SQLException, DBException {
 	boolean ok;
 	if (Catalog.getCarreteras().size() > 0) {
 	    ok = true;
@@ -50,7 +53,8 @@ public class CatalogSearchTests {
     }
 
     @Test
-    public void testFindPavimentoDependingOnCarretera() throws SQLException {
+    public void testFindPavimentoDependingOnCarretera() throws SQLException,
+    DBException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
 		.executeQuery("SELECT Count(*) As num_rows FROM inventario.tipo_pavimento WHERE carretera = '4606'");
@@ -65,7 +69,8 @@ public class CatalogSearchTests {
     }
 
     @Test
-    public void testFindPlataformaDependingOnCarretera() throws SQLException {
+    public void testFindPlataformaDependingOnCarretera() throws SQLException,
+    DBException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
 		.executeQuery("SELECT Count(*) As num_rows FROM inventario.ancho_plataforma WHERE carretera = '4606'");
@@ -80,7 +85,8 @@ public class CatalogSearchTests {
     }
 
     @Test
-    public void testFindPavimentoDependingOnConcello() throws SQLException {
+    public void testFindPavimentoDependingOnConcello() throws SQLException,
+    DBException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
 		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.tipo_pavimento WHERE municipio = '27018'");
@@ -95,7 +101,8 @@ public class CatalogSearchTests {
     }
 
     @Test
-    public void testFindPlataformaDependingOnConcello() throws SQLException {
+    public void testFindPlataformaDependingOnConcello() throws SQLException,
+    DBException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
 		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.ancho_plataforma WHERE municipio = '27018'");
@@ -111,7 +118,7 @@ public class CatalogSearchTests {
 
     @Test
     public void testFindPavimentoDependingOnCarreteraAndConcello()
-	    throws SQLException {
+	    throws SQLException, DBException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
 		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.tipo_pavimento WHERE carretera = '4606' AND municipio = '27018'");
@@ -128,7 +135,7 @@ public class CatalogSearchTests {
 
     @Test
     public void testFindPlataformaDependingOnCarreteraAndConcello()
-	    throws SQLException {
+	    throws SQLException, DBException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
 		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.ancho_plataforma WHERE carretera = '4606' AND municipio = '27018'");
@@ -144,7 +151,8 @@ public class CatalogSearchTests {
     }
 
     @Test
-    public void testFilterConcelloDependingOnCarretera() throws SQLException {
+    public void testFilterConcelloDependingOnCarretera() throws SQLException,
+    DBException {
 	Catalog.setCarretera("4606");
 	Concellos cs = Catalog.getConcellos();
 	int numConcellos = cs.size();
@@ -159,7 +167,7 @@ public class CatalogSearchTests {
     }
 
     @Test
-    public void testConsecutiveQuery() throws SQLException {
+    public void testConsecutiveQuery() throws SQLException, DBException {
 	Concellos cs1 = Catalog.getConcellos();
 
 	Catalog.setCarretera("4606");
@@ -172,6 +180,23 @@ public class CatalogSearchTests {
 	int numRows = rs2.getInt("num_rows");
 
 	assertEquals(numRows, numConcellos);
+    }
+
+    /**
+     * Test that an SQLException is thrown if no connection was set or if was
+     * closed
+     * 
+     * @throws SQLException
+     * @throws DBException
+     */
+    @Test(expected = PSQLException.class)
+    public void testConnectionClosed() throws SQLException, DBException {
+	c.close();
+	Catalog.clear();
+	Catalog.setCarretera("4606");
+	Catalog.setConcello("27018"); // Fonsagrada
+	TramosPlataforma tp = Catalog.getTramosAnchoPlataforma();
+	assertEquals(true, true);
     }
 
     @AfterClass

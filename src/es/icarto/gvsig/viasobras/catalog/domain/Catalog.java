@@ -1,9 +1,13 @@
 package es.icarto.gvsig.viasobras.catalog.domain;
 
+import java.sql.SQLException;
+
+import com.iver.cit.gvsig.fmap.drivers.DBException;
+
 import es.icarto.gvsig.viasobras.catalog.domain.mappers.CarreterasMapper;
 import es.icarto.gvsig.viasobras.catalog.domain.mappers.ConcellosMapper;
-import es.icarto.gvsig.viasobras.catalog.domain.mappers.TramosPlataformaMapper;
 import es.icarto.gvsig.viasobras.catalog.domain.mappers.TramosPavimentoMapper;
+import es.icarto.gvsig.viasobras.catalog.domain.mappers.TramosPlataformaMapper;
 
 
 public class Catalog {
@@ -11,11 +15,11 @@ public class Catalog {
     private static String carreteraSelected;
     private static String concelloSelected;
 
-    public static Carreteras getCarreteras() {
+    public static Carreteras getCarreteras() throws SQLException, DBException {
 	return CarreterasMapper.findAll();
     }
 
-    public static Concellos getConcellos() {
+    public static Concellos getConcellos() throws SQLException, DBException {
 	Concellos cs;
 	if (carreteraSelected == null) {
 	    cs = ConcellosMapper.findAll();
@@ -25,7 +29,8 @@ public class Catalog {
 	return cs;
     }
 
-    public static TramosPavimento getTramosTipoPavimento() {
+    public static TramosPavimento getTramosTipoPavimento() throws SQLException,
+    DBException {
 	TramosPavimento pv;
 	if ((carreteraSelected == null) && (concelloSelected == null)) {
 	    pv = TramosPavimentoMapper.findAll();
@@ -41,7 +46,8 @@ public class Catalog {
 	return pv;
     }
 
-    public static TramosPlataforma getTramosAnchoPlataforma() {
+    public static TramosPlataforma getTramosAnchoPlataforma()
+	    throws SQLException, DBException {
 	TramosPlataforma tc;
 	if ((carreteraSelected == null) && (concelloSelected == null)) {
 	    tc = TramosPlataformaMapper.findAll();

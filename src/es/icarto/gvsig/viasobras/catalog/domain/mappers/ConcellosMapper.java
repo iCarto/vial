@@ -10,6 +10,7 @@ import java.util.List;
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.FilteredRowSet;
 
+import com.iver.cit.gvsig.fmap.drivers.DBException;
 import com.sun.rowset.CachedRowSetImpl;
 import com.sun.rowset.FilteredRowSetImpl;
 
@@ -27,7 +28,7 @@ public class ConcellosMapper extends DomainMapper {
      */
     private static CachedRowSet concellos;
 
-    public static Concellos findAll() {
+    public static Concellos findAll() throws SQLException, DBException {
 	if (concellos != null) {
 	    return new Concellos(ConcellosMapper.toList(concellos));
 	}
@@ -46,7 +47,8 @@ public class ConcellosMapper extends DomainMapper {
 	}
     }
 
-    public static Concellos findWhereCarretera(String carretera) {
+    public static Concellos findWhereCarretera(String carretera)
+	    throws DBException {
 	try {
 	    FilteredRowSet frs = new FilteredRowSetImpl();
 	    concellos.beforeFirst();

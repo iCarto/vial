@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.sql.SQLException;
 import java.util.HashMap;
 
 import javax.swing.JButton;
@@ -14,8 +15,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
+import com.iver.andami.messages.NotificationManager;
 import com.iver.andami.ui.mdiManager.IWindow;
 import com.iver.andami.ui.mdiManager.WindowInfo;
+import com.iver.cit.gvsig.fmap.drivers.DBException;
 import com.jeta.forms.components.panel.FormPanel;
 
 import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
@@ -106,14 +109,20 @@ public class InventarioForm extends JPanel implements IWindow {
 
     private void fillTables() {
 	JTable tbTipoPavimento = (JTable) widgets.get("tabla_tipo_pavimento");
-	TableModel tipoPavimento = Catalog.getTramosTipoPavimento()
-		.getTableModel();
-	tbTipoPavimento.setModel(tipoPavimento);
-	JTable tbAnchoPlataforma = (JTable) widgets
-		.get("tabla_ancho_plataforma");
-	TableModel anchoPlataforma = Catalog.getTramosAnchoPlataforma()
-		.getTableModel();
-	tbAnchoPlataforma.setModel(anchoPlataforma);
+	TableModel tipoPavimento;
+	try {
+	    tipoPavimento = Catalog.getTramosTipoPavimento().getTableModel();
+	    tbTipoPavimento.setModel(tipoPavimento);
+	    JTable tbAnchoPlataforma = (JTable) widgets
+		    .get("tabla_ancho_plataforma");
+	    TableModel anchoPlataforma = Catalog.getTramosAnchoPlataforma()
+		    .getTableModel();
+	    tbAnchoPlataforma.setModel(anchoPlataforma);
+	} catch (SQLException e) {
+	    NotificationManager.addError(e);
+	} catch (DBException e) {
+	    NotificationManager.addError(e);
+	}
     }
 
     private void fillComboBoxes() {
@@ -124,16 +133,28 @@ public class InventarioForm extends JPanel implements IWindow {
     private void fillCarreteras() {
 	carreteras.removeAllItems();
 	carreteras.addItem(VOID_ITEM);
-	for (Carretera c : Catalog.getCarreteras()) {
-	    carreteras.addItem(c);
+	try {
+	    for (Carretera c : Catalog.getCarreteras()) {
+		carreteras.addItem(c);
+	    }
+	} catch (SQLException e) {
+	    NotificationManager.addError(e);
+	} catch (DBException e) {
+	    NotificationManager.addError(e);
 	}
     }
 
     private void fillConcellos() {
 	concellos.removeAllItems();
 	concellos.addItem(VOID_ITEM);
-	for (Concello c : Catalog.getConcellos()) {
-	    concellos.addItem(c);
+	try {
+	    for (Concello c : Catalog.getConcellos()) {
+		concellos.addItem(c);
+	    }
+	} catch (SQLException e) {
+	    NotificationManager.addError(e);
+	} catch (DBException e) {
+	    NotificationManager.addError(e);
 	}
     }
 

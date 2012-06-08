@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.iver.cit.gvsig.fmap.drivers.DBException;
+
 import es.icarto.gvsig.viasobras.catalog.domain.Carretera;
 import es.icarto.gvsig.viasobras.catalog.domain.Carreteras;
 
@@ -21,7 +23,7 @@ public class CarreterasMapper extends DomainMapper {
     private static List<Carretera> carreteras = new ArrayList<Carretera>();
     private static Map<String, Integer> indexes = new HashMap<String, Integer>();
 
-    public static Carreteras findAll() {
+    public static Carreteras findAll() throws SQLException, DBException {
 	if ((carreteras.size() > 0) && (carreteras.size() == indexes.size())) {
 	    return new Carreteras(carreteras, indexes);
 	}

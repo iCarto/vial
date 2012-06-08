@@ -3,7 +3,8 @@ package es.icarto.gvsig.viasobras.catalog.domain.mappers;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import es.udc.cartolab.gvsig.users.utils.DBSession;
+import org.postgresql.util.PSQLException;
+import org.postgresql.util.PSQLState;
 
 public class DomainMapper {
 
@@ -13,10 +14,10 @@ public class DomainMapper {
 	c = con;
     }
 
-    public static Connection getConnection() {
-	if (c == null) {
-	    DBSession dbs = DBSession.getCurrentSession();
-	    c = dbs.getJavaConnection();
+    public static Connection getConnection() throws SQLException {
+	if ((c == null) || (c.isClosed())) {
+	    throw new PSQLException("Connection error",
+		    PSQLState.CONNECTION_FAILURE);
 	}
 	return c;
     }
@@ -28,4 +29,5 @@ public class DomainMapper {
 	    e.printStackTrace();
 	}
     }
+
 }
