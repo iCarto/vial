@@ -12,23 +12,23 @@
 			<menu text="Vias e Obras/Importar datos"
 				position="01"/>
 			<tool-bar name="Catalogo carreteras">
-				<action-tool icon="viasobras-inventario" tooltip="Importar datos"
+				<action-tool icon="viasobras-catalogo" tooltip="Importar datos"
 					action-command="Importacion" position="50"/>
 			</tool-bar>
 		</extension>
-		<extension class-name="es.icarto.gvsig.viasobras.InventarioExtension" description="FORMS_PANEL" active="true">
-			<menu text="Vias e Obras/Inventario"
+		<extension class-name="es.icarto.gvsig.viasobras.CatalogExtension" description="FORMS_PANEL" active="true">
+			<menu text="Vias e Obras/Catalogo"
 				position="02"/>
 			<tool-bar name="Catalogo carreteras">
-				<action-tool icon="viasobras-inventario" tooltip="Inventario"
-					action-command="Inventario" position="60"/>
+				<action-tool icon="viasobras-catalogo" tooltip="Catálogo"
+					action-command="Catalogo" position="60"/>
 			</tool-bar>
 		</extension>
 		<extension class-name="es.icarto.gvsig.viasobras.MantementoCarreterasExtension" description="FORMS_PANEL" active="true">
 			<menu text="Vias e Obras/Mantemento carreteras"
 				position="03"/>
 			<tool-bar name="Catalogo carreteras">
-				<action-tool icon="viasobras-inventario" tooltip="Mantemento carreteras"
+				<action-tool icon="viasobras-catalogo" tooltip="Mantemento carreteras"
 					action-command="MantementoCarreteras" position="70"/>
 			</tool-bar>
 		</extension>
