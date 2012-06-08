@@ -5,16 +5,16 @@ import com.iver.andami.plugins.Extension;
 import com.iver.andami.plugins.IExtension;
 
 import es.icarto.gvsig.viasobras.catalog.domain.mappers.DomainMapper;
-import es.icarto.gvsig.viasobras.catalog.view.InventarioForm;
+import es.icarto.gvsig.viasobras.catalog.view.CatalogForm;
 import es.udc.cartolab.gvsig.users.DBConnectionExtension;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
-public class InventarioExtension extends Extension {
+public class CatalogExtension extends Extension {
 
     public void execute(String actionCommand) {
 	DBSession dbs = DBSession.getCurrentSession();
 	DomainMapper.setConnection(dbs.getJavaConnection());
-	InventarioForm dialog = new InventarioForm();
+	CatalogForm dialog = new CatalogForm();
 	PluginServices.getMDIManager().addWindow(dialog);
     }
 

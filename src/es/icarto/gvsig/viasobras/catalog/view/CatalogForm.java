@@ -26,7 +26,7 @@ import es.icarto.gvsig.viasobras.catalog.domain.Carretera;
 import es.icarto.gvsig.viasobras.catalog.domain.Catalog;
 import es.icarto.gvsig.viasobras.catalog.domain.Concello;
 
-public class InventarioForm extends JPanel implements IWindow {
+public class CatalogForm extends JPanel implements IWindow {
 
     protected static final String VOID_ITEM = "-";
     private FormPanel form;
@@ -38,7 +38,7 @@ public class InventarioForm extends JPanel implements IWindow {
     private JComboBox carreteras;
     private JComboBox concellos;
 
-    public InventarioForm() {
+    public CatalogForm() {
 	form = new FormPanel("inventarioform.xml");
 	initForm();
 	initListeners();
