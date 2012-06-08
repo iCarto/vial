@@ -5,8 +5,6 @@ import java.sql.SQLException;
 import javax.sql.RowSet;
 import javax.sql.rowset.Predicate;
 
-import com.iver.cit.gvsig.fmap.drivers.DBException;
-
 import es.icarto.gvsig.viasobras.catalog.domain.mappers.CarreterasMapper;
 import es.icarto.gvsig.viasobras.catalog.domain.mappers.ConcellosMapper;
 
@@ -15,7 +13,7 @@ public class CarreteraFilter implements Predicate {
     private String carretera;
     private Carreteras carreteras;
 
-    public CarreteraFilter(String carretera) throws SQLException, DBException {
+    public CarreteraFilter(String carretera) throws SQLException {
 	this.carretera = carretera;
 	carreteras = CarreterasMapper.findAll();
     }

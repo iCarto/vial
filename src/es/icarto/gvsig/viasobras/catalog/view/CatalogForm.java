@@ -18,7 +18,6 @@ import javax.swing.table.TableModel;
 import com.iver.andami.messages.NotificationManager;
 import com.iver.andami.ui.mdiManager.IWindow;
 import com.iver.andami.ui.mdiManager.WindowInfo;
-import com.iver.cit.gvsig.fmap.drivers.DBException;
 import com.jeta.forms.components.panel.FormPanel;
 
 import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
@@ -120,8 +119,6 @@ public class CatalogForm extends JPanel implements IWindow {
 	    tbAnchoPlataforma.setModel(anchoPlataforma);
 	} catch (SQLException e) {
 	    NotificationManager.addError(e);
-	} catch (DBException e) {
-	    NotificationManager.addError(e);
 	}
     }
 
@@ -139,8 +136,6 @@ public class CatalogForm extends JPanel implements IWindow {
 	    }
 	} catch (SQLException e) {
 	    NotificationManager.addError(e);
-	} catch (DBException e) {
-	    NotificationManager.addError(e);
 	}
     }
 
@@ -152,8 +147,6 @@ public class CatalogForm extends JPanel implements IWindow {
 		concellos.addItem(c);
 	    }
 	} catch (SQLException e) {
-	    NotificationManager.addError(e);
-	} catch (DBException e) {
 	    NotificationManager.addError(e);
 	}
     }

@@ -6,13 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.iver.cit.gvsig.fmap.drivers.DBException;
-
 import es.icarto.gvsig.viasobras.catalog.domain.TramosPlataforma;
 
 public class TramosPlataformaMapper extends DomainMapper {
 
-    public static TramosPlataforma findAll() throws SQLException, DBException {
+    public static TramosPlataforma findAll() throws SQLException {
 	Connection c = DomainMapper.getConnection();
 	Statement stmt;
 	stmt = c.createStatement();
@@ -22,7 +20,7 @@ public class TramosPlataformaMapper extends DomainMapper {
     }
 
     public static TramosPlataforma findWhereCarretera(String carretera)
-	    throws SQLException, DBException {
+	    throws SQLException {
 	Connection c = DomainMapper.getConnection();
 	PreparedStatement stmt;
 	String sql = "SELECT gid, ancho_plataforma, origentram, finaltramo FROM inventario.ancho_plataforma WHERE carretera = ?";
@@ -33,7 +31,7 @@ public class TramosPlataformaMapper extends DomainMapper {
     }
 
     public static TramosPlataforma findWhereConcello(String concello)
-	    throws SQLException, DBException {
+	    throws SQLException {
 	Connection c = DomainMapper.getConnection();
 	PreparedStatement stmt;
 	String sql = "SELECT gid, ancho_plataforma, origentram, finaltramo FROM inventario.ancho_plataforma WHERE municipio = ?";
@@ -44,7 +42,7 @@ public class TramosPlataformaMapper extends DomainMapper {
     }
 
     public static TramosPlataforma findWhereCarreteraAndConcello(
-	    String carretera, String concello) throws SQLException, DBException {
+	    String carretera, String concello) throws SQLException {
 	Connection c = DomainMapper.getConnection();
 	PreparedStatement stmt;
 	String sql = "SELECT gid, ancho_plataforma, origentram, finaltramo FROM inventario.ancho_plataforma WHERE carretera = ? AND municipio = ?";

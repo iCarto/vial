@@ -6,13 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.iver.cit.gvsig.fmap.drivers.DBException;
-
 import es.icarto.gvsig.viasobras.catalog.domain.TramosPavimento;
 
 public class TramosPavimentoMapper extends DomainMapper {
 
-    public static TramosPavimento findAll() throws SQLException, DBException {
+    public static TramosPavimento findAll() throws SQLException {
 	Connection c = DomainMapper.getConnection();
 	Statement stmt;
 	try {
@@ -27,7 +25,7 @@ public class TramosPavimentoMapper extends DomainMapper {
     }
 
     public static TramosPavimento findWhereCarretera(String carretera)
-	    throws SQLException, DBException {
+	    throws SQLException {
 	Connection c = DomainMapper.getConnection();
 	PreparedStatement stmt;
 	try {
@@ -43,7 +41,7 @@ public class TramosPavimentoMapper extends DomainMapper {
     }
 
     public static TramosPavimento findWhereConcello(String concello)
-	    throws SQLException, DBException {
+	    throws SQLException {
 	Connection c = DomainMapper.getConnection();
 	PreparedStatement stmt;
 	try {
@@ -58,8 +56,8 @@ public class TramosPavimentoMapper extends DomainMapper {
 	}
     }
 
-    public static TramosPavimento findWhereCarreteraAndConcello(String carretera,
-	    String concello) throws SQLException, DBException {
+    public static TramosPavimento findWhereCarreteraAndConcello(
+	    String carretera, String concello) throws SQLException {
 	Connection c = DomainMapper.getConnection();
 	PreparedStatement stmt;
 	try {

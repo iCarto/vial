@@ -35,14 +35,14 @@ public class CatalogSearchTests {
     }
 
     @Test
-    public void testNotNullResults() throws SQLException, DBException {
+    public void testNotNullResults() throws SQLException{
 	assertNotNull(Catalog.getCarreteras());
 	assertNotNull(Catalog.getConcellos());
 	assertNotNull(Catalog.getTramosTipoPavimento());
     }
 
     @Test
-    public void testCarreterasLoaded() throws SQLException, DBException {
+    public void testCarreterasLoaded() throws SQLException {
 	boolean ok;
 	if (Catalog.getCarreteras().size() > 0) {
 	    ok = true;
@@ -53,8 +53,35 @@ public class CatalogSearchTests {
     }
 
     @Test
-    public void testFindPavimentoDependingOnCarretera() throws SQLException,
-    DBException {
+    public void testFindPavimentoAll() throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT COUNT(*) AS num_rows FROM inventario.tipo_pavimento");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	TramosPavimento tp = Catalog.getTramosTipoPavimento();
+
+	assertEquals(numRows, tp.getTableModel().getRowCount());
+    }
+
+    @Test
+    public void testFindPlataformaAll() throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT COUNT(*) AS num_rows FROM inventario.ancho_plataforma");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	TramosPlataforma tp = Catalog.getTramosAnchoPlataforma();
+
+	assertEquals(numRows, tp.getTableModel().getRowCount());
+    }
+
+    @Test
+    public void testFindPavimentoDependingOnCarretera() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
 		.executeQuery("SELECT Count(*) As num_rows FROM inventario.tipo_pavimento WHERE carretera = '4606'");
@@ -69,8 +96,7 @@ public class CatalogSearchTests {
     }
 
     @Test
-    public void testFindPlataformaDependingOnCarretera() throws SQLException,
-    DBException {
+    public void testFindPlataformaDependingOnCarretera() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
 		.executeQuery("SELECT Count(*) As num_rows FROM inventario.ancho_plataforma WHERE carretera = '4606'");
@@ -85,8 +111,7 @@ public class CatalogSearchTests {
     }
 
     @Test
-    public void testFindPavimentoDependingOnConcello() throws SQLException,
-    DBException {
+    public void testFindPavimentoDependingOnConcello() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
 		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.tipo_pavimento WHERE municipio = '27018'");
@@ -135,7 +160,7 @@ public class CatalogSearchTests {
 
     @Test
     public void testFindPlataformaDependingOnCarreteraAndConcello()
-	    throws SQLException, DBException {
+	    throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
 		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.ancho_plataforma WHERE carretera = '4606' AND municipio = '27018'");
@@ -151,8 +176,7 @@ public class CatalogSearchTests {
     }
 
     @Test
-    public void testFilterConcelloDependingOnCarretera() throws SQLException,
-    DBException {
+    public void testFilterConcelloDependingOnCarretera() throws SQLException {
 	Catalog.setCarretera("4606");
 	Concellos cs = Catalog.getConcellos();
 	int numConcellos = cs.size();

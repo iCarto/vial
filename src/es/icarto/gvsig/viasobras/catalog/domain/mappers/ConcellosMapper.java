@@ -10,7 +10,6 @@ import java.util.List;
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.FilteredRowSet;
 
-import com.iver.cit.gvsig.fmap.drivers.DBException;
 import com.sun.rowset.CachedRowSetImpl;
 import com.sun.rowset.FilteredRowSetImpl;
 
@@ -28,7 +27,7 @@ public class ConcellosMapper extends DomainMapper {
      */
     private static CachedRowSet concellos;
 
-    public static Concellos findAll() throws SQLException, DBException {
+    public static Concellos findAll() throws SQLException {
 	if (concellos != null) {
 	    return new Concellos(ConcellosMapper.toList(concellos));
 	}
@@ -48,32 +47,23 @@ public class ConcellosMapper extends DomainMapper {
     }
 
     public static Concellos findWhereCarretera(String carretera)
-	    throws DBException {
-	try {
-	    FilteredRowSet frs = new FilteredRowSetImpl();
-	    concellos.beforeFirst();
-	    frs.populate((ResultSet) concellos);
-	    frs.setFilter(new CarreteraFilter(carretera));
-	    return new Concellos(ConcellosMapper.toList(frs));
-	} catch (SQLException e) {
-	    e.printStackTrace();
-	    return null;
-	}
+	    throws SQLException {
+	FilteredRowSet frs = new FilteredRowSetImpl();
+	concellos.beforeFirst();
+	frs.populate((ResultSet) concellos);
+	frs.setFilter(new CarreteraFilter(carretera));
+	return new Concellos(ConcellosMapper.toList(frs));
     }
 
-    private static List<Concello> toList(ResultSet rs) {
+    private static List<Concello> toList(ResultSet rs) throws SQLException {
 	List<Concello> cs = new ArrayList<Concello>();
-	try {
-	    rs.beforeFirst();
-	    while (rs.next()) {
-		Concello concello = new Concello(rs.getString("codigo"),
-			rs.getString("nombre"));
-		cs.add(concello);
-	    }
-	    return cs;
-	} catch (SQLException e) {
-	    e.printStackTrace();
-	    return null;
+	rs.beforeFirst();
+	while (rs.next()) {
+	    Concello concello = new Concello(rs.getString("codigo"),
+		    rs.getString("nombre"));
+	    cs.add(concello);
 	}
+	return cs;
     }
+
 }
