@@ -17,6 +17,7 @@ import javax.swing.table.TableModel;
 
 import com.iver.andami.messages.NotificationManager;
 import com.iver.andami.ui.mdiManager.IWindow;
+import com.iver.andami.ui.mdiManager.SingletonWindow;
 import com.iver.andami.ui.mdiManager.WindowInfo;
 import com.jeta.forms.components.panel.FormPanel;
 
@@ -25,9 +26,10 @@ import es.icarto.gvsig.viasobras.catalog.domain.Carretera;
 import es.icarto.gvsig.viasobras.catalog.domain.Catalog;
 import es.icarto.gvsig.viasobras.catalog.domain.Concello;
 
-public class CatalogForm extends JPanel implements IWindow {
+public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
 
-    protected static final String VOID_ITEM = "-";
+    private static final String VOID_ITEM = "Todos";
+
     private FormPanel form;
     protected WindowInfo viewInfo = null;
     private HashMap<String, JComponent> widgets;
@@ -165,6 +167,10 @@ public class CatalogForm extends JPanel implements IWindow {
 
     public Object getWindowProfile() {
 	return null;
+    }
+
+    public Object getWindowModel() {
+	return "catalog-roads";
     }
 
 }
