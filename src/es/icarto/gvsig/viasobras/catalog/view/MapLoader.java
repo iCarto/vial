@@ -12,6 +12,7 @@ import com.iver.cit.gvsig.project.documents.ProjectDocumentFactory;
 import com.iver.cit.gvsig.project.documents.view.ProjectViewFactory;
 import com.iver.cit.gvsig.project.documents.view.gui.View;
 
+import es.icarto.gvsig.elle.db.DBStructure;
 import es.udc.cartolab.gvsig.elle.utils.ELLEMap;
 import es.udc.cartolab.gvsig.elle.utils.LoadLegend;
 import es.udc.cartolab.gvsig.elle.utils.MapDAO;
@@ -40,7 +41,8 @@ public class MapLoader {
 	rows.add(row);
 	try {
 	    DBSession dbs = DBSession.getCurrentSession();
-	    if (!dbs.tableExists(dbs.getSchema(), "_map")) {
+	    if (!dbs.tableExists(DBStructure.getSchema(),
+		    DBStructure.getMapTable())) {
 		MapDAO.getInstance().createMapTables();
 	    }
 	    MapDAO.getInstance().saveMap(rows.toArray(new Object[0][0]),
@@ -69,8 +71,9 @@ public class MapLoader {
     private static void loadMapInView() {
 	View view = createView();
 	try {
-	    ELLEMap map = MapDAO.getInstance().getMap(view, MAP_NAME, "",
+	    ELLEMap map = MapDAO.getInstance().getMap(view, MAP_NAME,
 		    LoadLegend.NO_LEGEND, "");
+	    map.getLayer("Carreteras").setWhere("WHERE codigo='0101'");
 	    map.load(view.getProjection());
 	    PluginServices.getMDIManager().addWindow(view);
 	} catch (Exception e) {
