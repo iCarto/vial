@@ -30,15 +30,18 @@ public class MapLoader {
 
     public static boolean createMap() {
 	List<Object[]> rows = new ArrayList<Object[]>();
-	Object[] row = {"Carreteras",
-		"rede_carreteras",
-		"1",
-		true,
-		null,
-		null,
-		"",
-	"inventario"};
-	rows.add(row);
+	Object[] concellos = { "Concellos", "concellos", "1",
+		true, null, null,"", "info_base" };
+	Object[] carreteras = { "Carreteras", "rede_carreteras", "2",
+		true, null, null, "", "inventario" };
+	Object[] pavimento = { "Tipo de pavimento", "tipo_pavimento", "3",
+		true, null, null, "", "inventario" };
+	Object[] plataforma = { "Ancho de plataforma", "ancho_plataforma", "4",
+		true, null, null, "", "inventario" };
+	rows.add(carreteras);
+	rows.add(concellos);
+	rows.add(pavimento);
+	rows.add(plataforma);
 	try {
 	    DBSession dbs = DBSession.getCurrentSession();
 	    if (!dbs.tableExists(DBStructure.getSchema(),
@@ -73,7 +76,15 @@ public class MapLoader {
 	try {
 	    ELLEMap map = MapDAO.getInstance().getMap(view, MAP_NAME,
 		    LoadLegend.NO_LEGEND, "");
-	    map.getLayer("Carreteras").setWhere("WHERE codigo='0101'");
+	    String whereCarreteras = WhereAdapter
+		    .getClause(WhereAdapter.CARRETERAS);
+	    map.getLayer("Carreteras").setWhere(whereCarreteras);
+	    String whereConcellos = WhereAdapter
+		    .getClause(WhereAdapter.CONCELLOS);
+	    map.getLayer("Concellos").setWhere(whereConcellos);
+	    String whereTramos = WhereAdapter.getClause(WhereAdapter.TRAMOS);
+	    map.getLayer("Tipo de pavimento").setWhere(whereTramos);
+	    map.getLayer("Ancho de plataforma").setWhere(whereTramos);
 	    map.load(view.getProjection());
 	    PluginServices.getMDIManager().addWindow(view);
 	} catch (Exception e) {

@@ -6,7 +6,7 @@ CREATE SCHEMA inventario;
 
 DROP TABLE IF EXISTS inventario.carreteras_concellos;
 CREATE TABLE inventario.carreteras_concellos(
-       gid SERIAL,
+       id SERIAL,
        codigo_carretera varchar(4),
        codigo_concello varchar(5),
        CONSTRAINT pk_carreteras_concellos PRIMARY KEY (codigo_concello, codigo_carretera)

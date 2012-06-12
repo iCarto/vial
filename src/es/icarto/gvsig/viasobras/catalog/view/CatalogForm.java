@@ -41,6 +41,7 @@ public class CatalogForm extends JPanel implements IWindow {
 	form = new FormPanel("inventarioform.xml");
 	initForm();
 	initListeners();
+	Catalog.clear();
 	JScrollPane scrolledForm = new JScrollPane(form);
 	this.add(scrolledForm);
     }
