@@ -12,14 +12,12 @@ import java.sql.Statement;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.postgresql.util.PSQLException;
 
 import com.iver.cit.gvsig.fmap.drivers.DBException;
 
 import es.icarto.gvsig.viasobras.catalog.domain.Catalog;
 import es.icarto.gvsig.viasobras.catalog.domain.Concellos;
-import es.icarto.gvsig.viasobras.catalog.domain.TramosPavimento;
-import es.icarto.gvsig.viasobras.catalog.domain.TramosPlataforma;
+import es.icarto.gvsig.viasobras.catalog.domain.Tramos;
 import es.icarto.gvsig.viasobras.catalog.domain.mappers.DomainMapper;
 
 public class CatalogSearchTests {
@@ -61,9 +59,9 @@ public class CatalogSearchTests {
 	int numRows = rs.getInt("num_rows");
 
 	Catalog.clear();
-	TramosPavimento tp = Catalog.getTramosTipoPavimento();
+	Tramos tramos = Catalog.getTramosTipoPavimento();
 
-	assertEquals(numRows, tp.getTableModel().getRowCount());
+	assertEquals(numRows, tramos.getTableModel().getRowCount());
     }
 
     @Test
@@ -75,9 +73,9 @@ public class CatalogSearchTests {
 	int numRows = rs.getInt("num_rows");
 
 	Catalog.clear();
-	TramosPlataforma tp = Catalog.getTramosAnchoPlataforma();
+	Tramos tramos = Catalog.getTramosAnchoPlataforma();
 
-	assertEquals(numRows, tp.getTableModel().getRowCount());
+	assertEquals(numRows, tramos.getTableModel().getRowCount());
     }
 
     @Test
@@ -90,9 +88,9 @@ public class CatalogSearchTests {
 
 	Catalog.clear();
 	Catalog.setCarretera("4606");
-	TramosPavimento tp = Catalog.getTramosTipoPavimento();
+	Tramos tramos = Catalog.getTramosTipoPavimento();
 
-	assertEquals(numRows, tp.getTableModel().getRowCount());
+	assertEquals(numRows, tramos.getTableModel().getRowCount());
     }
 
     @Test
@@ -105,9 +103,9 @@ public class CatalogSearchTests {
 
 	Catalog.clear();
 	Catalog.setCarretera("4606");
-	TramosPlataforma tc = Catalog.getTramosAnchoPlataforma();
+	Tramos tramos = Catalog.getTramosAnchoPlataforma();
 
-	assertEquals(numRows, tc.getTableModel().getRowCount());
+	assertEquals(numRows, tramos.getTableModel().getRowCount());
     }
 
     @Test
@@ -120,9 +118,9 @@ public class CatalogSearchTests {
 
 	Catalog.clear();
 	Catalog.setConcello("27018"); // Fonsagrada
-	TramosPavimento tp = Catalog.getTramosTipoPavimento();
+	Tramos tramos = Catalog.getTramosTipoPavimento();
 
-	assertEquals(numRows, tp.getTableModel().getRowCount());
+	assertEquals(numRows, tramos.getTableModel().getRowCount());
     }
 
     @Test
@@ -136,9 +134,9 @@ public class CatalogSearchTests {
 
 	Catalog.clear();
 	Catalog.setConcello("27018"); // Fonsagrada
-	TramosPlataforma tp = Catalog.getTramosAnchoPlataforma();
+	Tramos tramos = Catalog.getTramosAnchoPlataforma();
 
-	assertEquals(numRows, tp.getTableModel().getRowCount());
+	assertEquals(numRows, tramos.getTableModel().getRowCount());
     }
 
     @Test
@@ -153,9 +151,9 @@ public class CatalogSearchTests {
 	Catalog.clear();
 	Catalog.setCarretera("4606");
 	Catalog.setConcello("27018"); // Fonsagrada
-	TramosPavimento tp = Catalog.getTramosTipoPavimento();
+	Tramos tramos = Catalog.getTramosTipoPavimento();
 
-	assertEquals(numRows, tp.getTableModel().getRowCount());
+	assertEquals(numRows, tramos.getTableModel().getRowCount());
     }
 
     @Test
@@ -170,9 +168,9 @@ public class CatalogSearchTests {
 	Catalog.clear();
 	Catalog.setCarretera("4606");
 	Catalog.setConcello("27018"); // Fonsagrada
-	TramosPlataforma tp = Catalog.getTramosAnchoPlataforma();
+	Tramos tramos = Catalog.getTramosAnchoPlataforma();
 
-	assertEquals(numRows, tp.getTableModel().getRowCount());
+	assertEquals(numRows, tramos.getTableModel().getRowCount());
     }
 
     @Test
@@ -204,23 +202,6 @@ public class CatalogSearchTests {
 	int numRows = rs2.getInt("num_rows");
 
 	assertEquals(numRows, numConcellos);
-    }
-
-    /**
-     * Test that an SQLException is thrown if no connection was set or if was
-     * closed
-     * 
-     * @throws SQLException
-     * @throws DBException
-     */
-    @Test(expected = PSQLException.class)
-    public void testConnectionClosed() throws SQLException, DBException {
-	c.close();
-	Catalog.clear();
-	Catalog.setCarretera("4606");
-	Catalog.setConcello("27018"); // Fonsagrada
-	TramosPlataforma tp = Catalog.getTramosAnchoPlataforma();
-	assertEquals(true, true);
     }
 
     @AfterClass

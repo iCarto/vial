@@ -27,8 +27,8 @@ public class Catalog {
 	return cs;
     }
 
-    public static TramosPavimento getTramosTipoPavimento() throws SQLException {
-	TramosPavimento pv;
+    public static Tramos getTramosTipoPavimento() throws SQLException {
+	Tramos pv;
 	if ((carreteraSelected == null) && (concelloSelected == null)) {
 	    pv = TramosPavimentoMapper.findAll();
 	} else if ((carreteraSelected == null) && (concelloSelected != null)) {
@@ -43,9 +43,9 @@ public class Catalog {
 	return pv;
     }
 
-    public static TramosPlataforma getTramosAnchoPlataforma()
+    public static Tramos getTramosAnchoPlataforma()
 	    throws SQLException {
-	TramosPlataforma tc;
+	Tramos tc;
 	if ((carreteraSelected == null) && (concelloSelected == null)) {
 	    tc = TramosPlataformaMapper.findAll();
 	} else if ((carreteraSelected == null) && (concelloSelected != null)) {

@@ -1,19 +1,20 @@
-package es.icarto.gvsig.viasobras.catalog.domain;
+package es.icarto.gvsig.viasobras.catalog.domain.filters;
 
 import java.sql.SQLException;
 
 import javax.sql.RowSet;
 import javax.sql.rowset.Predicate;
 
+import es.icarto.gvsig.viasobras.catalog.domain.Carreteras;
 import es.icarto.gvsig.viasobras.catalog.domain.mappers.CarreterasMapper;
 import es.icarto.gvsig.viasobras.catalog.domain.mappers.ConcellosMapper;
 
-public class CarreteraFilter implements Predicate {
+public class ConcellosFilter implements Predicate {
 
     private String carretera;
     private Carreteras carreteras;
 
-    public CarreteraFilter(String carretera) throws SQLException {
+    public ConcellosFilter(String carretera) throws SQLException {
 	this.carretera = carretera;
 	carreteras = CarreterasMapper.findAll();
     }

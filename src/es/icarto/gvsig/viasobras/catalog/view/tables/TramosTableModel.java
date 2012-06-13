@@ -1,64 +1,41 @@
-package es.icarto.gvsig.viasobras.catalog.domain;
+package es.icarto.gvsig.viasobras.catalog.view.tables;
 
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
+import java.util.List;
 
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
+import es.icarto.gvsig.viasobras.catalog.domain.Tramo;
+
 public class TramosTableModel extends AbstractTableModel {
 
-    private ResultSet rs;
-    private ResultSetMetaData metadata;
+    private List<Tramo> tramos;
+    private Tramo metadata;
     private int rowCount;
     private int colCount;
     public static int NO_COL_NUMBER = -1;
     public static int NO_ROW_NUMBER = -1;
 
-    public TramosTableModel(ResultSet rs) {
+    public TramosTableModel(List<Tramo> tramos) {
 	super();
-	this.rs = rs;
+	this.tramos = tramos;
 	initMetaData();
     }
 
     private void initMetaData() {
-	try {
-	    this.metadata = this.rs.getMetaData();
-	    this.colCount = this.metadata.getColumnCount();
-	    this.rs.beforeFirst();
-	    while (rs.next()) {
-		this.rowCount++;
-	    }
-	    rs.beforeFirst();
-	} catch (SQLException e) {
-	    e.printStackTrace();
-	    rowCount = NO_ROW_NUMBER;
-	    colCount = NO_COL_NUMBER;
-	    metadata = null;
+	if (tramos.size() > 0) {
+	    this.rowCount = tramos.size();
+	    this.colCount = tramos.get(0).getNumberOfProperties();
+	    this.metadata = tramos.get(0);
+	} else {
+	    this.colCount = NO_COL_NUMBER;
+	    this.rowCount = NO_ROW_NUMBER;
+	    this.metadata = null;
 	}
-    }
-
-    public void close() {
-	try {
-	    rs.getStatement().close();
-	} catch (SQLException e) {
-	    e.printStackTrace();
-	}
-    }
-
-    /** Automatically close when we're garbage collected */
-    protected void finalize() {
-	close();
     }
 
     public String getColumnName(int column) {
-	try {
-	    return this.metadata.getColumnName(column + 1);
-	} catch (SQLException e) {
-	    e.printStackTrace();
-	    return null;
-	}
+	return metadata.getPropertyName(column);
     }
 
     public int getColumnCount() {
@@ -70,17 +47,7 @@ public class TramosTableModel extends AbstractTableModel {
     }
 
     public Object getValueAt(int rowIndex, int colIndex) {
-	try {
-	    this.rs.absolute(rowIndex + 1);
-	    Object o = this.rs.getObject(colIndex + 1);
-	    if (o == null) {
-		return null;
-	    } else {
-		return o.toString();
-	    }
-	} catch (SQLException e) {
-	    return e.toString();
-	}
+	return tramos.get(rowIndex).getPropertyValue(colIndex);
     }
 
     public boolean isCellEditable(int arg0, int arg1) {
