@@ -92,6 +92,7 @@ public class TramosPavimentoMapper extends DomainMapper {
 	while (rs.next()) {
 	    Tramo tramo = new Tramo();
 	    tramo.setIndex(rs.getRow());
+	    tramo.setId(rs.getInt("gid"));
 	    tramo.setPkStart(rs.getDouble("origenpavi"));
 	    tramo.setPkEnd(rs.getDouble("finalpavim"));
 	    tramo.setCarretera(rs.getString("carretera"));
@@ -112,10 +113,13 @@ public class TramosPavimentoMapper extends DomainMapper {
 		tramos.updateString("municipio", t.getConcello());
 		tramos.updateString("tipopavime", t.getValue());
 		tramos.updateRow();
+	    } else if (t.getStatus() == Tramo.STATUS_DELETE) {
+		tramos.absolute(t.getIndex());
+		tramos.deleteRow();
+		tramos.beforeFirst();
 	    }
 	}
-	tramos.acceptChanges(DomainMapper.getConnection()); // will update the
-	// DB
+	tramos.acceptChanges(DomainMapper.getConnection());
     }
 
 }

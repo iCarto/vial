@@ -39,4 +39,18 @@ public class Tramos implements Iterable<Tramo> {
 	return tramos.iterator();
     }
 
+    public void addTramo(Tramo tramo) {
+	tramo.setStatus(Tramo.STATUS_INSERT);
+	tramos.add(tramo);
+    }
+
+    public void deleteTramo(Tramo tramo) {
+	for (Tramo t : tramos) {
+	    if (t.getId() == tramo.getId()) {
+		t.setStatus(Tramo.STATUS_DELETE);
+		break;
+	    }
+	}
+    }
+
 }

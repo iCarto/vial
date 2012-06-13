@@ -48,7 +48,7 @@ public class CatalogEditTests {
 	}
 	tipoPavimento.save();
 
-	// check if that made effect
+	// check if the later made effect
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
 		.executeQuery("SELECT tipopavime FROM inventario.tipo_pavimento WHERE carretera = '4606' AND municipio = '27018'");
@@ -59,6 +59,46 @@ public class CatalogEditTests {
 	    }
 	}
 	assertEquals(true, updated);
+    }
+
+    @Test
+    public void testDeletePavimento() throws SQLException {
+	String myValue = "MyTest";
+	double pkStart = 10.2;
+	double pkEnd = 10.4;
+	String carretera = "4606";
+	String concello = "27018";
+	int gid = getLastId();
+
+	// add new tramo
+	Catalog.clear();
+	Catalog.setCarretera(carretera);
+	Catalog.setConcello(concello);
+	Tramos tipoPavimento = Catalog.getTramosTipoPavimento();
+	Tramo tramo = new Tramo();
+	tramo.setId(gid);
+	tipoPavimento.deleteTramo(tramo);
+	tipoPavimento.save();
+
+	// check if the later made effect
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT gid FROM inventario.tipo_pavimento WHERE carretera = '4606' AND municipio = '27018'");
+	boolean updated = true;
+	while (rs.next()) {
+	    if (rs.getInt("gid") == gid) {
+		updated = false;
+	    }
+	}
+	assertEquals(true, updated);
+    }
+
+    private int getLastId() throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT gid FROM inventario.tipo_pavimento WHERE carretera = '4606' AND municipio = '27018' ORDER BY gid DESC LIMIT 1");
+	rs.next();
+	return rs.getInt("gid");
     }
 
 }
