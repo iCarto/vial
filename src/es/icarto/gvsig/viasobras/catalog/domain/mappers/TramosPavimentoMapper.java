@@ -1,6 +1,7 @@
 package es.icarto.gvsig.viasobras.catalog.domain.mappers;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -104,21 +105,34 @@ public class TramosPavimentoMapper extends DomainMapper {
     }
 
     public static void save(Tramos ts) throws SQLException {
+	Connection c = DomainMapper.getConnection();
+	c.setAutoCommit(false);
 	for (Tramo t : ts) {
 	    if (t.getStatus() == Tramo.STATUS_UPDATE) {
 		tramos.absolute(t.getIndex());
-		tramos.updateDouble("origenpavi", t.getPkStart());
-		tramos.updateDouble("finalpavim", t.getPkEnd());
 		tramos.updateString("carretera", t.getCarretera());
 		tramos.updateString("municipio", t.getConcello());
+		tramos.updateDouble("origenpavi", t.getPkStart());
+		tramos.updateDouble("finalpavim", t.getPkEnd());
 		tramos.updateString("tipopavime", t.getValue());
 		tramos.updateRow();
 	    } else if (t.getStatus() == Tramo.STATUS_DELETE) {
 		tramos.absolute(t.getIndex());
 		tramos.deleteRow();
 		tramos.beforeFirst();
+	    } else if (t.getStatus() == Tramo.STATUS_INSERT) {
+		PreparedStatement st = c
+			.prepareStatement("INSERT INTO inventario.tipo_pavimento (carretera, municipio, tipopavime, origenpavi, finalpavim) VALUES(?, ?, ?, ?, ?)");
+		st.setString(1, t.getCarretera());
+		st.setString(2, t.getConcello().toString());
+		st.setString(3, t.getValue());
+		st.setDouble(4, t.getPkStart());
+		st.setDouble(5, t.getPkEnd());
+		System.out.print("Query:" + st.toString());
+		st.executeUpdate();
 	    }
 	}
+	c.commit();
 	tramos.acceptChanges(DomainMapper.getConnection());
     }
 

@@ -39,7 +39,7 @@ public class Tramos implements Iterable<Tramo> {
 	return tramos.iterator();
     }
 
-    public void addTramo(Tramo tramo) {
+    public void insertTramo(Tramo tramo) {
 	tramo.setStatus(Tramo.STATUS_INSERT);
 	tramos.add(tramo);
     }

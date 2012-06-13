@@ -63,9 +63,6 @@ public class CatalogEditTests {
 
     @Test
     public void testDeletePavimento() throws SQLException {
-	String myValue = "MyTest";
-	double pkStart = 10.2;
-	double pkEnd = 10.4;
 	String carretera = "4606";
 	String concello = "27018";
 	int gid = getLastId();
@@ -88,9 +85,42 @@ public class CatalogEditTests {
 	while (rs.next()) {
 	    if (rs.getInt("gid") == gid) {
 		updated = false;
+		break;
 	    }
 	}
 	assertEquals(true, updated);
+    }
+
+    @Test
+    public void testInsertPavimento() throws SQLException {
+	String carretera = "4606";
+	String concello = "27018";
+	double pkStart = 10.2;
+	double pkEnd = 10.4;
+	String myValue = "foo";
+
+	// add new tramo
+	Catalog.clear();
+	Catalog.setCarretera(carretera);
+	Catalog.setConcello(concello);
+	Tramos tipoPavimento = Catalog.getTramosTipoPavimento();
+	Tramo tramo = new Tramo();
+	tramo.setId(getLastId() + 1);
+	tramo.setCarretera(carretera);
+	tramo.setConcello(concello);
+	tramo.setPkStart(pkStart);
+	tramo.setPkEnd(pkEnd);
+	tramo.setValue(myValue);
+	tipoPavimento.insertTramo(tramo);
+	tipoPavimento.save();
+	int tramosNumber = tipoPavimento.size();
+
+	// check if the later made effect
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT COUNT(*) AS rowNumber FROM inventario.tipo_pavimento WHERE carretera = '4606' AND municipio = '27018'");
+	rs.next();
+	assertEquals(tramosNumber, rs.getInt("rowNumber"));
     }
 
     private int getLastId() throws SQLException {
