@@ -25,6 +25,7 @@ import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
 import es.icarto.gvsig.viasobras.catalog.domain.Carretera;
 import es.icarto.gvsig.viasobras.catalog.domain.Catalog;
 import es.icarto.gvsig.viasobras.catalog.domain.Concello;
+import es.icarto.gvsig.viasobras.catalog.view.load.MapLoader;
 
 public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
 

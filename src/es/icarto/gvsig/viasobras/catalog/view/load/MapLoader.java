@@ -1,4 +1,4 @@
-package es.icarto.gvsig.viasobras.catalog.view;
+package es.icarto.gvsig.viasobras.catalog.view.load;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

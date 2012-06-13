@@ -12,7 +12,7 @@ import org.junit.Test;
 import com.iver.cit.gvsig.fmap.featureiterators.FeatureIteratorTest;
 import com.iver.cit.gvsig.fmap.layers.LayerFactory;
 
-import es.icarto.gvsig.viasobras.catalog.view.MapLoader;
+import es.icarto.gvsig.viasobras.catalog.view.load.MapLoader;
 import es.udc.cartolab.gvsig.elle.utils.MapDAO;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 

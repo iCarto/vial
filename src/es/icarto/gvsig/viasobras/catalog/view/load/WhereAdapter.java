@@ -1,4 +1,4 @@
-package es.icarto.gvsig.viasobras.catalog.view;
+package es.icarto.gvsig.viasobras.catalog.view.load;
 
 import es.icarto.gvsig.viasobras.catalog.domain.Catalog;
 
