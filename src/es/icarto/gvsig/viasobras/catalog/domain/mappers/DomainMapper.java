@@ -2,6 +2,7 @@ package es.icarto.gvsig.viasobras.catalog.domain.mappers;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Properties;
 
 import org.postgresql.util.PSQLException;
 import org.postgresql.util.PSQLState;
@@ -9,9 +10,12 @@ import org.postgresql.util.PSQLState;
 public class DomainMapper {
 
     private static Connection c;
+    private static Properties metadata;
 
-    public static void setConnection(Connection con) {
+    public static void setConnection(Connection con, Properties p)
+	    throws SQLException {
 	c = con;
+	metadata = p;
     }
 
     public static Connection getConnection() throws SQLException {
@@ -20,6 +24,18 @@ public class DomainMapper {
 		    PSQLState.CONNECTION_FAILURE);
 	}
 	return c;
+    }
+
+    public static String getUserName() {
+	return metadata.getProperty("username");
+    }
+
+    public static String getURL() {
+	return metadata.getProperty("url");
+    }
+
+    public static String getPwd() throws SQLException {
+	return metadata.getProperty("password");
     }
 
     public void close() {

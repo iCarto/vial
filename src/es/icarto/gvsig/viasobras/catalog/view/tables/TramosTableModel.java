@@ -1,22 +1,21 @@
 package es.icarto.gvsig.viasobras.catalog.view.tables;
 
-import java.util.List;
-
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
 import es.icarto.gvsig.viasobras.catalog.domain.Tramo;
+import es.icarto.gvsig.viasobras.catalog.domain.Tramos;
 
 public class TramosTableModel extends AbstractTableModel {
 
-    private List<Tramo> tramos;
+    private Tramos tramos;
     private Tramo metadata;
     private int rowCount;
     private int colCount;
     public static int NO_COL_NUMBER = -1;
     public static int NO_ROW_NUMBER = -1;
 
-    public TramosTableModel(List<Tramo> tramos) {
+    public TramosTableModel(Tramos tramos) {
 	super();
 	this.tramos = tramos;
 	initMetaData();
@@ -25,8 +24,8 @@ public class TramosTableModel extends AbstractTableModel {
     private void initMetaData() {
 	if (tramos.size() > 0) {
 	    this.rowCount = tramos.size();
-	    this.colCount = tramos.get(0).getNumberOfProperties();
-	    this.metadata = tramos.get(0);
+	    this.colCount = tramos.getTramo(0).getNumberOfProperties();
+	    this.metadata = tramos.getTramo(0);
 	} else {
 	    this.colCount = NO_COL_NUMBER;
 	    this.rowCount = NO_ROW_NUMBER;
@@ -47,7 +46,7 @@ public class TramosTableModel extends AbstractTableModel {
     }
 
     public Object getValueAt(int rowIndex, int colIndex) {
-	return tramos.get(rowIndex).getPropertyValue(colIndex);
+	return tramos.getTramo(rowIndex).getPropertyValue(colIndex);
     }
 
     public boolean isCellEditable(int arg0, int arg1) {
@@ -77,7 +76,7 @@ public class TramosTableModel extends AbstractTableModel {
      * this method will do nothing.
      */
     public void setValueAt(Object value, int row, int col) {
-	System.out.println("Calling setValueAt row " + row + ", column " + col);
+	// tramos.getTramo(row).setProperty(col, value);
     }
 
 }

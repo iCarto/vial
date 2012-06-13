@@ -1,6 +1,10 @@
 package es.icarto.gvsig.viasobras;
 
+import java.sql.SQLException;
+import java.util.Properties;
+
 import com.iver.andami.PluginServices;
+import com.iver.andami.messages.NotificationManager;
 import com.iver.andami.plugins.Extension;
 import com.iver.andami.plugins.IExtension;
 
@@ -13,9 +17,17 @@ public class CatalogExtension extends Extension {
 
     public void execute(String actionCommand) {
 	DBSession dbs = DBSession.getCurrentSession();
-	DomainMapper.setConnection(dbs.getJavaConnection());
-	CatalogForm dialog = new CatalogForm();
-	PluginServices.getMDIManager().addWindow(dialog);
+	try {
+	    Properties p = new Properties();
+	    p.setProperty("url", dbs.getJavaConnection().getMetaData().getURL());
+	    p.setProperty("username", dbs.getUserName());
+	    p.setProperty("password", dbs.getPassword());
+	    DomainMapper.setConnection(dbs.getJavaConnection(), p);
+	    CatalogForm dialog = new CatalogForm();
+	    PluginServices.getMDIManager().addWindow(dialog);
+	} catch (SQLException e) {
+	    NotificationManager.addError(e);
+	}
     }
 
     protected void registerIcons() {

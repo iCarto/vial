@@ -49,6 +49,9 @@ public class ConcellosMapper extends DomainMapper {
     public static Concellos findWhereCarretera(String carretera)
 	    throws SQLException {
 	FilteredRowSet frs = new FilteredRowSetImpl();
+	if (concellos == null) {
+	    ConcellosMapper.findAll();
+	}
 	concellos.beforeFirst();
 	frs.populate((ResultSet) concellos);
 	frs.setFilter(new ConcellosFilter(carretera));

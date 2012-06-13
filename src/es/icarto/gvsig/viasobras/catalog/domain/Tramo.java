@@ -9,11 +9,54 @@ public class Tramo {
     private static final int CARRETERA = 3;
     private static final int VALUE = 4;
 
+    /*
+     * Indicates how this tramo will be processed when savin data into DB:
+     * 
+     * - STATUS_ORIGINAL: it will be discarded
+     * - STATUS_INSERT: an INSERT query will be built
+     * - STATUS_UPDATE: an UPDATE query will be built
+     * - STATUS_DELETE: an DELETE query will be built
+     */
+    public static final int STATUS_ORIGINAL = 0;
+    public static final int STATUS_INSERT = 1;
+    public static final int STATUS_UPDATE = 2;
+    public static final int STATUS_DELETE = 3;
+
+    private int status = STATUS_ORIGINAL;
+
+    // indicates the position in RecordSet
+    private int index = 0;
+
+    private int id;// gid field
     private double pkStart;
     private double pkEnd;
     private String concello;
     private String carretera;
     private String value;
+
+    public void setIndex(int index) {
+	this.index = index;
+    }
+
+    public int getIndex() {
+	return index;
+    }
+
+    public int getStatus() {
+	return this.status;
+    }
+
+    public void setStatus(int status) {
+	this.status = status;
+    }
+
+    public int getId() {
+	return id;
+    }
+
+    public void setId(int id) {
+	this.id = id;
+    }
 
     public double getPkStart() {
 	return pkStart;
@@ -90,6 +133,28 @@ public class Tramo {
 	    return getValue();
 	default:
 	    return null;
+	}
+    }
+
+    public void setProperty(int index, Object value) {
+	switch (index) {
+	case PK_START:
+	    setPkStart((Double) value);
+	    break;
+	case PK_END:
+	    setPkEnd((Double) value);
+	    break;
+	case CONCELLO:
+	    setConcello((String) value);
+	    break;
+	case CARRETERA:
+	    setCarretera((String) value);
+	    break;
+	case VALUE:
+	    setValue((String) value);
+	    break;
+	default:
+	    // do nothing
 	}
     }
 

@@ -47,6 +47,9 @@ public class TramosPlataformaMapper extends DomainMapper {
     public static Tramos findWhereCarretera(String carretera)
 	    throws SQLException {
 	FilteredRowSet frs = new FilteredRowSetImpl();
+	if (tramos == null) {
+	    TramosPlataformaMapper.findAll();// will fill tramos
+	}
 	tramos.beforeFirst();
 	frs.populate((ResultSet) tramos);
 	frs.setFilter(new TramosFilter(CARRETERA_FIELDNAME, carretera));
@@ -56,6 +59,9 @@ public class TramosPlataformaMapper extends DomainMapper {
     public static Tramos findWhereConcello(String concello)
 	    throws SQLException {
 	FilteredRowSet frs = new FilteredRowSetImpl();
+	if (tramos == null) {
+	    TramosPlataformaMapper.findAll();// will fill tramos
+	}
 	tramos.beforeFirst();
 	frs.populate((ResultSet) tramos);
 	frs.setFilter(new TramosFilter(CONCELLO_FIELDNAME, concello));
@@ -65,6 +71,9 @@ public class TramosPlataformaMapper extends DomainMapper {
     public static Tramos findWhereCarreteraAndConcello(
 	    String carretera, String concello) throws SQLException {
 	FilteredRowSet frs = new FilteredRowSetImpl();
+	if (tramos == null) {
+	    TramosPlataformaMapper.findAll();// will fill tramos
+	}
 	tramos.beforeFirst();
 	frs.populate((ResultSet) tramos);
 	frs.setFilter(new TramosFilterCarreteraConcello(carretera, concello));

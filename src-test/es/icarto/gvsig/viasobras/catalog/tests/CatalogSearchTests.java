@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -29,7 +30,11 @@ public class CatalogSearchTests {
 	c = DriverManager.getConnection(
 		"jdbc:postgresql://localhost:5432/vias_obras", "postgres",
 		"postgres");
-	DomainMapper.setConnection(c);
+	Properties p = new Properties();
+	p.setProperty("url", c.getMetaData().getURL());
+	p.setProperty("username", "postgres");
+	p.setProperty("password", "postgres");
+	DomainMapper.setConnection(c, p);
     }
 
     @Test

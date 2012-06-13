@@ -37,6 +37,12 @@ public class TramosPavimentoMapper extends DomainMapper {
 		    .executeQuery("SELECT gid, carretera, municipio, tipopavime, origenpavi, finalpavim FROM inventario.tipo_pavimento ORDER BY origenpavi");
 	    tramos = new CachedRowSetImpl();
 	    tramos.populate(rs);
+	    tramos.setUrl(DomainMapper.getURL());
+	    tramos.setUsername(DomainMapper.getUserName());
+	    tramos.setPassword(DomainMapper.getPwd());
+	    tramos.setCommand("SELECT * FROM inventario.tipo_pavimento");
+	    int[] keys = { 1 };
+	    tramos.setKeyColumns(keys);// set primary key
 	    return new Tramos(TramosPavimentoMapper.toList(tramos));
 	} catch (SQLException e) {
 	    e.printStackTrace();
@@ -47,6 +53,9 @@ public class TramosPavimentoMapper extends DomainMapper {
     public static Tramos findWhereCarretera(String carretera)
 	    throws SQLException {
 	FilteredRowSet frs = new FilteredRowSetImpl();
+	if (tramos == null) {
+	    TramosPavimentoMapper.findAll();// will fill tramos
+	}
 	tramos.beforeFirst();
 	frs.populate((ResultSet) tramos);
 	frs.setFilter(new TramosFilter(CARRETERA_FIELDNAME, carretera));
@@ -56,6 +65,9 @@ public class TramosPavimentoMapper extends DomainMapper {
     public static Tramos findWhereConcello(String concello)
 	    throws SQLException {
 	FilteredRowSet frs = new FilteredRowSetImpl();
+	if (tramos == null) {
+	    TramosPavimentoMapper.findAll();// will fill tramos
+	}
 	tramos.beforeFirst();
 	frs.populate((ResultSet) tramos);
 	frs.setFilter(new TramosFilter(CONCELLO_FIELDNAME, concello));
@@ -65,6 +77,9 @@ public class TramosPavimentoMapper extends DomainMapper {
     public static Tramos findWhereCarreteraAndConcello(
 	    String carretera, String concello) throws SQLException {
 	FilteredRowSet frs = new FilteredRowSetImpl();
+	if (tramos == null) {
+	    TramosPavimentoMapper.findAll();// will fill tramos
+	}
 	tramos.beforeFirst();
 	frs.populate((ResultSet) tramos);
 	frs.setFilter(new TramosFilterCarreteraConcello(carretera, concello));
@@ -76,6 +91,7 @@ public class TramosPavimentoMapper extends DomainMapper {
 	rs.beforeFirst();
 	while (rs.next()) {
 	    Tramo tramo = new Tramo();
+	    tramo.setIndex(rs.getRow());
 	    tramo.setPkStart(rs.getDouble("origenpavi"));
 	    tramo.setPkEnd(rs.getDouble("finalpavim"));
 	    tramo.setCarretera(rs.getString("carretera"));
@@ -84,6 +100,22 @@ public class TramosPavimentoMapper extends DomainMapper {
 	    ts.add(tramo);
 	}
 	return ts;
+    }
+
+    public static void save(Tramos ts) throws SQLException {
+	for (Tramo t : ts) {
+	    if (t.getStatus() == Tramo.STATUS_UPDATE) {
+		tramos.absolute(t.getIndex());
+		tramos.updateDouble("origenpavi", t.getPkStart());
+		tramos.updateDouble("finalpavim", t.getPkEnd());
+		tramos.updateString("carretera", t.getCarretera());
+		tramos.updateString("municipio", t.getConcello());
+		tramos.updateString("tipopavime", t.getValue());
+		tramos.updateRow();
+	    }
+	}
+	tramos.acceptChanges(DomainMapper.getConnection()); // will update the
+	// DB
     }
 
 }
