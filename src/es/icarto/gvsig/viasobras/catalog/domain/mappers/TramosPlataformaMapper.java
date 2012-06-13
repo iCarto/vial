@@ -15,7 +15,7 @@ public class TramosPlataformaMapper extends DomainMapper {
 	Statement stmt;
 	stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT gid, ancho_plataforma, origentram, finaltramo FROM inventario.ancho_plataforma");
+		.executeQuery("SELECT gid, ancho_plataforma, origentram, finaltramo FROM inventario.ancho_plataforma ORDER BY origentram");
 	return new TramosPlataforma(rs);
     }
 
@@ -23,7 +23,7 @@ public class TramosPlataformaMapper extends DomainMapper {
 	    throws SQLException {
 	Connection c = DomainMapper.getConnection();
 	PreparedStatement stmt;
-	String sql = "SELECT gid, ancho_plataforma, origentram, finaltramo FROM inventario.ancho_plataforma WHERE carretera = ?";
+	String sql = "SELECT gid, ancho_plataforma, origentram, finaltramo FROM inventario.ancho_plataforma WHERE carretera = ? ORDER BY origentram";
 	stmt = c.prepareStatement(sql);
 	stmt.setString(1, carretera);
 	ResultSet rs = stmt.executeQuery();
@@ -34,7 +34,7 @@ public class TramosPlataformaMapper extends DomainMapper {
 	    throws SQLException {
 	Connection c = DomainMapper.getConnection();
 	PreparedStatement stmt;
-	String sql = "SELECT gid, ancho_plataforma, origentram, finaltramo FROM inventario.ancho_plataforma WHERE municipio = ?";
+	String sql = "SELECT gid, ancho_plataforma, origentram, finaltramo FROM inventario.ancho_plataforma WHERE municipio = ? ORDER BY origentram";
 	stmt = c.prepareStatement(sql);
 	stmt.setString(1, concello);
 	ResultSet rs = stmt.executeQuery();
@@ -45,7 +45,7 @@ public class TramosPlataformaMapper extends DomainMapper {
 	    String carretera, String concello) throws SQLException {
 	Connection c = DomainMapper.getConnection();
 	PreparedStatement stmt;
-	String sql = "SELECT gid, ancho_plataforma, origentram, finaltramo FROM inventario.ancho_plataforma WHERE carretera = ? AND municipio = ?";
+	String sql = "SELECT gid, ancho_plataforma, origentram, finaltramo FROM inventario.ancho_plataforma WHERE carretera = ? AND municipio = ? ORDER BY origentram";
 	stmt = c.prepareStatement(sql);
 	stmt.setString(1, carretera);
 	stmt.setString(2, concello);

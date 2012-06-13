@@ -16,7 +16,7 @@ public class TramosPavimentoMapper extends DomainMapper {
 	try {
 	    stmt = c.createStatement();
 	    ResultSet rs = stmt
-		    .executeQuery("SELECT gid, tipopavime, origenpavi, finalpavim FROM inventario.tipo_pavimento");
+		    .executeQuery("SELECT gid, tipopavime, origenpavi, finalpavim FROM inventario.tipo_pavimento ORDER BY origenpavi");
 	    return new TramosPavimento(rs);
 	} catch (SQLException e) {
 	    e.printStackTrace();
@@ -29,7 +29,7 @@ public class TramosPavimentoMapper extends DomainMapper {
 	Connection c = DomainMapper.getConnection();
 	PreparedStatement stmt;
 	try {
-	    String sql = "SELECT gid, tipopavime, origenpavi, finalpavim FROM inventario.tipo_pavimento WHERE carretera = ?";
+	    String sql = "SELECT gid, tipopavime, origenpavi, finalpavim FROM inventario.tipo_pavimento WHERE carretera = ? ORDER BY origenpavi";
 	    stmt = c.prepareStatement(sql);
 	    stmt.setString(1, carretera);
 	    ResultSet rs = stmt.executeQuery();
@@ -45,7 +45,7 @@ public class TramosPavimentoMapper extends DomainMapper {
 	Connection c = DomainMapper.getConnection();
 	PreparedStatement stmt;
 	try {
-	    String sql = "SELECT gid, tipopavime, origenpavi, finalpavim FROM inventario.tipo_pavimento WHERE municipio = ?";
+	    String sql = "SELECT gid, tipopavime, origenpavi, finalpavim FROM inventario.tipo_pavimento WHERE municipio = ? ORDER BY origenpavi";
 	    stmt = c.prepareStatement(sql);
 	    stmt.setString(1, concello);
 	    ResultSet rs = stmt.executeQuery();
@@ -61,7 +61,7 @@ public class TramosPavimentoMapper extends DomainMapper {
 	Connection c = DomainMapper.getConnection();
 	PreparedStatement stmt;
 	try {
-	    String sql = "SELECT gid, tipopavime, origenpavi, finalpavim FROM inventario.tipo_pavimento WHERE carretera = ? AND municipio = ?";
+	    String sql = "SELECT gid, tipopavime, origenpavi, finalpavim FROM inventario.tipo_pavimento WHERE carretera = ? AND municipio = ? ORDER BY origenpavi";
 	    stmt = c.prepareStatement(sql);
 	    stmt.setString(1, carretera);
 	    stmt.setString(2, concello);
