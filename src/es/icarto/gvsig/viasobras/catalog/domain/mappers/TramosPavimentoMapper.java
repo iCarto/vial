@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,19 +31,19 @@ public class TramosPavimentoMapper extends DomainMapper {
 	if (tramos != null) {
 	    return new Tramos(TramosPavimentoMapper.toList(tramos));
 	}
-	Connection c = DomainMapper.getConnection();
-	Statement stmt;
 	try {
-	    stmt = c.createStatement();
-	    ResultSet rs = stmt
-		    .executeQuery("SELECT gid, carretera, municipio, tipopavime, origenpavi, finalpavim FROM inventario.tipo_pavimento ORDER BY origenpavi");
+	    // "WHERE gid = gid" is needed to avoid errors, as it seems -in
+	    // JDBC- an ORDER clause cannot be used without WHERE
+	    String query = "SELECT gid, carretera, municipio, tipopavime, origenpavi, finalpavim "
+		    + "FROM inventario.tipo_pavimento "
+		    + "WHERE gid = gid ORDER BY origenpavi";
 	    tramos = new CachedRowSetImpl();
-	    tramos.populate(rs);
 	    tramos.setUrl(DomainMapper.getURL());
 	    tramos.setUsername(DomainMapper.getUserName());
 	    tramos.setPassword(DomainMapper.getPwd());
-	    tramos.setCommand("SELECT * FROM inventario.tipo_pavimento");
-	    int[] keys = { 1 }; // gid
+	    tramos.setCommand(query);
+	    tramos.execute();
+	    int[] keys = { 1 }; // primary key index = gid column index
 	    tramos.setKeyColumns(keys);// set primary key
 	    indexRegister = getIndexRegister(tramos);
 	    return new Tramos(TramosPavimentoMapper.toList(tramos));
@@ -107,6 +106,8 @@ public class TramosPavimentoMapper extends DomainMapper {
 		tramos.deleteRow();
 		tramos.beforeFirst();
 	    } else if (t.getStatus() == Tramo.STATUS_INSERT) {
+		// TODO: insert by means of updating tramos, so it gets updated
+		// without having to launch the query -findAll()- again
 		PreparedStatement st = c
 			.prepareStatement("INSERT INTO inventario.tipo_pavimento (carretera, municipio, tipopavime, origenpavi, finalpavim) VALUES(?, ?, ?, ?, ?)");
 		st.setString(1, t.getCarretera());
@@ -114,12 +115,17 @@ public class TramosPavimentoMapper extends DomainMapper {
 		st.setString(3, t.getValue());
 		st.setDouble(4, t.getPkStart());
 		st.setDouble(5, t.getPkEnd());
-		System.out.println("Query:" + st.toString());
+		// System.out.println("Query: " + st.toString());
 		st.executeUpdate();
 	    }
 	}
 	c.commit();
 	tramos.acceptChanges(DomainMapper.getConnection());
+	// ensure tramos are updated properly, as INSERT operations will not
+	// update them. TODO: make INSERT operations by means of CachedRowSet
+	// tramos and these steps may be deleted
+	tramos = null;
+	findAll();
     }
 
     private static List<Tramo> toList(ResultSet rs) throws SQLException {
