@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,19 +38,23 @@ public class TramosPavimentoMapper extends DomainMapper {
 	    String query = "SELECT gid, carretera, municipio, tipopavime, origenpavi, finalpavim "
 		    + "FROM inventario.tipo_pavimento "
 		    + "WHERE gid = gid ORDER BY origenpavi";
+	    Connection c = DomainMapper.getConnection();
+	    Statement stmt = c.createStatement();
+	    ResultSet rs = stmt.executeQuery(query);
 	    tramos = new CachedRowSetImpl();
+	    tramos.populate(rs);
 	    tramos.setUrl(DomainMapper.getURL());
 	    tramos.setUsername(DomainMapper.getUserName());
 	    tramos.setPassword(DomainMapper.getPwd());
 	    tramos.setCommand(query);
-	    tramos.execute();
 	    int[] keys = { 1 }; // primary key index = gid column index
 	    tramos.setKeyColumns(keys);// set primary key
 	    indexRegister = getIndexRegister(tramos);
 	    return new Tramos(TramosPavimentoMapper.toList(tramos));
 	} catch (SQLException e) {
 	    e.printStackTrace();
-	    return null;
+	    tramos = null;
+	    throw new SQLException(e);
 	}
     }
 

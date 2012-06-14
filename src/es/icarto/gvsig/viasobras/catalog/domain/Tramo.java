@@ -129,10 +129,10 @@ public class Tramo {
     public void setProperty(int index, Object value) {
 	switch (index) {
 	case PROPERTY_PK_START:
-	    setPkStart((Double) value);
+	    setPkStart(Double.parseDouble((String) value));
 	    break;
 	case PROPERTY_PK_END:
-	    setPkEnd((Double) value);
+	    setPkEnd(Double.parseDouble((String) value));
 	    break;
 	case PROPERTY_CONCELLO:
 	    setConcello((String) value);

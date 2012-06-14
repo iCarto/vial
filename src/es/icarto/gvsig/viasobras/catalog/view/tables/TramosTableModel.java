@@ -1,5 +1,7 @@
 package es.icarto.gvsig.viasobras.catalog.view.tables;
 
+import java.sql.SQLException;
+
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
@@ -50,25 +52,23 @@ public class TramosTableModel extends AbstractTableModel {
     }
 
     public boolean isCellEditable(int arg0, int arg1) {
-	// if return true, evaluate what to do with addTableModelListener,
-	// closeTableModelListener & setValueAt methods
-	return false;
+	return true;
     }
 
     /**
-     * As cell is set to not editable (see {@link #isCellEditable(int, int)},
-     * this method will do nothing.
      * 
      * @see javax.swing.table.TableModel#addTableModelListener(javax.swing.event.TableModelListener)
      */
-    public void addTableModelListener(TableModelListener arg0) {
+    public void addTableModelListener(TableModelListener listener) {
+	// do not track listeners
     }
 
     /**
      * As cell is set to not editable (see {@link #isCellEditable(int, int)},
      * this method will do nothing.
      */
-    public void removeTableModelListener(TableModelListener arg0) {
+    public void removeTableModelListener(TableModelListener listener) {
+	// do not track listeners
     }
 
     /**
@@ -76,7 +76,13 @@ public class TramosTableModel extends AbstractTableModel {
      * this method will do nothing.
      */
     public void setValueAt(Object value, int row, int col) {
-	// tramos.getTramo(row).setProperty(col, value);
+	// TODO: make UPDATE, INSERT and DELETE events
+	tramos.getTramo(row).setProperty(col, value);
+	tramos.getTramo(row).setStatus(Tramo.STATUS_UPDATE);
+    }
+
+    public void saveChanges() throws SQLException {
+	tramos.save();
     }
 
 }

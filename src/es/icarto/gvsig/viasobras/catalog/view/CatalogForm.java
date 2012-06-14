@@ -26,6 +26,7 @@ import es.icarto.gvsig.viasobras.catalog.domain.Carretera;
 import es.icarto.gvsig.viasobras.catalog.domain.Catalog;
 import es.icarto.gvsig.viasobras.catalog.domain.Concello;
 import es.icarto.gvsig.viasobras.catalog.view.load.MapLoader;
+import es.icarto.gvsig.viasobras.catalog.view.tables.TramosTableModel;
 
 public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
 
@@ -39,6 +40,8 @@ public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
     private ItemListener concelloUpdater;
     private JComboBox carreteras;
     private JComboBox concellos;
+    private TableModel tipoPavimento;
+    private TableModel anchoPlataforma;
 
     public CatalogForm() {
 	form = new FormPanel("inventarioform.xml");
@@ -108,17 +111,27 @@ public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
 	    }
 
 	});
+	JButton save = (JButton) buttons.get("guardar");
+	save.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+		try {
+		    ((TramosTableModel) tipoPavimento).saveChanges();
+		    ((TramosTableModel) anchoPlataforma).saveChanges();
+		} catch (SQLException e1) {
+		    NotificationManager.addError(e1);
+		}
+	    }
+	});
     }
 
     private void fillTables() {
 	JTable tbTipoPavimento = (JTable) widgets.get("tabla_tipo_pavimento");
-	TableModel tipoPavimento;
+	JTable tbAnchoPlataforma = (JTable) widgets
+		.get("tabla_ancho_plataforma");
 	try {
 	    tipoPavimento = Catalog.getTramosTipoPavimento().getTableModel();
 	    tbTipoPavimento.setModel(tipoPavimento);
-	    JTable tbAnchoPlataforma = (JTable) widgets
-		    .get("tabla_ancho_plataforma");
-	    TableModel anchoPlataforma = Catalog.getTramosAnchoPlataforma()
+	    anchoPlataforma = Catalog.getTramosAnchoPlataforma()
 		    .getTableModel();
 	    tbAnchoPlataforma.setModel(anchoPlataforma);
 	} catch (SQLException e) {
