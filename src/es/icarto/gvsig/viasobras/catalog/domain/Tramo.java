@@ -3,11 +3,12 @@ package es.icarto.gvsig.viasobras.catalog.domain;
 public class Tramo {
 
     // will define the order in which will appear in table
-    private static final int PK_START = 0;
-    private static final int PK_END = 1;
-    private static final int CONCELLO = 2;
-    private static final int CARRETERA = 3;
-    private static final int VALUE = 4;
+    public static final int PROPERTY_CARRETERA = 0;
+    public static final int PROPERTY_CONCELLO = 1;
+    public static final int PROPERTY_PK_START = 2;
+    public static final int PROPERTY_PK_END = 3;
+    public static final int PROPERTY_VALUE = 4;
+    private static final int NUMBER_OF_PROPERTIES = 5;
 
     /*
      * Indicates how this tramo will be processed when savin data into DB:
@@ -24,23 +25,12 @@ public class Tramo {
 
     private int status = STATUS_ORIGINAL;
 
-    // indicates the position in RecordSet
-    private int index = 0;
-
     private int id;// gid field
     private double pkStart;
     private double pkEnd;
     private String concello;
     private String carretera;
     private String value;
-
-    public void setIndex(int index) {
-	this.index = index;
-    }
-
-    public int getIndex() {
-	return index;
-    }
 
     public int getStatus() {
 	return this.status;
@@ -99,20 +89,20 @@ public class Tramo {
     }
 
     public int getNumberOfProperties() {
-	return 5; // number of properties defined
+	return NUMBER_OF_PROPERTIES;
     }
 
     public String getPropertyName(int index) {
 	switch (index) {
-	case PK_START:
+	case PROPERTY_PK_START:
 	    return "PK origen";
-	case PK_END:
+	case PROPERTY_PK_END:
 	    return "PK final";
-	case CONCELLO:
+	case PROPERTY_CONCELLO:
 	    return "Concello";
-	case CARRETERA:
+	case PROPERTY_CARRETERA:
 	    return "Carretera";
-	case VALUE:
+	case PROPERTY_VALUE:
 	    return "Característica";
 	default:
 	    return "None";
@@ -121,15 +111,15 @@ public class Tramo {
 
     public Object getPropertyValue(int index) {
 	switch (index) {
-	case PK_START:
+	case PROPERTY_PK_START:
 	    return getPkStart();
-	case PK_END:
+	case PROPERTY_PK_END:
 	    return getPkEnd();
-	case CONCELLO:
+	case PROPERTY_CONCELLO:
 	    return getConcello();
-	case CARRETERA:
+	case PROPERTY_CARRETERA:
 	    return getCarretera();
-	case VALUE:
+	case PROPERTY_VALUE:
 	    return getValue();
 	default:
 	    return null;
@@ -138,19 +128,19 @@ public class Tramo {
 
     public void setProperty(int index, Object value) {
 	switch (index) {
-	case PK_START:
+	case PROPERTY_PK_START:
 	    setPkStart((Double) value);
 	    break;
-	case PK_END:
+	case PROPERTY_PK_END:
 	    setPkEnd((Double) value);
 	    break;
-	case CONCELLO:
+	case PROPERTY_CONCELLO:
 	    setConcello((String) value);
 	    break;
-	case CARRETERA:
+	case PROPERTY_CARRETERA:
 	    setCarretera((String) value);
 	    break;
-	case VALUE:
+	case PROPERTY_VALUE:
 	    setValue((String) value);
 	    break;
 	default:

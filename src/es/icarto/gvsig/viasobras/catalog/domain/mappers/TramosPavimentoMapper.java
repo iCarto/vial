@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.sql.rowset.CachedRowSet;
@@ -25,6 +26,7 @@ public class TramosPavimentoMapper extends DomainMapper {
     public static final String CONCELLO_FIELDNAME = "municipio";
 
     private static CachedRowSet tramos;
+    private static HashMap<Integer, Integer> indexRegister;
 
     public static Tramos findAll() throws SQLException {
 	if (tramos != null) {
@@ -42,8 +44,9 @@ public class TramosPavimentoMapper extends DomainMapper {
 	    tramos.setUsername(DomainMapper.getUserName());
 	    tramos.setPassword(DomainMapper.getPwd());
 	    tramos.setCommand("SELECT * FROM inventario.tipo_pavimento");
-	    int[] keys = { 1 };
+	    int[] keys = { 1 }; // gid
 	    tramos.setKeyColumns(keys);// set primary key
+	    indexRegister = getIndexRegister(tramos);
 	    return new Tramos(TramosPavimentoMapper.toList(tramos));
 	} catch (SQLException e) {
 	    e.printStackTrace();
@@ -87,12 +90,43 @@ public class TramosPavimentoMapper extends DomainMapper {
 	return new Tramos(TramosPavimentoMapper.toList(frs));
     }
 
+    public static void save(Tramos ts) throws SQLException {
+	Connection c = DomainMapper.getConnection();
+	c.setAutoCommit(false);
+	for (Tramo t : ts) {
+	    if (t.getStatus() == Tramo.STATUS_UPDATE) {
+		tramos.absolute(indexRegister.get(t.getId()));
+		tramos.updateString("carretera", t.getCarretera());
+		tramos.updateString("municipio", t.getConcello());
+		tramos.updateDouble("origenpavi", t.getPkStart());
+		tramos.updateDouble("finalpavim", t.getPkEnd());
+		tramos.updateString("tipopavime", t.getValue());
+		tramos.updateRow();
+	    } else if (t.getStatus() == Tramo.STATUS_DELETE) {
+		tramos.absolute(indexRegister.get(t.getId()));
+		tramos.deleteRow();
+		tramos.beforeFirst();
+	    } else if (t.getStatus() == Tramo.STATUS_INSERT) {
+		PreparedStatement st = c
+			.prepareStatement("INSERT INTO inventario.tipo_pavimento (carretera, municipio, tipopavime, origenpavi, finalpavim) VALUES(?, ?, ?, ?, ?)");
+		st.setString(1, t.getCarretera());
+		st.setString(2, t.getConcello().toString());
+		st.setString(3, t.getValue());
+		st.setDouble(4, t.getPkStart());
+		st.setDouble(5, t.getPkEnd());
+		System.out.println("Query:" + st.toString());
+		st.executeUpdate();
+	    }
+	}
+	c.commit();
+	tramos.acceptChanges(DomainMapper.getConnection());
+    }
+
     private static List<Tramo> toList(ResultSet rs) throws SQLException {
 	List<Tramo> ts = new ArrayList<Tramo>();
 	rs.beforeFirst();
 	while (rs.next()) {
 	    Tramo tramo = new Tramo();
-	    tramo.setIndex(rs.getRow());
 	    tramo.setId(rs.getInt("gid"));
 	    tramo.setPkStart(rs.getDouble("origenpavi"));
 	    tramo.setPkEnd(rs.getDouble("finalpavim"));
@@ -104,36 +138,14 @@ public class TramosPavimentoMapper extends DomainMapper {
 	return ts;
     }
 
-    public static void save(Tramos ts) throws SQLException {
-	Connection c = DomainMapper.getConnection();
-	c.setAutoCommit(false);
-	for (Tramo t : ts) {
-	    if (t.getStatus() == Tramo.STATUS_UPDATE) {
-		tramos.absolute(t.getIndex());
-		tramos.updateString("carretera", t.getCarretera());
-		tramos.updateString("municipio", t.getConcello());
-		tramos.updateDouble("origenpavi", t.getPkStart());
-		tramos.updateDouble("finalpavim", t.getPkEnd());
-		tramos.updateString("tipopavime", t.getValue());
-		tramos.updateRow();
-	    } else if (t.getStatus() == Tramo.STATUS_DELETE) {
-		tramos.absolute(t.getIndex());
-		tramos.deleteRow();
-		tramos.beforeFirst();
-	    } else if (t.getStatus() == Tramo.STATUS_INSERT) {
-		PreparedStatement st = c
-			.prepareStatement("INSERT INTO inventario.tipo_pavimento (carretera, municipio, tipopavime, origenpavi, finalpavim) VALUES(?, ?, ?, ?, ?)");
-		st.setString(1, t.getCarretera());
-		st.setString(2, t.getConcello().toString());
-		st.setString(3, t.getValue());
-		st.setDouble(4, t.getPkStart());
-		st.setDouble(5, t.getPkEnd());
-		System.out.print("Query:" + st.toString());
-		st.executeUpdate();
-	    }
+    private static HashMap<Integer, Integer> getIndexRegister(ResultSet rs)
+	    throws SQLException {
+	HashMap<Integer, Integer> register = new HashMap<Integer, Integer>();
+	rs.beforeFirst();
+	while (rs.next()) {
+	    register.put(rs.getInt("gid"), rs.getRow());
 	}
-	c.commit();
-	tramos.acceptChanges(DomainMapper.getConnection());
+	return register;
     }
 
 }
