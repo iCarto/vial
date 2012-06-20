@@ -26,6 +26,16 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
     $viasobras_dbname < datos/inventario/accidentes.sql
 
+# Import functions
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname < funcions/update_geom_tipo_pavimento.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname < funcions/update_geom_ancho_plataforma.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname < funcions/trigger_update_geom_tipo_pavimento.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname < funcions/trigger_update_geom_ancho_plataforma.sql
+
 # Post-procesado to create final tables from aforos.sql & inventario.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
     $viasobras_dbname < datos/inventario/aforos.sql
@@ -58,6 +68,11 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
     $viasobras_dbname < funcions/create_aforos_event_points.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
     $viasobras_dbname < funcions/create_dynamic_segments_from_inventario.sql
+
+#Create triggers
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname < funcions/create_triggers.sql
+
 
 # Grant permissions
 # -----------------
