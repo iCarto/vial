@@ -25,13 +25,13 @@ public class TramosTableModel extends AbstractTableModel {
 
     private void initMetaData() {
 	if (tramos.size() > 0) {
-	    this.rowCount = tramos.size();
-	    this.colCount = tramos.getTramo(0).getNumberOfProperties();
 	    this.metadata = tramos.getTramo(0);
+	    this.rowCount = tramos.size();
+	    this.colCount = metadata.getNumberOfProperties();
 	} else {
-	    this.colCount = NO_COL_NUMBER;
-	    this.rowCount = NO_ROW_NUMBER;
-	    this.metadata = null;
+	    this.metadata = new Tramo();
+	    this.colCount = metadata.getNumberOfProperties();
+	    this.rowCount = 0;
 	}
     }
 

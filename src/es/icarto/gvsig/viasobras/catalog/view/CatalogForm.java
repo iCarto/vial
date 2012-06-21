@@ -152,6 +152,7 @@ public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
 	    anchoPlataforma = Catalog.getTramosAnchoPlataforma()
 		    .getTableModel();
 	    tbAnchoPlataforma.setModel(anchoPlataforma);
+	    this.repaint();
 	} catch (SQLException e) {
 	    NotificationManager.addError(e);
 	}
