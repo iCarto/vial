@@ -17,11 +17,14 @@ import es.icarto.gvsig.viasobras.catalog.domain.Tramo;
 import es.icarto.gvsig.viasobras.catalog.domain.Tramos;
 import es.icarto.gvsig.viasobras.catalog.domain.filters.TramosFilter;
 import es.icarto.gvsig.viasobras.catalog.domain.filters.TramosFilterCarreteraConcello;
+import es.icarto.gvsig.viasobras.catalog.domain.filters.TramosFilterPK;
 
 public class TramosPlataformaMapper extends DomainMapper {
 
     public static final String CARRETERA_FIELDNAME = "carretera";
     public static final String CONCELLO_FIELDNAME = "municipio";
+    public static final String PK_START_FIELDNAME = "origentram";
+    public static final String PK_END_FIELDNAME = "finaltramo";
 
     private static CachedRowSet tramos;
 
@@ -56,8 +59,20 @@ public class TramosPlataformaMapper extends DomainMapper {
 	return new Tramos(TramosPlataformaMapper.toList(frs));
     }
 
-    public static Tramos findWhereConcello(String concello)
-	    throws SQLException {
+    public static Tramos findWhereCarretera(String carretera, double pkStart,
+	    double pkEnd) throws SQLException {
+	FilteredRowSet frs = new FilteredRowSetImpl();
+	if (tramos == null) {
+	    TramosPlataformaMapper.findAll();// will fill tramos
+	}
+	tramos.beforeFirst();
+	frs.populate((ResultSet) tramos);
+	frs.setFilter(new TramosFilterPK(CARRETERA_FIELDNAME, carretera,
+		PK_START_FIELDNAME, pkStart, PK_END_FIELDNAME, pkEnd));
+	return new Tramos(TramosPlataformaMapper.toList(frs));
+    }
+
+    public static Tramos findWhereConcello(String concello) throws SQLException {
 	FilteredRowSet frs = new FilteredRowSetImpl();
 	if (tramos == null) {
 	    TramosPlataformaMapper.findAll();// will fill tramos
@@ -68,8 +83,8 @@ public class TramosPlataformaMapper extends DomainMapper {
 	return new Tramos(TramosPlataformaMapper.toList(frs));
     }
 
-    public static Tramos findWhereCarreteraAndConcello(
-	    String carretera, String concello) throws SQLException {
+    public static Tramos findWhereCarreteraAndConcello(String carretera,
+	    String concello) throws SQLException {
 	FilteredRowSet frs = new FilteredRowSetImpl();
 	if (tramos == null) {
 	    TramosPlataformaMapper.findAll();// will fill tramos

@@ -38,7 +38,7 @@ public class CatalogSearchTests {
     }
 
     @Test
-    public void testNotNullResults() throws SQLException{
+    public void testNotNullResults() throws SQLException {
 	assertNotNull(Catalog.getCarreteras());
 	assertNotNull(Catalog.getConcellos());
 	assertNotNull(Catalog.getTramosTipoPavimento());
@@ -66,7 +66,7 @@ public class CatalogSearchTests {
 	Catalog.clear();
 	Tramos tramos = Catalog.getTramosTipoPavimento();
 
-	assertEquals(numRows, tramos.getTableModel().getRowCount());
+	assertEquals(numRows, tramos.size());
     }
 
     @Test
@@ -80,7 +80,7 @@ public class CatalogSearchTests {
 	Catalog.clear();
 	Tramos tramos = Catalog.getTramosAnchoPlataforma();
 
-	assertEquals(numRows, tramos.getTableModel().getRowCount());
+	assertEquals(numRows, tramos.size());
     }
 
     @Test
@@ -95,7 +95,7 @@ public class CatalogSearchTests {
 	Catalog.setCarretera("4606");
 	Tramos tramos = Catalog.getTramosTipoPavimento();
 
-	assertEquals(numRows, tramos.getTableModel().getRowCount());
+	assertEquals(numRows, tramos.size());
     }
 
     @Test
@@ -110,7 +110,41 @@ public class CatalogSearchTests {
 	Catalog.setCarretera("4606");
 	Tramos tramos = Catalog.getTramosAnchoPlataforma();
 
-	assertEquals(numRows, tramos.getTableModel().getRowCount());
+	assertEquals(numRows, tramos.size());
+    }
+
+    @Test
+    public void testFindPavimentoDependingOnPK() throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.tipo_pavimento WHERE carretera = '4606' AND origenpavi >= 0 AND finalpavim <= 10");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Catalog.setCarretera("4606");
+	Catalog.setPKStart(0.0);
+	Catalog.setPKEnd(10.0);
+	Tramos tramos = Catalog.getTramosTipoPavimento();
+
+	assertEquals(numRows, tramos.size());
+    }
+
+    @Test
+    public void testFindPlataformaDependingOnPK() throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.ancho_plataforma WHERE carretera = '4606' AND origentram >= 0 AND finaltramo <= 10");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Catalog.setCarretera("4606");
+	Catalog.setPKStart(0.0);
+	Catalog.setPKEnd(10.0);
+	Tramos tramos = Catalog.getTramosAnchoPlataforma();
+
+	assertEquals(numRows, tramos.size());
     }
 
     @Test
@@ -125,12 +159,12 @@ public class CatalogSearchTests {
 	Catalog.setConcello("27018"); // Fonsagrada
 	Tramos tramos = Catalog.getTramosTipoPavimento();
 
-	assertEquals(numRows, tramos.getTableModel().getRowCount());
+	assertEquals(numRows, tramos.size());
     }
 
     @Test
     public void testFindPlataformaDependingOnConcello() throws SQLException,
-    DBException {
+	    DBException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
 		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.ancho_plataforma WHERE municipio = '27018'");
@@ -141,7 +175,7 @@ public class CatalogSearchTests {
 	Catalog.setConcello("27018"); // Fonsagrada
 	Tramos tramos = Catalog.getTramosAnchoPlataforma();
 
-	assertEquals(numRows, tramos.getTableModel().getRowCount());
+	assertEquals(numRows, tramos.size());
     }
 
     @Test
@@ -158,7 +192,7 @@ public class CatalogSearchTests {
 	Catalog.setConcello("27018"); // Fonsagrada
 	Tramos tramos = Catalog.getTramosTipoPavimento();
 
-	assertEquals(numRows, tramos.getTableModel().getRowCount());
+	assertEquals(numRows, tramos.size());
     }
 
     @Test
@@ -175,7 +209,7 @@ public class CatalogSearchTests {
 	Catalog.setConcello("27018"); // Fonsagrada
 	Tramos tramos = Catalog.getTramosAnchoPlataforma();
 
-	assertEquals(numRows, tramos.getTableModel().getRowCount());
+	assertEquals(numRows, tramos.size());
     }
 
     @Test
