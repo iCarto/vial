@@ -5,7 +5,13 @@ import java.sql.SQLException;
 import javax.sql.RowSet;
 import javax.sql.rowset.Predicate;
 
+import es.icarto.gvsig.viasobras.catalog.domain.Catalog;
+
 public class TramosFilterPK implements Predicate {
+
+    private static final int BAND_PASS_FILTER = 0;
+    private static final int LOW_PASS_FILTER = 1;
+    private static final int HIGH_PASS_FILTER = 2;
 
     private String carreteraFieldName;
     private String carretera;
@@ -13,6 +19,7 @@ public class TramosFilterPK implements Predicate {
     private double pkStart;
     private String pkEndFieldName;
     private double pkEnd;
+    private int filterType;
 
     public TramosFilterPK(String carreteraFieldname, String carretera,
 	    String pkStartFieldname, double pkStart, String pkEndFieldname,
@@ -23,6 +30,17 @@ public class TramosFilterPK implements Predicate {
 	this.pkStart = pkStart;
 	this.pkEndFieldName = pkEndFieldname;
 	this.pkEnd = pkEnd;
+	this.filterType = getFilterType();
+    }
+
+    private int getFilterType() {
+	if ((this.pkStart != Catalog.PK_NONE)
+		&& (this.pkEnd != Catalog.PK_NONE)) {
+	    return BAND_PASS_FILTER;
+	} else if (this.pkStart != Catalog.PK_NONE) {
+	    return HIGH_PASS_FILTER;
+	}
+	return LOW_PASS_FILTER;
     }
 
     public boolean evaluate(RowSet rs) {
@@ -30,13 +48,25 @@ public class TramosFilterPK implements Predicate {
 	    if ((rs.getRow() == 0) || (rs == null)) {
 		return false;
 	    }
-	    if ((this.carretera.equals(rs.getString(carreteraFieldName)))
-		    && (this.pkStart <= rs.getDouble(this.pkStartFieldName))
-		    && (this.pkEnd >= rs.getDouble(this.pkEndFieldName))) {
-		return true;
-	    } else {
-		return false;
+	    if (this.carretera.equals(rs.getString(carreteraFieldName))) {
+		boolean b;
+		switch (filterType) {
+		case BAND_PASS_FILTER:
+		    b = (this.pkStart <= rs.getDouble(this.pkStartFieldName))
+			    && (this.pkEnd >= rs.getDouble(this.pkEndFieldName));
+		    break;
+		case LOW_PASS_FILTER:
+		    b = (this.pkEnd >= rs.getDouble(this.pkEndFieldName));
+		    break;
+		case HIGH_PASS_FILTER:
+		    b = (this.pkStart <= rs.getDouble(this.pkStartFieldName));
+		    break;
+		default:
+		    b = false;
+		}
+		return b;
 	    }
+	    return false;
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	    return false;

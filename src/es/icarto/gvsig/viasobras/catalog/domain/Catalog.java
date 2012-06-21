@@ -105,6 +105,8 @@ public class Catalog {
     public static void clear() {
 	carretera = null;
 	concello = null;
+	pkStart = PK_NONE;
+	pkEnd = PK_NONE;
     }
 
 }

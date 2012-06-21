@@ -131,6 +131,38 @@ public class CatalogSearchTests {
     }
 
     @Test
+    public void testFindPavimentoDependingOnPKStart() throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.tipo_pavimento WHERE carretera = '4606' AND origenpavi >= 2.0");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Catalog.setCarretera("4606");
+	Catalog.setPKStart(2.0);
+	Tramos tramos = Catalog.getTramosTipoPavimento();
+
+	assertEquals(numRows, tramos.size());
+    }
+
+    @Test
+    public void testFindPavimentoDependingOnPKEnd() throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.tipo_pavimento WHERE carretera = '4606' AND finalpavim <= 8.0");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Catalog.setCarretera("4606");
+	Catalog.setPKEnd(8.0);
+	Tramos tramos = Catalog.getTramosTipoPavimento();
+
+	assertEquals(numRows, tramos.size());
+    }
+
+    @Test
     public void testFindPlataformaDependingOnPK() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
