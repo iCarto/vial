@@ -13,6 +13,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.TableModel;
 
 import com.iver.andami.messages.NotificationManager;
@@ -43,6 +44,9 @@ public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
     private TableModel tipoPavimento;
     private TableModel anchoPlataforma;
 
+    private JTextField pkStart;
+    private JTextField pkEnd;
+
     public CatalogForm() {
 	form = new FormPanel("inventarioform.xml");
 	initForm();
@@ -57,6 +61,8 @@ public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
 	buttons = AbeilleParser.getButtonsFromContainer(form);
 	carreteras = (JComboBox) widgets.get("carretera");
 	concellos = (JComboBox) widgets.get("concello");
+	pkStart = (JTextField) widgets.get("pk_inicial");
+	pkEnd = (JTextField) widgets.get("pk_final");
 	fillComboBoxes();
 	connectButtonsToActions();
     }
@@ -67,7 +73,7 @@ public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
 	    public void itemStateChanged(ItemEvent e) {
 		if (e.getStateChange() == ItemEvent.SELECTED) {
 		    if (carreteras.getSelectedItem().equals(VOID_ITEM)) {
-			Catalog.setCarretera(null);
+			Catalog.setCarretera(Catalog.CARRETERA_NONE);
 		    } else {
 			Carretera c = (Carretera) carreteras.getSelectedItem();
 			Catalog.setCarretera(c.getCode());
@@ -82,7 +88,7 @@ public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
 	    public void itemStateChanged(ItemEvent e) {
 		if (e.getStateChange() == ItemEvent.SELECTED) {
 		    if (concellos.getSelectedItem().equals(VOID_ITEM)) {
-			Catalog.setConcello(null);
+			Catalog.setConcello(Catalog.CONCELLO_NONE);
 		    } else {
 			Concello c = (Concello) concellos.getSelectedItem();
 			Catalog.setConcello(c.getCode());
@@ -100,6 +106,18 @@ public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
 	JButton search = (JButton) buttons.get("buscar");
 	search.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent arg0) {
+		if (!pkStart.getText().equals("")) {
+		    double d = Double.parseDouble(pkStart.getText());
+		    Catalog.setPKStart(d);
+		} else {
+		    Catalog.setPKStart(Catalog.PK_NONE);
+		}
+		if (!pkEnd.getText().equals("")) {
+		    double d = Double.parseDouble(pkEnd.getText());
+		    Catalog.setPKEnd(d);
+		} else {
+		    Catalog.setPKEnd(Catalog.PK_NONE);
+		}
 		fillTables();
 	    }
 	});

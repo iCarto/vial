@@ -9,11 +9,14 @@ import es.icarto.gvsig.viasobras.catalog.domain.mappers.TramosPlataformaMapper;
 
 public class Catalog {
 
-    private static final double NO_PK = -1;
+    public static final double PK_NONE = -1;
+    public static final String CONCELLO_NONE = null;
+    public static final String CARRETERA_NONE = null;
+
     private static String carretera;
     private static String concello;
-    private static double pkStart = NO_PK;
-    private static double pkEnd = NO_PK;
+    private static double pkStart = PK_NONE;
+    private static double pkEnd = PK_NONE;
 
     public static Carreteras getCarreteras() throws SQLException {
 	return CarreterasMapper.findAll();
@@ -31,15 +34,15 @@ public class Catalog {
 
     public static Tramos getTramosTipoPavimento() throws SQLException {
 	Tramos tramos;
-	if ((carretera == null) && (concello == null)) {
+	if ((carretera == CARRETERA_NONE) && (concello == CONCELLO_NONE)) {
 	    tramos = TramosPavimentoMapper.findAll();
-	} else if ((carretera == null) && (concello != null)) {
+	} else if ((carretera == CARRETERA_NONE) && (concello != CONCELLO_NONE)) {
 	    tramos = TramosPavimentoMapper.findWhereConcello(concello);
-	} else if ((carretera != null) && (concello == null)
-		&& ((pkStart != NO_PK) || (pkEnd != NO_PK))) {
+	} else if ((carretera != CARRETERA_NONE) && (concello == CONCELLO_NONE)
+		&& ((pkStart != PK_NONE) || (pkEnd != PK_NONE))) {
 	    tramos = TramosPavimentoMapper.findWhereCarretera(carretera,
 		    pkStart, pkEnd);
-	} else if ((carretera != null) && (concello == null)) {
+	} else if ((carretera != CARRETERA_NONE) && (concello == CONCELLO_NONE)) {
 	    tramos = TramosPavimentoMapper.findWhereCarretera(carretera);
 	} else {
 	    tramos = TramosPavimentoMapper.findWhereCarreteraAndConcello(
@@ -50,15 +53,15 @@ public class Catalog {
 
     public static Tramos getTramosAnchoPlataforma() throws SQLException {
 	Tramos tramos;
-	if ((carretera == null) && (concello == null)) {
+	if ((carretera == CARRETERA_NONE) && (concello == CONCELLO_NONE)) {
 	    tramos = TramosPlataformaMapper.findAll();
-	} else if ((carretera == null) && (concello != null)) {
+	} else if ((carretera == CARRETERA_NONE) && (concello != CONCELLO_NONE)) {
 	    tramos = TramosPlataformaMapper.findWhereConcello(concello);
-	} else if ((carretera != null) && (concello == null)
-		&& ((pkStart != NO_PK) || (pkEnd != NO_PK))) {
+	} else if ((carretera != CARRETERA_NONE) && (concello == CONCELLO_NONE)
+		&& ((pkStart != PK_NONE) || (pkEnd != PK_NONE))) {
 	    tramos = TramosPlataformaMapper.findWhereCarretera(carretera,
 		    pkStart, pkEnd);
-	} else if ((carretera != null) && (concello == null)) {
+	} else if ((carretera != CARRETERA_NONE) && (concello == CONCELLO_NONE)) {
 	    tramos = TramosPlataformaMapper.findWhereCarretera(carretera);
 	} else {
 	    tramos = TramosPlataformaMapper.findWhereCarreteraAndConcello(
