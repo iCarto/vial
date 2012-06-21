@@ -197,18 +197,22 @@ public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
     }
 
     private void setPKOnCatalog() {
-	if (!pkStart.getText().equals("")) {
-	    double d = Double.parseDouble(pkStart.getText());
-	    Catalog.setPKStart(d);
-	} else {
-	    Catalog.setPKStart(Catalog.PK_NONE);
+	double start;
+	try {
+	    start = Double.parseDouble(pkStart.getText());
+	} catch (NumberFormatException e) {
+	    pkStart.setText("");
+	    start = Catalog.PK_NONE;
 	}
-	if (!pkEnd.getText().equals("")) {
-	    double d = Double.parseDouble(pkEnd.getText());
-	    Catalog.setPKEnd(d);
-	} else {
-	    Catalog.setPKEnd(Catalog.PK_NONE);
+	Catalog.setPKStart(start);
+	double end;
+	try {
+	    end = Double.parseDouble(pkEnd.getText());
+	} catch (NumberFormatException e) {
+	    pkEnd.setText("");
+	    end = Catalog.PK_NONE;
 	}
+	Catalog.setPKEnd(end);
     }
 
     private void fillTables() {
