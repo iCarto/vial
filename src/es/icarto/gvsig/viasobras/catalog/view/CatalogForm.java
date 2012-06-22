@@ -261,10 +261,10 @@ public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
     public WindowInfo getWindowInfo() {
 	if (viewInfo == null) {
 	    viewInfo = new WindowInfo(WindowInfo.MODELESSDIALOG
-		    | WindowInfo.RESIZABLE | WindowInfo.PALETTE);
+		    | WindowInfo.PALETTE);
 	    viewInfo.setTitle("Vias Obras");
-	    viewInfo.setWidth(850);
-	    viewInfo.setHeight(380);
+	    viewInfo.setWidth(800);
+	    viewInfo.setHeight(480);
 	}
 	return viewInfo;
     }
