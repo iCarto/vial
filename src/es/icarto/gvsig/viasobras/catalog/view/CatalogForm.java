@@ -43,9 +43,7 @@ public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
     private HashMap<String, JButton> buttons;
 
     private JComboBox carreteras;
-    private ItemListener carreteraUpdater;
     private JComboBox concellos;
-    private ItemListener concelloUpdater;
 
     private JTextField pkStart;
     private JTextField pkEnd;
@@ -104,85 +102,16 @@ public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
 
     private void initListeners() {
 
-	carreteraUpdater = new ItemListener() {
-	    public void itemStateChanged(ItemEvent e) {
-		if (e.getStateChange() == ItemEvent.SELECTED) {
-		    if (carreteras.getSelectedItem().equals(VOID_ITEM)) {
-			Catalog.setCarretera(Catalog.CARRETERA_NONE);
-			disablePKControls();
-		    } else {
-			Carretera c = (Carretera) carreteras.getSelectedItem();
-			Catalog.setCarretera(c.getCode());
-			enablePKControls();
-		    }
-		    fillConcellos();
-		}
-	    }
-	};
+	carreteras.addItemListener(new CarreteraListener());
+	concellos.addItemListener(new ConcelloListener());
 
-	concelloUpdater = new ItemListener() {
-	    public void itemStateChanged(ItemEvent e) {
-		if (e.getStateChange() == ItemEvent.SELECTED) {
-		    if (concellos.getSelectedItem().equals(VOID_ITEM)) {
-			Catalog.setConcello(Catalog.CONCELLO_NONE);
-			if (Catalog.getCarreteraSelected() != Catalog.CARRETERA_NONE) {
-			    enablePKControls();
-			} else {
-			    disablePKControls();
-			}
-		    } else {
-			Concello c = (Concello) concellos.getSelectedItem();
-			Catalog.setConcello(c.getCode());
-			disablePKControls();
-		    }
-		}
-	    }
-
-	};
-
-	carreteras.addItemListener(carreteraUpdater);
-	concellos.addItemListener(concelloUpdater);
-
-	KeyListener mySearchListener = new KeyListener() {
-	    public void keyPressed(KeyEvent arg0) {
-	    }
-
-	    public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-		    setPKOnCatalog();
-		    fillTables();
-		}
-	    }
-
-	    public void keyTyped(KeyEvent arg0) {
-	    }
-	};
+	SearchListener mySearchListener = new SearchListener();
 	pkStart.addKeyListener(mySearchListener);
 	pkEnd.addKeyListener(mySearchListener);
+	search.addActionListener(mySearchListener);
 
-	search.addActionListener(new ActionListener() {
-	    public void actionPerformed(ActionEvent arg0) {
-		setPKOnCatalog();
-		fillTables();
-	    }
-	});
-	load.addActionListener(new ActionListener() {
-
-	    public void actionPerformed(ActionEvent arg0) {
-		MapLoader.load();
-	    }
-
-	});
-	save.addActionListener(new ActionListener() {
-	    public void actionPerformed(ActionEvent e) {
-		try {
-		    ((TramosTableModel) tipoPavimentoModel).saveChanges();
-		    ((TramosTableModel) anchoPlataformaModel).saveChanges();
-		} catch (SQLException e1) {
-		    NotificationManager.addError(e1);
-		}
-	    }
-	});
+	load.addActionListener(new LoadMapListener());
+	save.addActionListener(new SaveChangesListener());
 
     }
 
@@ -275,6 +204,82 @@ public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
 
     public Object getWindowModel() {
 	return "catalog-roads";
+    }
+
+    private final class SaveChangesListener implements ActionListener {
+	public void actionPerformed(ActionEvent e) {
+	    try {
+		((TramosTableModel) tipoPavimentoModel).saveChanges();
+		((TramosTableModel) anchoPlataformaModel).saveChanges();
+	    } catch (SQLException e1) {
+		NotificationManager.addError(e1);
+	    }
+	}
+    }
+
+    private final class LoadMapListener implements ActionListener {
+	public void actionPerformed(ActionEvent arg0) {
+	    MapLoader.load();
+	}
+    }
+
+    private final class SearchListener implements KeyListener, ActionListener {
+	public void keyPressed(KeyEvent arg0) {
+	}
+
+	public void keyReleased(KeyEvent e) {
+	    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+		doSearch();
+	    }
+	}
+
+	public void keyTyped(KeyEvent arg0) {
+	}
+
+	public void actionPerformed(ActionEvent arg0) {
+	    doSearch();
+	}
+
+	private void doSearch() {
+	    setPKOnCatalog();
+	    fillTables();
+	}
+
+    }
+
+    private final class ConcelloListener implements ItemListener {
+	public void itemStateChanged(ItemEvent e) {
+	    if (e.getStateChange() == ItemEvent.SELECTED) {
+		if (concellos.getSelectedItem().equals(VOID_ITEM)) {
+		    Catalog.setConcello(Catalog.CONCELLO_NONE);
+		    if (Catalog.getCarreteraSelected() != Catalog.CARRETERA_NONE) {
+			enablePKControls();
+		    } else {
+			disablePKControls();
+		    }
+		} else {
+		    Concello c = (Concello) concellos.getSelectedItem();
+		    Catalog.setConcello(c.getCode());
+		    disablePKControls();
+		}
+	    }
+	}
+    }
+
+    private final class CarreteraListener implements ItemListener {
+	public void itemStateChanged(ItemEvent e) {
+	    if (e.getStateChange() == ItemEvent.SELECTED) {
+		if (carreteras.getSelectedItem().equals(VOID_ITEM)) {
+		    Catalog.setCarretera(Catalog.CARRETERA_NONE);
+		    disablePKControls();
+		} else {
+		    Carretera c = (Carretera) carreteras.getSelectedItem();
+		    Catalog.setCarretera(c.getCode());
+		    enablePKControls();
+		}
+		fillConcellos();
+	    }
+	}
     }
 
 }
