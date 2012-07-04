@@ -34,7 +34,7 @@ public class CatalogEditTests {
     }
 
     @Test
-    public void testDeletePavimento() throws SQLException {
+    public void testPavimentoDelete() throws SQLException {
 	int gid = deleteLastTramo();
 
 	// check if the later made effect
@@ -52,7 +52,7 @@ public class CatalogEditTests {
     }
 
     @Test
-    public void testUpdatePavimento() throws SQLException {
+    public void testPavimentoUpdate() throws SQLException {
 	String myValue = updateTramo();
 
 	// check if the later made effect
@@ -69,7 +69,7 @@ public class CatalogEditTests {
     }
 
     @Test
-    public void testInsertPavimento() throws SQLException {
+    public void testPavimentoInsert() throws SQLException {
 	int tramosNumber = insertTramo();
 
 	// check if the later made effect
@@ -101,7 +101,7 @@ public class CatalogEditTests {
     }
 
     @Test
-    public void testGeomChangesWhenUpdatePavimento() throws SQLException {
+    public void testPavimentoUpdateGeomWhenPKChanges() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
 		.executeQuery("SELECT ST_Length(the_geom) AS geom_length FROM inventario.tipo_pavimento WHERE carretera = '0102' AND municipio = '27001' AND gid = 9");
