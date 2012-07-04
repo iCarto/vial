@@ -28,13 +28,13 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
 
 # Import functions
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname < funcions/update_geom_tipo_pavimento_all.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname < funcions/update_geom_ancho_plataforma_all.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
     $viasobras_dbname < funcions/update_geom_tipo_pavimento.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
     $viasobras_dbname < funcions/update_geom_ancho_plataforma.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
-    $viasobras_dbname < funcions/trigger_update_geom_tipo_pavimento.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
-    $viasobras_dbname < funcions/trigger_update_geom_ancho_plataforma.sql
 
 # Post-procesado to create final tables from aforos.sql & inventario.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
@@ -73,6 +73,10 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
     $viasobras_dbname < funcions/create_triggers.sql
 
+# Functions for testing purposes
+# ------------------------------
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname < $pg_tap_install_path
 
 # Grant permissions
 # -----------------
