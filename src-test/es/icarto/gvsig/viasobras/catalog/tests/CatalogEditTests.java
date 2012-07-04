@@ -139,12 +139,7 @@ public class CatalogEditTests {
 	Catalog.setCarretera(carretera);
 	Catalog.setConcello(concello);
 	Tramos tramos = Catalog.getTramosTipoPavimento();
-	for (Tramo t : tramos) {
-	    if (t.getId() == gid) {
-		tramos.deleteTramo(t);
-		break;
-	    }
-	}
+	tramos.removeTramo(gid);
 	tramos.save();
 	return gid;
     }
@@ -183,7 +178,7 @@ public class CatalogEditTests {
 	tramo.setPkStart(pkStart);
 	tramo.setPkEnd(pkEnd);
 	tramo.setValue(myValue);
-	tipoPavimento.insertTramo(tramo);
+	tipoPavimento.addTramo(tramo);
 	tipoPavimento.save();
 	int tramosNumber = tipoPavimento.size();
 	return tramosNumber;
