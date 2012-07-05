@@ -14,13 +14,19 @@ CREATE TABLE queries.queries(
 
 INSERT INTO queries.queries (codigo, descripcion, consulta, haswhere, titulo)
        VALUES ('C1',
-       'Nro de tramos, por tipo de pavimento',
-       'SELECT tipopavime AS "Tipo de pavimento", COUNT(tipopavime) AS "Nro de tramos" FROM inventario.tipo_pavimento [[WHERE]] GROUP BY tipopavime ORDER BY tipopavime',
+       'Longitud de tramos, por ancho de plataforma',
+       'SELECT CASE WHEN ancho_plataforma BETWEEN 0 AND 5 THEN ''0-5''
+                    WHEN ancho_plataforma > 5 AND ancho_plataforma <= 8 THEN ''5-8''
+                    WHEN ancho_plataforma > 8 THEN ''>8'' END AS "Ancho de plataforma",
+               SUM(finaltramo-origentram) AS "Longitud (km)"
+        FROM inventario.ancho_plataforma
+        [[WHERE]] GROUP BY 1 ORDER BY 1',
        'NO',
-       'Nro de tramos, por tipo de pavimento');
+       'Longitud de tramos, por ancho de plataforma');
+
 INSERT INTO queries.queries (codigo, descripcion, consulta, haswhere, titulo)
        VALUES ('C2',
-       'Nro de tramos, por ancho de plataforma',
-       'SELECT ancho_plataforma AS "Ancho de plataforma", COUNT(ancho_plataforma) AS "Nro de tramos" FROM inventario.ancho_plataforma [[WHERE]] GROUP BY ancho_plataforma ORDER BY ancho_plataforma',
+       'Longitud de tramos, por tipo de pavimento',
+       'SELECT tipopavime, SUM(finalpavim-origenpavi) AS "Longitud" FROM inventario.tipo_pavimento GROUP BY tipopavime ORDER BY tipopavime',
        'NO',
-       'Nro de tramos, por ancho de plataforma');
+       'Longitud de tramos, por tipo de pavimento');

@@ -63,13 +63,10 @@ public class Report {
     // image.setAbsolutePosition(0, 0);
     // image.setAlignment(Chunk.ALIGN_RIGHT);
     // } catch (BadElementException e) {
-    // // TODO Auto-generated catch block
     // e.printStackTrace();
     // } catch (MalformedURLException e) {
-    // // TODO Auto-generated catch block
     // e.printStackTrace();
     // } catch (IOException e) {
-    // // TODO Auto-generated catch block
     // e.printStackTrace();
     // }
     // return image;
@@ -112,7 +109,6 @@ public class Report {
 	try {
 	    document.add(subtitleP);
 	} catch (DocumentException e) {
-	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
     }
@@ -131,18 +127,16 @@ public class Report {
 	try {
 	    document.add(dateP);
 	} catch (DocumentException e) {
-	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
     }
 
-    private void writeNumberOfFincas(Document document, int numFincas) {
-	Paragraph numFincasP = new Paragraph("Número de fincas: " + numFincas,
-		bodyBoldStyle);
+    private void writeNumberOfRegisters(Document document, int numRegisters) {
+	Paragraph numRegistersP = new Paragraph("Número de registros: "
+		+ numRegisters, bodyBoldStyle);
 	try {
-	    document.add(numFincasP);
+	    document.add(numRegistersP);
 	} catch (DocumentException e) {
-	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
     }
@@ -209,7 +203,7 @@ public class Report {
 		}
 		document.add(table);
 		document.add(Chunk.NEWLINE);
-		writeNumberOfFincas(document, result.getRowCount());
+		writeNumberOfRegisters(document, result.getRowCount());
 		document.newPage();
 		// document.add(image);
 	    }
@@ -217,7 +211,6 @@ public class Report {
 	    document.close();
 
 	} catch (DocumentException e) {
-	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
 
@@ -337,7 +330,7 @@ public class Report {
 		}
 		// table.setHorizontalAlignment(Element.ALIGN_LEFT);
 		document.add(table);
-		writeNumberOfFincas(document, result.getRowCount());
+		writeNumberOfRegisters(document, result.getRowCount());
 		isFirstPage = false;
 	    }
 
@@ -345,7 +338,6 @@ public class Report {
 	    document.close();
 
 	} catch (DocumentException e) {
-	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
     }
@@ -389,10 +381,8 @@ public class Report {
 	    document.close();
 
 	} catch (FileNotFoundException e) {
-	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	} catch (DocumentException e) {
-	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
     }
@@ -438,7 +428,6 @@ public class Report {
 		    }
 		}
 	    } catch (DocumentException e1) {
-		// TODO Auto-generated catch block
 		e1.printStackTrace();
 	    }
 	}
