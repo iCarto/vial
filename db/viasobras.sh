@@ -16,6 +16,12 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
     $viasobras_dbname < datos/info_base/nucleos.sql
 
+# Queries
+# -------
+
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname < funcions/create_schema_queries.sql
+
 # Inventario
 # ----------
 

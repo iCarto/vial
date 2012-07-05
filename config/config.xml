@@ -7,14 +7,16 @@
 	<libraries library-dir="lib"/>
 	<resourceBundle name="text"/>
 	<extensions>
-		<extension class-name="es.icarto.gvsig.viasobras.ImportacionExtension" description="FORMS_PANEL" active="true">
-			<menu text="Vias e Obras/Importar datos"
+		
+		<extension class-name="es.icarto.gvsig.viasobras.QueriesExtension" description="FORMS_PANEL" active="true">
+			<menu text="Vias e Obras/Consultas"
 				position="01"/>
 			<tool-bar name="Catalogo carreteras">
-				<action-tool icon="viasobras-catalogo" tooltip="Importar datos"
-					action-command="Importacion" position="50"/>
+				<action-tool icon="viasobras-consultas" tooltip="Consultas"
+					action-command="Consultas" position="50"/>
 			</tool-bar>
 		</extension>
+		
 		<extension class-name="es.icarto.gvsig.viasobras.CatalogExtension" description="FORMS_PANEL" active="true">
 			<menu text="Vias e Obras/Catalogo"
 				position="02"/>
@@ -23,6 +25,7 @@
 					action-command="Catalogo" position="60"/>
 			</tool-bar>
 		</extension>
+		
 		<extension class-name="es.icarto.gvsig.viasobras.MantementoCarreterasExtension" description="FORMS_PANEL" active="true">
 			<menu text="Vias e Obras/Mantemento carreteras"
 				position="03"/>
@@ -31,5 +34,6 @@
 					action-command="MantementoCarreteras" position="70"/>
 			</tool-bar>
 		</extension>
+		
 	</extensions>
 </plugin-config>
