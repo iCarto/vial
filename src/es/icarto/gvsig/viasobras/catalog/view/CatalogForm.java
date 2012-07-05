@@ -6,8 +6,10 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -30,12 +32,12 @@ import es.icarto.gvsig.viasobras.catalog.domain.Carretera;
 import es.icarto.gvsig.viasobras.catalog.domain.Catalog;
 import es.icarto.gvsig.viasobras.catalog.domain.Concello;
 import es.icarto.gvsig.viasobras.catalog.domain.Tramo;
+import es.icarto.gvsig.viasobras.catalog.domain.mappers.DomainMapper;
 import es.icarto.gvsig.viasobras.catalog.view.load.MapLoader;
 import es.icarto.gvsig.viasobras.catalog.view.tables.TramosTableModel;
+import es.udc.cartolab.gvsig.users.utils.DBSession;
 
 public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
-
-    private static final String VOID_ITEM = "Todos";
 
     private FormPanel form;
     protected WindowInfo viewInfo = null;
@@ -65,10 +67,25 @@ public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
 
     public CatalogForm() {
 	form = new FormPanel("inventarioform.xml");
+	initDomainMapper();
 	Catalog.clear();
 	initForm();
 	JScrollPane scrolledForm = new JScrollPane(form);
 	this.add(scrolledForm);
+    }
+
+    private void initDomainMapper() {
+	try {
+	    DBSession dbs = DBSession.getCurrentSession();
+	    Properties p = new Properties();
+	    p.setProperty("url", dbs.getJavaConnection().getMetaData().getURL());
+	    p.setProperty("username", dbs.getUserName());
+	    p.setProperty("password", dbs.getPassword());
+	    Connection c = dbs.getJavaConnection();
+	    DomainMapper.setConnection(c, p);
+	} catch (Exception e) {
+	    NotificationManager.addError(e);
+	}
     }
 
     private void initForm() {
@@ -189,24 +206,28 @@ public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
 
     private void fillCarreteras() {
 	carreteras.removeAllItems();
-	carreteras.addItem(VOID_ITEM);
+	carreteras.addItem(Catalog.CARRETERA_ALL);
 	try {
 	    for (Carretera c : Catalog.getCarreteras()) {
 		carreteras.addItem(c);
 	    }
 	} catch (SQLException e) {
+	    carreteras.removeAllItems();
+	    carreteras.addItem(Catalog.CARRETERA_ALL);
 	    NotificationManager.addError(e);
 	}
     }
 
     private void fillConcellos() {
 	concellos.removeAllItems();
-	concellos.addItem(VOID_ITEM);
+	concellos.addItem(Catalog.CONCELLO_ALL);
 	try {
 	    for (Concello c : Catalog.getConcellos()) {
 		concellos.addItem(c);
 	    }
 	} catch (SQLException e) {
+	    concellos.removeAllItems();
+	    concellos.addItem(Catalog.CONCELLO_ALL);
 	    NotificationManager.addError(e);
 	}
     }
@@ -316,9 +337,9 @@ public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
     private final class ConcelloListener implements ItemListener {
 	public void itemStateChanged(ItemEvent e) {
 	    if (e.getStateChange() == ItemEvent.SELECTED) {
-		if (concellos.getSelectedItem().equals(VOID_ITEM)) {
-		    Catalog.setConcello(Catalog.CONCELLO_NONE);
-		    if (Catalog.getCarreteraSelected() != Catalog.CARRETERA_NONE) {
+		if (concellos.getSelectedItem().equals(Catalog.CONCELLO_ALL)) {
+		    Catalog.setConcello(Catalog.CONCELLO_ALL);
+		    if (Catalog.getCarreteraSelected() != Catalog.CARRETERA_ALL) {
 			enablePKControls();
 		    } else {
 			disablePKControls();
@@ -335,8 +356,8 @@ public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
     private final class CarreteraListener implements ItemListener {
 	public void itemStateChanged(ItemEvent e) {
 	    if (e.getStateChange() == ItemEvent.SELECTED) {
-		if (carreteras.getSelectedItem().equals(VOID_ITEM)) {
-		    Catalog.setCarretera(Catalog.CARRETERA_NONE);
+		if (carreteras.getSelectedItem().equals(Catalog.CARRETERA_ALL)) {
+		    Catalog.setCarretera(Catalog.CARRETERA_ALL);
 		    disablePKControls();
 		} else {
 		    Carretera c = (Carretera) carreteras.getSelectedItem();

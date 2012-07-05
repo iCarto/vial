@@ -1,14 +1,9 @@
 package es.icarto.gvsig.viasobras;
 
-import java.sql.Connection;
-import java.util.Properties;
-
 import com.iver.andami.PluginServices;
-import com.iver.andami.messages.NotificationManager;
 import com.iver.andami.plugins.Extension;
 import com.iver.andami.plugins.IExtension;
 
-import es.icarto.gvsig.viasobras.catalog.domain.mappers.DomainMapper;
 import es.icarto.gvsig.viasobras.catalog.view.CatalogForm;
 import es.udc.cartolab.gvsig.users.DBConnectionExtension;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
@@ -16,19 +11,8 @@ import es.udc.cartolab.gvsig.users.utils.DBSession;
 public class CatalogExtension extends Extension {
 
     public void execute(String actionCommand) {
-	try {
-	    DBSession dbs = DBSession.getCurrentSession();
-	    Properties p = new Properties();
-	    p.setProperty("url", dbs.getJavaConnection().getMetaData().getURL());
-	    p.setProperty("username", dbs.getUserName());
-	    p.setProperty("password", dbs.getPassword());
-	    Connection c = dbs.getJavaConnection();
-	    DomainMapper.setConnection(c, p);
-	    CatalogForm dialog = new CatalogForm();
-	    PluginServices.getMDIManager().addWindow(dialog);
-	} catch (Exception e) {
-	    NotificationManager.addError(e);
-	}
+	CatalogForm dialog = new CatalogForm();
+	PluginServices.getMDIManager().addWindow(dialog);
     }
 
     protected void registerIcons() {

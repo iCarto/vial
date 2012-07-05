@@ -3,12 +3,15 @@ package es.icarto.gvsig.viasobras.queries;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.JButton;
@@ -24,15 +27,18 @@ import javax.swing.table.TableColumn;
 import org.apache.log4j.Logger;
 
 import com.iver.andami.PluginServices;
+import com.iver.andami.messages.NotificationManager;
 import com.iver.cit.gvsig.fmap.drivers.DBException;
 import com.jeta.forms.components.panel.FormPanel;
 
+import es.icarto.gvsig.viasobras.catalog.domain.Carretera;
+import es.icarto.gvsig.viasobras.catalog.domain.Catalog;
+import es.icarto.gvsig.viasobras.catalog.domain.Concello;
+import es.icarto.gvsig.viasobras.catalog.domain.mappers.DomainMapper;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
 @SuppressWarnings("serial")
 public class QueriesPanel extends gvWindow {
-
-    private static final String DEFAULT_FILTER = "--TODOS--";
 
     private FormPanel formBody;
     private JScrollPane scrollPane;
@@ -46,9 +52,8 @@ public class QueriesPanel extends gvWindow {
 
     private DBSession dbs;
 
-    private JComboBox carretera;
-
-    private JComboBox concello;
+    private JComboBox carreteras;
+    private JComboBox concellos;
 
     public QueriesPanel(boolean report) {
 	super(600, 500, true);
@@ -64,29 +69,72 @@ public class QueriesPanel extends gvWindow {
 	this.add(formBody, BorderLayout.CENTER);
 	this.add(scrollPane, BorderLayout.CENTER);
 	dbs = DBSession.getCurrentSession();
+	initDomainMapper(dbs);
+	Catalog.clear();
 	initWidgets();
 	initListeners();
+
     }
 
-    private void initListeners() {
-	runQueriesB.addActionListener(new RunQueriesListener());
+    private void initDomainMapper(DBSession dbs) {
+	try {
+	    Properties p = new Properties();
+	    p.setProperty("url", dbs.getJavaConnection().getMetaData().getURL());
+	    p.setProperty("username", dbs.getUserName());
+	    p.setProperty("password", dbs.getPassword());
+	    Connection c = dbs.getJavaConnection();
+	    DomainMapper.setConnection(c, p);
+	} catch (Exception e) {
+	    NotificationManager.addError(e);
+	}
     }
 
     public void initWidgets() {
 	runQueriesB = (JButton) formBody.getComponentByName("runQueriesButton");
 	queriesTable = (JTable) formBody.getComponentByName("queriesTable");
 
-	carretera = (JComboBox) formBody.getComponentByName("carretera");
-	concello = (JComboBox) formBody.getComponentByName("concello");
+	carreteras = (JComboBox) formBody.getComponentByName("carretera");
+	concellos = (JComboBox) formBody.getComponentByName("concello");
 
-	fillComboBoxes();
+	fillCarreteras();
+	fillConcellos();
 	initQueriesTable();
 	fillQueriesTable();
     }
 
-    private void fillComboBoxes() {
-	carretera.addItem(new String(DEFAULT_FILTER));
-	concello.addItem(new String(DEFAULT_FILTER));
+    private void initListeners() {
+	runQueriesB.addActionListener(new RunQueriesListener());
+	carreteras.addItemListener(new CarreteraListener());
+	concellos.addItemListener(new ConcelloListener());
+    }
+
+    private void fillCarreteras() {
+	carreteras.removeAllItems();
+	carreteras.addItem(Catalog.CARRETERA_ALL);
+	try {
+	    for (Carretera c : Catalog.getCarreteras()) {
+		carreteras.addItem(c);
+	    }
+	} catch (SQLException e) {
+	    carreteras.removeAllItems();
+	    carreteras.addItem(Catalog.CARRETERA_ALL);
+	    NotificationManager.addError(e);
+	}
+
+    }
+
+    private void fillConcellos() {
+	concellos.removeAllItems();
+	concellos.addItem(Catalog.CONCELLO_ALL);
+	try {
+	    for (Concello c : Catalog.getConcellos()) {
+		concellos.addItem(c);
+	    }
+	} catch (SQLException e) {
+	    concellos.removeAllItems();
+	    concellos.addItem(Catalog.CONCELLO_ALL);
+	    NotificationManager.addError(e);
+	}
     }
 
     private void initQueriesTable() {
@@ -149,6 +197,32 @@ public class QueriesPanel extends gvWindow {
 	}
     }
 
+    private final class ConcelloListener implements ItemListener {
+	public void itemStateChanged(ItemEvent e) {
+	    if (e.getStateChange() == ItemEvent.SELECTED) {
+		String code = Catalog.CONCELLO_ALL;
+		if (!concellos.getSelectedItem().equals(Catalog.CONCELLO_ALL)) {
+		    code = ((Concello) concellos.getSelectedItem()).getCode();
+		}
+		Catalog.setConcello(code);
+	    }
+	}
+    }
+
+    private final class CarreteraListener implements ItemListener {
+	public void itemStateChanged(ItemEvent e) {
+	    if (e.getStateChange() == ItemEvent.SELECTED) {
+		String code = Catalog.CARRETERA_ALL;
+		if (!carreteras.getSelectedItem()
+			.equals(Catalog.CARRETERA_ALL)) {
+		    code = ((Carretera) carreteras.getSelectedItem()).getCode();
+		}
+		Catalog.setCarretera(code);
+		fillConcellos();
+	    }
+	}
+    }
+
     private final class RunQueriesListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 	    executeValidations();
@@ -160,7 +234,6 @@ public class QueriesPanel extends gvWindow {
 	QueriesTask qt = new QueriesTask();
 	ProgressBarDialog progressBarDialog = new ProgressBarDialog(qt);
 	progressBarDialog.open();
-
     }
 
     private class RunStatementThread extends Thread {
@@ -327,39 +400,36 @@ public class QueriesPanel extends gvWindow {
 
 	private String[] getFilters() {
 	    String[] filters = new String[2];
-	    filters[0] = "0101";
-	    filters[1] = "27001";
+	    filters[0] = Catalog.getCarreteraSelected();
+	    filters[1] = Catalog.getConcelloSelected();
 	    return filters;
 	}
 
 	private String getWhereClause(boolean hasWhere) throws SQLException {
-	    return "";
-	    // String whereC;
-	    // if (!hasWhere) {
-	    // whereC = "WHERE";
-	    // } else {
-	    // whereC = " AND ";
-	    // }
-	    // if (tramoSelected.compareToIgnoreCase(DEFAULT_FILTER) != 0) {
-	    // whereC = whereC + " " + DBNames.FIELD_TRAMO + " = " + "'"
-	    // + getTramoId() + "'";
-	    // }
-	    // if (ucSelected.compareToIgnoreCase(DEFAULT_FILTER) != 0) {
-	    // whereC = whereC + " AND " + DBNames.FIELD_UC + " = " + "'"
-	    // + getUcId() + "'";
-	    // }
-	    // if (ayuntamientoSelected.compareToIgnoreCase(DEFAULT_FILTER) !=
-	    // 0) {
-	    // whereC = whereC + " AND " + DBNames.FIELD_AYUNTAMIENTO + " = "
-	    // + "'" + getAyuntamientoId() + "'";
-	    // }
-	    // if (whereC.equalsIgnoreCase("WHERE")) {
-	    // whereC = ""; // has no combobox selected
-	    // }
-	    // if (whereC.equalsIgnoreCase(" AND ")) {
-	    // whereC = "AND 1=1";
-	    // }
-	    // return whereC;
+	    String whereC;
+	    if (!hasWhere) {
+		whereC = "WHERE";
+	    } else {
+		whereC = " AND ";
+	    }
+	    if (!Catalog.getCarreteraSelected().equalsIgnoreCase(
+		    Catalog.CARRETERA_ALL)) {
+		whereC = whereC + " carretera = '"
+			+ ((Carretera) carreteras.getSelectedItem()).getCode()
+			+ "'";
+	    } else {
+		whereC = whereC + " 1=1 ";
+	    }
+	    if (!Catalog.getConcelloSelected().equalsIgnoreCase(
+		    Catalog.CONCELLO_ALL)) {
+		whereC = whereC + " AND municipio = '"
+			+ ((Concello) concellos.getSelectedItem()).getCode()
+			+ "'";
+	    }
+	    if (whereC.equalsIgnoreCase("WHERE 1=1 ")) {
+		whereC = ""; // has no combobox selected
+	    }
+	    return whereC;
 	}
 
 	private String[] doQuery(String queryCode) throws Exception {
@@ -392,13 +462,7 @@ public class QueriesPanel extends gvWindow {
 	    if (!isCancelled() && !sqlError) {
 		try {
 		    String str = get();
-		    QueriesResultPanel resultPanel;
-		    // if (councilCB.getSelectedIndex() > 0) {
-		    // resultPanel = new EIELValidationResultPanel(councilCB
-		    // .getSelectedItem().toString());
-		    // } else {
-		    resultPanel = new QueriesResultPanel();
-		    // }
+		    QueriesResultPanel resultPanel = new QueriesResultPanel();
 		    resultPanel.open();
 		    resultPanel.setResult(str);
 		    resultPanel.setResultMap(resultsMap);
