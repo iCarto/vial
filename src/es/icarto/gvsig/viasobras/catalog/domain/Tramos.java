@@ -27,8 +27,18 @@ public class Tramos implements Iterable<Tramo> {
 	return this.tramos.size();
     }
 
-    public Tramo getTramo(int index) {
+    /**
+     * Get tramo as it is ordered in the tramos list
+     * 
+     * @param index
+     * @return
+     */
+    public Tramo getFromList(int index) {
 	return tramos.get(index);
+    }
+
+    public void removeFromList(int index) {
+	tramos.remove(index);
     }
 
     public void save() throws SQLException {
@@ -39,18 +49,44 @@ public class Tramos implements Iterable<Tramo> {
 	return tramos.iterator();
     }
 
-    public void addTramo(Tramo tramo) {
+    public int addTramo(Tramo tramo) {
 	tramo.setStatus(Tramo.STATUS_INSERT);
+	if (tramo.getId() == Tramo.NO_GID) {
+	    // as we don't know what is the next ID in source, just create a
+	    // random one. It will be ignored as INSERT queries should be leave
+	    // the id blank for the DB to autocalculate
+	    tramo.setId("virtual-" + tramos.size() + "-"
+		    + Double.toString(Math.random()));
+	}
 	tramos.add(tramo);
+	return tramos.size() - 1;
     }
 
-    public void removeTramo(int gid) {
+    /**
+     * Returns tramo by its gid
+     * 
+     * @param id
+     * @return
+     */
+    public Tramo getTramo(int id) {
 	for (Tramo t : tramos) {
-	    if (t.getId() == gid) {
-		t.setStatus(Tramo.STATUS_DELETE);
-		break;
+	    if (t.getId().equals(id)) {
+		return t;
 	    }
 	}
+	return null;
     }
 
+    public boolean removeTramo(String id) {
+	if (id.equals(Tramo.NO_GID)) {
+	    return false;
+	}
+	for (Tramo t : tramos) {
+	    if (t.getId().equals(id)) {
+		t.setStatus(Tramo.STATUS_DELETE);
+		return true;
+	    }
+	}
+	return false;
+    }
 }

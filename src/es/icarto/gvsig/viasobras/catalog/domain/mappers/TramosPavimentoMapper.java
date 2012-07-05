@@ -29,7 +29,7 @@ public class TramosPavimentoMapper extends DomainMapper {
     public static final String PK_END_FIELDNAME = "finalpavim";
 
     private static CachedRowSet tramos;
-    private static HashMap<Integer, Integer> indexRegister;
+    private static HashMap<String, Integer> indexRegister;
 
     public static Tramos findAll() throws SQLException {
 	if (tramos != null) {
@@ -153,7 +153,7 @@ public class TramosPavimentoMapper extends DomainMapper {
 	rs.beforeFirst();
 	while (rs.next()) {
 	    Tramo tramo = new Tramo();
-	    tramo.setId(rs.getInt("gid"));
+	    tramo.setId(Integer.toString(rs.getInt("gid")));
 	    tramo.setPkStart(rs.getDouble("origenpavi"));
 	    tramo.setPkEnd(rs.getDouble("finalpavim"));
 	    tramo.setCarretera(rs.getString("carretera"));
@@ -164,12 +164,12 @@ public class TramosPavimentoMapper extends DomainMapper {
 	return ts;
     }
 
-    private static HashMap<Integer, Integer> getIndexRegister(ResultSet rs)
+    private static HashMap<String, Integer> getIndexRegister(ResultSet rs)
 	    throws SQLException {
-	HashMap<Integer, Integer> register = new HashMap<Integer, Integer>();
+	HashMap<String, Integer> register = new HashMap<String, Integer>();
 	rs.beforeFirst();
 	while (rs.next()) {
-	    register.put(rs.getInt("gid"), rs.getRow());
+	    register.put(Integer.toString(rs.getInt("gid")), rs.getRow());
 	}
 	return register;
     }

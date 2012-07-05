@@ -29,6 +29,7 @@ import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
 import es.icarto.gvsig.viasobras.catalog.domain.Carretera;
 import es.icarto.gvsig.viasobras.catalog.domain.Catalog;
 import es.icarto.gvsig.viasobras.catalog.domain.Concello;
+import es.icarto.gvsig.viasobras.catalog.domain.Tramo;
 import es.icarto.gvsig.viasobras.catalog.view.load.MapLoader;
 import es.icarto.gvsig.viasobras.catalog.view.tables.TramosTableModel;
 
@@ -57,6 +58,11 @@ public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
     private JButton load;
     private JButton save;
 
+    private JButton insertTramoPavimento;
+    private JButton deleteTramoPavimento;
+    private JButton insertTramoPlataforma;
+    private JButton deleteTramoPlataforma;
+
     public CatalogForm() {
 	form = new FormPanel("inventarioform.xml");
 	Catalog.clear();
@@ -67,6 +73,16 @@ public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
 
     private void initForm() {
 
+	setWidgets();
+
+	fillComboBoxes();
+	fillTables();
+
+	initFocus();
+	initListeners();
+    }
+
+    private void setWidgets() {
 	widgets = AbeilleParser.getWidgetsFromContainer(form);
 	buttons = AbeilleParser.getButtonsFromContainer(form);
 
@@ -79,17 +95,16 @@ public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
 	pkEnd.setEnabled(false);
 
 	tipoPavimento = (JTable) widgets.get("tabla_tipo_pavimento");
+	insertTramoPavimento = (JButton) buttons.get("insertar_pavimento");
+	deleteTramoPavimento = (JButton) buttons.get("borrar_pavimento");
+
 	anchoPlataforma = (JTable) widgets.get("tabla_ancho_plataforma");
+	insertTramoPlataforma = (JButton) buttons.get("insertar_plataforma");
+	deleteTramoPlataforma = (JButton) buttons.get("borrar_plataforma");
 
 	search = (JButton) buttons.get("buscar");
 	load = (JButton) buttons.get("cargar");
 	save = (JButton) buttons.get("guardar");
-
-	fillComboBoxes();
-	fillTables();
-
-	initFocus();
-	initListeners();
     }
 
     private void initFocus() {
@@ -113,6 +128,15 @@ public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
 	load.addActionListener(new LoadMapListener());
 	save.addActionListener(new SaveChangesListener());
 
+	insertTramoPavimento
+		.addActionListener(new InsertTramoPavimentoListener());
+	deleteTramoPavimento
+		.addActionListener(new DeleteTramoPavimentoListener());
+
+	insertTramoPlataforma
+		.addActionListener(new InsertTramoPlataformaListener());
+	deleteTramoPlataforma
+		.addActionListener(new DeleteTramoPlataformaListener());
     }
 
     private void enablePKControls() {
@@ -204,6 +228,48 @@ public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
 
     public Object getWindowModel() {
 	return "catalog-roads";
+    }
+
+    private final class DeleteTramoPlataformaListener implements ActionListener {
+	public void actionPerformed(ActionEvent e) {
+	    if ((anchoPlataforma.getRowCount() > 0)
+		    && (anchoPlataforma.getSelectedRow() != -1)) {
+		((TramosTableModel) anchoPlataformaModel)
+			.deleteTramo(anchoPlataforma.getSelectedRow());
+	    }
+	}
+    }
+
+    private final class InsertTramoPlataformaListener implements ActionListener {
+	public void actionPerformed(ActionEvent e) {
+	    Tramo t = new Tramo();
+	    t.setCarretera(Catalog.getCarreteraSelected());
+	    t.setConcello(Catalog.getConcelloSelected());
+	    t.setPkStart(Catalog.getPKStart());
+	    t.setPkEnd(Catalog.getPKEnd());
+	    ((TramosTableModel) anchoPlataformaModel).addTramo(t);
+	}
+    }
+
+    private final class DeleteTramoPavimentoListener implements ActionListener {
+	public void actionPerformed(ActionEvent e) {
+	    if ((tipoPavimento.getRowCount() > 0)
+		    && (tipoPavimento.getSelectedRow() != -1)) {
+		((TramosTableModel) tipoPavimentoModel)
+			.deleteTramo(tipoPavimento.getSelectedRow());
+	    }
+	}
+    }
+
+    private final class InsertTramoPavimentoListener implements ActionListener {
+	public void actionPerformed(ActionEvent e) {
+	    Tramo t = new Tramo();
+	    t.setCarretera(Catalog.getCarreteraSelected());
+	    t.setConcello(Catalog.getConcelloSelected());
+	    t.setPkStart(Catalog.getPKStart());
+	    t.setPkEnd(Catalog.getPKEnd());
+	    ((TramosTableModel) tipoPavimentoModel).addTramo(t);
+	}
     }
 
     private final class SaveChangesListener implements ActionListener {

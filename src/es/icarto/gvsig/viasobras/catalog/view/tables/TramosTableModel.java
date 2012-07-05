@@ -1,8 +1,9 @@
 package es.icarto.gvsig.viasobras.catalog.view.tables;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
 import es.icarto.gvsig.viasobras.catalog.domain.Tramo;
@@ -16,6 +17,7 @@ public class TramosTableModel extends AbstractTableModel {
     private int colCount;
     public static int NO_COL_NUMBER = -1;
     public static int NO_ROW_NUMBER = -1;
+    public List<Integer> rows;
 
     public TramosTableModel(Tramos tramos) {
 	super();
@@ -24,10 +26,14 @@ public class TramosTableModel extends AbstractTableModel {
     }
 
     private void initMetaData() {
+	rows = new ArrayList<Integer>();
 	if (tramos.size() > 0) {
-	    this.metadata = tramos.getTramo(0);
+	    this.metadata = tramos.getFromList(0);
 	    this.rowCount = tramos.size();
 	    this.colCount = metadata.getNumberOfProperties();
+	    for (int i = 0; i < rowCount; i++) {
+		rows.add(i);
+	    }
 	} else {
 	    this.metadata = new Tramo();
 	    this.colCount = metadata.getNumberOfProperties();
@@ -47,38 +53,36 @@ public class TramosTableModel extends AbstractTableModel {
 	return rowCount;
     }
 
-    public Object getValueAt(int rowIndex, int colIndex) {
-	return tramos.getTramo(rowIndex).getPropertyValue(colIndex);
-    }
-
     public boolean isCellEditable(int arg0, int arg1) {
 	return true;
     }
 
-    /**
-     * 
-     * @see javax.swing.table.TableModel#addTableModelListener(javax.swing.event.TableModelListener)
-     */
-    public void addTableModelListener(TableModelListener listener) {
-	// do not track listeners
+    public Object getValueAt(int row, int col) {
+	int rowInTramos = rows.get(row);
+	return tramos.getFromList(rowInTramos).getPropertyValue(col);
     }
 
-    /**
-     * As cell is set to not editable (see {@link #isCellEditable(int, int)},
-     * this method will do nothing.
-     */
-    public void removeTableModelListener(TableModelListener listener) {
-	// do not track listeners
-    }
-
-    /**
-     * As cell is set to not editable (see {@link #isCellEditable(int, int)},
-     * this method will do nothing.
-     */
     public void setValueAt(Object value, int row, int col) {
-	// TODO: make UPDATE, INSERT and DELETE events
-	tramos.getTramo(row).setProperty(col, value);
-	tramos.getTramo(row).setStatus(Tramo.STATUS_UPDATE);
+	int rowInTramos = rows.get(row);
+	tramos.getFromList(rowInTramos).setProperty(col, value);
+	tramos.getFromList(rowInTramos).setStatus(Tramo.STATUS_UPDATE);
+	this.fireTableCellUpdated(row, col);
+    }
+
+    public void addTramo(Tramo t) {
+	int idx = tramos.addTramo(t);
+	rowCount++;
+	rows.add(idx);
+	this.fireTableRowsInserted(rowCount, rowCount);
+    }
+
+    public String deleteTramo(int row) {
+	String id = tramos.getFromList(rows.get(row)).getId();
+	tramos.removeTramo(id);
+	this.fireTableRowsDeleted(row, row);
+	rows.remove(row);
+	rowCount--;
+	return id;
     }
 
     public void saveChanges() throws SQLException {

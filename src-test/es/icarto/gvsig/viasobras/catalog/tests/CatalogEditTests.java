@@ -35,7 +35,7 @@ public class CatalogEditTests {
 
     @Test
     public void testPavimentoDelete() throws SQLException {
-	int gid = deleteLastTramo();
+	String gid = deleteLastTramo();
 
 	// check if the later made effect
 	Statement stmt = c.createStatement();
@@ -43,7 +43,7 @@ public class CatalogEditTests {
 		.executeQuery("SELECT gid FROM inventario.tipo_pavimento WHERE carretera = '4606' AND municipio = '27018'");
 	boolean updated = true;
 	while (rs.next()) {
-	    if (rs.getInt("gid") == gid) {
+	    if (Integer.toString(rs.getInt("gid")).equals(gid)) {
 		updated = false;
 		break;
 	    }
@@ -84,7 +84,8 @@ public class CatalogEditTests {
     public void testTramosAreSinchronizedAfterCRUDOperations()
 	    throws SQLException {
 	insertTramo();
-	int gid = deleteLastTramo(); // should delete the recently created tramo
+	String gid = deleteLastTramo(); // should delete the recently created
+					// tramo
 
 	// check if the later made effect
 	Statement stmt = c.createStatement();
@@ -92,7 +93,7 @@ public class CatalogEditTests {
 		.executeQuery("SELECT gid FROM inventario.tipo_pavimento WHERE carretera = '4606' AND municipio = '27018'");
 	boolean updated = true;
 	while (rs.next()) {
-	    if (rs.getInt("gid") == gid) {
+	    if (Integer.toString(rs.getInt("gid")).equals(gid)) {
 		updated = false;
 		break;
 	    }
@@ -114,7 +115,7 @@ public class CatalogEditTests {
 	Catalog.setConcello("27001");
 	Tramos tipoPavimento = Catalog.getTramosTipoPavimento();
 	for (Tramo t : tipoPavimento) {
-	    if (t.getId() == 9) {
+	    if (t.getId().equals("9")) {
 		t.setPkEnd(t.getPkEnd() + 10);
 		t.setStatus(Tramo.STATUS_UPDATE);
 	    }
@@ -129,10 +130,10 @@ public class CatalogEditTests {
 	assertEquals(true, !newLength.equals(oldLength));
     }
 
-    private int deleteLastTramo() throws SQLException {
+    private String deleteLastTramo() throws SQLException {
 	String carretera = "4606";
 	String concello = "27018";
-	int gid = getLastId();
+	String gid = getLastId();
 
 	// add new tramo
 	Catalog.clear();
@@ -184,12 +185,12 @@ public class CatalogEditTests {
 	return tramosNumber;
     }
 
-    private int getLastId() throws SQLException {
+    private String getLastId() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
 		.executeQuery("SELECT gid FROM inventario.tipo_pavimento WHERE carretera = '4606' AND municipio = '27018' ORDER BY gid DESC LIMIT 1");
 	rs.next();
-	return rs.getInt("gid");
+	return Integer.toString(rs.getInt("gid"));
     }
 
 }

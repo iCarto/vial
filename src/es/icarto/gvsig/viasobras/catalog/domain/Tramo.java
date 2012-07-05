@@ -10,27 +10,29 @@ public class Tramo {
     public static final int PROPERTY_VALUE = 4;
     private static final int NUMBER_OF_PROPERTIES = 5;
 
-    /*
-     * Indicates how this tramo will be processed when savin data into DB:
-     * 
-     * - STATUS_ORIGINAL: it will be discarded
-     * - STATUS_INSERT: an INSERT query will be built
-     * - STATUS_UPDATE: an UPDATE query will be built
-     * - STATUS_DELETE: an DELETE query will be built
-     */
-    public static final int STATUS_ORIGINAL = 0;
-    public static final int STATUS_INSERT = 1;
-    public static final int STATUS_UPDATE = 2;
-    public static final int STATUS_DELETE = 3;
+    // Indicates how this tramo will be processed when saving data into DB
+    public static final int STATUS_ORIGINAL = 0; // do nothing
+    public static final int STATUS_INSERT = 1; // INSERT SQL query
+    public static final int STATUS_UPDATE = 2; // UPDATE SQL query
+    public static final int STATUS_DELETE = 3; // DELETE SQL query
 
     private int status = STATUS_ORIGINAL;
 
-    private int id;// gid field
+    public static final String NO_GID = "-1";
+    // we needed to be a string to create quickly virtual tramos (those which
+    // are not stored in the source yet). As we don't know the next ID in
+    // source, we just create a random one. See @Tramos.addTramo()
+    private String id = NO_GID;
+
     private double pkStart;
     private double pkEnd;
     private String concello;
     private String carretera;
     private String value;
+
+    public Tramo() {
+	this.id = NO_GID;
+    }
 
     public int getStatus() {
 	return this.status;
@@ -40,11 +42,11 @@ public class Tramo {
 	this.status = status;
     }
 
-    public int getId() {
+    public String getId() {
 	return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
 	this.id = id;
     }
 
