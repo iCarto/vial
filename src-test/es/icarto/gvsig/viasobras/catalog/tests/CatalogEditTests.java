@@ -101,35 +101,6 @@ public class CatalogEditTests {
 	assertEquals(true, updated);
     }
 
-    @Test
-    public void testPavimentoUpdateGeomWhenPKChanges() throws SQLException {
-	Statement stmt = c.createStatement();
-	ResultSet rs = stmt
-		.executeQuery("SELECT ST_Length(the_geom) AS geom_length FROM inventario.tipo_pavimento WHERE carretera = '0102' AND municipio = '27001' AND gid = 9");
-	rs.next();
-	String oldLength = rs.getString("geom_length");
-
-	// update pavimento PK
-	Catalog.clear();
-	Catalog.setCarretera("0102");
-	Catalog.setConcello("27001");
-	Tramos tipoPavimento = Catalog.getTramosTipoPavimento();
-	for (Tramo t : tipoPavimento) {
-	    if (t.getId().equals("9")) {
-		t.setPkEnd(t.getPkEnd() + 10);
-		t.setStatus(Tramo.STATUS_UPDATE);
-	    }
-	}
-	tipoPavimento.save();
-
-	// check if the later made effect
-	ResultSet rs2 = stmt
-		.executeQuery("SELECT ST_Length(the_geom) AS geom_length FROM inventario.tipo_pavimento WHERE carretera = '0102' AND municipio = '27001' AND gid = 9");
-	rs2.next();
-	String newLength = rs2.getString("geom_length");
-	assertEquals(true, !newLength.equals(oldLength));
-    }
-
     private String deleteLastTramo() throws SQLException {
 	String carretera = "4606";
 	String concello = "27018";
