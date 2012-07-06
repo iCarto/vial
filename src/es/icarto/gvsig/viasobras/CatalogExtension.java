@@ -17,9 +17,9 @@ public class CatalogExtension extends Extension {
 
     protected void registerIcons() {
 	PluginServices.getIconTheme().registerDefault(
-		"viasobras-catalogo",
+		"viasobras-catalog",
 		this.getClass().getClassLoader()
-			.getResource("images/catalog.png"));
+		.getResource("images/catalog.png"));
     }
 
     public void initialize() {

@@ -8,32 +8,48 @@
 	<resourceBundle name="text"/>
 	<extensions>
 		
-		<extension class-name="es.icarto.gvsig.viasobras.QueriesExtension" description="FORMS_PANEL" active="true">
-			<menu text="Vias e Obras/Consultas"
-				position="01"/>
-			<tool-bar name="Catalogo carreteras">
-				<action-tool icon="viasobras-consultas" tooltip="Consultas"
-					action-command="Consultas" position="50"/>
-			</tool-bar>
-		</extension>
-		
 		<extension class-name="es.icarto.gvsig.viasobras.CatalogExtension" description="FORMS_PANEL" active="true">
-			<menu text="Vias e Obras/Catalogo"
+			<menu text="Vías e Obras/Catálogo"
+				position="01"/>
+			<tool-bar name="ViasObrasLugo">
+				<action-tool icon="viasobras-catalog" tooltip="Catálogo"
+					action-command="Catalog" position="50"/>
+			</tool-bar>
+		</extension>
+
+		<extension class-name="es.icarto.gvsig.viasobras.QueriesActuacionsExtension" description="FORMS_PANEL" active="true">
+			<menu text="Vías e Obras/Consultas/Actuacións"
 				position="02"/>
-			<tool-bar name="Catalogo carreteras">
-				<action-tool icon="viasobras-catalogo" tooltip="Catálogo"
-					action-command="Catalogo" position="60"/>
-			</tool-bar>
-		</extension>
-		
-		<extension class-name="es.icarto.gvsig.viasobras.MantementoCarreterasExtension" description="FORMS_PANEL" active="true">
-			<menu text="Vias e Obras/Mantemento carreteras"
+		</extension>		
+
+		<extension class-name="es.icarto.gvsig.viasobras.QueriesEstadoExtension" description="FORMS_PANEL" active="true">
+			<menu text="Vías e Obras/Consultas/Estado actual"
 				position="03"/>
-			<tool-bar name="Catalogo carreteras">
-				<action-tool icon="viasobras-catalogo" tooltip="Mantemento carreteras"
-					action-command="MantementoCarreteras" position="70"/>
+			<tool-bar name="ViasObrasLugo">
+				<action-tool icon="viasobras-queries-estado" tooltip="Consultas estado actual"
+					action-command="QueriesEstado" position="60"/>
 			</tool-bar>
-		</extension>
+		</extension>		
 		
+		<extension class-name="es.icarto.gvsig.viasobras.FormActuacionsExtension" description="FORMS_PANEL" active="true">
+			<menu text="Vías e Obras/Información/Actuacións"
+				position="04"/>
+		</extension>
+
+		<extension class-name="es.icarto.gvsig.viasobras.FormEstradasExtension" description="FORMS_PANEL" active="true">
+			<menu text="Vías e Obras/Información/Estradas"
+				position="05"/>
+		</extension>
+
+		<extension class-name="es.icarto.gvsig.viasobras.ImportAforosExtension" description="FORMS_PANEL" active="true">
+			<menu text="Vías e Obras/Importación/Aforos"
+				position="06"/>
+		</extension>
+
+		<extension class-name="es.icarto.gvsig.viasobras.ImportAccidentesExtension" description="FORMS_PANEL" active="true">
+			<menu text="Vías e Obras/Importación/Accidentes"
+				position="07"/>
+		</extension>
+
 	</extensions>
 </plugin-config>
