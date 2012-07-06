@@ -41,15 +41,5 @@
 				position="05"/>
 		</extension>
 
-		<extension class-name="es.icarto.gvsig.viasobras.ImportAforosExtension" description="FORMS_PANEL" active="true">
-			<menu text="Vías e Obras/Importación/Aforos"
-				position="06"/>
-		</extension>
-
-		<extension class-name="es.icarto.gvsig.viasobras.ImportAccidentesExtension" description="FORMS_PANEL" active="true">
-			<menu text="Vías e Obras/Importación/Accidentes"
-				position="07"/>
-		</extension>
-
 	</extensions>
 </plugin-config>
