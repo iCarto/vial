@@ -26,12 +26,14 @@ public class WhereAdapter {
     private static String getWhereTramos() {
 	String carretera = Catalog.getCarreteraSelected();
 	String concello = Catalog.getConcelloSelected();
-	if ((concello != null) && (carretera != null)) { // both selected
+	if ((concello != Catalog.CONCELLO_ALL)
+		&& (carretera != Catalog.CARRETERA_ALL)) { // both
+	    // selected
 	    return "WHERE municipio = '" + concello + "' AND carretera = '"
 	    + carretera + "'";
-	} else if ((carretera != null)) { // carretera selected
+	} else if ((carretera != Catalog.CARRETERA_ALL)) { // carretera selected
 	    return "WHERE carretera = '" + carretera + "'";
-	} else if ((concello != null)) { // concello selected
+	} else if ((concello != Catalog.CONCELLO_ALL)) { // concello selected
 	    return "WHERE municipio = '" + concello + "'";
 	} else { // none selected
 	    return NONE_WHERE;
@@ -41,7 +43,8 @@ public class WhereAdapter {
     private static String getWhereCarreteras() {
 	String carretera = Catalog.getCarreteraSelected();
 	String concello = Catalog.getConcelloSelected();
-	if ((concello != null) && (carretera != null)) {
+	if ((concello != Catalog.CONCELLO_ALL)
+		&& (carretera != Catalog.CARRETERA_ALL)) {
 	    // both selected
 	    //
 	    // Hack to filter layer carretera depending on other layers,
@@ -53,7 +56,7 @@ public class WhereAdapter {
 	    + "' AND link.codigo_carretera = '"
 	    + carretera
 	    + "'";
-	} else if (concello != null) {
+	} else if (concello != Catalog.CONCELLO_ALL) {
 	    // only concello selected
 	    //
 	    // Hack to filter layer carretera depending on other layers
@@ -63,7 +66,7 @@ public class WhereAdapter {
 	    // all fields in table - see getTotalFields()):
 	    return ", inventario.carreteras_concellos AS link WHERE link.codigo_carretera = codigo AND link.codigo_concello = '"
 	    + concello + "'";
-	} else if (carretera != null) {
+	} else if (carretera != Catalog.CARRETERA_ALL) {
 	    // only carretera selected
 	    return "WHERE codigo = '" + carretera + "'";
 	} else {
@@ -75,7 +78,8 @@ public class WhereAdapter {
     private static String getWhereConcellos() {
 	String concello = Catalog.getConcelloSelected();
 	String carretera = Catalog.getCarreteraSelected();
-	if ((concello != null) && (carretera != null)) {
+	if ((concello != Catalog.CONCELLO_ALL)
+		&& (carretera != Catalog.CARRETERA_ALL)) {
 	    // both carretera & concello selected
 	    //
 	    // Hack to filter layer concello depending on other layers
@@ -88,7 +92,7 @@ public class WhereAdapter {
 	    + "' AND link.codigo_concello = '"
 	    + concello
 	    + "'";
-	} else if (carretera != null) {
+	} else if (carretera != Catalog.CARRETERA_ALL) {
 	    // only carretera selected
 	    //
 	    // Hack to filter layer concello depending on other layers
@@ -98,7 +102,7 @@ public class WhereAdapter {
 	    // all fields in table - see getTotalFields()):
 	    return ", inventario.carreteras_concellos AS link WHERE link.codigo_concello = codigo AND link.codigo_carretera = '"
 	    + carretera + "'";
-	} else if (concello != null) {
+	} else if (concello != Catalog.CONCELLO_ALL) {
 	    // only concello selected
 	    return "WHERE codigo = '" + concello + "'";
 	} else {

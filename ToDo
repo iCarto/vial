@@ -1,4 +1,2 @@
-[ ] Limita-los campos pedidos nunha consulta SQL
-[ ] Filtrar comboboxes concellos/carreteras de modo dependente
-[ ] Engadir nos comboboxes concellos/carreteras o valor vacío
-[ ] Crear táboa tramos_carretera (relación carretera/concello), incluindo pk inicial e final
+[ ] Chequear pq os nucleos teñen 4 dimensións
+[ ] Test para chequear os where que usa o mapa

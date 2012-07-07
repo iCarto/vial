@@ -30,16 +30,28 @@ public class MapLoader {
 
     public static boolean createMap() {
 	List<Object[]> rows = new ArrayList<Object[]>();
-	Object[] concellos = { "Concellos", "concellos", "1",
-		true, null, null,"", "info_base" };
-	Object[] carreteras = { "Carreteras", "rede_carreteras", "2",
+	Object[] oceano = { "Océano", "oceano", "1", true, null, null, "",
+		"info_base" };
+	Object[] portugal = { "Portugal", "portugal", "2", true, null, null,
+		"", "info_base" };
+	Object[] provincias_galicia = { "Provincias Galicia",
+		"provincias_galicia", "3", true, null, null, "", "info_base" };
+	Object[] provincias_limitrofes = { "Provincias España",
+		"provincias_limitrofes", "4", true, null, null, "", "info_base" };
+	Object[] concellos = { "Concellos", "concellos", "5", true, null,
+		null, "", "info_base" };
+	Object[] carreteras = { "Carreteras", "carreteras", "6",
 		true, null, null, "", "inventario" };
-	Object[] pavimento = { "Tipo de pavimento", "tipo_pavimento", "3",
+	Object[] pavimento = { "Tipo de pavimento", "tipo_pavimento", "7",
 		true, null, null, "", "inventario" };
-	Object[] plataforma = { "Ancho de plataforma", "ancho_plataforma", "4",
+	Object[] plataforma = { "Ancho de plataforma", "ancho_plataforma", "8",
 		true, null, null, "", "inventario" };
-	rows.add(carreteras);
+	rows.add(portugal);
+	rows.add(provincias_galicia);
+	rows.add(provincias_limitrofes);
+	rows.add(oceano);
 	rows.add(concellos);
+	rows.add(carreteras);
 	rows.add(pavimento);
 	rows.add(plataforma);
 	try {

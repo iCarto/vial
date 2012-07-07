@@ -12,6 +12,14 @@ createdb -h $viasobras_server -p $viasobras_port -U $viasobras_pguser -O $viasob
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
     $viasobras_dbname < funcions/create_schema_infobase.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname < datos/info_base/oceano.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname < datos/info_base/portugal.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname < datos/info_base/provincias_galicia.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname < datos/info_base/provincias_limitrofes.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
     $viasobras_dbname < datos/info_base/concellos.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
     $viasobras_dbname < datos/info_base/nucleos.sql
@@ -29,6 +37,8 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
     $viasobras_dbname < funcions/create_schema_inventario.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
     $viasobras_dbname < datos/inventario/rede_carreteras.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+    $viasobras_dbname < datos/inventario/carreteras.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
     $viasobras_dbname < datos/inventario/accidentes.sql
 
