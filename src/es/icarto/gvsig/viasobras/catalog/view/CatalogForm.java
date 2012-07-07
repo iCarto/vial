@@ -66,7 +66,7 @@ public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
     private JButton deleteTramoPlataforma;
 
     public CatalogForm() {
-	form = new FormPanel("inventarioform.xml");
+	form = new FormPanel("catalog.xml");
 	initDomainMapper();
 	Catalog.clear();
 	initForm();
@@ -146,14 +146,14 @@ public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
 	save.addActionListener(new SaveChangesListener());
 
 	insertTramoPavimento
-		.addActionListener(new InsertTramoPavimentoListener());
+	.addActionListener(new InsertTramoPavimentoListener());
 	deleteTramoPavimento
-		.addActionListener(new DeleteTramoPavimentoListener());
+	.addActionListener(new DeleteTramoPavimentoListener());
 
 	insertTramoPlataforma
-		.addActionListener(new InsertTramoPlataformaListener());
+	.addActionListener(new InsertTramoPlataformaListener());
 	deleteTramoPlataforma
-		.addActionListener(new DeleteTramoPlataformaListener());
+	.addActionListener(new DeleteTramoPlataformaListener());
     }
 
     private void enablePKControls() {
@@ -256,7 +256,7 @@ public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
 	    if ((anchoPlataforma.getRowCount() > 0)
 		    && (anchoPlataforma.getSelectedRow() != -1)) {
 		((TramosTableModel) anchoPlataformaModel)
-			.deleteTramo(anchoPlataforma.getSelectedRow());
+		.deleteTramo(anchoPlataforma.getSelectedRow());
 	    }
 	}
     }
@@ -277,7 +277,7 @@ public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
 	    if ((tipoPavimento.getRowCount() > 0)
 		    && (tipoPavimento.getSelectedRow() != -1)) {
 		((TramosTableModel) tipoPavimentoModel)
-			.deleteTramo(tipoPavimento.getSelectedRow());
+		.deleteTramo(tipoPavimento.getSelectedRow());
 	    }
 	}
     }

@@ -2,7 +2,7 @@ package es.icarto.gvsig.viasobras;
 
 import com.iver.andami.plugins.Extension;
 
-public class ImportAforosExtension extends Extension {
+public class FormCarreterasExtension extends Extension {
 
     public void initialize() {
 	// TODO Auto-generated method stub

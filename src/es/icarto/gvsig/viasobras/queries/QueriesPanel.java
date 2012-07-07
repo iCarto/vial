@@ -63,7 +63,7 @@ public class QueriesPanel extends gvWindow {
 	} else {
 	    this.setTitle("Consultas");
 	}
-	formBody = new FormPanel("consultas.xml");
+	formBody = new FormPanel("queries-estado.xml");
 	formBody.setVisible(true);
 	scrollPane = new JScrollPane(queriesTable);
 	this.add(formBody, BorderLayout.CENTER);
@@ -159,14 +159,14 @@ public class QueriesPanel extends gvWindow {
 	model.addColumn(column02);
 
 	queriesTable.getColumnModel().getColumn(0)
-		.setHeaderValue(columnNames[0]);
+	.setHeaderValue(columnNames[0]);
 	queriesTable.getColumnModel().getColumn(0).setMaxWidth(100);
 	queriesTable.getColumnModel().getColumn(1)
-		.setHeaderValue(columnNames[1]);
+	.setHeaderValue(columnNames[1]);
 	queriesTable.getColumnModel().getColumn(1).setMinWidth(100);
 	queriesTable.getColumnModel().getColumn(1).setMaxWidth(110);
 	queriesTable.getColumnModel().getColumn(2)
-		.setHeaderValue(columnNames[2]);
+	.setHeaderValue(columnNames[2]);
 	queriesTable.getColumnModel().getColumn(2).setMaxWidth(500);
     }
 

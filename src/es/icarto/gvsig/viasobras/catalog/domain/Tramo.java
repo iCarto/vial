@@ -101,7 +101,7 @@ public class Tramo {
 	case PROPERTY_PK_END:
 	    return "PK final";
 	case PROPERTY_CONCELLO:
-	    return "Concello";
+	    return "Municipio";
 	case PROPERTY_CARRETERA:
 	    return "Carretera";
 	case PROPERTY_VALUE:
