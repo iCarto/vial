@@ -38,10 +38,23 @@ public class CatalogSearchTests {
     }
 
     @Test
-    public void testNotNullResults() throws SQLException {
+    public void testNotNullCarretera() throws SQLException {
 	assertNotNull(Catalog.getCarreteras());
+    }
+
+    @Test
+    public void testNotNullConcellos() throws SQLException {
 	assertNotNull(Catalog.getConcellos());
+    }
+
+    @Test
+    public void testNotNullTipoPavimento() throws SQLException {
 	assertNotNull(Catalog.getTramosTipoPavimento());
+    }
+
+    @Test
+    public void testNotNullAnchoPlataforma() throws SQLException {
+	assertNotNull(Catalog.getTramosAnchoPlataforma());
     }
 
     @Test
@@ -196,7 +209,7 @@ public class CatalogSearchTests {
 
     @Test
     public void testFindPlataformaDependingOnConcello() throws SQLException,
-	    DBException {
+    DBException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
 		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.ancho_plataforma WHERE municipio = '27018'");

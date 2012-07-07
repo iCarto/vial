@@ -13,8 +13,8 @@ public class Catalog {
     public static final String CONCELLO_ALL = "Todos";
     public static final String CARRETERA_ALL = "Todas";
 
-    private static String carretera;
-    private static String concello;
+    private static String carretera = CARRETERA_ALL;
+    private static String concello = CONCELLO_ALL;
     private static double pkStart = PK_NONE;
     private static double pkEnd = PK_NONE;
 
