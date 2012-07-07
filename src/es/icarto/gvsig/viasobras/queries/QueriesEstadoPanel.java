@@ -38,7 +38,7 @@ import es.icarto.gvsig.viasobras.catalog.domain.mappers.DomainMapper;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
 @SuppressWarnings("serial")
-public class QueriesPanel extends gvWindow {
+public class QueriesEstadoPanel extends gvWindow {
 
     private FormPanel formBody;
     private JScrollPane scrollPane;
@@ -48,15 +48,15 @@ public class QueriesPanel extends gvWindow {
 
     private boolean isReport;
 
-    private static final Logger logger = Logger.getLogger(QueriesPanel.class);
+    private static final Logger logger = Logger.getLogger(QueriesEstadoPanel.class);
 
     private DBSession dbs;
 
     private JComboBox carreteras;
     private JComboBox concellos;
 
-    public QueriesPanel(boolean report) {
-	super(600, 500, true);
+    public QueriesEstadoPanel(boolean report) {
+	super(600, 400, true);
 	this.isReport = report;
 	if (isReport) {
 	    this.setTitle("Informes");

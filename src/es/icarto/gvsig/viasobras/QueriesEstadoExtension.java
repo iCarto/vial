@@ -3,7 +3,7 @@ package es.icarto.gvsig.viasobras;
 import com.iver.andami.PluginServices;
 import com.iver.andami.plugins.Extension;
 
-import es.icarto.gvsig.viasobras.queries.QueriesPanel;
+import es.icarto.gvsig.viasobras.queries.QueriesEstadoPanel;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
 public class QueriesEstadoExtension extends Extension {
@@ -13,7 +13,7 @@ public class QueriesEstadoExtension extends Extension {
     }
 
     public void execute(String actionCommand) {
-	QueriesPanel p = new QueriesPanel(false);
+	QueriesEstadoPanel p = new QueriesEstadoPanel(false);
 	p.open();
     }
 

@@ -144,8 +144,8 @@
               <at name="size">11</at>
              </object>
             </at>
+            <at name="name"/>
             <at name="width">182</at>
-            <at name="name"></at>
             <at name="fill">
              <object classname="com.jeta.forms.store.properties.effects.PaintProperty">
               <at name="name">fill</at>
@@ -212,8 +212,8 @@
               <at name="size">11</at>
              </object>
             </at>
+            <at name="name"/>
             <at name="width">182</at>
-            <at name="name"></at>
             <at name="fill">
              <object classname="com.jeta.forms.store.properties.effects.PaintProperty">
               <at name="name">fill</at>
@@ -462,14 +462,81 @@
           <at name="classname">javax.swing.JComboBox</at>
           <at name="properties">
            <object classname="com.jeta.forms.store.support.PropertyMap">
-            <at name="height">20</at>
+            <at name="height">18</at>
+            <at name="selectedItem">
+             <object classname="com.jeta.forms.store.properties.ListItemProperty">
+              <at name="name">listitem</at>
+              <at name="label">Todas</at>
+              <at name="icon">
+               <object classname="com.jeta.forms.store.properties.IconProperty">
+                <at name="embedded">false</at>
+                <at name="description"></at>
+                <at name="width">0</at>
+                <at name="height">0</at>
+               </object>
+              </at>
+             </object>
+            </at>
             <at name="items">
              <object classname="com.jeta.forms.store.properties.ItemsProperty">
               <at name="name">items</at>
+              <at name="items">
+               <object classname="java.util.LinkedList">
+                <item >
+                 <at name="value">
+                  <object classname="com.jeta.forms.store.properties.ListItemProperty">
+                   <at name="name">listitem</at>
+                   <at name="label">Todas</at>
+                   <at name="icon">
+                    <object classname="com.jeta.forms.store.properties.IconProperty">
+                     <at name="embedded">false</at>
+                     <at name="description"></at>
+                     <at name="width">0</at>
+                     <at name="height">0</at>
+                    </object>
+                   </at>
+                  </object>
+                 </at>
+                </item>
+                <item >
+                 <at name="value">
+                  <object classname="com.jeta.forms.store.properties.ListItemProperty">
+                   <at name="name">listitem</at>
+                   <at name="label">LU-P-0101</at>
+                   <at name="icon">
+                    <object classname="com.jeta.forms.store.properties.IconProperty">
+                     <at name="embedded">false</at>
+                     <at name="description"></at>
+                     <at name="width">0</at>
+                     <at name="height">0</at>
+                    </object>
+                   </at>
+                  </object>
+                 </at>
+                </item>
+                <item >
+                 <at name="value">
+                  <object classname="com.jeta.forms.store.properties.ListItemProperty">
+                   <at name="name">listitem</at>
+                   <at name="label">LU-P-0102</at>
+                   <at name="icon">
+                    <object classname="com.jeta.forms.store.properties.IconProperty">
+                     <at name="embedded">false</at>
+                     <at name="description"></at>
+                     <at name="width">0</at>
+                     <at name="height">0</at>
+                    </object>
+                   </at>
+                  </object>
+                 </at>
+                </item>
+               </object>
+              </at>
              </object>
             </at>
             <at name="width">236</at>
             <at name="name">carretera</at>
+            <at name="itemCount">3</at>
             <at name="border">
              <object classname="com.jeta.forms.store.properties.CompoundBorderProperty">
               <super classname="com.jeta.forms.store.properties.BorderProperty">
@@ -515,20 +582,15 @@
          <at name="componentclass">com.jeta.forms.gui.form.StandardComponent</at>
         </super>
         <at name="jetabeanclass">com.jeta.forms.gui.beans.JETABean</at>
-        <at name="beanclass">javax.swing.JComboBox</at>
+        <at name="beanclass">javax.swing.JTextField</at>
         <at name="beanproperties">
          <object classname="com.jeta.forms.store.memento.PropertiesMemento">
-          <at name="classname">javax.swing.JComboBox</at>
+          <at name="classname">javax.swing.JTextField</at>
           <at name="properties">
            <object classname="com.jeta.forms.store.support.PropertyMap">
             <at name="height">20</at>
-            <at name="items">
-             <object classname="com.jeta.forms.store.properties.ItemsProperty">
-              <at name="name">items</at>
-             </object>
-            </at>
             <at name="width">236</at>
-            <at name="name">concello</at>
+            <at name="name"></at>
             <at name="border">
              <object classname="com.jeta.forms.store.properties.CompoundBorderProperty">
               <super classname="com.jeta.forms.store.properties.BorderProperty">

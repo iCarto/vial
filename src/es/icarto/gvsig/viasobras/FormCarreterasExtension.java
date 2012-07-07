@@ -1,26 +1,25 @@
 package es.icarto.gvsig.viasobras;
 
+import com.iver.andami.PluginServices;
 import com.iver.andami.plugins.Extension;
+
+import es.icarto.gvsig.viasobras.info.FormCarreteras;
 
 public class FormCarreterasExtension extends Extension {
 
     public void initialize() {
-	// TODO Auto-generated method stub
-
     }
 
     public void execute(String actionCommand) {
-	// TODO Auto-generated method stub
-
+	FormCarreteras dialog = new FormCarreteras();
+	PluginServices.getMDIManager().addWindow(dialog);
     }
 
     public boolean isEnabled() {
-	// TODO Auto-generated method stub
-	return false;
+	return true;
     }
 
     public boolean isVisible() {
-	// TODO Auto-generated method stub
 	return true;
     }
 

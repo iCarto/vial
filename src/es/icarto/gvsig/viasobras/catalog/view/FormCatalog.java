@@ -37,7 +37,7 @@ import es.icarto.gvsig.viasobras.catalog.view.load.MapLoader;
 import es.icarto.gvsig.viasobras.catalog.view.tables.TramosTableModel;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
-public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
+public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 
     private FormPanel form;
     protected WindowInfo viewInfo = null;
@@ -65,7 +65,7 @@ public class CatalogForm extends JPanel implements IWindow, SingletonWindow {
     private JButton insertTramoPlataforma;
     private JButton deleteTramoPlataforma;
 
-    public CatalogForm() {
+    public FormCatalog() {
 	form = new FormPanel("catalog.xml");
 	initDomainMapper();
 	Catalog.clear();
