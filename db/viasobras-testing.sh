@@ -12,5 +12,5 @@ fi
 
 # Functions for testing purposes
 # ------------------------------
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_pguser \
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_superuser \
     $viasobras_dbname < $pg_tap_install_path
