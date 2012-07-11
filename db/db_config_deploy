@@ -1,0 +1,14 @@
+#!/bin/bash
+
+viasobras_server=192.168.0.12
+viasobras_port=5432
+viasobras_pguser=postgres
+
+viasobras_template=template_postgis
+viasobras_dbname=vias_obras
+
+viasobras_data_orig=/home/amaneiro/03_proxectos_abertos/viasobras/datos/
+
+scp ${viasobras_server}:/usr/share/postgresql/9.1/extension/pgtap--0.90.0.sql /tmp
+
+pg_tap_install_path=/tmp/pgtap--0.90.0.sql
