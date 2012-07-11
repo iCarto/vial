@@ -23,8 +23,8 @@ public class FormCarreteras extends JPanel implements IWindow {
 	    viewInfo = new WindowInfo(WindowInfo.MODELESSDIALOG
 		    | WindowInfo.PALETTE);
 	    viewInfo.setTitle("Vias Obras");
-	    viewInfo.setWidth(550);
-	    viewInfo.setHeight(200);
+	    viewInfo.setWidth(450);
+	    viewInfo.setHeight(300);
 	}
 	return viewInfo;
 
