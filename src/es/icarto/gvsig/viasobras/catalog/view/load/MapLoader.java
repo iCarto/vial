@@ -31,7 +31,7 @@ public class MapLoader {
     public static boolean createMap() {
 	List<Object[]> rows = new ArrayList<Object[]>();
 	Object[] oceano = { "Océano", "oceano", "1", true, null, null, "",
-		"info_base" };
+	"info_base" };
 	Object[] portugal = { "Portugal", "portugal", "2", true, null, null,
 		"", "info_base" };
 	Object[] provincias_galicia = { "Provincias Galicia",
@@ -87,10 +87,8 @@ public class MapLoader {
 	View view = createView();
 	try {
 	    ELLEMap map = MapDAO.getInstance().getMap(view, MAP_NAME,
-		    LoadLegend.NO_LEGEND, "");
-	    String whereCarreteras = WhereAdapter
-		    .getClause(WhereAdapter.CARRETERAS);
-	    map.getLayer("Carreteras").setWhere(whereCarreteras);
+		    LoadLegend.DB_LEGEND, MAP_NAME);
+	    // filter concellos & tramos
 	    String whereConcellos = WhereAdapter
 		    .getClause(WhereAdapter.CONCELLOS);
 	    map.getLayer("Concellos").setWhere(whereConcellos);
