@@ -64,9 +64,9 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/create_schema_inventario.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < datos/inventario/rede_carreteras.sql
+    $viasobras_dbname < datos/inventario/rede_carreteras_tmp.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < datos/inventario/carreteras.sql
+    $viasobras_dbname < funcions/procesar_rede_carreteras.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < datos/inventario/accidentes.sql
 

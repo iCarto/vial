@@ -42,7 +42,7 @@ CREATE TABLE elle._map_overview_style (
 
 COPY elle._map (mapa, nombre_capa, nombre_tabla, posicion, visible, max_escala, min_escala, grupo, schema, localizador) FROM stdin;
 Vías Obras Lugo	Ancho de plataforma	ancho_plataforma	8	t	\N	\N		inventario	\N
-Vías Obras Lugo	Carreteras	carreteras	6	t	\N	\N		inventario	\N
+Vías Obras Lugo	Carreteras	rede_carreteras	6	t	\N	\N		inventario	\N
 Vías Obras Lugo	Concellos	concellos	5	t	\N	\N		info_base	\N
 Vías Obras Lugo	Océano	oceano	1	t	\N	\N		info_base	\N
 Vías Obras Lugo	Portugal	portugal	2	t	\N	\N		info_base	\N

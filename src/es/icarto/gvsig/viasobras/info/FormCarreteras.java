@@ -1,37 +1,50 @@
 package es.icarto.gvsig.viasobras.info;
 
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import org.apache.log4j.Logger;
 
+import com.iver.andami.PluginServices;
 import com.iver.andami.ui.mdiManager.IWindow;
-import com.iver.andami.ui.mdiManager.WindowInfo;
+import com.iver.cit.gvsig.fmap.layers.FLyrVect;
 import com.jeta.forms.components.panel.FormPanel;
 
-public class FormCarreteras extends JPanel implements IWindow {
+import es.icarto.gvsig.navtableforms.AbstractForm;
+
+public class FormCarreteras extends AbstractForm implements IWindow {
 
     private FormPanel form;
-    protected WindowInfo viewInfo = null;
 
-    public FormCarreteras() {
-	form = new FormPanel("form-carreteras.xml");
-	JScrollPane scrolledForm = new JScrollPane(form);
-	this.add(scrolledForm);
+    public FormCarreteras(FLyrVect layer) {
+	super(layer);
+	initWindow();
     }
 
-    public WindowInfo getWindowInfo() {
-	if (viewInfo == null) {
-	    viewInfo = new WindowInfo(WindowInfo.MODELESSDIALOG
-		    | WindowInfo.PALETTE);
-	    viewInfo.setTitle("Vias Obras");
-	    viewInfo.setWidth(450);
-	    viewInfo.setHeight(300);
+    private void initWindow() {
+	viewInfo.setHeight(425);
+	viewInfo.setWidth(475);
+	viewInfo.setTitle("Vías Obras: carreteras");
+    }
+
+    @Override
+    protected void fillSpecificValues() {
+    }
+
+    @Override
+    public FormPanel getFormBody() {
+	if (form == null) {
+	    form = new FormPanel("form-carreteras.xml");
 	}
-	return viewInfo;
-
+	return form;
     }
 
-    public Object getWindowProfile() {
-	return null;
+    @Override
+    public Logger getLoggerName() {
+	return Logger.getLogger("CarreterasForm");
+    }
+
+    @Override
+    public String getXMLPath() {
+	return PluginServices.getPluginServices("es.icarto.gvsig.viasobras")
+		.getClassLoader().getResource("viasobras.xml").getPath();
     }
 
 }

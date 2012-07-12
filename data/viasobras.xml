@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <METADATA>
-  <LAYER alias="Example 1">
-    <TABLENAME>example1.shp</TABLENAME>
+  <LAYER alias="Carreteras">
+    <TABLENAME>redes_carreteras</TABLENAME>
+    <PRIMARYKEY>
+    	<PKELEMENT>gid</PKELEMENT>
+    </PRIMARYKEY>
     <RECORDSET>
       <FIELD>
         <FIELDNAME>codigo</FIELDNAME>
-        <VALIDATIONRULE>MANDATORY</VALIDATIONRULE>
-		<VALIDATIONRULE>integer_positive</VALIDATIONRULE>
-      </FIELD>
-      <FIELD>
-        <FIELDNAME>gestion</FIELDNAME>
         <DOMAINREADER>
-	        <DRTYPE>file</DRTYPE>
-	        <DRFILENAME>example1.domain</DRFILENAME>
-	        <DRFILEFIELDALIAS>gestion</DRFILEFIELDALIAS>
+        <DRTYPE>db</DRTYPE>
+        <DRDBTABLE>rede_carreteras</DRDBTABLE>
+        <DRDBCOLUMNVALUE>codigo</DRDBCOLUMNVALUE>
+        <DRDBCOLUMNALIAS>codigo_provincial</DRDBCOLUMNALIAS>
         </DOMAINREADER>
       </FIELD>
     </RECORDSET>

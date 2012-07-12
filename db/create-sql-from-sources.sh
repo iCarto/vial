@@ -34,4 +34,4 @@ shp2pgsql -d -W iso-8859-1 \
     inventario.inventario > datos/inventario/inventario.sql
 shp2pgsql -d -g the_geom -W iso-8859-1 -s 23029 -I \
     ${viasobras_data_orig}/inventario/rede_carreteras/Vias_Provinciales_datos \
-    inventario.rede_carreteras > datos/inventario/rede_carreteras.sql
+    inventario.rede_carreteras_tmp > datos/inventario/rede_carreteras_tmp.sql

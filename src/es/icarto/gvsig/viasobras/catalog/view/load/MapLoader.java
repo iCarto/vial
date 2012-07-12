@@ -40,7 +40,7 @@ public class MapLoader {
 		"provincias_limitrofes", "4", true, null, null, "", "info_base" };
 	Object[] concellos = { "Concellos", "concellos", "5", true, null,
 		null, "", "info_base" };
-	Object[] carreteras = { "Carreteras", "carreteras", "6",
+	Object[] carreteras = { "Carreteras", "rede_carreteras", "6",
 		true, null, null, "", "inventario" };
 	Object[] pavimento = { "Tipo de pavimento", "tipo_pavimento", "7",
 		true, null, null, "", "inventario" };

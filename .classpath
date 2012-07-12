@@ -14,7 +14,7 @@
 	<classpathentry kind="lib" path="lib/postgresql-8.4-703.jdbc4.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-api-1.5.10.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-simple-1.5.10.jar"/>
-	<classpathentry kind="lib" path="lib/es.icarto.gvsig.navtableforms.jar"/>
+	<classpathentry kind="lib" path="lib/es.icarto.gvsig.navtableforms.jar" sourcepath="/extNavTableForms/src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/extELLE"/>
 	<classpathentry kind="lib" path="/libFMap/lib/driver-manager-1.1.jar" sourcepath="/libDriverManager"/>
