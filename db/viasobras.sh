@@ -116,3 +116,7 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
 #Create triggers
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/create_triggers.sql
+
+# Actuaciones
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname < funcions/create_actuacions.sql

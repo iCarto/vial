@@ -17,4 +17,21 @@
       </FIELD>
     </RECORDSET>
   </LAYER>
+  <LAYER alias="Actuaciones">
+    <TABLENAME>actuacions</TABLENAME>
+    <PRIMARYKEY>
+    	<PKELEMENT>id</PKELEMENT>
+    </PRIMARYKEY>
+    <RECORDSET>
+      <FIELD>
+        <FIELDNAME>codigo_carretera</FIELDNAME>
+        <DOMAINREADER>
+        <DRTYPE>db</DRTYPE>
+        <DRDBTABLE>rede_carreteras</DRDBTABLE>
+        <DRDBCOLUMNVALUE>codigo</DRDBCOLUMNVALUE>
+        <DRDBCOLUMNALIAS>codigo_provincial</DRDBCOLUMNALIAS>
+        </DOMAINREADER>
+      </FIELD>
+    </RECORDSET>
+  </LAYER>
 </METADATA>
