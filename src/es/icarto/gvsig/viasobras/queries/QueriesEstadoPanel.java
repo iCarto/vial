@@ -118,9 +118,9 @@ public class QueriesEstadoPanel extends gvWindow {
 	} catch (SQLException e) {
 	    carreteras.removeAllItems();
 	    carreteras.addItem(Catalog.CARRETERA_ALL);
+	    System.out.println(e.getMessage());
 	    NotificationManager.addError(e);
 	}
-
     }
 
     private void fillConcellos() {
@@ -133,6 +133,7 @@ public class QueriesEstadoPanel extends gvWindow {
 	} catch (SQLException e) {
 	    concellos.removeAllItems();
 	    concellos.addItem(Catalog.CONCELLO_ALL);
+	    System.out.println(e.getMessage());
 	    NotificationManager.addError(e);
 	}
     }

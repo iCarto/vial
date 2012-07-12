@@ -214,6 +214,7 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	} catch (SQLException e) {
 	    carreteras.removeAllItems();
 	    carreteras.addItem(Catalog.CARRETERA_ALL);
+	    System.out.println(e.getMessage());
 	    NotificationManager.addError(e);
 	}
     }
@@ -228,6 +229,7 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	} catch (SQLException e) {
 	    concellos.removeAllItems();
 	    concellos.addItem(Catalog.CONCELLO_ALL);
+	    System.out.println(e.getMessage());
 	    NotificationManager.addError(e);
 	}
     }

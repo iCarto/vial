@@ -30,11 +30,11 @@ public class CarreterasMapper extends DomainMapper {
 	try {
 	    stmt = c.createStatement();
 	    ResultSet rs = stmt
-		    .executeQuery("SELECT codigo, código_pr FROM inventario.rede_carreteras ORDER BY codigo");
+		    .executeQuery("SELECT codigo, codigo_provincial FROM inventario.rede_carreteras ORDER BY codigo");
 	    int cIndex = 0;
 	    while (rs.next()) {
 		String code = rs.getString("codigo");
-		String value = rs.getString("código_pr");
+		String value = rs.getString("codigo_provincial");
 		carreteras.add(new Carretera(code, value));
 		indexes.put(code, cIndex);
 		cIndex++;
