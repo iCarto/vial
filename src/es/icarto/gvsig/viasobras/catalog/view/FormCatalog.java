@@ -300,6 +300,7 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	    try {
 		((TramosTableModel) tipoPavimentoModel).saveChanges();
 		((TramosTableModel) anchoPlataformaModel).saveChanges();
+		doSearch();
 	    } catch (SQLException e1) {
 		NotificationManager.addError(e1);
 	    }
@@ -329,11 +330,11 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	    doSearch();
 	}
 
-	private void doSearch() {
-	    setPKOnCatalog();
-	    fillTables();
-	}
+    }
 
+    private void doSearch() {
+	setPKOnCatalog();
+	fillTables();
     }
 
     private final class ConcelloListener implements ItemListener {

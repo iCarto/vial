@@ -41,8 +41,8 @@ public class Tramos implements Iterable<Tramo> {
 	tramos.remove(index);
     }
 
-    public void save() throws SQLException {
-	TramosPavimentoMapper.save(this);
+    public Tramos save() throws SQLException {
+	return TramosPavimentoMapper.save(this);
     }
 
     public Iterator<Tramo> iterator() {

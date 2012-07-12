@@ -109,7 +109,7 @@ public class TramosPavimentoMapper extends DomainMapper {
 	return new Tramos(TramosPavimentoMapper.toList(frs));
     }
 
-    public static void save(Tramos ts) throws SQLException {
+    public static Tramos save(Tramos ts) throws SQLException {
 	Connection c = DomainMapper.getConnection();
 	c.setAutoCommit(false);
 	for (Tramo t : ts) {
@@ -145,7 +145,7 @@ public class TramosPavimentoMapper extends DomainMapper {
 	// update them. TODO: make INSERT operations by means of CachedRowSet
 	// tramos and these steps may be deleted
 	tramos = null;
-	findAll();
+	return findAll();
     }
 
     private static List<Tramo> toList(ResultSet rs) throws SQLException {

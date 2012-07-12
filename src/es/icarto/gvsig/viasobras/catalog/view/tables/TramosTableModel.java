@@ -65,7 +65,11 @@ public class TramosTableModel extends AbstractTableModel {
     public void setValueAt(Object value, int row, int col) {
 	int rowInTramos = rows.get(row);
 	tramos.getFromList(rowInTramos).setProperty(col, value);
-	tramos.getFromList(rowInTramos).setStatus(Tramo.STATUS_UPDATE);
+	int status = tramos.getFromList(rowInTramos).getStatus();
+	if ((status == Tramo.STATUS_ORIGINAL)
+		|| (status == Tramo.STATUS_UPDATE)) {
+	    tramos.getFromList(rowInTramos).setStatus(Tramo.STATUS_UPDATE);
+	}
 	this.fireTableCellUpdated(row, col);
     }
 
@@ -85,8 +89,10 @@ public class TramosTableModel extends AbstractTableModel {
 	return id;
     }
 
-    public void saveChanges() throws SQLException {
-	tramos.save();
+    public boolean saveChanges() throws SQLException {
+	this.tramos = tramos.save();
+	initMetaData();
+	return true;
     }
 
 }
