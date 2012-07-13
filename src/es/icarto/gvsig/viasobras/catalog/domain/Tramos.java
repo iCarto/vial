@@ -6,15 +6,17 @@ import java.util.List;
 
 import javax.swing.table.TableModel;
 
-import es.icarto.gvsig.viasobras.catalog.domain.mappers.TramosPavimentoMapper;
+import es.icarto.gvsig.viasobras.catalog.domain.mappers.TramosMapper;
 import es.icarto.gvsig.viasobras.catalog.view.tables.TramosTableModel;
 
 public class Tramos implements Iterable<Tramo> {
 
     private TableModel tm;
     private List<Tramo> tramos;
+    private TramosMapper mapper;
 
-    public Tramos(List<Tramo> tramos) {
+    public Tramos(TramosMapper mapper, List<Tramo> tramos) {
+	this.mapper = mapper;
 	this.tramos = tramos;
 	this.tm = new TramosTableModel(this);
     }
@@ -42,7 +44,7 @@ public class Tramos implements Iterable<Tramo> {
     }
 
     public Tramos save() throws SQLException {
-	return TramosPavimentoMapper.save(this);
+	return mapper.save(this);
     }
 
     public Iterator<Tramo> iterator() {

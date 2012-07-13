@@ -18,6 +18,9 @@ public class Catalog {
     private static double pkStart = PK_NONE;
     private static double pkEnd = PK_NONE;
 
+    private static TramosPavimentoMapper pavimentoMapper;
+    private static TramosPlataformaMapper plataformaMapper;
+
     public static Carreteras getCarreteras() throws SQLException {
 	return CarreterasMapper.findAll();
     }
@@ -34,37 +37,39 @@ public class Catalog {
 
     public static Tramos getTramosTipoPavimento() throws SQLException {
 	Tramos tramos;
+	pavimentoMapper = new TramosPavimentoMapper();
 	if ((carretera == CARRETERA_ALL) && (concello == CONCELLO_ALL)) {
-	    tramos = TramosPavimentoMapper.findAll();
+	    tramos = pavimentoMapper.findAll();
 	} else if ((carretera == CARRETERA_ALL) && (concello != CONCELLO_ALL)) {
-	    tramos = TramosPavimentoMapper.findWhereConcello(concello);
+	    tramos = pavimentoMapper.findWhereConcello(concello);
 	} else if ((carretera != CARRETERA_ALL) && (concello == CONCELLO_ALL)
 		&& ((pkStart != PK_NONE) || (pkEnd != PK_NONE))) {
-	    tramos = TramosPavimentoMapper.findWhereCarretera(carretera,
-		    pkStart, pkEnd);
+	    tramos = pavimentoMapper.findWhereCarretera(carretera, pkStart,
+		    pkEnd);
 	} else if ((carretera != CARRETERA_ALL) && (concello == CONCELLO_ALL)) {
-	    tramos = TramosPavimentoMapper.findWhereCarretera(carretera);
+	    tramos = pavimentoMapper.findWhereCarretera(carretera);
 	} else {
-	    tramos = TramosPavimentoMapper.findWhereCarreteraAndConcello(
-		    carretera, concello);
+	    tramos = pavimentoMapper.findWhereCarreteraAndConcello(carretera,
+		    concello);
 	}
 	return tramos;
     }
 
     public static Tramos getTramosAnchoPlataforma() throws SQLException {
 	Tramos tramos;
+	plataformaMapper = new TramosPlataformaMapper();
 	if ((carretera == CARRETERA_ALL) && (concello == CONCELLO_ALL)) {
-	    tramos = TramosPlataformaMapper.findAll();
+	    tramos = plataformaMapper.findAll();
 	} else if ((carretera == CARRETERA_ALL) && (concello != CONCELLO_ALL)) {
-	    tramos = TramosPlataformaMapper.findWhereConcello(concello);
+	    tramos = plataformaMapper.findWhereConcello(concello);
 	} else if ((carretera != CARRETERA_ALL) && (concello == CONCELLO_ALL)
 		&& ((pkStart != PK_NONE) || (pkEnd != PK_NONE))) {
-	    tramos = TramosPlataformaMapper.findWhereCarretera(carretera,
+	    tramos = plataformaMapper.findWhereCarretera(carretera,
 		    pkStart, pkEnd);
 	} else if ((carretera != CARRETERA_ALL) && (concello == CONCELLO_ALL)) {
-	    tramos = TramosPlataformaMapper.findWhereCarretera(carretera);
+	    tramos = plataformaMapper.findWhereCarretera(carretera);
 	} else {
-	    tramos = TramosPlataformaMapper.findWhereCarreteraAndConcello(
+	    tramos = plataformaMapper.findWhereCarreteraAndConcello(
 		    carretera, concello);
 	}
 	return tramos;
