@@ -62,21 +62,6 @@ public class Tramos implements Iterable<Tramo> {
 	return tramos.size() - 1;
     }
 
-    /**
-     * Returns tramo by its gid
-     * 
-     * @param id
-     * @return
-     */
-    public Tramo getTramo(int id) {
-	for (Tramo t : tramos) {
-	    if (t.getId().equals(id)) {
-		return t;
-	    }
-	}
-	return null;
-    }
-
     public boolean removeTramo(String id) {
 	if (id.equals(Tramo.NO_GID)) {
 	    return false;
@@ -89,4 +74,26 @@ public class Tramos implements Iterable<Tramo> {
 	}
 	return false;
     }
+
+    public void updateTramo(String id, int propertyIndex, Object propertyValue) {
+	Tramo t = this.getTramo(id);
+	t.setProperty(propertyIndex, propertyValue);
+	int status = t.getStatus();
+	if ((status == Tramo.STATUS_ORIGINAL)
+		|| (status == Tramo.STATUS_UPDATE)) {
+	    // if tramo has INSERT status we should not set as UPDATE,
+	    // as it will affect how mapper will process it
+	    this.getTramo(id).setStatus(Tramo.STATUS_UPDATE);
+	}
+    }
+
+    private Tramo getTramo(String id) {
+	for (Tramo t : tramos) {
+	    if (t.getId().equals(id)) {
+		return t;
+	    }
+	}
+	return null;
+    }
+
 }
