@@ -21,6 +21,8 @@ INSERT INTO inventario.ancho_plataforma (
 UPDATE inventario.ancho_plataforma SET municipio = c.codigo
        FROM inventario.municipio_codigo AS c
        WHERE inventario.ancho_plataforma.nombre = c.nombre;
+DELETE FROM inventario.ancho_plataforma WHERE
+       origentram IS NULL AND finaltramo IS NULL;
 
 -- INSERT INTO inventario.ancho_plataforma (
 --        SELECT nextval('inventario.ancho_plataforma_gid_seq'),
@@ -67,6 +69,8 @@ INSERT INTO inventario.tipo_pavimento(
 UPDATE inventario.tipo_pavimento SET municipio = c.codigo
        FROM inventario.municipio_codigo AS c
        WHERE inventario.tipo_pavimento.nombre = c.nombre;
+DELETE FROM inventario.tipo_pavimento WHERE
+       origenpavi IS NULL AND finalpavim IS NULL;
 
 -- INSERT INTO inventario.tipo_pavimento(
 --        SELECT nextval('inventario.tipo_pavimento_gid_seq'),
