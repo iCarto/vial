@@ -63,7 +63,7 @@ public class ConcellosMapper extends DomainMapper {
 	rs.beforeFirst();
 	while (rs.next()) {
 	    Concello concello = new Concello(rs.getString("codigo"),
-		    rs.getString("nombre"));
+		    rs.getString("codigo") + " - " + rs.getString("nombre"));
 	    cs.add(concello);
 	}
 	return cs;
