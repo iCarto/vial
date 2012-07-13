@@ -15,6 +15,7 @@ import javax.sql.rowset.FilteredRowSet;
 import com.sun.rowset.CachedRowSetImpl;
 import com.sun.rowset.FilteredRowSetImpl;
 
+import es.icarto.gvsig.viasobras.catalog.domain.Catalog;
 import es.icarto.gvsig.viasobras.catalog.domain.Tramo;
 import es.icarto.gvsig.viasobras.catalog.domain.Tramos;
 import es.icarto.gvsig.viasobras.catalog.domain.filters.TramosFilter;
@@ -122,8 +123,7 @@ public class TramosPlataformaMapper extends DomainMapper implements
 		tramos.updateString(CONCELLO_FIELDNAME, t.getConcello());
 		tramos.updateDouble(PK_START_FIELDNAME, t.getPkStart());
 		tramos.updateDouble(PK_END_FIELDNAME, t.getPkEnd());
-		tramos.updateDouble(CARACTERISTICA_FIELDNAME,
-			Double.parseDouble(t.getValue()));
+		tramos.updateDouble(CARACTERISTICA_FIELDNAME, getDouble(t));
 		tramos.updateRow();
 	    } else if (t.getStatus() == Tramo.STATUS_DELETE) {
 		tramos.absolute(indexRegister.get(t.getId()));
@@ -136,7 +136,7 @@ public class TramosPlataformaMapper extends DomainMapper implements
 			.prepareStatement("INSERT INTO inventario.ancho_plataforma (carretera, municipio, ancho_plataforma, origentram, finaltramo) VALUES(?, ?, ?, ?, ?)");
 		st.setString(1, t.getCarretera());
 		st.setString(2, t.getConcello().toString());
-		st.setDouble(3, Double.parseDouble(t.getValue()));
+		st.setDouble(3, getDouble(t));
 		st.setDouble(4, t.getPkStart());
 		st.setDouble(5, t.getPkEnd());
 		// System.out.println("Query: " + st.toString());
@@ -150,6 +150,16 @@ public class TramosPlataformaMapper extends DomainMapper implements
 	// tramos and these steps may be deleted
 	tramos = null;
 	return findAll();
+    }
+
+    private double getDouble(Tramo t) {
+	double d;
+	try {
+	    d = Double.parseDouble(t.getValue());
+	    return d;
+	} catch (NumberFormatException e) {
+	    return Catalog.PK_NONE;
+	}
     }
 
     private List<Tramo> toList(ResultSet rs) throws SQLException {

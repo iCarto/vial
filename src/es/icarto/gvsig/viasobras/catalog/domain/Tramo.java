@@ -131,10 +131,10 @@ public class Tramo {
     public void setProperty(int index, Object value) {
 	switch (index) {
 	case PROPERTY_PK_START:
-	    setPkStart(Double.parseDouble((String) value));
+	    setPkStart(getDouble(value));
 	    break;
 	case PROPERTY_PK_END:
-	    setPkEnd(Double.parseDouble((String) value));
+	    setPkEnd(getDouble(value));
 	    break;
 	case PROPERTY_CONCELLO:
 	    setConcello((String) value);
@@ -150,4 +150,13 @@ public class Tramo {
 	}
     }
 
+    private double getDouble(Object value) {
+	double d;
+	try {
+	    d = Double.parseDouble((String) value);
+	    return d;
+	} catch (NumberFormatException e) {
+	    return Catalog.PK_NONE;
+	}
+    }
 }
