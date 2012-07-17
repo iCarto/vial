@@ -19,7 +19,11 @@ import es.icarto.gvsig.viasobras.catalog.domain.mappers.DomainMapper;
 
 public class CatalogEditTests {
 
-    static Connection c;
+    private static Connection c;
+    private static String carreteraPlataforma;
+    private static String concelloPlataforma;
+    private static String carreteraPavimento;
+    private static String concelloPavimento;
 
     @BeforeClass
     public static void connectToDatabase() throws SQLException {
@@ -31,18 +35,46 @@ public class CatalogEditTests {
 	p.setProperty("username", "viasobras");
 	p.setProperty("password", "viasobras");
 	DomainMapper.setConnection(c, p);
+	setCarreteraAndConcelloForPlataforma();
+	setCarreteraAndConcelloForPavimento();
+    }
+
+    private static void setCarreteraAndConcelloForPlataforma()
+	    throws SQLException {
+	// use the area (carretera, concello) with more tramos
+	String sql = "SELECT codigo_carretera, codigo_concello, COUNT(gid) AS tramos_count FROM inventario.ancho_plataforma GROUP BY codigo_carretera, codigo_concello ORDER BY tramos_count DESC LIMIT 1";
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt.executeQuery(sql);
+	rs.next();
+	carreteraPlataforma = rs.getString("codigo_carretera");
+	concelloPlataforma = rs.getString("codigo_concello");
+    }
+
+    private static void setCarreteraAndConcelloForPavimento()
+	    throws SQLException {
+	// use the area (carretera, concello) with more tramos
+	String sql = "SELECT codigo_carretera, codigo_concello, COUNT(gid) AS tramos_count FROM inventario.tipo_pavimento GROUP BY codigo_carretera, codigo_concello ORDER BY tramos_count DESC LIMIT 1";
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt.executeQuery(sql);
+	rs.next();
+	carreteraPavimento = rs.getString("codigo_carretera");
+	concelloPavimento = rs.getString("codigo_concello");
     }
 
     @Test
     public void testPavimentoDelete() throws SQLException {
-	String carretera = "4606";
-	String concello = "27018";
+	String carretera = carreteraPavimento;
+	String concello = concelloPavimento;
 	String gid = deleteLastTramoPavimento(carretera, concello);
 
 	// check if the later made effect
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT gid FROM inventario.tipo_pavimento WHERE codigo_carretera = '4606' AND codigo_concello = '27018'");
+		.executeQuery("SELECT gid FROM inventario.tipo_pavimento WHERE codigo_carretera = '"
+			+ carretera
+			+ "' AND codigo_concello = '"
+			+ concello
+			+ "'");
 	boolean updated = true;
 	while (rs.next()) {
 	    if (Integer.toString(rs.getInt("gid")).equals(gid)) {
@@ -55,14 +87,18 @@ public class CatalogEditTests {
 
     @Test
     public void testPlataformaDelete() throws SQLException {
-	String carretera = "4606";
-	String concello = "27018";
+	String carretera = carreteraPlataforma;
+	String concello = concelloPlataforma;
 	String gid = deleteLastTramoPlataforma(carretera, concello);
 
 	// check if the later made effect
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT gid FROM inventario.ancho_plataforma WHERE codigo_carretera = '4606' AND codigo_concello = '27018'");
+		.executeQuery("SELECT gid FROM inventario.ancho_plataforma WHERE codigo_carretera = '"
+			+ carretera
+			+ "' AND codigo_concello = '"
+			+ concello
+			+ "'");
 	boolean updated = true;
 	while (rs.next()) {
 	    if (Integer.toString(rs.getInt("gid")).equals(gid)) {
@@ -75,14 +111,19 @@ public class CatalogEditTests {
 
     @Test
     public void testPavimentoUpdate() throws SQLException {
-	String carretera = "4606";
-	String concello = "27018";
-	String myValue = updateTramoPavimento(carretera, concello);
+	String carretera = carreteraPavimento;
+	String concello = concelloPavimento;
+	String myValue = "B";
+	updateTramoPavimento(carretera, concello, myValue);
 
 	// check if the later made effect
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT valor FROM inventario.tipo_pavimento WHERE codigo_carretera = '4606' AND codigo_concello = '27018'");
+		.executeQuery("SELECT valor FROM inventario.tipo_pavimento WHERE codigo_carretera = '"
+			+ carretera
+			+ "' AND codigo_concello = '"
+			+ concello
+			+ "'");
 	boolean updated = true;
 	while (rs.next()) {
 	    if (!rs.getString("valor").equals(myValue)) {
@@ -94,15 +135,19 @@ public class CatalogEditTests {
 
     @Test
     public void testPlataformaUpdate() throws SQLException {
-	String carretera = "4606";
-	String concello = "27018";
+	String carretera = carreteraPlataforma;
+	String concello = concelloPlataforma;
 	String value = "666";
 	updateTramoPlataforma(carretera, concello, value);
 
 	// check if the later made effect
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT valor FROM inventario.ancho_plataforma WHERE codigo_carretera = '4606' AND codigo_concello = '27018'");
+		.executeQuery("SELECT valor FROM inventario.ancho_plataforma WHERE codigo_carretera = '"
+			+ carretera
+			+ "' AND codigo_concello = '"
+			+ concello
+			+ "'");
 	boolean updated = true;
 	while (rs.next()) {
 	    if (rs.getDouble("valor") != Double.parseDouble(value)) {
@@ -114,26 +159,36 @@ public class CatalogEditTests {
 
     @Test
     public void testPavimentoInsert() throws SQLException {
-	int tramosNumber = insertTramoPavimento();
+	String carretera = carreteraPavimento;
+	String concello = concelloPavimento;
+	int tramosNumber = insertTramoPavimento(carretera, concello);
 
 	// check if the later made effect
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT COUNT(*) AS rowNumber FROM inventario.tipo_pavimento WHERE codigo_carretera = '4606' AND codigo_concello = '27018'");
+		.executeQuery("SELECT COUNT(*) AS rowNumber FROM inventario.tipo_pavimento WHERE codigo_carretera = '"
+			+ carretera
+			+ "' AND codigo_concello = '"
+			+ concello
+			+ "'");
 	rs.next();
 	assertEquals(tramosNumber, rs.getInt("rowNumber"));
     }
 
     @Test
     public void testPlataformaInsert() throws SQLException {
-	String carretera = "4606";
-	String concello = "27018";
+	String carretera = carreteraPlataforma;
+	String concello = concelloPlataforma;
 	int tramosNumber = insertTramoPlataforma(carretera, concello);
 
 	// check if the later made effect
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT COUNT(*) AS rowNumber FROM inventario.ancho_plataforma WHERE codigo_carretera = '4606' AND codigo_concello = '27018'");
+		.executeQuery("SELECT COUNT(*) AS rowNumber FROM inventario.ancho_plataforma WHERE codigo_carretera = '"
+			+ carretera
+			+ "' AND codigo_concello = '"
+			+ concello
+			+ "'");
 	rs.next();
 	assertEquals(tramosNumber, rs.getInt("rowNumber"));
     }
@@ -141,16 +196,20 @@ public class CatalogEditTests {
     @Test
     public void testTramosAreSinchronizedAfterCRUDOperations()
 	    throws SQLException {
-	insertTramoPavimento();
-	String carretera = "4606";
-	String concello = "27018";
+	String carretera = carreteraPavimento;
+	String concello = concelloPavimento;
+	insertTramoPavimento(carretera, concello);
 	// should delete the recently created tramo
 	String gid = deleteLastTramoPavimento(carretera, concello);
 
 	// check if the later made effect
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT gid FROM inventario.tipo_pavimento WHERE codigo_carretera = '4606' AND codigo_concello = '27018'");
+		.executeQuery("SELECT gid FROM inventario.tipo_pavimento WHERE codigo_carretera = '"
+			+ carretera
+			+ "' AND codigo_concello = '"
+			+ concello
+			+ "'");
 	boolean updated = true;
 	while (rs.next()) {
 	    if (Integer.toString(rs.getInt("gid")).equals(gid)) {
@@ -163,7 +222,7 @@ public class CatalogEditTests {
 
     private String deleteLastTramoPlataforma(String carretera, String concello)
 	    throws SQLException {
-	String gid = getLastIdPlataforma();
+	String gid = getLastIdPlataforma(carretera, concello);
 
 	// add new tramo
 	Catalog.clear();
@@ -177,7 +236,7 @@ public class CatalogEditTests {
 
     private String deleteLastTramoPavimento(String carretera, String concello)
 	    throws SQLException {
-	String gid = getLastIdPavimento();
+	String gid = getLastIdPavimento(carretera, concello);
 
 	// add new tramo
 	Catalog.clear();
@@ -204,9 +263,9 @@ public class CatalogEditTests {
 	anchoPlataforma.save();
     }
 
-    private String updateTramoPavimento(String carretera, String concello)
-	    throws SQLException {
-	String myValue = "B";
+    private void updateTramoPavimento(String carretera, String concello,
+	    String value)
+		    throws SQLException {
 
 	// modify and save tramos
 	Catalog.clear();
@@ -214,16 +273,14 @@ public class CatalogEditTests {
 	Catalog.setConcello(concello);
 	Tramos tipoPavimento = Catalog.getTramosTipoPavimento();
 	for (Tramo t : tipoPavimento) {
-	    t.setValue(myValue);
+	    t.setValue(value);
 	    t.setStatus(Tramo.STATUS_UPDATE);
 	}
 	tipoPavimento.save();
-	return myValue;
     }
 
-    private int insertTramoPavimento() throws SQLException {
-	String carretera = "4606";
-	String concello = "27018";
+    private int insertTramoPavimento(String carretera, String concello)
+	    throws SQLException {
 	double pkStart = 10.2;
 	double pkEnd = 10.4;
 	String myValue = "foo";
@@ -268,18 +325,24 @@ public class CatalogEditTests {
 	return tramosNumber;
     }
 
-    private String getLastIdPlataforma() throws SQLException {
+    private String getLastIdPlataforma(String carretera, String concello)
+	    throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT gid FROM inventario.ancho_plataforma WHERE codigo_carretera = '4606' AND codigo_concello = '27018' ORDER BY gid DESC LIMIT 1");
+		.executeQuery("SELECT gid FROM inventario.ancho_plataforma WHERE codigo_carretera = '"+carretera+"' AND codigo_concello = '"+concello+"' ORDER BY gid DESC LIMIT 1");
 	rs.next();
 	return Integer.toString(rs.getInt("gid"));
     }
 
-    private String getLastIdPavimento() throws SQLException {
+    private String getLastIdPavimento(String carretera, String concello)
+	    throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT gid FROM inventario.tipo_pavimento WHERE codigo_carretera = '4606' AND codigo_concello = '27018' ORDER BY gid DESC LIMIT 1");
+		.executeQuery("SELECT gid FROM inventario.tipo_pavimento WHERE codigo_carretera = '"
+			+ carretera
+			+ "' AND codigo_concello = '"
+			+ concello
+			+ "' ORDER BY gid DESC LIMIT 1");
 	rs.next();
 	return Integer.toString(rs.getInt("gid"));
     }
