@@ -15,20 +15,22 @@ import javax.sql.rowset.FilteredRowSet;
 import com.sun.rowset.CachedRowSetImpl;
 import com.sun.rowset.FilteredRowSetImpl;
 
+import es.icarto.gvsig.viasobras.catalog.domain.Catalog;
 import es.icarto.gvsig.viasobras.catalog.domain.Tramo;
 import es.icarto.gvsig.viasobras.catalog.domain.Tramos;
 import es.icarto.gvsig.viasobras.catalog.domain.filters.TramosFilter;
 import es.icarto.gvsig.viasobras.catalog.domain.filters.TramosFilterCarreteraConcello;
 import es.icarto.gvsig.viasobras.catalog.domain.filters.TramosFilterPK;
 
-public class TramosPavimentoMapper extends DomainMapper implements TramosMapper {
+public class TramosMapperPlataforma extends DomainMapper implements
+	TramosMapper {
 
     private static final String ID_FIELDNAME = "gid";
-    private static final String CARACTERISTICA_FIELDNAME = "tipopavime";
     public static final String CARRETERA_FIELDNAME = "carretera";
     public static final String CONCELLO_FIELDNAME = "municipio";
-    public static final String PK_START_FIELDNAME = "origenpavi";
-    public static final String PK_END_FIELDNAME = "finalpavim";
+    public static final String PK_START_FIELDNAME = "origentram";
+    public static final String PK_END_FIELDNAME = "finaltramo";
+    private static final String CARACTERISTICA_FIELDNAME = "ancho_plataforma";
 
     // tramos and the register are shared within all mappers of this kind
     private static CachedRowSet tramos;
@@ -38,21 +40,21 @@ public class TramosPavimentoMapper extends DomainMapper implements TramosMapper 
 	if (tramos != null) {
 	    return new Tramos(this, toList(tramos));
 	}
+	// "WHERE gid = gid" is needed to avoid errors, as it seems -in
+	// JDBC- an ORDER clause cannot be used without WHERE
+	String sqlQuery = "SELECT gid, carretera, municipio, ancho_plataforma, origentram, finaltramo "
+		+ " FROM inventario.ancho_plataforma "
+		+ " WHERE gid = gid ORDER BY origentram";
+	Connection c = DomainMapper.getConnection();
 	try {
-	    // "WHERE gid = gid" is needed to avoid errors, as it seems -in
-	    // JDBC- an ORDER clause cannot be used without WHERE
-	    String query = "SELECT gid, carretera, municipio, tipopavime, origenpavi, finalpavim "
-		    + "FROM inventario.tipo_pavimento "
-		    + "WHERE gid = gid ORDER BY origenpavi";
-	    Connection c = DomainMapper.getConnection();
 	    Statement stmt = c.createStatement();
-	    ResultSet rs = stmt.executeQuery(query);
+	    ResultSet rs = stmt.executeQuery(sqlQuery);
 	    tramos = new CachedRowSetImpl();
 	    tramos.populate(rs);
 	    tramos.setUrl(DomainMapper.getURL());
 	    tramos.setUsername(DomainMapper.getUserName());
 	    tramos.setPassword(DomainMapper.getPwd());
-	    tramos.setCommand(query);
+	    tramos.setCommand(sqlQuery);
 	    int[] keys = { 1 }; // primary key index = gid column index
 	    tramos.setKeyColumns(keys);// set primary key
 	    indexRegister = getIndexRegister(tramos);
@@ -79,7 +81,7 @@ public class TramosPavimentoMapper extends DomainMapper implements TramosMapper 
 	    double pkEnd) throws SQLException {
 	FilteredRowSet frs = new FilteredRowSetImpl();
 	if (tramos == null) {
-	    findAll();
+	    findAll();// will fill tramos
 	}
 	tramos.beforeFirst();
 	frs.populate((ResultSet) tramos);
@@ -121,7 +123,7 @@ public class TramosPavimentoMapper extends DomainMapper implements TramosMapper 
 		tramos.updateString(CONCELLO_FIELDNAME, t.getConcello());
 		tramos.updateDouble(PK_START_FIELDNAME, t.getPkStart());
 		tramos.updateDouble(PK_END_FIELDNAME, t.getPkEnd());
-		tramos.updateString(CARACTERISTICA_FIELDNAME, t.getValue());
+		tramos.updateDouble(CARACTERISTICA_FIELDNAME, getDouble(t));
 		tramos.updateRow();
 	    } else if (t.getStatus() == Tramo.STATUS_DELETE) {
 		tramos.absolute(indexRegister.get(t.getId()));
@@ -131,10 +133,10 @@ public class TramosPavimentoMapper extends DomainMapper implements TramosMapper 
 		// TODO: insert by means of updating tramos, so it gets updated
 		// without having to launch the query -findAll()- again
 		PreparedStatement st = c
-			.prepareStatement("INSERT INTO inventario.tipo_pavimento (carretera, municipio, tipopavime, origenpavi, finalpavim) VALUES(?, ?, ?, ?, ?)");
+			.prepareStatement("INSERT INTO inventario.ancho_plataforma (carretera, municipio, ancho_plataforma, origentram, finaltramo) VALUES(?, ?, ?, ?, ?)");
 		st.setString(1, t.getCarretera());
 		st.setString(2, t.getConcello().toString());
-		st.setString(3, t.getValue());
+		st.setDouble(3, getDouble(t));
 		st.setDouble(4, t.getPkStart());
 		st.setDouble(5, t.getPkEnd());
 		// System.out.println("Query: " + st.toString());
@@ -150,6 +152,16 @@ public class TramosPavimentoMapper extends DomainMapper implements TramosMapper 
 	return findAll();
     }
 
+    private double getDouble(Tramo t) {
+	double d;
+	try {
+	    d = Double.parseDouble(t.getValue());
+	    return d;
+	} catch (NumberFormatException e) {
+	    return Catalog.PK_NONE;
+	}
+    }
+
     private List<Tramo> toList(ResultSet rs) throws SQLException {
 	List<Tramo> ts = new ArrayList<Tramo>();
 	rs.beforeFirst();
@@ -160,7 +172,8 @@ public class TramosPavimentoMapper extends DomainMapper implements TramosMapper 
 	    tramo.setPkEnd(rs.getDouble(PK_END_FIELDNAME));
 	    tramo.setCarretera(rs.getString(CARRETERA_FIELDNAME));
 	    tramo.setConcello(rs.getString(CONCELLO_FIELDNAME));
-	    tramo.setValue(rs.getString(CARACTERISTICA_FIELDNAME));
+	    tramo.setValue(Double.toString(rs
+		    .getDouble(CARACTERISTICA_FIELDNAME)));
 	    ts.add(tramo);
 	}
 	return ts;
