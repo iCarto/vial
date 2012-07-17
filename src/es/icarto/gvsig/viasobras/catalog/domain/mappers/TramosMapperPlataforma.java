@@ -16,20 +16,18 @@ public class TramosMapperPlataforma extends TramosMapperAbstract {
     // tramos and the register are shared within all mappers of this kind
     private static CachedRowSet tramos;
     private static HashMap<String, Integer> indexRegister;
+    private static String tableName = "inventario.ancho_plataforma";
 
-    public CachedRowSet getTramos() {
+    public CachedRowSet getTramos() throws SQLException {
+	if (tramos == null) {
+	    tramos = load();
+	}
 	return tramos;
     }
 
     public CachedRowSet load() throws SQLException {
 	try {
-	    // "WHERE gid = gid" is needed to avoid errors, as it seems -in
-	    // JDBC- an ORDER clause cannot be used without WHERE
-	    String sqlQuery = "SELECT gid, codigo_carretera, codigo_concello, valor, pk_inicial, pk_final "
-		    + " FROM inventario.ancho_plataforma "
-		    + " WHERE gid = gid ORDER BY pk_inicial";
-	    int[] primaryKeys = { 1 }; // primary key index = gid column index
-	    tramos = super.getCachedRowSet(sqlQuery, primaryKeys);
+	    tramos = super.getCachedRowSet(tableName);
 	    indexRegister = getIndexRegister(tramos);
 	    return tramos;
 	} catch (SQLException e) {
@@ -59,7 +57,9 @@ public class TramosMapperPlataforma extends TramosMapperAbstract {
 		// TODO: insert by means of updating tramos, so it gets updated
 		// without having to launch the query -findAll()- again
 		PreparedStatement st = c
-			.prepareStatement("INSERT INTO inventario.ancho_plataforma (codigo_carretera, codigo_concello, valor, pk_inicial, pk_final) VALUES(?, ?, ?, ?, ?)");
+			.prepareStatement("INSERT INTO "
+				+ tableName
+				+ " (codigo_carretera, codigo_concello, valor, pk_inicial, pk_final) VALUES(?, ?, ?, ?, ?)");
 		st.setString(1, t.getCarretera());
 		st.setString(2, t.getConcello().toString());
 		st.setString(3, t.getValue());
@@ -75,7 +75,7 @@ public class TramosMapperPlataforma extends TramosMapperAbstract {
 	// update them. TODO: make INSERT operations by means of CachedRowSet
 	// tramos and these steps may be deleted
 	tramos = null;
-	return findAll();
+	return super.findAll();
     }
 
     private HashMap<String, Integer> getIndexRegister(ResultSet rs)

@@ -15,21 +15,19 @@ public class TramosMapperPavimento extends TramosMapperAbstract {
 
     // tramos and the register are shared within all mappers of this kind
     private static CachedRowSet tramos;
+    private String tableName = "inventario.tipo_pavimento";
     private static HashMap<String, Integer> indexRegister;
 
-    public CachedRowSet getTramos() {
+    public CachedRowSet getTramos() throws SQLException {
+	if (tramos == null) {
+	    tramos = load();
+	}
 	return tramos;
     }
 
     public CachedRowSet load() throws SQLException {
 	try {
-	    // "WHERE gid = gid" is needed to avoid errors, as it seems -in
-	    // JDBC- an ORDER clause cannot be used without WHERE
-	    String query = "SELECT gid, codigo_carretera, codigo_concello, valor, pk_inicial, pk_final "
-		    + "FROM inventario.tipo_pavimento "
-		    + "WHERE gid = gid ORDER BY pk_inicial";
-	    int[] primaryKeys = { 1 }; // primary key index = gid column index
-	    tramos = super.getCachedRowSet(query, primaryKeys);
+	    tramos = super.getCachedRowSet(tableName);
 	    indexRegister = getIndexRegister(tramos);
 	    return tramos;
 	} catch (SQLException e) {
@@ -45,11 +43,11 @@ public class TramosMapperPavimento extends TramosMapperAbstract {
 	for (Tramo t : ts) {
 	    if (t.getStatus() == Tramo.STATUS_UPDATE) {
 		tramos.absolute(indexRegister.get(t.getId()));
-		tramos.updateString(TramosMapperAbstract.CARRETERA_FIELDNAME, t.getCarretera());
-		tramos.updateString(TramosMapperAbstract.CONCELLO_FIELDNAME, t.getConcello());
-		tramos.updateDouble(TramosMapperAbstract.PK_START_FIELDNAME, t.getPkStart());
-		tramos.updateDouble(TramosMapperAbstract.PK_END_FIELDNAME, t.getPkEnd());
-		tramos.updateString(TramosMapperAbstract.CARACTERISTICA_FIELDNAME, t.getValue());
+		tramos.updateString(CARRETERA_FIELDNAME, t.getCarretera());
+		tramos.updateString(CONCELLO_FIELDNAME, t.getConcello());
+		tramos.updateDouble(PK_START_FIELDNAME, t.getPkStart());
+		tramos.updateDouble(PK_END_FIELDNAME, t.getPkEnd());
+		tramos.updateString(CARACTERISTICA_FIELDNAME, t.getValue());
 		tramos.updateRow();
 	    } else if (t.getStatus() == Tramo.STATUS_DELETE) {
 		tramos.absolute(indexRegister.get(t.getId()));
@@ -59,7 +57,9 @@ public class TramosMapperPavimento extends TramosMapperAbstract {
 		// TODO: insert by means of updating tramos, so it gets updated
 		// without having to launch the query -findAll()- again
 		PreparedStatement st = c
-			.prepareStatement("INSERT INTO inventario.tipo_pavimento (codigo_carretera, codigo_concello, valor, pk_inicial, pk_final) VALUES(?, ?, ?, ?, ?)");
+			.prepareStatement("INSERT INTO "
+				+ tableName
+				+ " (codigo_carretera, codigo_concello, valor, pk_inicial, pk_final) VALUES(?, ?, ?, ?, ?)");
 		st.setString(1, t.getCarretera());
 		st.setString(2, t.getConcello().toString());
 		st.setString(3, t.getValue());
@@ -83,7 +83,7 @@ public class TramosMapperPavimento extends TramosMapperAbstract {
 	HashMap<String, Integer> register = new HashMap<String, Integer>();
 	rs.beforeFirst();
 	while (rs.next()) {
-	    register.put(Integer.toString(rs.getInt(TramosMapperAbstract.ID_FIELDNAME)), rs.getRow());
+	    register.put(Integer.toString(rs.getInt(ID_FIELDNAME)), rs.getRow());
 	}
 	return register;
     }
