@@ -20,7 +20,7 @@ public class CatalogLoadTests {
     public void connectToDatabase() throws Exception {
 	doSetup();
 	DBSession.createConnection("localhost", 5432, "vias_obras",
-		"inventario", "postgres", "postgres");
+		"inventario", "viasobras", "viasobras");
     }
 
     @Test

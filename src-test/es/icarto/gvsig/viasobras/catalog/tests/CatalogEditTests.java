@@ -24,12 +24,12 @@ public class CatalogEditTests {
     @BeforeClass
     public static void connectToDatabase() throws SQLException {
 	c = DriverManager.getConnection(
-		"jdbc:postgresql://localhost:5432/vias_obras", "postgres",
-		"postgres");
+		"jdbc:postgresql://localhost:5432/vias_obras", "viasobras",
+		"viasobras");
 	Properties p = new Properties();
 	p.setProperty("url", c.getMetaData().getURL());
-	p.setProperty("username", "postgres");
-	p.setProperty("password", "postgres");
+	p.setProperty("username", "viasobras");
+	p.setProperty("password", "viasobras");
 	DomainMapper.setConnection(c, p);
     }
 
@@ -42,7 +42,7 @@ public class CatalogEditTests {
 	// check if the later made effect
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT gid FROM inventario.tipo_pavimento WHERE carretera = '4606' AND municipio = '27018'");
+		.executeQuery("SELECT gid FROM inventario.tipo_pavimento WHERE codigo_carretera = '4606' AND codigo_concello = '27018'");
 	boolean updated = true;
 	while (rs.next()) {
 	    if (Integer.toString(rs.getInt("gid")).equals(gid)) {
@@ -62,7 +62,7 @@ public class CatalogEditTests {
 	// check if the later made effect
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT gid FROM inventario.ancho_plataforma WHERE carretera = '4606' AND municipio = '27018'");
+		.executeQuery("SELECT gid FROM inventario.ancho_plataforma WHERE codigo_carretera = '4606' AND codigo_concello = '27018'");
 	boolean updated = true;
 	while (rs.next()) {
 	    if (Integer.toString(rs.getInt("gid")).equals(gid)) {
@@ -82,10 +82,10 @@ public class CatalogEditTests {
 	// check if the later made effect
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT tipopavime FROM inventario.tipo_pavimento WHERE carretera = '4606' AND municipio = '27018'");
+		.executeQuery("SELECT valor FROM inventario.tipo_pavimento WHERE codigo_carretera = '4606' AND codigo_concello = '27018'");
 	boolean updated = true;
 	while (rs.next()) {
-	    if (!rs.getString("tipopavime").equals(myValue)) {
+	    if (!rs.getString("valor").equals(myValue)) {
 		updated = false;
 	    }
 	}
@@ -102,10 +102,10 @@ public class CatalogEditTests {
 	// check if the later made effect
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT ancho_plataforma FROM inventario.ancho_plataforma WHERE carretera = '4606' AND municipio = '27018'");
+		.executeQuery("SELECT valor FROM inventario.ancho_plataforma WHERE codigo_carretera = '4606' AND codigo_concello = '27018'");
 	boolean updated = true;
 	while (rs.next()) {
-	    if (rs.getDouble("ancho_plataforma") != Double.parseDouble(value)) {
+	    if (rs.getDouble("valor") != Double.parseDouble(value)) {
 		updated = false;
 	    }
 	}
@@ -119,7 +119,7 @@ public class CatalogEditTests {
 	// check if the later made effect
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT COUNT(*) AS rowNumber FROM inventario.tipo_pavimento WHERE carretera = '4606' AND municipio = '27018'");
+		.executeQuery("SELECT COUNT(*) AS rowNumber FROM inventario.tipo_pavimento WHERE codigo_carretera = '4606' AND codigo_concello = '27018'");
 	rs.next();
 	assertEquals(tramosNumber, rs.getInt("rowNumber"));
     }
@@ -133,7 +133,7 @@ public class CatalogEditTests {
 	// check if the later made effect
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT COUNT(*) AS rowNumber FROM inventario.ancho_plataforma WHERE carretera = '4606' AND municipio = '27018'");
+		.executeQuery("SELECT COUNT(*) AS rowNumber FROM inventario.ancho_plataforma WHERE codigo_carretera = '4606' AND codigo_concello = '27018'");
 	rs.next();
 	assertEquals(tramosNumber, rs.getInt("rowNumber"));
     }
@@ -150,7 +150,7 @@ public class CatalogEditTests {
 	// check if the later made effect
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT gid FROM inventario.tipo_pavimento WHERE carretera = '4606' AND municipio = '27018'");
+		.executeQuery("SELECT gid FROM inventario.tipo_pavimento WHERE codigo_carretera = '4606' AND codigo_concello = '27018'");
 	boolean updated = true;
 	while (rs.next()) {
 	    if (Integer.toString(rs.getInt("gid")).equals(gid)) {
@@ -271,7 +271,7 @@ public class CatalogEditTests {
     private String getLastIdPlataforma() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT gid FROM inventario.ancho_plataforma WHERE carretera = '4606' AND municipio = '27018' ORDER BY gid DESC LIMIT 1");
+		.executeQuery("SELECT gid FROM inventario.ancho_plataforma WHERE codigo_carretera = '4606' AND codigo_concello = '27018' ORDER BY gid DESC LIMIT 1");
 	rs.next();
 	return Integer.toString(rs.getInt("gid"));
     }
@@ -279,7 +279,7 @@ public class CatalogEditTests {
     private String getLastIdPavimento() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT gid FROM inventario.tipo_pavimento WHERE carretera = '4606' AND municipio = '27018' ORDER BY gid DESC LIMIT 1");
+		.executeQuery("SELECT gid FROM inventario.tipo_pavimento WHERE codigo_carretera = '4606' AND codigo_concello = '27018' ORDER BY gid DESC LIMIT 1");
 	rs.next();
 	return Integer.toString(rs.getInt("gid"));
     }

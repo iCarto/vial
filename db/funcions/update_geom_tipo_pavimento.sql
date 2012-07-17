@@ -5,21 +5,21 @@ CREATE OR REPLACE FUNCTION inventario.update_geom_tipo_pavimento() RETURNS trigg
 BEGIN
 
         IF (TG_OP = 'UPDATE') THEN
-           IF ((NEW.origenpavi <> OLD.origenpavi) OR (NEW.finalpavim <> OLD.finalpavim)) THEN
+           IF ((NEW.pk_inicial <> OLD.pk_final) OR (NEW.pk_inicial <> OLD.pk_final)) THEN
 
-                  SELECT ST_CollectionExtract(ST_Locate_Between_Measures(c.the_geom, NEW.origenpavi, NEW.finalpavim), 2)
+                  SELECT ST_CollectionExtract(ST_Locate_Between_Measures(c.the_geom, NEW.pk_inicial, NEW.pk_final), 2)
                          INTO NEW.the_geom
                          FROM inventario.rede_carreteras AS c
-                         WHERE c.codigo=NEW.carretera;
+                         WHERE c.codigo=NEW.codigo_carretera;
                   RETURN NEW;
            END IF;
 
         ELSE IF (TG_OP = 'INSERT') THEN
 
-                  SELECT ST_CollectionExtract(ST_Locate_Between_Measures(c.the_geom, NEW.origenpavi, NEW.finalpavim), 2)
+                  SELECT ST_CollectionExtract(ST_Locate_Between_Measures(c.the_geom, NEW.pk_inicial, NEW.pk_final), 2)
                          INTO NEW.the_geom
                          FROM inventario.rede_carreteras AS c
-                         WHERE c.codigo=NEW.carretera;
+                         WHERE c.codigo=NEW.codigo_carretera;
                   RETURN NEW;
 
         END IF;

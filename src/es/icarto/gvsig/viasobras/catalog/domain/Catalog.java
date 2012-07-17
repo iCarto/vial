@@ -64,7 +64,7 @@ public class Catalog {
 	    tramos = plataformaMapper.findWhereConcello(concello);
 	} else if ((carretera != CARRETERA_ALL) && (concello == CONCELLO_ALL)
 		&& ((pkStart != PK_NONE) || (pkEnd != PK_NONE))) {
-	    tramos = plataformaMapper.findWhereCarretera(carretera,
+	    tramos = plataformaMapper.findWhereCarreteraAndPK(carretera,
 		    pkStart, pkEnd);
 	} else if ((carretera != CARRETERA_ALL) && (concello == CONCELLO_ALL)) {
 	    tramos = plataformaMapper.findWhereCarretera(carretera);

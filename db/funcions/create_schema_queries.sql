@@ -15,10 +15,10 @@ CREATE TABLE queries.queries(
 INSERT INTO queries.queries (codigo, descripcion, consulta, haswhere, titulo)
        VALUES ('C1',
        'Longitud de tramos, por ancho de plataforma',
-       'SELECT CASE WHEN ancho_plataforma BETWEEN 0 AND 5 THEN ''0-5''
-                    WHEN ancho_plataforma > 5 AND ancho_plataforma <= 8 THEN ''5-8''
-                    WHEN ancho_plataforma > 8 THEN ''>8'' END AS "Ancho de plataforma",
-               SUM(finaltramo-origentram) AS "Longitud (km)"
+       'SELECT CASE WHEN valor BETWEEN 0 AND 5 THEN ''0-5''
+                    WHEN valor > 5 AND valor <= 8 THEN ''5-8''
+                    WHEN valor > 8 THEN ''>8'' END AS "Ancho de plataforma",
+               SUM(pk_final-pk_inicial) AS "Longitud (km)"
         FROM inventario.ancho_plataforma
         [[WHERE]] GROUP BY 1 ORDER BY 1',
        'NO',
@@ -27,6 +27,6 @@ INSERT INTO queries.queries (codigo, descripcion, consulta, haswhere, titulo)
 INSERT INTO queries.queries (codigo, descripcion, consulta, haswhere, titulo)
        VALUES ('C2',
        'Longitud de tramos, por tipo de pavimento',
-       'SELECT tipopavime, SUM(finalpavim-origenpavi) AS "Longitud" FROM inventario.tipo_pavimento GROUP BY tipopavime ORDER BY tipopavime',
+       'SELECT valor, SUM(pk_final-pk_inicial) AS "Longitud" FROM inventario.tipo_pavimento GROUP BY valor ORDER BY valor',
        'NO',
        'Longitud de tramos, por tipo de pavimento');

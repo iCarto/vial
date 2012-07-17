@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import javax.sql.RowSet;
 import javax.sql.rowset.Predicate;
 
+import es.icarto.gvsig.viasobras.catalog.domain.mappers.TramosMapperAbstract;
+
 public class TramosFilterCarreteraConcello implements Predicate {
 
     private String carretera;
@@ -20,8 +22,11 @@ public class TramosFilterCarreteraConcello implements Predicate {
 	    if ((rs.getRow() == 0) || (rs == null)) {
 		return false;
 	    }
-	    if ((this.carretera.equals(rs.getString("carretera")))
-		    && (this.concello.equals(rs.getString("municipio")))) {
+	    if ((this.carretera.equals(rs
+		    .getString(TramosMapperAbstract.CARRETERA_FIELDNAME)))
+		    && (this.concello
+			    .equals(rs
+				    .getString(TramosMapperAbstract.CONCELLO_FIELDNAME)))) {
 		return true;
 	    } else {
 		return false;

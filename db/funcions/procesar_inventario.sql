@@ -1,28 +1,29 @@
 -- ANCHO PLATAFORMA
 DROP TABLE IF EXISTS inventario.ancho_plataforma;
 CREATE TABLE inventario.ancho_plataforma (
-       "gid" serial PRIMARY KEY,
-       "carretera" varchar(4),
-       "nombre" varchar(21),
-       "municipio" varchar(5),
-       "tramo" varchar(1),
-       "ancho_plataforma" float8,
-       "origentram" float8,
-       "finaltramo" float8
+       gid serial PRIMARY KEY,
+       codigo_carretera varchar(4),
+       codigo_concello varchar(5),
+       nome_concello varchar(21),
+       pk_inicial float8,
+       pk_final float8,
+       valor float8
 );
 
 INSERT INTO inventario.ancho_plataforma (
        SELECT nextval('inventario.ancho_plataforma_gid_seq'),
-              numeroinve, municipio, '', tramo,
-              anchoplata, origentram, finaltramo
+              numeroinve, '', municipio, origentram, finaltramo,
+              anchoplata
        FROM inventario.inventario
        WHERE anchoplata IS NOT NULL
 );
-UPDATE inventario.ancho_plataforma SET municipio = c.codigo
+UPDATE inventario.ancho_plataforma SET codigo_concello = c.codigo
        FROM inventario.municipio_codigo AS c
-       WHERE inventario.ancho_plataforma.nombre = c.nombre;
+       WHERE inventario.ancho_plataforma.nome_concello = c.nombre;
+ALTER TABLE inventario.ancho_plataforma
+      DROP COLUMN nome_concello;
 DELETE FROM inventario.ancho_plataforma WHERE
-       origentram IS NULL AND finaltramo IS NULL;
+       pk_inicial IS NULL AND pk_final IS NULL;
 
 -- INSERT INTO inventario.ancho_plataforma (
 --        SELECT nextval('inventario.ancho_plataforma_gid_seq'),
@@ -47,30 +48,31 @@ DELETE FROM inventario.ancho_plataforma WHERE
 -- TIPO PAVIMENTO
 DROP TABLE IF EXISTS inventario.tipo_pavimento;
 CREATE TABLE inventario.tipo_pavimento (
-       "gid" serial PRIMARY KEY,
-       "carretera" varchar(4),
-       "nombre" varchar(21),
-       "municipio" varchar(5),
-       "tramo" varchar(1),
-       "tipopavime" varchar(5),
-       "origenpavi" float8,
-       "finalpavim" float8
+       gid serial PRIMARY KEY,
+       codigo_carretera varchar(4),
+       codigo_concello varchar(5),
+       nome_concello varchar(21),
+       pk_inicial float8,
+       pk_final float8,
+       valor varchar(5)
 );
 
 INSERT INTO inventario.tipo_pavimento(
        SELECT nextval('inventario.tipo_pavimento_gid_seq'),
-              numeroinve, municipio, '', tramo,
-              tipopavime,
+              numeroinve, '', municipio,
               to_number(origenpavi, '999D999'),
-              to_number(finalpavim, '999D999')
+              to_number(finalpavim, '999D999'),
+              tipopavime
        FROM inventario.inventario
        WHERE tipopavime IS NOT NULL
 );
-UPDATE inventario.tipo_pavimento SET municipio = c.codigo
+UPDATE inventario.tipo_pavimento SET codigo_concello = c.codigo
        FROM inventario.municipio_codigo AS c
-       WHERE inventario.tipo_pavimento.nombre = c.nombre;
+       WHERE inventario.tipo_pavimento.nome_concello = c.nombre;
+ALTER TABLE inventario.tipo_pavimento
+      DROP COLUMN nome_concello;
 DELETE FROM inventario.tipo_pavimento WHERE
-       origenpavi IS NULL AND finalpavim IS NULL;
+       pk_inicial IS NULL AND pk_final IS NULL;
 
 -- INSERT INTO inventario.tipo_pavimento(
 --        SELECT nextval('inventario.tipo_pavimento_gid_seq'),

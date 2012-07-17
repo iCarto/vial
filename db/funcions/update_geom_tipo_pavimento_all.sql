@@ -6,10 +6,10 @@ BEGIN
 
         UPDATE inventario.tipo_pavimento AS p2 SET the_geom = (
                SELECT ST_CollectionExtract(ST_Locate_Between_Measures(c.the_geom,
-                                p.origenpavi,
-                                p.finalpavim), 2)
+                                p.pk_inicial,
+                                p.pk_final), 2)
                FROM inventario.rede_carreteras AS c, inventario.tipo_pavimento AS p
-               WHERE c.codigo = p.carretera AND p.gid = p2.gid);
+               WHERE c.codigo = p.codigo_carretera AND p.gid = p2.gid);
 
 END;
 $BODY$ LANGUAGE plpgsql;
