@@ -159,4 +159,11 @@ public class Tramo {
 	    return Catalog.PK_NONE;
 	}
     }
+
+    public String toString() {
+	String s = "Carretera: " + getCarretera() + " - Concello: "
+		+ getConcello() + " - PK inicial " + getPkStart()
+		+ " - PK final: " + getPkEnd() + " - Valor: " + getValue();
+	return s;
+    }
 }

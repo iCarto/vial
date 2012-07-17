@@ -65,7 +65,8 @@ public class CatalogEditTests {
     public void testPavimentoDelete() throws SQLException {
 	String carretera = carreteraPavimento;
 	String concello = concelloPavimento;
-	String gid = deleteLastTramoPavimento(carretera, concello);
+	String lastID = getLastIdPavimento(carretera, concello);
+	String gid = deleteTramoPavimento(carretera, concello, lastID);
 
 	// check if the later made effect
 	Statement stmt = c.createStatement();
@@ -89,7 +90,8 @@ public class CatalogEditTests {
     public void testPlataformaDelete() throws SQLException {
 	String carretera = carreteraPlataforma;
 	String concello = concelloPlataforma;
-	String gid = deleteLastTramoPlataforma(carretera, concello);
+	String lastID = getLastIdPlataforma(carretera, concello);
+	String gid = deleteTramoPlataforma(carretera, concello, lastID);
 
 	// check if the later made effect
 	Statement stmt = c.createStatement();
@@ -194,13 +196,14 @@ public class CatalogEditTests {
     }
 
     @Test
-    public void testTramosAreSinchronizedAfterCRUDOperations()
+    public void testTipoPavimentoIsSinchronizedAfterCRUDOperations()
 	    throws SQLException {
 	String carretera = carreteraPavimento;
 	String concello = concelloPavimento;
 	insertTramoPavimento(carretera, concello);
+	String lastID = getLastIdPavimento(carretera, concello);
 	// should delete the recently created tramo
-	String gid = deleteLastTramoPavimento(carretera, concello);
+	String gid = deleteTramoPavimento(carretera, concello, lastID);
 
 	// check if the later made effect
 	Statement stmt = c.createStatement();
@@ -220,9 +223,37 @@ public class CatalogEditTests {
 	assertEquals(true, updated);
     }
 
-    private String deleteLastTramoPlataforma(String carretera, String concello)
+    @Test
+    public void testAnchoPlataformaIsSinchronizedAfterCRUDOperations()
 	    throws SQLException {
-	String gid = getLastIdPlataforma(carretera, concello);
+	String carretera = carreteraPlataforma;
+	String concello = concelloPlataforma;
+	insertTramoPlataforma(carretera, concello);
+	// should delete the recently created tramo
+	String lastID = getLastIdPlataforma(carretera, concello);
+	String gid = deleteTramoPlataforma(carretera, concello, lastID);
+
+	// check if the later made effect
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT gid FROM inventario.ancho_plataforma WHERE codigo_carretera = '"
+			+ carretera
+			+ "' AND codigo_concello = '"
+			+ concello
+			+ "'");
+	boolean updated = true;
+	while (rs.next()) {
+	    if (Integer.toString(rs.getInt("gid")).equals(gid)) {
+		updated = false;
+		break;
+	    }
+	}
+	assertEquals(true, updated);
+    }
+
+    private String deleteTramoPlataforma(String carretera, String concello,
+	    String gid)
+		    throws SQLException {
 
 	// add new tramo
 	Catalog.clear();
@@ -234,9 +265,9 @@ public class CatalogEditTests {
 	return gid;
     }
 
-    private String deleteLastTramoPavimento(String carretera, String concello)
-	    throws SQLException {
-	String gid = getLastIdPavimento(carretera, concello);
+    private String deleteTramoPavimento(String carretera, String concello,
+	    String gid)
+		    throws SQLException {
 
 	// add new tramo
 	Catalog.clear();
@@ -282,8 +313,8 @@ public class CatalogEditTests {
     private int insertTramoPavimento(String carretera, String concello)
 	    throws SQLException {
 	double pkStart = 10.2;
-	double pkEnd = 10.4;
-	String myValue = "foo";
+	double pkEnd = 10.5;
+	String myValue = "AAA";
 
 	// add new tramo
 	Catalog.clear();
@@ -329,7 +360,11 @@ public class CatalogEditTests {
 	    throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT gid FROM inventario.ancho_plataforma WHERE codigo_carretera = '"+carretera+"' AND codigo_concello = '"+concello+"' ORDER BY gid DESC LIMIT 1");
+		.executeQuery("SELECT gid FROM inventario.ancho_plataforma WHERE codigo_carretera = '"
+			+ carretera
+			+ "' AND codigo_concello = '"
+			+ concello
+			+ "' ORDER BY gid DESC LIMIT 1");
 	rs.next();
 	return Integer.toString(rs.getInt("gid"));
     }

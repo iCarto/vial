@@ -1,9 +1,9 @@
 package es.icarto.gvsig.viasobras.catalog.domain.mappers;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 
 import javax.sql.rowset.CachedRowSet;
@@ -38,8 +38,7 @@ public class TramosMapperPavimento extends TramosMapperAbstract {
     }
 
     public Tramos save(Tramos ts) throws SQLException {
-	Connection c = DomainMapper.getConnection();
-	c.setAutoCommit(false);
+	int newID = getLastAvailableID();
 	for (Tramo t : ts) {
 	    if (t.getStatus() == Tramo.STATUS_UPDATE) {
 		tramos.absolute(indexRegister.get(t.getId()));
@@ -54,28 +53,31 @@ public class TramosMapperPavimento extends TramosMapperAbstract {
 		tramos.deleteRow();
 		tramos.beforeFirst();
 	    } else if (t.getStatus() == Tramo.STATUS_INSERT) {
-		// TODO: insert by means of updating tramos, so it gets updated
-		// without having to launch the query -findAll()- again
-		PreparedStatement st = c
-			.prepareStatement("INSERT INTO "
-				+ tableName
-				+ " (codigo_carretera, codigo_concello, valor, pk_inicial, pk_final) VALUES(?, ?, ?, ?, ?)");
-		st.setString(1, t.getCarretera());
-		st.setString(2, t.getConcello().toString());
-		st.setString(3, t.getValue());
-		st.setDouble(4, t.getPkStart());
-		st.setDouble(5, t.getPkEnd());
-		// System.out.println("Query: " + st.toString());
-		st.executeUpdate();
+		tramos.moveToInsertRow();
+		tramos.updateInt(ID_FIELDNAME, newID);
+		tramos.updateString(CARRETERA_FIELDNAME, t.getCarretera());
+		tramos.updateString(CONCELLO_FIELDNAME, t.getConcello()
+			.toString());
+		tramos.updateDouble(PK_START_FIELDNAME, t.getPkStart());
+		tramos.updateDouble(PK_END_FIELDNAME, t.getPkEnd());
+		tramos.updateString(CARACTERISTICA_FIELDNAME, t.getValue());
+		tramos.insertRow();
+		tramos.moveToCurrentRow();
+		newID++;
 	    }
 	}
-	c.commit();
-	tramos.acceptChanges(DomainMapper.getConnection());
-	// ensure tramos are updated properly, as INSERT operations will not
-	// update them. TODO: make INSERT operations by means of CachedRowSet
-	// tramos and these steps may be deleted
-	tramos = null;
-	return super.findAll();
+	tramos.acceptChanges();
+	indexRegister = getIndexRegister(tramos);
+	return new Tramos(this, Filter.findAll(tramos));
+    }
+
+    private int getLastAvailableID() throws SQLException {
+	Connection c = DomainMapper.getConnection();
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT nextval('inventario.tipo_pavimento_gid_seq') AS value FROM inventario.tipo_pavimento");
+	rs.next();
+	return rs.getInt("value");
     }
 
     private HashMap<String, Integer> getIndexRegister(ResultSet rs)

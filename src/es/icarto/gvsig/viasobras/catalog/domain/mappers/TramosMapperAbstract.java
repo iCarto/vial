@@ -1,9 +1,6 @@
 package es.icarto.gvsig.viasobras.catalog.domain.mappers;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.sql.rowset.CachedRowSet;
 
@@ -62,16 +59,13 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 	// "WHERE gid = gid" is needed to avoid errors, as it seems -in
 	// JDBC- an ORDER clause cannot be used without WHERE
 	int[] primaryKeys = { 1 }; // primary key index = gid column index
-	Connection c = DomainMapper.getConnection();
-	Statement stmt = c.createStatement();
-	ResultSet rs = stmt.executeQuery(sqlQuery);
 	CachedRowSet tramos = new CachedRowSetImpl();
-	tramos.populate(rs);
 	tramos.setUrl(DomainMapper.getURL());
 	tramos.setUsername(DomainMapper.getUserName());
 	tramos.setPassword(DomainMapper.getPwd());
 	tramos.setCommand(sqlQuery);
 	tramos.setKeyColumns(primaryKeys);// set primary key
+	tramos.execute();
 	return tramos;
     }
 
