@@ -32,7 +32,7 @@ public class TramosMapperPavimento extends TramosMapperAbstract {
     }
 
     public int getLastAvailableID() throws SQLException {
-	Connection c = DomainMapper.getConnection();
+	Connection c = DBFacade.getConnection();
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
 		.executeQuery("SELECT nextval('inventario.tipo_pavimento_gid_seq') AS value");

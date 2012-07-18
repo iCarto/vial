@@ -32,7 +32,7 @@ import es.icarto.gvsig.viasobras.catalog.domain.Carretera;
 import es.icarto.gvsig.viasobras.catalog.domain.Catalog;
 import es.icarto.gvsig.viasobras.catalog.domain.Concello;
 import es.icarto.gvsig.viasobras.catalog.domain.Tramo;
-import es.icarto.gvsig.viasobras.catalog.domain.mappers.DomainMapper;
+import es.icarto.gvsig.viasobras.catalog.domain.mappers.DBFacade;
 import es.icarto.gvsig.viasobras.catalog.view.load.MapLoader;
 import es.icarto.gvsig.viasobras.catalog.view.tables.TramosTableModel;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
@@ -82,7 +82,7 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	    p.setProperty("username", dbs.getUserName());
 	    p.setProperty("password", dbs.getPassword());
 	    Connection c = dbs.getJavaConnection();
-	    DomainMapper.setConnection(c, p);
+	    DBFacade.setConnection(c, p);
 	} catch (Exception e) {
 	    NotificationManager.addError(e);
 	}

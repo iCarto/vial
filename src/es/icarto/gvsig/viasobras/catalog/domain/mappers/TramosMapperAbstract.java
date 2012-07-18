@@ -64,9 +64,9 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 	// JDBC- an ORDER clause cannot be used without WHERE
 	int[] primaryKeys = { 1 }; // primary key index = gid column index
 	CachedRowSet tramos = new CachedRowSetImpl();
-	tramos.setUrl(DomainMapper.getURL());
-	tramos.setUsername(DomainMapper.getUserName());
-	tramos.setPassword(DomainMapper.getPwd());
+	tramos.setUrl(DBFacade.getURL());
+	tramos.setUsername(DBFacade.getUserName());
+	tramos.setPassword(DBFacade.getPwd());
 	tramos.setCommand(sqlQuery);
 	tramos.setKeyColumns(primaryKeys);// set primary key
 	tramos.execute();

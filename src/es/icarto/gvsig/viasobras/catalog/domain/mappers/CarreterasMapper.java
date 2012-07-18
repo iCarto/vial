@@ -12,7 +12,7 @@ import java.util.Map;
 import es.icarto.gvsig.viasobras.catalog.domain.Carretera;
 import es.icarto.gvsig.viasobras.catalog.domain.Carreteras;
 
-public class CarreterasMapper extends DomainMapper {
+public class CarreterasMapper extends DBFacade {
 
     public static String CODE = "codigo";
 
@@ -27,7 +27,7 @@ public class CarreterasMapper extends DomainMapper {
 	if ((carreteras.size() > 0) && (carreteras.size() == indexes.size())) {
 	    return new Carreteras(carreteras, indexes);
 	}
-	Connection c = DomainMapper.getConnection();
+	Connection c = DBFacade.getConnection();
 	Statement stmt;
 	try {
 	    stmt = c.createStatement();

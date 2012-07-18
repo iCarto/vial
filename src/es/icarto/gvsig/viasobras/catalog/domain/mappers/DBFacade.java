@@ -7,7 +7,7 @@ import java.util.Properties;
 import org.postgresql.util.PSQLException;
 import org.postgresql.util.PSQLState;
 
-public class DomainMapper {
+public class DBFacade {
 
     private static Connection c;
     private static Properties metadata;

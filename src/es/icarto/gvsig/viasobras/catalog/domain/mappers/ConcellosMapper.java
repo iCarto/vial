@@ -17,7 +17,7 @@ import es.icarto.gvsig.viasobras.catalog.domain.Concello;
 import es.icarto.gvsig.viasobras.catalog.domain.Concellos;
 import es.icarto.gvsig.viasobras.catalog.domain.filters.FilterConcelloByCarretera;
 
-public class ConcellosMapper extends DomainMapper {
+public class ConcellosMapper extends DBFacade {
 
     public static String CODE = "codigo";
 
@@ -31,7 +31,7 @@ public class ConcellosMapper extends DomainMapper {
 	if (concellos != null) {
 	    return new Concellos(ConcellosMapper.toList(concellos));
 	}
-	Connection c = DomainMapper.getConnection();
+	Connection c = DBFacade.getConnection();
 	Statement stmt;
 	try {
 	    stmt = c.createStatement();

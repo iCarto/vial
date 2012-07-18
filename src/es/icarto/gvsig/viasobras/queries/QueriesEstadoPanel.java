@@ -34,7 +34,7 @@ import com.jeta.forms.components.panel.FormPanel;
 import es.icarto.gvsig.viasobras.catalog.domain.Carretera;
 import es.icarto.gvsig.viasobras.catalog.domain.Catalog;
 import es.icarto.gvsig.viasobras.catalog.domain.Concello;
-import es.icarto.gvsig.viasobras.catalog.domain.mappers.DomainMapper;
+import es.icarto.gvsig.viasobras.catalog.domain.mappers.DBFacade;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
 @SuppressWarnings("serial")
@@ -83,7 +83,7 @@ public class QueriesEstadoPanel extends gvWindow {
 	    p.setProperty("username", dbs.getUserName());
 	    p.setProperty("password", dbs.getPassword());
 	    Connection c = dbs.getJavaConnection();
-	    DomainMapper.setConnection(c, p);
+	    DBFacade.setConnection(c, p);
 	} catch (Exception e) {
 	    NotificationManager.addError(e);
 	}

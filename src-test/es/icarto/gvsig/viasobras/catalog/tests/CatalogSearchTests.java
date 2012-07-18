@@ -19,7 +19,7 @@ import com.iver.cit.gvsig.fmap.drivers.DBException;
 import es.icarto.gvsig.viasobras.catalog.domain.Catalog;
 import es.icarto.gvsig.viasobras.catalog.domain.Concellos;
 import es.icarto.gvsig.viasobras.catalog.domain.Tramos;
-import es.icarto.gvsig.viasobras.catalog.domain.mappers.DomainMapper;
+import es.icarto.gvsig.viasobras.catalog.domain.mappers.DBFacade;
 
 public class CatalogSearchTests {
 
@@ -34,7 +34,7 @@ public class CatalogSearchTests {
 	p.setProperty("url", c.getMetaData().getURL());
 	p.setProperty("username", "viasobras");
 	p.setProperty("password", "viasobras");
-	DomainMapper.setConnection(c, p);
+	DBFacade.setConnection(c, p);
     }
 
     @Test
