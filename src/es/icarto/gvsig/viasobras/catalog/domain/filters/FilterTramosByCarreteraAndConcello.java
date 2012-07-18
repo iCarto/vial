@@ -5,16 +5,19 @@ import java.sql.SQLException;
 import javax.sql.RowSet;
 import javax.sql.rowset.Predicate;
 
-import es.icarto.gvsig.viasobras.catalog.domain.mappers.TramosMapperAbstract;
-
-public class TramosFilterCarreteraConcello implements Predicate {
+public class FilterTramosByCarreteraAndConcello implements Predicate {
 
     private String carretera;
     private String concello;
+    private String carreteraFieldName;
+    private String concelloFieldName;
 
-    public TramosFilterCarreteraConcello(String carretera, String concello) {
+    public FilterTramosByCarreteraAndConcello(String carreteraFieldName,
+	    String carretera, String concelloFieldName, String concello) {
 	this.carretera = carretera;
 	this.concello = concello;
+	this.carreteraFieldName = carreteraFieldName;
+	this.concelloFieldName = concelloFieldName;
     }
 
     public boolean evaluate(RowSet rs) {
@@ -22,11 +25,8 @@ public class TramosFilterCarreteraConcello implements Predicate {
 	    if ((rs.getRow() == 0) || (rs == null)) {
 		return false;
 	    }
-	    if ((this.carretera.equals(rs
-		    .getString(TramosMapperAbstract.CARRETERA_FIELDNAME)))
-		    && (this.concello
-			    .equals(rs
-				    .getString(TramosMapperAbstract.CONCELLO_FIELDNAME)))) {
+	    if ((this.carretera.equals(rs.getString(carreteraFieldName)))
+		    && (this.concello.equals(rs.getString(concelloFieldName)))) {
 		return true;
 	    } else {
 		return false;

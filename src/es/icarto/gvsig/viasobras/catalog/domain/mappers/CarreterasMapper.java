@@ -14,6 +14,8 @@ import es.icarto.gvsig.viasobras.catalog.domain.Carreteras;
 
 public class CarreterasMapper extends DomainMapper {
 
+    public static String CODE = "codigo";
+
     /*
      * As carreteras is not going to change usually, is safe to asume that the
      * same carreteras are going to be the same during the whole session.

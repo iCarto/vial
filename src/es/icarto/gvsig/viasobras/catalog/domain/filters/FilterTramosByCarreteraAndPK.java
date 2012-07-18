@@ -7,7 +7,7 @@ import javax.sql.rowset.Predicate;
 
 import es.icarto.gvsig.viasobras.catalog.domain.Catalog;
 
-public class TramosFilterPK implements Predicate {
+public class FilterTramosByCarreteraAndPK implements Predicate {
 
     private static final int BAND_PASS_FILTER = 0;
     private static final int LOW_PASS_FILTER = 1;
@@ -21,7 +21,7 @@ public class TramosFilterPK implements Predicate {
     private double pkEnd;
     private int filterType;
 
-    public TramosFilterPK(String carreteraFieldname, String carretera,
+    public FilterTramosByCarreteraAndPK(String carreteraFieldname, String carretera,
 	    String pkStartFieldname, double pkStart, String pkEndFieldname,
 	    double pkEnd) {
 	this.carreteraFieldName = carreteraFieldname;

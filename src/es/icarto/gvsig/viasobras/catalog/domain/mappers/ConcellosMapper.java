@@ -15,7 +15,7 @@ import com.sun.rowset.FilteredRowSetImpl;
 
 import es.icarto.gvsig.viasobras.catalog.domain.Concello;
 import es.icarto.gvsig.viasobras.catalog.domain.Concellos;
-import es.icarto.gvsig.viasobras.catalog.domain.filters.ConcellosFilter;
+import es.icarto.gvsig.viasobras.catalog.domain.filters.FilterConcelloByCarretera;
 
 public class ConcellosMapper extends DomainMapper {
 
@@ -54,7 +54,7 @@ public class ConcellosMapper extends DomainMapper {
 	}
 	concellos.beforeFirst();
 	frs.populate((ResultSet) concellos);
-	frs.setFilter(new ConcellosFilter(carretera));
+	frs.setFilter(new FilterConcelloByCarretera(carretera));
 	return new Concellos(ConcellosMapper.toList(frs));
     }
 

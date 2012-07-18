@@ -8,6 +8,7 @@ import com.sun.rowset.CachedRowSetImpl;
 
 import es.icarto.gvsig.viasobras.catalog.domain.Tramo;
 import es.icarto.gvsig.viasobras.catalog.domain.Tramos;
+import es.icarto.gvsig.viasobras.catalog.domain.filters.RecordsetTramosAdapter;
 
 public abstract class TramosMapperAbstract implements TramosMapper {
 
@@ -26,30 +27,30 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 
     public Tramos findAll() throws SQLException {
 	CachedRowSet tramos = getTramos();
-	return new Tramos(this, Filter.findAll(tramos));
+	return new Tramos(this, RecordsetTramosAdapter.findAll(tramos));
     }
 
     public Tramos findWhereCarretera(String carretera) throws SQLException {
 	CachedRowSet tramos = getTramos();
-	return new Tramos(this, Filter.findWhereCarretera(tramos, carretera));
+	return new Tramos(this, RecordsetTramosAdapter.findWhereCarretera(tramos, carretera));
     }
 
     public Tramos findWhereCarreteraAndPK(String carretera, double pkStart,
 	    double pkEnd) throws SQLException {
 	CachedRowSet tramos = getTramos();
-	return new Tramos(this, Filter.findWhereCarreteraAndPK(tramos,
+	return new Tramos(this, RecordsetTramosAdapter.findWhereCarreteraAndPK(tramos,
 		carretera, pkStart, pkEnd));
     }
 
     public Tramos findWhereConcello(String concello) throws SQLException {
 	CachedRowSet tramos = getTramos();
-	return new Tramos(this, Filter.findWhereConcello(tramos, concello));
+	return new Tramos(this, RecordsetTramosAdapter.findWhereConcello(tramos, concello));
     }
 
     public Tramos findWhereCarreteraAndConcello(String carretera,
 	    String concello) throws SQLException {
 	CachedRowSet tramos = getTramos();
-	return new Tramos(this, Filter.findWhereCarreteraAndConcello(tramos,
+	return new Tramos(this, RecordsetTramosAdapter.findWhereCarreteraAndConcello(tramos,
 		carretera, concello));
     }
 
@@ -103,7 +104,7 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 	    }
 	}
 	tramos.acceptChanges();
-	return new Tramos(this, Filter.findAll(tramos));
+	return new Tramos(this, RecordsetTramosAdapter.findAll(tramos));
     }
 
 }

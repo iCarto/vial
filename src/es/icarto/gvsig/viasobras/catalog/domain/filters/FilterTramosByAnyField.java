@@ -5,12 +5,12 @@ import java.sql.SQLException;
 import javax.sql.RowSet;
 import javax.sql.rowset.Predicate;
 
-public class TramosFilter implements Predicate {
+public class FilterTramosByAnyField implements Predicate {
 
     private String fieldName;
     private String value;
 
-    public TramosFilter(String fieldName, String value) {
+    public FilterTramosByAnyField(String fieldName, String value) {
 	this.fieldName = fieldName;
 	this.value = value;
     }

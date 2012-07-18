@@ -9,12 +9,13 @@ import es.icarto.gvsig.viasobras.catalog.domain.Carreteras;
 import es.icarto.gvsig.viasobras.catalog.domain.mappers.CarreterasMapper;
 import es.icarto.gvsig.viasobras.catalog.domain.mappers.ConcellosMapper;
 
-public class ConcellosFilter implements Predicate {
+public class FilterConcelloByCarretera implements Predicate {
 
     private String carretera;
     private Carreteras carreteras;
 
-    public ConcellosFilter(String carretera) throws SQLException {
+    public FilterConcelloByCarretera(String carretera)
+	    throws SQLException {
 	this.carretera = carretera;
 	carreteras = CarreterasMapper.findAll();
     }
