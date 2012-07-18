@@ -18,14 +18,14 @@ SELECT trigger_is('inventario',
 -- Test they work
 
 INSERT INTO inventario.tipo_pavimento
-       (carretera, municipio, tipopavime, origenpavi, finalpavim)
+       (codigo_carretera, codigo_concello, valor, pk_inicial, pk_final)
        VALUES('0101', '27018', 'test', 10.2, 10.4);
 SELECT isnt(the_geom, NULL, 'tipo_pavimento - geom calculated on INSERT')
        FROM inventario.tipo_pavimento
        WHERE gid = currval('inventario.tipo_pavimento_gid_seq');
 
 INSERT INTO inventario.ancho_plataforma
-       (carretera, municipio, ancho_plataforma, origentram, finaltramo)
+       (codigo_carretera, codigo_concello, valor, pk_inicial, pk_final)
        VALUES('0101', '27018', 666.666, 10.2, 10.4);
 SELECT isnt(the_geom, NULL, 'ancho_plataforma - geom calculated on INSERT')
        FROM inventario.ancho_plataforma
