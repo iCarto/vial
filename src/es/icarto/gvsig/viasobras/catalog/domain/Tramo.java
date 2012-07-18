@@ -24,6 +24,9 @@ public class Tramo {
     // source, we just create a random one. See @Tramos.addTramo()
     private String id = NO_GID;
 
+    public static final int NO_POSITION = -1;
+    private int position = NO_POSITION;
+
     private double pkStart;
     private double pkEnd;
     private String concello;
@@ -32,6 +35,7 @@ public class Tramo {
 
     public Tramo() {
 	this.id = NO_GID;
+	this.position = NO_POSITION;
     }
 
     public int getStatus() {
@@ -48,6 +52,24 @@ public class Tramo {
 
     public void setId(String id) {
 	this.id = id;
+    }
+
+    /**
+     * Set the position in the source
+     * 
+     * @param position
+     */
+    public void setPosition(int position) {
+	this.position = position;
+    }
+
+    /**
+     * 
+     * @return the position in the source, NO_POSITION if the tramo is not yet
+     *         in the source (ie: is a brand new tramo)
+     */
+    public int getPosition() {
+	return this.position;
     }
 
     public double getPkStart() {
@@ -166,4 +188,5 @@ public class Tramo {
 		+ " - PK final: " + getPkEnd() + " - Valor: " + getValue();
 	return s;
     }
+
 }

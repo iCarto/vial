@@ -1,8 +1,6 @@
 package es.icarto.gvsig.viasobras.catalog.domain.mappers;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 
 import javax.sql.rowset.CachedRowSet;
 
@@ -19,8 +17,6 @@ public abstract class TramosMapperAbstract implements TramosMapper {
     public static final String PK_START_FIELDNAME = "pk_inicial";
     public static final String PK_END_FIELDNAME = "pk_final";
     public static final String CARACTERISTICA_FIELDNAME = "valor";
-
-    private HashMap<String, Integer> indexRegister;
 
     public abstract CachedRowSet getTramos() throws SQLException;
 
@@ -73,17 +69,15 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 	tramos.setCommand(sqlQuery);
 	tramos.setKeyColumns(primaryKeys);// set primary key
 	tramos.execute();
-	this.indexRegister = getIndexRegister(tramos);
 	return tramos;
     }
 
     public Tramos save(Tramos ts) throws SQLException {
 	int newID = getLastAvailableID();
 	CachedRowSet tramos = getTramos();
-	this.indexRegister = getIndexRegister(tramos);
 	for (Tramo t : ts) {
 	    if (t.getStatus() == Tramo.STATUS_UPDATE) {
-		tramos.absolute(this.indexRegister.get(t.getId()));
+		tramos.absolute(t.getPosition());
 		tramos.updateString(CARRETERA_FIELDNAME, t.getCarretera());
 		tramos.updateString(CONCELLO_FIELDNAME, t.getConcello());
 		tramos.updateDouble(PK_START_FIELDNAME, t.getPkStart());
@@ -91,7 +85,7 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 		tramos.updateString(CARACTERISTICA_FIELDNAME, t.getValue());
 		tramos.updateRow();
 	    } else if (t.getStatus() == Tramo.STATUS_DELETE) {
-		tramos.absolute(this.indexRegister.get(t.getId()));
+		tramos.absolute(t.getPosition());
 		tramos.deleteRow();
 		tramos.beforeFirst();
 	    } else if (t.getStatus() == Tramo.STATUS_INSERT) {
@@ -109,18 +103,7 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 	    }
 	}
 	tramos.acceptChanges();
-	this.indexRegister = getIndexRegister(tramos);
 	return new Tramos(this, Filter.findAll(tramos));
-    }
-
-    private HashMap<String, Integer> getIndexRegister(ResultSet rs)
-	    throws SQLException {
-	HashMap<String, Integer> register = new HashMap<String, Integer>();
-	rs.beforeFirst();
-	while (rs.next()) {
-	    register.put(Integer.toString(rs.getInt(ID_FIELDNAME)), rs.getRow());
-	}
-	return register;
     }
 
 }
