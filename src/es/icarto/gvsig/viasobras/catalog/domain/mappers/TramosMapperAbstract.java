@@ -83,7 +83,7 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 		tramos.updateString(CONCELLO_FIELDNAME, t.getConcello());
 		tramos.updateDouble(PK_START_FIELDNAME, t.getPkStart());
 		tramos.updateDouble(PK_END_FIELDNAME, t.getPkEnd());
-		tramos.updateString(CARACTERISTICA_FIELDNAME, t.getValue());
+		tramos.updateObject(CARACTERISTICA_FIELDNAME, t.getValue());
 		tramos.updateRow();
 	    } else if (t.getStatus() == Tramo.STATUS_DELETE) {
 		tramos.absolute(t.getPosition());
@@ -97,7 +97,7 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 			.toString());
 		tramos.updateDouble(PK_START_FIELDNAME, t.getPkStart());
 		tramos.updateDouble(PK_END_FIELDNAME, t.getPkEnd());
-		tramos.updateString(CARACTERISTICA_FIELDNAME, t.getValue());
+		tramos.updateObject(CARACTERISTICA_FIELDNAME, t.getValue());
 		tramos.insertRow();
 		tramos.moveToCurrentRow();
 		newID++;

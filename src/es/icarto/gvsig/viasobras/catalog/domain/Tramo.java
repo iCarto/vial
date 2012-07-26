@@ -31,7 +31,7 @@ public class Tramo {
     private double pkEnd;
     private String concello;
     private String carretera;
-    private String value;
+    private Object value;
 
     public Tramo() {
 	this.id = NO_GID;
@@ -104,11 +104,11 @@ public class Tramo {
 	this.carretera = carretera;
     }
 
-    public String getValue() {
+    public Object getValue() {
 	return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(Object value) {
 	this.value = value;
     }
 
@@ -165,7 +165,7 @@ public class Tramo {
 	    setCarretera((String) value);
 	    break;
 	case PROPERTY_VALUE:
-	    setValue((String) value);
+	    setValue(value);
 	    break;
 	default:
 	    // do nothing

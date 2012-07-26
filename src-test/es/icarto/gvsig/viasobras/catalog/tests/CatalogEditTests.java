@@ -139,7 +139,7 @@ public class CatalogEditTests {
     public void testPlataformaUpdate() throws SQLException {
 	String carretera = carreteraPlataforma;
 	String concello = concelloPlataforma;
-	String value = "666";
+	double value = 666;
 	updateTramoPlataforma(carretera, concello, value);
 
 	// check if the later made effect
@@ -152,7 +152,7 @@ public class CatalogEditTests {
 			+ "'");
 	boolean updated = true;
 	while (rs.next()) {
-	    if (rs.getDouble("valor") != Double.parseDouble(value)) {
+	    if (rs.getDouble("valor") != value) {
 		updated = false;
 	    }
 	}
@@ -280,7 +280,7 @@ public class CatalogEditTests {
     }
 
     private void updateTramoPlataforma(String carretera, String concello,
-	    String value) throws SQLException {
+	    double value) throws SQLException {
 
 	// modify and save tramos
 	Catalog.clear();
@@ -337,7 +337,7 @@ public class CatalogEditTests {
 	    throws SQLException {
 	double pkStart = 10.2;
 	double pkEnd = 10.4;
-	String myValue = "666";
+	double myValue = 666;
 
 	// add new tramo
 	Catalog.clear();

@@ -7,13 +7,13 @@ CREATE TABLE inventario.ancho_plataforma (
        nome_concello varchar(21),
        pk_inicial float8,
        pk_final float8,
-       valor varchar(10)
+       valor double precision
 );
 
 INSERT INTO inventario.ancho_plataforma (
        SELECT nextval('inventario.ancho_plataforma_gid_seq'),
               numeroinve, '', municipio, origentram, finaltramo,
-              to_char(anchoplata, '999D99')
+              anchoplata
        FROM inventario.inventario
        WHERE anchoplata IS NOT NULL
 );

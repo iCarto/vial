@@ -73,7 +73,8 @@ public class RecordsetTramosAdapter {
 	    tramo.setPkEnd(rs.getDouble(TramosMapperAbstract.PK_END_FIELDNAME));
 	    tramo.setCarretera(rs.getString(TramosMapperAbstract.CARRETERA_FIELDNAME));
 	    tramo.setConcello(rs.getString(TramosMapperAbstract.CONCELLO_FIELDNAME));
-	    tramo.setValue(rs.getString(TramosMapperAbstract.CARACTERISTICA_FIELDNAME));
+	    tramo.setValue(rs
+		    .getObject(TramosMapperAbstract.CARACTERISTICA_FIELDNAME));
 	    ts.add(tramo);
 	}
 	return ts;
