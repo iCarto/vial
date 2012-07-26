@@ -56,12 +56,17 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 
     public CachedRowSet getCachedRowSet(String tableName)
 	    throws SQLException {
+	/*
+	 * "WHERE gid = gid" is needed to avoid errors, as it seems -in JDBC- an
+	 * ORDER clause cannot be used without WHERE
+	 * 
+	 * I couldn't order by several fields (ORDER BY codigo_carretera,
+	 * codigo_concello, ...) as it give problems when saving, so the
+	 * ordering is done in Tramos() builder.
+	 */
 	String sqlQuery = "SELECT gid, codigo_carretera, codigo_concello, valor, pk_inicial, pk_final "
-		+ " FROM "
-		+ tableName
-		+ " WHERE gid = gid ORDER BY pk_inicial";
-	// "WHERE gid = gid" is needed to avoid errors, as it seems -in
-	// JDBC- an ORDER clause cannot be used without WHERE
+		+ " FROM " + tableName;
+	//+ " WHERE gid = gid ORDER BY pk_inicial";
 	int[] primaryKeys = { 1 }; // primary key index = gid column index
 	CachedRowSet tramos = new CachedRowSetImpl();
 	tramos.setUrl(DBFacade.getURL());

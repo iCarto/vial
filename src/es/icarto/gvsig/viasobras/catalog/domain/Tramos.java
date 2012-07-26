@@ -1,6 +1,7 @@
 package es.icarto.gvsig.viasobras.catalog.domain;
 
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class Tramos implements Iterable<Tramo> {
     public Tramos(TramosMapper mapper, List<Tramo> tramos) {
 	this.mapper = mapper;
 	this.tramos = tramos;
+	Collections.sort(this.tramos, new TramosComparator());
 	this.tm = new TramosTableModel(this);
     }
 
