@@ -72,7 +72,7 @@ UPDATE inventario.tipo_pavimento SET codigo_concello = c.codigo
 ALTER TABLE inventario.tipo_pavimento
       DROP COLUMN nome_concello;
 DELETE FROM inventario.tipo_pavimento WHERE
-       pk_inicial IS NULL AND pk_final IS NULL;
+       pk_inicial IS NULL OR pk_final IS NULL;
 
 -- INSERT INTO inventario.tipo_pavimento(
 --        SELECT nextval('inventario.tipo_pavimento_gid_seq'),
