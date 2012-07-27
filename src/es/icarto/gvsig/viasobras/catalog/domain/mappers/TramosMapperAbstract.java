@@ -74,7 +74,7 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 	tramos.setPassword(DBFacade.getPwd());
 	tramos.setCommand(sqlQuery);
 	tramos.setKeyColumns(primaryKeys);// set primary key
-	tramos.execute();
+	tramos.execute(DBFacade.getConnection());
 	return tramos;
     }
 

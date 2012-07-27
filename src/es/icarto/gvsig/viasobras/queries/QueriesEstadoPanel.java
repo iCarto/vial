@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -79,10 +80,19 @@ public class QueriesEstadoPanel extends gvWindow {
     private void initDomainMapper(DBSession dbs) {
 	try {
 	    Properties p = new Properties();
-	    p.setProperty("url", dbs.getJavaConnection().getMetaData().getURL());
-	    p.setProperty("username", dbs.getUserName());
-	    p.setProperty("password", dbs.getPassword());
-	    Connection c = dbs.getJavaConnection();
+	    p.setProperty(DBFacade.URL, dbs.getJavaConnection().getMetaData()
+		    .getURL());
+	    p.setProperty(DBFacade.USERNAME, dbs.getUserName());
+	    p.setProperty(DBFacade.PASSWORD, dbs.getPassword());
+	    // Create the connection ourselves, as at this moment, gvSIG has an
+	    // old driver (lower than jdbc4) which doesn't implement the methods
+	    // we need. So, take care that the jar in
+	    // lib/postgresql-8.4-jdbc4.jar is used instead of gvSIG ones.
+	    Class.forName("org.postgresql.Driver");
+	    Connection c = DriverManager.getConnection(
+		    p.getProperty(DBFacade.URL),
+		    p.getProperty(DBFacade.USERNAME),
+		    p.getProperty(DBFacade.PASSWORD));
 	    DBFacade.setConnection(c, p);
 	} catch (Exception e) {
 	    NotificationManager.addError(e);

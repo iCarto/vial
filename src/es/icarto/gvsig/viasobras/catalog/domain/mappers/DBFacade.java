@@ -9,6 +9,10 @@ import org.postgresql.util.PSQLState;
 
 public class DBFacade {
 
+    public static final String URL = "url";
+    public static final String USERNAME = "username";
+    public static final String PASSWORD = "password";
+
     private static Connection c;
     private static Properties metadata;
 

@@ -26,14 +26,22 @@ public class CatalogSearchTests {
     static Connection c;
 
     @BeforeClass
-    public static void connectToDatabase() throws SQLException {
-	c = DriverManager.getConnection(
-		"jdbc:postgresql://localhost:5432/vias_obras", "viasobras",
-		"viasobras");
+    public static void connectToDatabase() throws SQLException,
+    ClassNotFoundException {
+	String url = "jdbc:postgresql://localhost:5432/vias_obras";
+	String user = "viasobras";
+	String passwd = "viasobras";
 	Properties p = new Properties();
-	p.setProperty("url", c.getMetaData().getURL());
-	p.setProperty("username", "viasobras");
-	p.setProperty("password", "viasobras");
+	p.setProperty(DBFacade.URL, url);
+	p.setProperty(DBFacade.USERNAME, user);
+	p.setProperty(DBFacade.PASSWORD, passwd);
+	// postgresql-8.4.-jdbc4.jar needs to be in the classpasth before the
+	// other gvSIG jars related to pgsql (which are jdbc3 are may not work).
+	// Configure that in your classpath tab if you use eclipse
+	Class.forName("org.postgresql.Driver");
+	c = DriverManager.getConnection(p.getProperty(DBFacade.URL),
+		p.getProperty(DBFacade.USERNAME),
+		p.getProperty(DBFacade.PASSWORD));
 	DBFacade.setConnection(c, p);
     }
 
