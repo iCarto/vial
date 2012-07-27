@@ -1,6 +1,9 @@
 package es.icarto.gvsig.viasobras.catalog.view.load;
 
 import es.icarto.gvsig.viasobras.catalog.domain.Catalog;
+import es.icarto.gvsig.viasobras.catalog.domain.mappers.CarreterasMapper;
+import es.icarto.gvsig.viasobras.catalog.domain.mappers.ConcellosMapper;
+import es.icarto.gvsig.viasobras.catalog.domain.mappers.TramosMapperAbstract;
 
 public class WhereAdapter {
 
@@ -29,12 +32,16 @@ public class WhereAdapter {
 	if ((concello != Catalog.CONCELLO_ALL)
 		&& (carretera != Catalog.CARRETERA_ALL)) { // both
 	    // selected
-	    return "WHERE municipio = '" + concello + "' AND carretera = '"
+	    return "WHERE " + TramosMapperAbstract.CONCELLO_FIELDNAME + " = '"
+	    + concello + "' AND "
+	    + TramosMapperAbstract.CARRETERA_FIELDNAME + " = '"
 	    + carretera + "'";
 	} else if ((carretera != Catalog.CARRETERA_ALL)) { // carretera selected
-	    return "WHERE carretera = '" + carretera + "'";
+	    return "WHERE " + TramosMapperAbstract.CARRETERA_FIELDNAME + " = '"
+	    + carretera + "'";
 	} else if ((concello != Catalog.CONCELLO_ALL)) { // concello selected
-	    return "WHERE municipio = '" + concello + "'";
+	    return "WHERE " + TramosMapperAbstract.CONCELLO_FIELDNAME + " = '"
+	    + concello + "'";
 	} else { // none selected
 	    return NONE_WHERE;
 	}
@@ -68,7 +75,7 @@ public class WhereAdapter {
 	    + concello + "'";
 	} else if (carretera != Catalog.CARRETERA_ALL) {
 	    // only carretera selected
-	    return "WHERE codigo = '" + carretera + "'";
+	    return "WHERE " + CarreterasMapper.CODE + " = '" + carretera + "'";
 	} else {
 	    // none selected
 	    return NONE_WHERE;
@@ -104,7 +111,7 @@ public class WhereAdapter {
 	    + carretera + "'";
 	} else if (concello != Catalog.CONCELLO_ALL) {
 	    // only concello selected
-	    return "WHERE codigo = '" + concello + "'";
+	    return "WHERE " + ConcellosMapper.CODE + " = '" + concello + "'";
 	} else {
 	    // none selected
 	    return NONE_WHERE;
