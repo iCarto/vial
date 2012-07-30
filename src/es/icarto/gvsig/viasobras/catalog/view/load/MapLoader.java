@@ -2,6 +2,7 @@ package es.icarto.gvsig.viasobras.catalog.view.load;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.iver.andami.PluginServices;
@@ -20,15 +21,36 @@ import es.udc.cartolab.gvsig.users.utils.DBSession;
 
 public class MapLoader {
 
-    public static String MAP_NAME = "Vías Obras Lugo";
+    public static String DEFAULT_MAP_NAME = "Características";
 
-    public static void load() {
-	if (createMap()) {
-	    loadMapInView();
+    public static void loadMap(String mapName) {
+	View view = createView(mapName);
+	try {
+	    ELLEMap map = MapDAO.getInstance().getMap(view, mapName,
+		    LoadLegend.DB_LEGEND, mapName);
+	    if (map.getName().equals(DEFAULT_MAP_NAME)) {
+		// filter concellos & tramos
+		String whereConcellos = WhereAdapter
+			.getClause(WhereAdapter.CONCELLOS);
+		map.getLayer("Concellos").setWhere(whereConcellos);
+		String whereTramos = WhereAdapter
+			.getClause(WhereAdapter.TRAMOS);
+		map.getLayer("Tipo de pavimento").setWhere(whereTramos);
+		map.getLayer("Ancho de plataforma").setWhere(whereTramos);
+	    }
+	    map.load(view.getProjection());
+	    PluginServices.getMDIManager().addWindow(view);
+	} catch (Exception e) {
+	    e.printStackTrace();
 	}
     }
 
-    public static boolean createMap() {
+    public static void loadDefaultMap() {
+	createMap(DEFAULT_MAP_NAME);
+	loadMap(DEFAULT_MAP_NAME);
+    }
+
+    private static boolean createMap(String mapName) {
 	List<Object[]> rows = new ArrayList<Object[]>();
 	Object[] oceano = { "Océano", "oceano", 1, true, null, null, "",
 	"info_base" };
@@ -61,7 +83,7 @@ public class MapLoader {
 		MapDAO.getInstance().createMapTables();
 	    }
 	    MapDAO.getInstance().saveMap(rows.toArray(new Object[0][0]),
-		    MAP_NAME);
+		    mapName);
 	    return true;
 	} catch (SQLException e) {
 	    e.printStackTrace();
@@ -69,36 +91,28 @@ public class MapLoader {
 	}
     }
 
-    private static View createView() {
+    private static View createView(String mapName) {
 	View view = null;
 	Project project = ((ProjectExtension) PluginServices
 		.getExtension(ProjectExtension.class)).getProject();
 	ProjectDocumentFactory viewFactory = Project
 		.getProjectDocumentFactory(ProjectViewFactory.registerName);
 	ProjectDocument projectDocument = viewFactory.create(project);
-	projectDocument.setName(MAP_NAME);
+	projectDocument.setName(mapName);
 	project.addDocument(projectDocument);
 	view = (View) projectDocument.createWindow();
 	view.getWindowInfo().setMaximized(true);
 	return view;
     }
 
-    private static void loadMapInView() {
-	View view = createView();
+    public static List<String> getAllMapNames() {
+	String[] maps;
 	try {
-	    ELLEMap map = MapDAO.getInstance().getMap(view, MAP_NAME,
-		    LoadLegend.DB_LEGEND, MAP_NAME);
-	    // filter concellos & tramos
-	    String whereConcellos = WhereAdapter
-		    .getClause(WhereAdapter.CONCELLOS);
-	    map.getLayer("Concellos").setWhere(whereConcellos);
-	    String whereTramos = WhereAdapter.getClause(WhereAdapter.TRAMOS);
-	    map.getLayer("Tipo de pavimento").setWhere(whereTramos);
-	    map.getLayer("Ancho de plataforma").setWhere(whereTramos);
-	    map.load(view.getProjection());
-	    PluginServices.getMDIManager().addWindow(view);
-	} catch (Exception e) {
-	    e.printStackTrace();
+	    maps = MapDAO.getInstance().getMaps();
+	    return Arrays.asList(maps);
+	} catch (SQLException e) {
+	    maps = new String[] { "" };
+	    return Arrays.asList(maps);
 	}
     }
 

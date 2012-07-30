@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Properties;
 
 import javax.swing.JButton;
@@ -60,6 +61,8 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
     private JButton search;
     private JButton load;
     private JButton save;
+
+    private JComboBox mapLoad;
 
     private JButton insertTramoPavimento;
     private JButton deleteTramoPavimento;
@@ -132,6 +135,8 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	search = (JButton) buttons.get("buscar");
 	load = (JButton) buttons.get("cargar");
 	save = (JButton) buttons.get("guardar");
+
+	mapLoad = (JComboBox) widgets.get("mapa");
     }
 
     private void initFocus() {
@@ -212,6 +217,15 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
     private void fillComboBoxes() {
 	fillConcellos();
 	fillCarreteras();
+	fillELLEMaps();
+    }
+
+    private void fillELLEMaps() {
+	mapLoad.removeAllItems();
+	List<String> maps = MapLoader.getAllMapNames();
+	for (String mapName : maps) {
+	    mapLoad.addItem(mapName);
+	}
     }
 
     private void fillCarreteras() {
@@ -249,7 +263,7 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	    viewInfo = new WindowInfo(WindowInfo.MODELESSDIALOG
 		    | WindowInfo.PALETTE);
 	    viewInfo.setTitle("Vias Obras");
-	    viewInfo.setWidth(800);
+	    viewInfo.setWidth(840);
 	    viewInfo.setHeight(480);
 	}
 	return viewInfo;
@@ -319,7 +333,11 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 
     private final class LoadMapListener implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
-	    MapLoader.load();
+	    if (mapLoad.getSelectedItem() != null) {
+		MapLoader.loadMap(mapLoad.getSelectedItem().toString());
+	    } else {
+		MapLoader.loadDefaultMap();
+	    }
 	}
     }
 
