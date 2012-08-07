@@ -1,5 +1,6 @@
 package es.icarto.gvsig.viasobras.catalog.view.load;
 
+import java.awt.geom.Rectangle2D;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,33 +28,33 @@ public class MapLoader {
 
     public static String DEFAULT_MAP_NAME = "Características";
 
-    public static void loadMap(String mapName) {
+    public static void loadMap(String mapName) throws Exception {
 	View view = createView(mapName);
-	try {
-	    ELLEMap map = MapDAO.getInstance().getMap(view, mapName,
-		    LoadLegend.DB_LEGEND, mapName);
-	    // set filters for layers
-	    String whereConcellos = WhereAdapter
-		    .getClause(WhereAdapter.CONCELLOS);
-	    String whereTramos = WhereAdapter
-		    .getClause(WhereAdapter.TRAMOS);
-	    if (map.layerInMap(CONCELLOS)) {
-		map.getLayer(CONCELLOS).setWhere(whereConcellos);
-	    }
-	    if (map.layerInMap(TIPO_DE_PAVIMENTO)) {
-		map.getLayer(TIPO_DE_PAVIMENTO).setWhere(whereTramos);
-	    }
-	    if (map.layerInMap(ANCHO_DE_PLATAFORMA)) {
-		map.getLayer(ANCHO_DE_PLATAFORMA).setWhere(whereTramos);
-	    }
-	    map.load(view.getProjection());
-	    PluginServices.getMDIManager().addWindow(view);
-	} catch (Exception e) {
-	    e.printStackTrace();
+	ELLEMap map = MapDAO.getInstance().getMap(view, mapName,
+		LoadLegend.DB_LEGEND, mapName);
+	// set filters for layers
+	String whereConcellos = WhereAdapter.getClause(WhereAdapter.CONCELLOS);
+	String whereTramos = WhereAdapter.getClause(WhereAdapter.TRAMOS);
+	if (map.layerInMap(CONCELLOS)) {
+	    map.getLayer(CONCELLOS).setWhere(whereConcellos);
 	}
+	if (map.layerInMap(TIPO_DE_PAVIMENTO)) {
+	    map.getLayer(TIPO_DE_PAVIMENTO).setWhere(whereTramos);
+	}
+	if (map.layerInMap(ANCHO_DE_PLATAFORMA)) {
+	    map.getLayer(ANCHO_DE_PLATAFORMA).setWhere(whereTramos);
+	}
+	map.load(view.getProjection());
+	if (map.layerInMap(CONCELLOS)) {
+	    Rectangle2D concellosExtent = view.getMapControl().getMapContext()
+		    .getLayers().getLayer(CONCELLOS).getFullExtent();
+	    view.getMapControl().getMapContext().zoomToExtent(concellosExtent);
+	    view.getMapControl().getMapContext().getLayers().getLayer(CONCELLOS);
+	}
+	PluginServices.getMDIManager().addWindow(view);
     }
 
-    public static void loadDefaultMap() {
+    public static void loadDefaultMap() throws Exception {
 	createMap(DEFAULT_MAP_NAME);
 	loadMap(DEFAULT_MAP_NAME);
     }

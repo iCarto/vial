@@ -333,10 +333,14 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 
     private final class LoadMapListener implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
-	    if (mapLoad.getSelectedItem() != null) {
-		MapLoader.loadMap(mapLoad.getSelectedItem().toString());
-	    } else {
-		MapLoader.loadDefaultMap();
+	    try {
+		if (mapLoad.getSelectedItem() != null) {
+		    MapLoader.loadMap(mapLoad.getSelectedItem().toString());
+		} else {
+		    MapLoader.loadDefaultMap();
+		}
+	    } catch (Exception e) {
+		NotificationManager.addError(e);
 	    }
 	}
     }
