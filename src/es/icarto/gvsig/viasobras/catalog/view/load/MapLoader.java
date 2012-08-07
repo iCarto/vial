@@ -21,6 +21,10 @@ import es.udc.cartolab.gvsig.users.utils.DBSession;
 
 public class MapLoader {
 
+    private static final String ANCHO_DE_PLATAFORMA = "Ancho de plataforma";
+    private static final String TIPO_DE_PAVIMENTO = "Tipo de pavimento";
+    private static final String CONCELLOS = "Concellos";
+
     public static String DEFAULT_MAP_NAME = "Características";
 
     public static void loadMap(String mapName) {
@@ -28,15 +32,19 @@ public class MapLoader {
 	try {
 	    ELLEMap map = MapDAO.getInstance().getMap(view, mapName,
 		    LoadLegend.DB_LEGEND, mapName);
-	    if (map.getName().equals(DEFAULT_MAP_NAME)) {
-		// filter concellos & tramos
-		String whereConcellos = WhereAdapter
-			.getClause(WhereAdapter.CONCELLOS);
-		map.getLayer("Concellos").setWhere(whereConcellos);
-		String whereTramos = WhereAdapter
-			.getClause(WhereAdapter.TRAMOS);
-		map.getLayer("Tipo de pavimento").setWhere(whereTramos);
-		map.getLayer("Ancho de plataforma").setWhere(whereTramos);
+	    // set filters for layers
+	    String whereConcellos = WhereAdapter
+		    .getClause(WhereAdapter.CONCELLOS);
+	    String whereTramos = WhereAdapter
+		    .getClause(WhereAdapter.TRAMOS);
+	    if (map.layerInMap(CONCELLOS)) {
+		map.getLayer(CONCELLOS).setWhere(whereConcellos);
+	    }
+	    if (map.layerInMap(TIPO_DE_PAVIMENTO)) {
+		map.getLayer(TIPO_DE_PAVIMENTO).setWhere(whereTramos);
+	    }
+	    if (map.layerInMap(ANCHO_DE_PLATAFORMA)) {
+		map.getLayer(ANCHO_DE_PLATAFORMA).setWhere(whereTramos);
 	    }
 	    map.load(view.getProjection());
 	    PluginServices.getMDIManager().addWindow(view);
@@ -60,13 +68,13 @@ public class MapLoader {
 		"provincias_galicia", 3, true, null, null, "", "info_base" };
 	Object[] provincias_limitrofes = { "Provincias España",
 		"provincias_limitrofes", 4, true, null, null, "", "info_base" };
-	Object[] concellos = { "Concellos", "concellos", 5, true, null,
+	Object[] concellos = { CONCELLOS, "concellos", 5, true, null,
 		null, "", "info_base" };
 	Object[] carreteras = { "Carreteras", "rede_carreteras", 6,
 		true, null, null, "", "inventario" };
-	Object[] pavimento = { "Tipo de pavimento", "tipo_pavimento", 7,
+	Object[] pavimento = { TIPO_DE_PAVIMENTO, "tipo_pavimento", 7,
 		true, null, null, "", "inventario" };
-	Object[] plataforma = { "Ancho de plataforma", "ancho_plataforma", 8,
+	Object[] plataforma = { ANCHO_DE_PLATAFORMA, "ancho_plataforma", 8,
 		true, null, null, "", "inventario" };
 	rows.add(portugal);
 	rows.add(provincias_galicia);
