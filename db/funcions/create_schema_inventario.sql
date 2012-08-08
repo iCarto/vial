@@ -9,6 +9,9 @@ CREATE TABLE inventario.carreteras_concellos(
        id SERIAL,
        codigo_carretera varchar(4),
        codigo_concello varchar(5),
+       pk_inicial float8,
+       pk_final float8,
+       observaciones text,
        CONSTRAINT pk_carreteras_concellos PRIMARY KEY (codigo_concello, codigo_carretera)
 );
 

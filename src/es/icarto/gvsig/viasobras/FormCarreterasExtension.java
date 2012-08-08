@@ -5,6 +5,7 @@ import com.iver.andami.plugins.Extension;
 import com.iver.cit.gvsig.fmap.layers.FLyrVect;
 
 import es.icarto.gvsig.navtableforms.utils.TOCLayerManager;
+import es.icarto.gvsig.viasobras.info.AlphanumericTableLoader;
 import es.icarto.gvsig.viasobras.info.FormCarreteras;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
@@ -17,7 +18,7 @@ public class FormCarreterasExtension extends Extension {
     public void execute(String actionCommand) {
 	TOCLayerManager toc = new TOCLayerManager();
 	FLyrVect l = toc.getLayerByName(carreterasLayerName);
-	if (l != null) {
+	if ((l != null) && AlphanumericTableLoader.loadTables()) {
 	    FormCarreteras dialog = new FormCarreteras(l);
 	    if (dialog.init()) {
 		PluginServices.getMDIManager().addWindow(dialog);
