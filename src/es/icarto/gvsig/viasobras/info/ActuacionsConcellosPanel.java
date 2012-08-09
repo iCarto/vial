@@ -15,6 +15,7 @@ import com.iver.cit.gvsig.project.documents.table.gui.Table;
 import com.jeta.forms.components.panel.FormPanel;
 
 import es.icarto.gvsig.navtableforms.gui.tables.TableFilter;
+import es.icarto.gvsig.navtableforms.gui.tables.TableManager;
 import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
 
 public class ActuacionsConcellosPanel extends JPanel implements IWindow {
