@@ -6,8 +6,8 @@ import com.iver.andami.plugins.Extension;
 import com.iver.cit.gvsig.fmap.layers.FLyrVect;
 
 import es.icarto.gvsig.navtableforms.utils.TOCLayerManager;
-import es.icarto.gvsig.viasobras.info.AlphanumericTableLoader;
-import es.icarto.gvsig.viasobras.info.FormActuaciones;
+import es.icarto.gvsig.viasobras.forms.FormActuacions;
+import es.icarto.gvsig.viasobras.forms.utils.AlphanumericTableLoader;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
 public class FormActuacionesExtension extends Extension {
@@ -22,7 +22,7 @@ public class FormActuacionesExtension extends Extension {
 	try {
 	    AlphanumericTableLoader.loadTables();
 	    if (l != null) {
-		FormActuaciones dialog = new FormActuaciones(l);
+		FormActuacions dialog = new FormActuacions(l);
 		if (dialog.init()) {
 		    PluginServices.getMDIManager().addCentredWindow(dialog);
 		}

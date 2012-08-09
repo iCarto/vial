@@ -32,10 +32,10 @@ import com.iver.andami.messages.NotificationManager;
 import com.iver.cit.gvsig.fmap.drivers.DBException;
 import com.jeta.forms.components.panel.FormPanel;
 
-import es.icarto.gvsig.viasobras.catalog.domain.Carretera;
-import es.icarto.gvsig.viasobras.catalog.domain.Catalog;
-import es.icarto.gvsig.viasobras.catalog.domain.Concello;
-import es.icarto.gvsig.viasobras.catalog.domain.mappers.DBFacade;
+import es.icarto.gvsig.viasobras.domain.catalog.Carretera;
+import es.icarto.gvsig.viasobras.domain.catalog.Catalog;
+import es.icarto.gvsig.viasobras.domain.catalog.Concello;
+import es.icarto.gvsig.viasobras.domain.catalog.mappers.DBFacade;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
 @SuppressWarnings("serial")
