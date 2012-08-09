@@ -1,5 +1,10 @@
 package es.icarto.gvsig.viasobras.info;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+
 import org.apache.log4j.Logger;
 
 import com.iver.andami.PluginServices;
@@ -7,10 +12,12 @@ import com.iver.cit.gvsig.fmap.layers.FLyrVect;
 import com.jeta.forms.components.panel.FormPanel;
 
 import es.icarto.gvsig.navtableforms.AbstractForm;
+import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
 
 public class FormActuaciones extends AbstractForm {
 
     private FormPanel form;
+    private JButton ayuntamientos;
 
     public FormActuaciones(FLyrVect layer) {
 	super(layer);
@@ -18,7 +25,7 @@ public class FormActuaciones extends AbstractForm {
     }
 
     public void initWindow() {
-	viewInfo.setHeight(530);
+	viewInfo.setHeight(540);
 	viewInfo.setWidth(450);
 	viewInfo.setTitle("Vías y Obras: actuaciones");
     }
@@ -44,6 +51,24 @@ public class FormActuaciones extends AbstractForm {
 
     @Override
     protected void fillSpecificValues() {
+    }
+
+    @Override
+    public void setListeners() {
+	super.setListeners();
+
+	ayuntamientos = (JButton) AbeilleParser.getButtonsFromContainer(form)
+		.get("ayuntamientos");
+	ayuntamientos.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+		openConcellosPanel();
+	    }
+	});
+    }
+
+    private void openConcellosPanel() {
+	ActuacionsConcellosPanel cp = new ActuacionsConcellosPanel("0000");
+	PluginServices.getMDIManager().addWindow(cp);
     }
 
 }

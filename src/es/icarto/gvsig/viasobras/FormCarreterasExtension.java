@@ -1,6 +1,7 @@
 package es.icarto.gvsig.viasobras;
 
 import com.iver.andami.PluginServices;
+import com.iver.andami.messages.NotificationManager;
 import com.iver.andami.plugins.Extension;
 import com.iver.cit.gvsig.fmap.layers.FLyrVect;
 
@@ -18,11 +19,16 @@ public class FormCarreterasExtension extends Extension {
     public void execute(String actionCommand) {
 	TOCLayerManager toc = new TOCLayerManager();
 	FLyrVect l = toc.getLayerByName(carreterasLayerName);
-	if ((l != null) && AlphanumericTableLoader.loadTables()) {
-	    FormCarreteras dialog = new FormCarreteras(l);
-	    if (dialog.init()) {
-		PluginServices.getMDIManager().addWindow(dialog);
+	try {
+	    AlphanumericTableLoader.loadTables();
+	    if (l != null) {
+		FormCarreteras dialog = new FormCarreteras(l);
+		if (dialog.init()) {
+		    PluginServices.getMDIManager().addWindow(dialog);
+		}
 	    }
+	} catch (Exception e) {
+	    NotificationManager.addError(e);
 	}
     }
 

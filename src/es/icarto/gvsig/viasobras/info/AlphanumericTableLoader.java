@@ -24,29 +24,21 @@ import es.udc.cartolab.gvsig.users.utils.DBSession;
 
 public class AlphanumericTableLoader {
 
-    public static boolean tablesLoaded = false;
-
-    public static boolean loadTables() {
-
-	if (tablesLoaded) {
-	    return true;
-	}
+    public static void loadTables() throws DriverLoadException,
+	    NoSuchTableException, ReadDriverException, PropertyVetoException {
 
 	// Alphanumeric tables needed by this form
 	String[] tableNames = new String[1];
 	tableNames[0] = "carreteras_concellos";
+	tableNames[0] = "actuacions_concellos";
 
 	for (int i = 0; i < tableNames.length; i++) {
-	    tablesLoaded = loadTable(tableNames[i]);
-	    if (!tablesLoaded) {
-		// return inmediately if any of the tables couldn't be loaded
-		return tablesLoaded;
-	    }
+	    loadTable(tableNames[i]);
 	}
-	return tablesLoaded;
     }
 
-    private static boolean loadTable(String tableName) {
+    private static void loadTable(String tableName) throws DriverLoadException,
+    NoSuchTableException, ReadDriverException, PropertyVetoException {
 
 	IWindow[] ws = PluginServices.getMDIManager().getAllWindows();
 	IWindow baseView = null;
@@ -64,44 +56,30 @@ public class AlphanumericTableLoader {
 		"PostgreSQL Alphanumeric");
 
 	DataSource dataSource;
-	try {
-	    dataSource = LayerFactory.getDataSourceFactory()
-		    .createRandomDataSource(tableName,
-			    DataSourceFactory.AUTOMATIC_OPENING);
-	    SelectableDataSource sds = new SelectableDataSource(dataSource);
-	    EditableAdapter auxea = new EditableAdapter();
+	dataSource = LayerFactory.getDataSourceFactory()
+		.createRandomDataSource(tableName,
+			DataSourceFactory.AUTOMATIC_OPENING);
+	SelectableDataSource sds = new SelectableDataSource(dataSource);
+	EditableAdapter auxea = new EditableAdapter();
 
-	    auxea.setOriginalDataSource(sds);
+	auxea.setOriginalDataSource(sds);
 
-	    ProjectTable projectTable = ProjectFactory.createTable(tableName,
-		    auxea);
-	    Table t = new Table();
-	    t.setModel(projectTable);
+	ProjectTable projectTable = ProjectFactory.createTable(tableName,
+		auxea);
+	Table t = new Table();
+	t.setModel(projectTable);
 
-	    PluginServices.getMDIManager().addWindow(t);
-	    JInternalFrame frame = (JInternalFrame) t.getRootPane().getParent();
+	PluginServices.getMDIManager().addWindow(t);
+	JInternalFrame frame = (JInternalFrame) t.getRootPane().getParent();
 
-	    ProjectExtension ext = (ProjectExtension) PluginServices
-		    .getExtension(ProjectExtension.class);
-	    ext.getProject().addDocument(projectTable);
-	    frame.toBack();
-	    frame.setSelected(false);
-	    JInternalFrame frameBaseView = (JInternalFrame) ((BaseView) baseView)
-		    .getRootPane().getParent();
-	    frameBaseView.setSelected(true);
-	    return true;
-	} catch (DriverLoadException e) {
-	    e.printStackTrace();
-	    return false;
-	} catch (NoSuchTableException e) {
-	    e.printStackTrace();
-	    return false;
-	} catch (ReadDriverException e) {
-	    e.printStackTrace();
-	    return false;
-	} catch (PropertyVetoException e) {
-	    e.printStackTrace();
-	    return false;
-	}
+	ProjectExtension ext = (ProjectExtension) PluginServices
+		.getExtension(ProjectExtension.class);
+	ext.getProject().addDocument(projectTable);
+	frame.toBack();
+	frame.setSelected(false);
+	JInternalFrame frameBaseView = (JInternalFrame) ((BaseView) baseView)
+		.getRootPane().getParent();
+	frameBaseView.setSelected(true);
     }
+
 }
