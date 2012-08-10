@@ -8,7 +8,9 @@ import javax.swing.event.InternalFrameEvent;
 
 import org.apache.log4j.Logger;
 
+import com.hardcode.gdbms.driver.exceptions.ReadDriverException;
 import com.iver.andami.PluginServices;
+import com.iver.andami.messages.NotificationManager;
 import com.iver.andami.ui.mdiManager.IWindow;
 import com.iver.cit.gvsig.fmap.layers.FLyrVect;
 import com.jeta.forms.components.panel.FormPanel;
@@ -55,12 +57,14 @@ ILauncherForm {
 	colAliases.add("PK Final");
 	colAliases.add("Código concello");
 	colAliases.add("Observaciones");
-	ayuntamientos.setModel(TableModelFactory.createFromTable(
-		"carreteras_concellos",
-		"codigo_carretera",
-		((KeyValue) codigo.getSelectedItem()).getKey(),
-		colNames,
-		colAliases));
+	try {
+	    ayuntamientos.setModel(TableModelFactory.createFromTable(
+		    "carreteras_concellos", "codigo_carretera",
+		    ((KeyValue) codigo.getSelectedItem()).getKey(), colNames,
+		    colAliases));
+	} catch (ReadDriverException e) {
+	    NotificationManager.addError(e);
+	}
     }
 
     @Override

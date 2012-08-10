@@ -9,6 +9,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import com.hardcode.gdbms.driver.exceptions.ReadDriverException;
 import com.iver.andami.ui.mdiManager.IWindow;
 import com.iver.andami.ui.mdiManager.WindowInfo;
 import com.iver.cit.gvsig.project.documents.table.gui.Table;
@@ -43,10 +44,15 @@ public class FormActuacionsConcellos extends JPanel implements IWindow {
 	Table t = tableManager.getTableByName("actuacions_concellos");
 	ArrayList<String> cols = new ArrayList<String>();
 	cols.add("codigo_concello");
-	Object[][] cs = TableFilter.getRowsFromSource(t.getModel().getModelo(),
-		"codigo_actuacion", actuacion, cols);
-	for (int i = 0; i < cs.length; i++) {
-	    concellos.add(cs[i][0].toString());
+	Object[][] cs;
+	try {
+	    cs = TableFilter.getRowsFromSource(t.getModel().getModelo(),
+		    "codigo_actuacion", actuacion, cols);
+	    for (int i = 0; i < cs.length; i++) {
+		concellos.add(cs[i][0].toString());
+	    }
+	} catch (ReadDriverException e) {
+	    concellos.clear();
 	}
     }
 

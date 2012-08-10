@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS inventario.actuacions;
 CREATE TABLE inventario.actuacions(
        id SERIAL,
+       codigo_actuacion varchar(4) UNIQUE,
        codigo_carretera varchar(4),
        pk_inicial float,
        pk_final float,

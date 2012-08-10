@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
@@ -18,6 +19,7 @@ public class FormActuacions extends AbstractForm {
 
     private FormPanel form;
     private JButton ayuntamientos;
+    private JTextField codigoActuacion;
 
     public FormActuacions(FLyrVect layer) {
 	super(layer);
@@ -64,11 +66,17 @@ public class FormActuacions extends AbstractForm {
 		openConcellosPanel();
 	    }
 	});
+
+	codigoActuacion = (JTextField) this.getWidgetComponents().get(
+		"codigo_actuacion");
     }
 
     private void openConcellosPanel() {
-	FormActuacionsConcellos cp = new FormActuacionsConcellos("0000");
-	PluginServices.getMDIManager().addWindow(cp);
+	if (!codigoActuacion.getText().equals("")) {
+	    FormActuacionsConcellos cp = new FormActuacionsConcellos(
+		    codigoActuacion.getText());
+	    PluginServices.getMDIManager().addWindow(cp);
+	}
     }
 
 }

@@ -15,6 +15,14 @@ CREATE TABLE inventario.carreteras_concellos(
        CONSTRAINT pk_carreteras_concellos PRIMARY KEY (codigo_concello, codigo_carretera)
 );
 
+DROP TABLE IF EXISTS inventario.actuacions_concellos;
+CREATE TABLE inventario.actuacions_concellos(
+       id SERIAL,
+       codigo_actuacion varchar(4),
+       codigo_concello varchar(5),
+       CONSTRAINT pk_actuacions_concellos PRIMARY KEY (codigo_concello, codigo_actuacion)
+);
+
 DROP TABLE IF EXISTS inventario.municipio_codigo;
 CREATE TABLE inventario.municipio_codigo(
        codigo varchar(5),

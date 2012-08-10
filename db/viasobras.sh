@@ -103,6 +103,12 @@ sql_query="\COPY inventario.carreteras_concellos (codigo_carretera, codigo_conce
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname -c "$sql_query"
 
+# Import from CSV link data between actuacions-concellos
+csv_path=`pwd`/datos/inventario/actuacions_concellos.csv #COPY command needs absolute path
+sql_query="\COPY inventario.actuacions_concellos (codigo_actuacion, codigo_concello) FROM '$csv_path' WITH DELIMITER ','"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
 # Linear referencing: calibrate road, event points & dynamic segmentation
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/calibrate_carreteras.sql
@@ -120,3 +126,5 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
 # Actuaciones
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/create_actuacions.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname < funcions/create_actuacions_data.sql
