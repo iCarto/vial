@@ -25,12 +25,12 @@ import es.udc.cartolab.gvsig.users.utils.DBSession;
 public class AlphanumericTableLoader {
 
     public static void loadTables() throws DriverLoadException,
-	    NoSuchTableException, ReadDriverException, PropertyVetoException {
+    NoSuchTableException, ReadDriverException, PropertyVetoException {
 
 	// Alphanumeric tables needed by this form
-	String[] tableNames = new String[1];
+	String[] tableNames = new String[2];
 	tableNames[0] = "carreteras_concellos";
-	tableNames[0] = "actuacions_concellos";
+	tableNames[1] = "actuacions_concellos";
 
 	for (int i = 0; i < tableNames.length; i++) {
 	    loadTable(tableNames[i]);
