@@ -20,6 +20,7 @@ import com.iver.cit.gvsig.project.documents.table.ProjectTable;
 import com.iver.cit.gvsig.project.documents.table.gui.Table;
 import com.iver.cit.gvsig.project.documents.view.gui.BaseView;
 
+import es.icarto.gvsig.navtableforms.gui.tables.TableManager;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
 public class AlphanumericTableLoader {
@@ -32,8 +33,12 @@ public class AlphanumericTableLoader {
 	tableNames[0] = "carreteras_concellos";
 	tableNames[1] = "actuacions_concellos";
 
+	TableManager t = new TableManager();
+
 	for (int i = 0; i < tableNames.length; i++) {
-	    loadTable(tableNames[i]);
+	    if (t.getTableByName(tableNames[i]) == null) {
+		loadTable(tableNames[i]);
+	    }
 	}
     }
 
