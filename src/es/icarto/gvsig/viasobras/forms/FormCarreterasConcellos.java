@@ -29,66 +29,60 @@ public class FormCarreterasConcellos extends JPanel implements IForm, IWindow {
     private JScrollPane form;
     private TableModelAlphanumeric model;
 
-    private JTextField concello;
     private JTextField carretera;
+    private JTextField concello;
     private JTextField pkInicial;
     private JTextField pkFinal;
     private JTextArea observaciones;
     private JButton save;
+    private ActionListener action;
 
+    private String carreteraCode;
     private long position;
 
     public FormCarreterasConcellos() {
 	super();
+	FormPanel formBody = new FormPanel("carreteras-concellos.xml");
+	form = new JScrollPane(formBody);
+	initWidgets();
+	action = new CreateAction();
+	save.addActionListener(action);
     }
 
-    public void open(long position) {
-	this.position = position;
-	if (form == null) {
-	    FormPanel formBody = new FormPanel("carreteras-concellos.xml");
-	    form = new JScrollPane(formBody);
-	}
-	initWidgets();
-	fillWidgets(position);
+    /**
+     * setModel & setCarreteraCode should be set before executing it
+     */
+    public void createRecord(long position) {
+	this.position = -1;
+	save.removeActionListener(action);
+	action = new CreateAction();
+	save.addActionListener(action);
+	fillWidgetsForCreatingRecord();
 	this.add(form);
 	PluginServices.getMDIManager().addWindow(this);
     }
 
-    public void setModel(TableModelAlphanumeric model) {
-	this.model = model;
+    /**
+     * setModel should be set before executing it
+     */
+    public void updateRecord(long position) {
+	this.position = position;
+	save.removeActionListener(action);
+	action = new SaveAction();
+	save.addActionListener(action);
+	fillWidgetsForUpdatingRecord(position);
+	this.add(form);
+	PluginServices.getMDIManager().addWindow(this);
     }
 
-    private void initWidgets() {
-	HashMap<String, JComponent> widgets = AbeilleParser
-		.getWidgetsFromContainer(form);
-	concello = (JTextField) widgets.get("codigo_concello");
-	carretera = (JTextField) widgets.get("codigo_carretera");
-	pkInicial = (JTextField) widgets.get("pk_inicial");
-	pkFinal = (JTextField) widgets.get("pk_final");
-	observaciones = (JTextArea) widgets.get("observaciones");
-
-	save = (JButton) AbeilleParser.getButtonsFromContainer(form).get(
-		"guardar");
-	save.addActionListener(new SaveAction());
-    }
-
-    private void fillWidgets(long position) {
+    /**
+     * setModel should be set before executing it
+     */
+    public void deleteRecord(long position) {
 	try {
-	    concello.setText(model.read((int) position).get("codigo_concello"));
-	    carretera.setText(model.read((int) position)
-		    .get("codigo_carretera"));
-	    carretera.setEnabled(false);
-	    pkInicial.setText(model.read((int) position).get("pk_inicial"));
-	    pkFinal.setText(model.read((int) position).get("pk_final"));
-	    observaciones.setText(model.read((int) position).get(
-		    "observaciones"));
-	} catch (ReadDriverException e) {
-	    e.printStackTrace();
-	    concello.setText("");
-	    carretera.setText("");
-	    pkInicial.setText("");
-	    pkFinal.setText("");
-	    observaciones.setText("");
+	    model.delete((int) position);
+	} catch (Exception e) {
+	    NotificationManager.addError(e);
 	}
     }
 
@@ -96,12 +90,54 @@ public class FormCarreterasConcellos extends JPanel implements IForm, IWindow {
 	return model.getSource();
     }
 
-    public void delete(long position) {
+    public void setModel(TableModelAlphanumeric model) {
+	this.model = model;
+    }
+
+    public void setCarretera(String carreteraCode) {
+	this.carreteraCode = carreteraCode;
+    }
+
+    private void initWidgets() {
+	HashMap<String, JComponent> widgets = AbeilleParser
+		.getWidgetsFromContainer(form);
+	carretera = (JTextField) widgets.get("codigo_carretera");
+	concello = (JTextField) widgets.get("codigo_concello");
+	pkInicial = (JTextField) widgets.get("pk_inicial");
+	pkFinal = (JTextField) widgets.get("pk_final");
+	observaciones = (JTextArea) widgets.get("observaciones");
+
+	carretera.setEnabled(false);
+
+	save = (JButton) AbeilleParser.getButtonsFromContainer(form).get(
+		"guardar");
+    }
+
+    private void fillWidgetsForUpdatingRecord(long position) {
 	try {
-	    model.delete((int) position);
-	} catch (Exception e) {
-	    NotificationManager.addError(e);
+	    carretera.setText(model.read((int) position)
+		    .get("codigo_carretera"));
+	    concello.setText(model.read((int) position).get("codigo_concello"));
+	    pkInicial.setText(model.read((int) position).get("pk_inicial"));
+	    pkFinal.setText(model.read((int) position).get("pk_final"));
+	    observaciones.setText(model.read((int) position).get(
+		    "observaciones"));
+	} catch (ReadDriverException e) {
+	    e.printStackTrace();
+	    carretera.setText("");
+	    concello.setText("");
+	    pkInicial.setText("");
+	    pkFinal.setText("");
+	    observaciones.setText("");
 	}
+    }
+
+    private void fillWidgetsForCreatingRecord() {
+	carretera.setText(carreteraCode);
+	concello.setText("");
+	pkInicial.setText("");
+	pkFinal.setText("");
+	observaciones.setText("");
     }
 
     public WindowInfo getWindowInfo() {
@@ -120,6 +156,23 @@ public class FormCarreterasConcellos extends JPanel implements IForm, IWindow {
 	return null;
     }
 
+    private final class CreateAction implements ActionListener {
+	public void actionPerformed(ActionEvent arg0) {
+	    HashMap<String, String> values = new HashMap<String, String>();
+	    values.put("codigo_carretera", carretera.getText());
+	    values.put("codigo_concello", concello.getText());
+	    values.put("pk_inicial", pkInicial.getText());
+	    values.put("pk_final", pkFinal.getText());
+	    values.put("observaciones", observaciones.getText());
+	    try {
+		model.create(values);
+		fillWidgetsForCreatingRecord();
+	    } catch (Exception e) {
+		NotificationManager.addError(e);
+	    }
+	}
+    }
+
     private final class SaveAction implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 	    model.updateValue("codigo_carretera", carretera.getText());
@@ -129,7 +182,7 @@ public class FormCarreterasConcellos extends JPanel implements IForm, IWindow {
 	    model.updateValue("observaciones", observaciones.getText());
 	    try {
 		model.update((int) position);
-	    } catch (ReadDriverException e) {
+	    } catch (Exception e) {
 		NotificationManager.addError(e);
 	    }
 	}

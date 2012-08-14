@@ -14,7 +14,6 @@ import com.iver.cit.gvsig.fmap.layers.FLyrVect;
 import com.jeta.forms.components.panel.FormPanel;
 
 import es.icarto.gvsig.navtableforms.AbstractForm;
-import es.icarto.gvsig.navtableforms.gui.tables.IForm;
 import es.icarto.gvsig.navtableforms.gui.tables.JTableContextualMenu;
 import es.icarto.gvsig.navtableforms.gui.tables.TableModelAlphanumeric;
 import es.icarto.gvsig.navtableforms.gui.tables.TableModelFactory;
@@ -26,7 +25,7 @@ public class FormCarreteras extends AbstractForm implements IWindow {
     private FormPanel form;
     private JTable ayuntamientos;
     private JComboBox codigo;
-    private IForm carreterasConcellos;
+    private FormCarreterasConcellos carreterasConcellos;
     private JTableContextualMenu contextualMenu;
 
     public FormCarreteras(FLyrVect layer) {
@@ -64,6 +63,8 @@ public class FormCarreteras extends AbstractForm implements IWindow {
 		    colAliases);
 	    ayuntamientos.setModel(model);
 	    carreterasConcellos.setModel(model);
+	    carreterasConcellos.setCarretera(((KeyValue) codigo
+		    .getSelectedItem()).getKey());
 	    this.repaint(); // will force embedded tables to refresh
 	} catch (ReadDriverException e) {
 	    e.printStackTrace();
