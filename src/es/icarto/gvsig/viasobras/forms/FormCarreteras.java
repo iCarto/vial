@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javax.swing.JComboBox;
 import javax.swing.JTable;
-import javax.swing.event.InternalFrameEvent;
 
 import org.apache.log4j.Logger;
 
@@ -112,28 +111,6 @@ public class FormCarreteras extends AbstractForm implements IWindow {
     public String getXMLPath() {
 	return PluginServices.getPluginServices("es.icarto.gvsig.viasobras")
 		.getClassLoader().getResource("viasobras.xml").getPath();
-    }
-
-    public void internalFrameActivated(InternalFrameEvent arg0) {
-    }
-
-    public void internalFrameClosed(InternalFrameEvent arg0) {
-    }
-
-    public void internalFrameClosing(InternalFrameEvent arg0) {
-    }
-
-    public void internalFrameDeactivated(InternalFrameEvent arg0) {
-	updateJTables();
-    }
-
-    public void internalFrameDeiconified(InternalFrameEvent arg0) {
-    }
-
-    public void internalFrameIconified(InternalFrameEvent arg0) {
-    }
-
-    public void internalFrameOpened(InternalFrameEvent arg0) {
     }
 
     @Override
