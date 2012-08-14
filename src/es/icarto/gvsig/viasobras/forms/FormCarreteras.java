@@ -10,25 +10,25 @@ import org.apache.log4j.Logger;
 
 import com.hardcode.gdbms.driver.exceptions.ReadDriverException;
 import com.iver.andami.PluginServices;
-import com.iver.andami.messages.NotificationManager;
 import com.iver.andami.ui.mdiManager.IWindow;
 import com.iver.cit.gvsig.fmap.layers.FLyrVect;
 import com.jeta.forms.components.panel.FormPanel;
 
 import es.icarto.gvsig.navtableforms.AbstractForm;
+import es.icarto.gvsig.navtableforms.gui.tables.IForm;
+import es.icarto.gvsig.navtableforms.gui.tables.JTableContextualMenu;
+import es.icarto.gvsig.navtableforms.gui.tables.TableModelAlphanumeric;
 import es.icarto.gvsig.navtableforms.gui.tables.TableModelFactory;
-import es.icarto.gvsig.navtableforms.launcher.AlphanumericNavTableLauncher;
-import es.icarto.gvsig.navtableforms.launcher.ILauncherForm;
-import es.icarto.gvsig.navtableforms.launcher.LauncherParams;
 import es.icarto.gvsig.navtableforms.ormlite.domain.KeyValue;
+import es.udc.cartolab.gvsig.navtable.listeners.PositionEvent;
 
-public class FormCarreteras extends AbstractForm implements IWindow,
-ILauncherForm {
+public class FormCarreteras extends AbstractForm implements IWindow {
 
     private FormPanel form;
     private JTable ayuntamientos;
-    private AlphanumericNavTableLauncher antl;
     private JComboBox codigo;
+    private IForm carreterasConcellos;
+    private JTableContextualMenu contextualMenu;
 
     public FormCarreteras(FLyrVect layer) {
 	super(layer);
@@ -48,44 +48,51 @@ ILauncherForm {
 
     private void updateJTables() {
 	ArrayList<String> colNames = new ArrayList<String>();
+	colNames.add("codigo_concello");
 	colNames.add("pk_inicial");
 	colNames.add("pk_final");
-	colNames.add("codigo_concello");
 	colNames.add("observaciones");
 	ArrayList<String> colAliases = new ArrayList<String>();
+	colAliases.add("Ayuntamiento");
 	colAliases.add("PK Inicial");
 	colAliases.add("PK Final");
-	colAliases.add("Código concello");
 	colAliases.add("Observaciones");
+	TableModelAlphanumeric model;
 	try {
-	    ayuntamientos.setModel(TableModelFactory.createFromTable(
-		    "carreteras_concellos", "codigo_carretera",
+	    model = TableModelFactory.createFromTable("carreteras_concellos",
+		    "codigo_carretera",
 		    ((KeyValue) codigo.getSelectedItem()).getKey(), colNames,
-		    colAliases));
+		    colAliases);
+	    ayuntamientos.setModel(model);
+	    carreterasConcellos.setModel(model);
+	    this.repaint(); // will force embedded tables to refresh
 	} catch (ReadDriverException e) {
-	    NotificationManager.addError(e);
+	    e.printStackTrace();
 	}
+
     }
 
     @Override
     public void setListeners() {
 	super.setListeners();
 
-	LauncherParams lp = new LauncherParams(this, "carreteras_concellos",
-		"Ayuntamientos", "Editar ayuntamientos");
-	antl = new AlphanumericNavTableLauncher(
-		this, lp);
+	// LauncherParams lp = new LauncherParams(this, "carreteras_concellos",
+	// "Ayuntamientos", "Editar ayuntamientos");
+	// antl = new AlphanumericNavTableLauncher(
+	// this, lp);
 	codigo = (JComboBox) this.getWidgetComponents().get("codigo");
 	ayuntamientos = (JTable) this.getWidgetComponents()
 		.get("ayuntamientos");
-	ayuntamientos.addMouseListener(antl);
+	carreterasConcellos = new FormCarreterasConcellos();
+	contextualMenu = new JTableContextualMenu(carreterasConcellos);
+	ayuntamientos.addMouseListener(contextualMenu);
     }
 
     @Override
     public void removeListeners() {
 	super.removeListeners();
 
-	ayuntamientos.removeMouseListener(antl);
+	ayuntamientos.removeMouseListener(contextualMenu);
     }
 
     @Override
@@ -129,8 +136,10 @@ ILauncherForm {
     public void internalFrameOpened(InternalFrameEvent arg0) {
     }
 
-    public String getSQLQuery(String queryID) {
-	return null;
+    @Override
+    public void onPositionChange(PositionEvent e) {
+	super.onPositionChange(e);
+	updateJTables();
     }
 
 }

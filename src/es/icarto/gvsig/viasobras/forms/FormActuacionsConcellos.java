@@ -15,9 +15,9 @@ import com.iver.andami.ui.mdiManager.WindowInfo;
 import com.iver.cit.gvsig.project.documents.table.gui.Table;
 import com.jeta.forms.components.panel.FormPanel;
 
-import es.icarto.gvsig.navtableforms.gui.tables.TableFilter;
-import es.icarto.gvsig.navtableforms.gui.tables.TableManager;
+import es.icarto.gvsig.navtableforms.gui.tables.RowsFilter;
 import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
+import es.icarto.gvsig.navtableforms.utils.TOCTableManager;
 
 public class FormActuacionsConcellos extends JPanel implements IWindow {
 
@@ -40,13 +40,13 @@ public class FormActuacionsConcellos extends JPanel implements IWindow {
 
     private void initConcellosAffected() {
 	this.concellos = new ArrayList<String>();
-	TableManager tableManager = new TableManager();
+	TOCTableManager tableManager = new TOCTableManager();
 	Table t = tableManager.getTableByName("actuacions_concellos");
 	ArrayList<String> cols = new ArrayList<String>();
 	cols.add("codigo_concello");
 	Object[][] cs;
 	try {
-	    cs = TableFilter.getRowsFromSource(t.getModel().getModelo(),
+	    cs = RowsFilter.getRowsFromSource(t.getModel().getModelo(),
 		    "codigo_actuacion", actuacion, cols);
 	    for (int i = 0; i < cs.length; i++) {
 		concellos.add(cs[i][0].toString());
