@@ -1,130 +1,87 @@
 #!/bin/bash
 
-db_config=${1}
+usage() {
+    echo
+    echo "`basename $0` -c config_file -s schema_to_deploy"
+    echo
+    echo "-c: config file"
+    echo "-s: schema to deploy (elle, inventario, queries). 'all' will recreate the whole database"
+    exit -1
+}
 
-if [ $# -ne 1 ]
+while getopts ":c:s:" opt; do
+  case $opt in
+    c)
+      #If config file exists, load it; else, exit.
+      if [ -e $OPTARG ]
+      then
+          echo "LOG: config file="$OPTARG
+          config_file=$OPTARG
+      else
+          echo "ERROR: file "$OPTARG" not exist"
+          usage
+      fi
+      ;;
+    s)
+      #Use all (recreate the whole database) if schema is not set
+      if [ -z $OPTARG ]
+      then
+          schema=all
+      else
+          schema=$OPTARG
+      fi
+          echo "LOG: schema="$schema
+      ;;
+    \?)
+      echo "ERROR: Option" $OPTARG "not available"
+      usage
+      ;;
+    :)
+      echo "ERROR: Option" $OPTARG "requires an argument"
+      usage
+      ;;
+  esac
+done
+
+#Check schema & config_file are set
+if [ -z $schema ]
 then
-    # use local db_config if none passed
-    . db_config_local
-else
-    . $db_config
+    echo "ERROR: schema not set"
+    usage
+elif [ -z $config_file ]
+then
+    echo "ERROR: config file not set"
+    usage
 fi
 
-# Create user and database
-# -------------------------
+if [ $schema == "all" ]
+then
 
-dropdb -h $viasobras_server -p $viasobras_port -U $viasobras_superuser $viasobras_dbname;
-dropuser -h $viasobras_server -p $viasobras_port -U $viasobras_superuser $viasobras_user
-createuser -h $viasobras_server -p $viasobras_port -U $viasobras_superuser -SDRPl $viasobras_user
-createdb -h $viasobras_server -p $viasobras_port -U $viasobras_superuser -O $viasobras_user \
-    -T $viasobras_template $viasobras_dbname;
+    echo "LOG: drop & create database"
+    ./viasobras-create-db.sh $config_file
+    ./viasobras-create-schema-elle.sh $config_file
+    ./viasobras-create-schema-infobase.sh $config_file
+    ./viasobras-create-schema-queries.sh $config_file
+    ./viasobras-create-schema-inventario.sh $config_file
 
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_superuser \
-    $viasobras_dbname -c "ALTER DATABASE $viasobras_dbname OWNER TO $viasobras_user;"
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_superuser \
-    $viasobras_dbname -c "ALTER SCHEMA public OWNER TO $viasobras_user;"
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_superuser \
-    $viasobras_dbname -c "ALTER TABLE public.geometry_columns OWNER TO $viasobras_user;"
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_superuser \
-    $viasobras_dbname -c "ALTER TABLE public.spatial_ref_sys OWNER TO $viasobras_user;"
+elif [ $schema == "elle" ]
+then
+    echo "LOG: drop & create schema ELLE"
+    ./viasobras-create-schema-elle.sh $config_file
 
-# ELLE: create default map with styles
-# ------------------------------------
+elif [ $schema == "infobase" ]
+then
+    echo "LOG: drop & create schema INFOBASE"
+    ./viasobras-create-schema-infobase.sh $config_file
 
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/elle.sql
+elif [ $schema == "inventario" ]
+then
+    echo "LOG: drop & create schema INVENTARIO"
+    ./viasobras-create-schema-inventario.sh $config_file
 
-# Info base
-# ---------
+elif [ $schema == "queries" ]
+then
+    echo "LOG: drop & create schema QUERIES"
+    ./viasobras-create-schema-queries.sh $config_file
 
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/create_schema_infobase.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < datos/info_base/oceano.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < datos/info_base/portugal.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < datos/info_base/provincias_galicia.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < datos/info_base/provincias_limitrofes.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < datos/info_base/concellos.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < datos/info_base/nucleos.sql
-
-# Queries
-# -------
-
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/create_schema_queries.sql
-
-# Inventario
-# ----------
-
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/create_schema_inventario.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < datos/inventario/rede_carreteras_tmp.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/procesar_rede_carreteras.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < datos/inventario/accidentes.sql
-
-# Import functions
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/update_geom_tipo_pavimento_all.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/update_geom_ancho_plataforma_all.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/update_geom_tipo_pavimento.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/update_geom_ancho_plataforma.sql
-
-# Post-procesado to create final tables from aforos.sql & inventario.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < datos/inventario/aforos.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-   $viasobras_dbname < funcions/procesar_aforos.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < datos/inventario/inventario.sql
-
-# Import from CSV aux data to process inventario
-csv_path=`pwd`/datos/inventario/municipio_codigo.csv #COPY command needs absolute path
-sql_query="\COPY inventario.municipio_codigo (nombre, codigo) FROM '$csv_path' WITH DELIMITER ','"
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname -c "$sql_query"
-
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-   $viasobras_dbname < funcions/procesar_inventario.sql
-
-# Import from CSV link data between carreteras-concellos
-csv_path=`pwd`/datos/inventario/carreteras_concellos.csv #COPY command needs absolute path
-sql_query="\COPY inventario.carreteras_concellos (codigo_carretera, codigo_concello) FROM '$csv_path' WITH DELIMITER ','"
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname -c "$sql_query"
-
-# Import from CSV link data between actuacions-concellos
-csv_path=`pwd`/datos/inventario/actuacions_concellos.csv #COPY command needs absolute path
-sql_query="\COPY inventario.actuacions_concellos (codigo_actuacion, codigo_concello) FROM '$csv_path' WITH DELIMITER ','"
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname -c "$sql_query"
-
-# Linear referencing: calibrate road, event points & dynamic segmentation
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/calibrate_carreteras.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/create_accidentes_event_points.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/create_aforos_event_points.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/create_dynamic_segments_from_inventario.sql
-
-#Create triggers
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/create_triggers.sql
-
-# Actuaciones
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/create_actuacions.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/create_actuacions_data.sql
+fi
