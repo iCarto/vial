@@ -20,6 +20,7 @@ public class Catalog {
 
     private static TramosMapperPavimento pavimentoMapper;
     private static TramosMapperPlataforma plataformaMapper;
+    private static TramosMapperCotas cotasMapper;
 
     public static Carreteras getCarreteras() throws SQLException {
 	return CarreterasMapper.findAll();
@@ -71,6 +72,26 @@ public class Catalog {
 	} else {
 	    tramos = plataformaMapper.findWhereCarreteraAndConcello(
 		    carretera, concello);
+	}
+	return tramos;
+    }
+
+    public static Tramos getTramosCotas() throws SQLException {
+	Tramos tramos;
+	cotasMapper = new TramosMapperCotas();
+	if ((carretera == CARRETERA_ALL) && (concello == CONCELLO_ALL)) {
+	    tramos = cotasMapper.findAll();
+	} else if ((carretera == CARRETERA_ALL) && (concello != CONCELLO_ALL)) {
+	    tramos = cotasMapper.findWhereConcello(concello);
+	} else if ((carretera != CARRETERA_ALL) && (concello == CONCELLO_ALL)
+		&& ((pkStart != PK_NONE) || (pkEnd != PK_NONE))) {
+	    tramos = cotasMapper.findWhereCarreteraAndPK(carretera,
+		    pkStart, pkEnd);
+	} else if ((carretera != CARRETERA_ALL) && (concello == CONCELLO_ALL)) {
+	    tramos = cotasMapper.findWhereCarretera(carretera);
+	} else {
+	    tramos = cotasMapper.findWhereCarreteraAndConcello(carretera,
+		    concello);
 	}
 	return tramos;
     }

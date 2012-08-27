@@ -1,5 +1,6 @@
 BEGIN;
 
+-- definition
 DROP TABLE IF EXISTS inventario.red_carreteras;
 CREATE TABLE inventario.red_carreteras (
        gid serial,
@@ -20,8 +21,11 @@ CREATE TABLE inventario.red_carreteras (
        observaciones text,
        PRIMARY KEY(gid)
 );
-SELECT AddGeometryColumn('inventario', 'red_carreteras', 'the_geom', '23029', 'MULTILINESTRING', '2');
+SELECT AddGeometryColumn('inventario', 'red_carreteras', 'the_geom', '23029', 'MULTILINESTRINGM', '3');
+ALTER TABLE inventario.red_carreteras DROP CONSTRAINT enforce_geotype_the_geom;
+ALTER TABLE inventario.red_carreteras DROP CONSTRAINT enforce_dims_the_geom;
 
+-- populate it
 INSERT INTO inventario.red_carreteras(
        SELECT nextval('inventario.red_carreteras_gid_seq') AS gid,
               "codigo" AS codigo,
@@ -44,5 +48,12 @@ INSERT INTO inventario.red_carreteras(
 );
 
 SELECT DropGeometryTable('inventario','red_carreteras_tmp');
+
+-- calibrate
+UPDATE inventario.red_carreteras AS c2 SET the_geom = (
+       SELECT ST_AddMeasure(the_geom, pk_inicial, pk_final)
+       FROM inventario.red_carreteras AS c
+       WHERE c.gid = c2.gid)
+;
 
 COMMIT;

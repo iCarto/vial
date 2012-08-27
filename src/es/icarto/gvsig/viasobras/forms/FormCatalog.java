@@ -57,6 +57,8 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
     private TableModel tipoPavimentoModel;
     private JTable anchoPlataforma;
     private TableModel anchoPlataformaModel;
+    private JTable cotas;
+    private TableModel cotasModel;
 
     private JButton search;
     private JButton load;
@@ -68,6 +70,8 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
     private JButton deleteTramoPavimento;
     private JButton insertTramoPlataforma;
     private JButton deleteTramoPlataforma;
+    private JButton insertCota;
+    private JButton deleteCota;
 
     public FormCatalog() {
 	form = new FormPanel("catalog.xml");
@@ -132,6 +136,10 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	insertTramoPlataforma = (JButton) buttons.get("insertar_plataforma");
 	deleteTramoPlataforma = (JButton) buttons.get("borrar_plataforma");
 
+	cotas = (JTable) widgets.get("tabla_cotas");
+	insertCota = (JButton) buttons.get("insertar_cota");
+	deleteCota = (JButton) buttons.get("borrar_cota");
+
 	search = (JButton) buttons.get("buscar");
 	load = (JButton) buttons.get("cargar");
 	save = (JButton) buttons.get("guardar");
@@ -145,6 +153,7 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	carreteras.requestFocusInWindow();
 	tipoPavimento.setFocusable(false);
 	anchoPlataforma.setFocusable(false);
+	cotas.setFocusable(false);
     }
 
     private void initListeners() {
@@ -160,15 +169,20 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	load.addActionListener(new LoadMapListener());
 	save.addActionListener(new SaveChangesListener());
 
-	insertTramoPavimento
-	.addActionListener(new InsertTramoPavimentoListener());
-	deleteTramoPavimento
-	.addActionListener(new DeleteTramoPavimentoListener());
+	insertTramoPavimento.addActionListener(
+		new InsertTramoPavimentoListener());
+	deleteTramoPavimento.addActionListener(
+		new DeleteTramoPavimentoListener());
 
-	insertTramoPlataforma
-	.addActionListener(new InsertTramoPlataformaListener());
-	deleteTramoPlataforma
-	.addActionListener(new DeleteTramoPlataformaListener());
+	insertTramoPlataforma.addActionListener(
+		new InsertTramoPlataformaListener());
+	deleteTramoPlataforma.addActionListener(
+		new DeleteTramoPlataformaListener());
+
+	insertCota.addActionListener(
+		new InsertTramoCotaListener());
+	deleteCota.addActionListener(
+		new DeleteTramoCotaListener());
     }
 
     private void enablePKControls() {
@@ -208,6 +222,8 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	    anchoPlataformaModel = Catalog.getTramosAnchoPlataforma()
 		    .getTableModel();
 	    anchoPlataforma.setModel(anchoPlataformaModel);
+	    cotasModel = Catalog.getTramosCotas().getTableModel();
+	    cotas.setModel(cotasModel);
 	    this.repaint();
 	} catch (SQLException e) {
 	    NotificationManager.addError(e);
@@ -315,7 +331,27 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	    t.setConcello(Catalog.getConcelloSelected());
 	    t.setPkStart(Catalog.getPKStart());
 	    t.setPkEnd(Catalog.getPKEnd());
-	    ((TramosTableModel) tipoPavimentoModel).addTramo(t);
+	    ((TramosTableModel) cotasModel).addTramo(t);
+	}
+    }
+
+    private final class DeleteTramoCotaListener implements ActionListener {
+	public void actionPerformed(ActionEvent e) {
+	    if ((cotas.getRowCount() > 0) && (cotas.getSelectedRow() != -1)) {
+		((TramosTableModel) cotasModel).deleteTramo(cotas
+			.getSelectedRow());
+	    }
+	}
+    }
+
+    private final class InsertTramoCotaListener implements ActionListener {
+	public void actionPerformed(ActionEvent e) {
+	    Tramo t = new Tramo();
+	    t.setCarretera(Catalog.getCarreteraSelected());
+	    t.setConcello(Catalog.getConcelloSelected());
+	    t.setPkStart(Catalog.getPKStart());
+	    t.setPkEnd(Catalog.getPKEnd());
+	    ((TramosTableModel) cotasModel).addTramo(t);
 	}
     }
 
@@ -324,6 +360,7 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	    try {
 		((TramosTableModel) tipoPavimentoModel).saveChanges();
 		((TramosTableModel) anchoPlataformaModel).saveChanges();
+		((TramosTableModel) cotasModel).saveChanges();
 		doSearch();
 	    } catch (SQLException e1) {
 		NotificationManager.addError(e1);

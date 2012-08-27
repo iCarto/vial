@@ -15,20 +15,20 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/procesar_red_carreteras.sql
 
 # Import useful functions
+#-------------------------
+
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/update_geom_tipo_pavimento_all.sql
+    $viasobras_dbname < funcions/update_geom_all.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/update_geom_ancho_plataforma_all.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/update_geom_tipo_pavimento.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/update_geom_ancho_plataforma.sql
+    $viasobras_dbname < funcions/update_geom_on_pk_change.sql
 
 # Accidentes
 #-----------
 
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < datos/inventario/accidentes.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname < funcions/create_accidentes_event_points.sql
 
 # Aforos
 #-------
@@ -37,6 +37,8 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < datos/inventario/aforos.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
    $viasobras_dbname < funcions/procesar_aforos.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname < funcions/create_aforos_event_points.sql
 
 # Municipio - codigo
 #-------------------
@@ -78,6 +80,14 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/procesar_tipo_pavimento.sql
 
+# Cotas
+#------
+
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname < datos/inventario/cotas_tmp.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname < funcions/procesar_cotas.sql
+
 # Actuacions - concellos
 #------------------------
 
@@ -99,21 +109,3 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
 # TODO: this is fake data, replace it from proper inputs
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/create_actuacions_data.sql
-
-# Linear referencing: calibrate road & all caracteristicas
-#---------------------------------------------------------
-
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/calibrate_carreteras.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/create_accidentes_event_points.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/create_aforos_event_points.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/create_dynamic_segments_from_inventario.sql
-
-# Create triggers for all caracteristicas
-#----------------------------------------
-
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/create_triggers.sql

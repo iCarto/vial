@@ -38,3 +38,6 @@ shp2pgsql -d -W iso-8859-1 \
 shp2pgsql -d -W iso-8859-1 \
     ${viasobras_data_orig}/inventario/inventario/tipo_pavimento.dbf \
     inventario.tipo_pavimento_tmp > datos/inventario/tipo_pavimento_tmp.sql
+shp2pgsql -d -W iso-8859-1 \
+    ${viasobras_data_orig}/inventario/inventario/cotas.dbf \
+    inventario.cotas_tmp > datos/inventario/cotas_tmp.sql

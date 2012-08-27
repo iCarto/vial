@@ -66,6 +66,11 @@ public class CatalogSearchTests {
     }
 
     @Test
+    public void testNotNullCotas() throws SQLException {
+	assertNotNull(Catalog.getTramosCotas());
+    }
+
+    @Test
     public void testCarreterasLoaded() throws SQLException {
 	boolean ok;
 	if (Catalog.getCarreteras().size() > 0) {
@@ -105,6 +110,20 @@ public class CatalogSearchTests {
     }
 
     @Test
+    public void testFindCotasAll() throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT COUNT(*) AS num_rows FROM inventario.cotas");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Tramos tramos = Catalog.getTramosCotas();
+
+	assertEquals(numRows, tramos.size());
+    }
+
+    @Test
     public void testFindPavimentoDependingOnCarretera() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
@@ -135,6 +154,21 @@ public class CatalogSearchTests {
     }
 
     @Test
+    public void testFindCotasDependingOnCarretera() throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.cotas WHERE codigo_carretera = '4606'");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Catalog.setCarretera("4606");
+	Tramos tramos = Catalog.getTramosCotas();
+
+	assertEquals(numRows, tramos.size());
+    }
+
+    @Test
     public void testFindPavimentoDependingOnPK() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
@@ -147,6 +181,40 @@ public class CatalogSearchTests {
 	Catalog.setPKStart(0.0);
 	Catalog.setPKEnd(10.0);
 	Tramos tramos = Catalog.getTramosTipoPavimento();
+
+	assertEquals(numRows, tramos.size());
+    }
+
+    @Test
+    public void testFindPlataformaDependingOnPK() throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.ancho_plataforma WHERE codigo_carretera = '4606' AND pk_inicial >= 0 AND pk_final <= 10");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Catalog.setCarretera("4606");
+	Catalog.setPKStart(0.0);
+	Catalog.setPKEnd(10.0);
+	Tramos tramos = Catalog.getTramosAnchoPlataforma();
+
+	assertEquals(numRows, tramos.size());
+    }
+
+    @Test
+    public void testFindCotasDependingOnPK() throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.cotas WHERE codigo_carretera = '4606' AND pk_inicial >= 0 AND pk_final <= 10");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Catalog.setCarretera("4606");
+	Catalog.setPKStart(0.0);
+	Catalog.setPKEnd(10.0);
+	Tramos tramos = Catalog.getTramosCotas();
 
 	assertEquals(numRows, tramos.size());
     }
@@ -168,6 +236,38 @@ public class CatalogSearchTests {
     }
 
     @Test
+    public void testFindPlataformaDependingOnPKStart() throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.ancho_plataforma WHERE codigo_carretera = '4606' AND pk_inicial >= 2.0");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Catalog.setCarretera("4606");
+	Catalog.setPKStart(2.0);
+	Tramos tramos = Catalog.getTramosAnchoPlataforma();
+
+	assertEquals(numRows, tramos.size());
+    }
+
+    @Test
+    public void testFindCotasDependingOnPKStart() throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.cotas WHERE codigo_carretera = '4606' AND pk_inicial >= 2.0");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Catalog.setCarretera("4606");
+	Catalog.setPKStart(2.0);
+	Tramos tramos = Catalog.getTramosCotas();
+
+	assertEquals(numRows, tramos.size());
+    }
+
+    @Test
     public void testFindPavimentoDependingOnPKEnd() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
@@ -184,18 +284,33 @@ public class CatalogSearchTests {
     }
 
     @Test
-    public void testFindPlataformaDependingOnPK() throws SQLException {
+    public void testFindPlataformaDependingOnPKEnd() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT Count(*) As num_rows FROM inventario.ancho_plataforma WHERE codigo_carretera = '4606' AND pk_inicial >= 0 AND pk_final <= 10");
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.ancho_plataforma WHERE codigo_carretera = '4606' AND pk_final <= 8.0");
 	rs.next();
 	int numRows = rs.getInt("num_rows");
 
 	Catalog.clear();
 	Catalog.setCarretera("4606");
-	Catalog.setPKStart(0.0);
-	Catalog.setPKEnd(10.0);
+	Catalog.setPKEnd(8.0);
 	Tramos tramos = Catalog.getTramosAnchoPlataforma();
+
+	assertEquals(numRows, tramos.size());
+    }
+
+    @Test
+    public void testFindCotasDependingOnPKEnd() throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.cotas WHERE codigo_carretera = '4606' AND pk_final <= 8.0");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Catalog.setCarretera("4606");
+	Catalog.setPKEnd(8.0);
+	Tramos tramos = Catalog.getTramosCotas();
 
 	assertEquals(numRows, tramos.size());
     }
@@ -232,6 +347,22 @@ public class CatalogSearchTests {
     }
 
     @Test
+    public void testFindCotasDependingOnConcello() throws SQLException,
+    DBException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.cotas WHERE codigo_municipio = '27018'");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Catalog.setConcello("27018"); // Fonsagrada
+	Tramos tramos = Catalog.getTramosCotas();
+
+	assertEquals(numRows, tramos.size());
+    }
+
+    @Test
     public void testFindPavimentoDependingOnCarreteraAndConcello()
 	    throws SQLException, DBException {
 	Statement stmt = c.createStatement();
@@ -261,6 +392,23 @@ public class CatalogSearchTests {
 	Catalog.setCarretera("4606");
 	Catalog.setConcello("27018"); // Fonsagrada
 	Tramos tramos = Catalog.getTramosAnchoPlataforma();
+
+	assertEquals(numRows, tramos.size());
+    }
+
+    @Test
+    public void testFindCotasDependingOnCarreteraAndConcello()
+	    throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.cotas WHERE codigo_carretera = '4606' AND codigo_municipio = '27018'");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Catalog.setCarretera("4606");
+	Catalog.setConcello("27018"); // Fonsagrada
+	Tramos tramos = Catalog.getTramosCotas();
 
 	assertEquals(numRows, tramos.size());
     }

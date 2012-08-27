@@ -1,5 +1,6 @@
 BEGIN;
 
+-- definition
 DROP TABLE IF EXISTS inventario.tipo_pavimento;
 CREATE TABLE inventario.tipo_pavimento (
        gid serial,
@@ -15,6 +16,7 @@ CREATE TABLE inventario.tipo_pavimento (
        PRIMARY KEY(gid)
 );
 
+-- populate it
 INSERT INTO inventario.tipo_pavimento(
        SELECT nextval('inventario.tipo_pavimento_gid_seq') AS gid,
               "numero_inv" AS codigo_carretera,
@@ -33,5 +35,17 @@ DELETE FROM inventario.tipo_pavimento WHERE
        pk_inicial IS NULL OR pk_final IS NULL;
 
 DROP TABLE IF EXISTS inventario.tipo_pavimento_tmp;
+
+-- linear referencing
+SELECT AddGeometryColumn('inventario', 'tipo_pavimento', 'the_geom', '23029', 'MULTILINESTRINGM', 3);
+ALTER TABLE inventario.tipo_pavimento DROP CONSTRAINT enforce_geotype_the_geom;
+SELECT inventario.update_geom_all('inventario', 'tipo_pavimento');
+
+-- triggers
+DROP TRIGGER IF EXISTS update_geom_tipo_pavimento ON inventario.tipo_pavimento;
+CREATE TRIGGER update_geom_tipo_pavimento
+       BEFORE UPDATE OR INSERT
+       ON inventario.tipo_pavimento FOR EACH ROW
+       EXECUTE PROCEDURE inventario.update_geom_on_pk_change();
 
 COMMIT;
