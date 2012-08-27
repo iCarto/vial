@@ -189,7 +189,7 @@ public class QueriesEstadoPanel extends gvWindow {
 	try {
 	    String[] orderBy = new String[1];
 	    orderBy[0] = "codigo";
-	    String[][] tableContent = dbs.getTable("queries", "queries",
+	    String[][] tableContent = dbs.getTable("consultas", "consultas",
 		    orderBy, false);
 
 	    int numRows = 0;
@@ -447,7 +447,7 @@ public class QueriesEstadoPanel extends gvWindow {
 	    DBSession dbs = DBSession.getCurrentSession();
 
 	    String whereClause = "codigo" + " = '" + queryCode + "'";
-	    String[][] tableContent = dbs.getTable("queries", "queries",
+	    String[][] tableContent = dbs.getTable("consultas", "consultas",
 		    whereClause);
 
 	    String[] contents = new String[4];

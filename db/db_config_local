@@ -6,6 +6,4 @@ viasobras_user=viasobras
 viasobras_template=template_postgis
 viasobras_dbname=vias_obras
 
-viasobras_data_orig=/home/amaneiro/03_proxectos_abertos/viasobras/datos/
-
 pg_tap_install_path=/usr/share/postgresql/8.4/contrib/pgtap.sql

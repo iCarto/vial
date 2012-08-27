@@ -58,7 +58,7 @@ public class WhereAdapter {
 	    // see PostGisDriver.setData, seems not possible to filter rows
 	    // depending on other layers or columns (as it takes into account
 	    // all fields in table - see getTotalFields()):
-	    return ", inventario.carreteras_concellos AS link WHERE link.codigo_carretera = codigo AND link.codigo_concello = '"
+	    return ", inventario.carretera_municipio AS link WHERE link.codigo_carretera = codigo AND link.codigo_municipio = '"
 	    + concello
 	    + "' AND link.codigo_carretera = '"
 	    + carretera
@@ -71,7 +71,7 @@ public class WhereAdapter {
 	    // See PostGisDriver.setData: seems not possible to filter rows
 	    // depending on other layers or columns (as it takes into account
 	    // all fields in table - see getTotalFields()):
-	    return ", inventario.carreteras_concellos AS link WHERE link.codigo_carretera = codigo AND link.codigo_concello = '"
+	    return ", inventario.carretera_municipio AS link WHERE link.codigo_carretera = codigo AND link.codigo_municipio = '"
 	    + concello + "'";
 	} else if (carretera != Catalog.CARRETERA_ALL) {
 	    // only carretera selected
@@ -94,9 +94,9 @@ public class WhereAdapter {
 	    // See PostGisDriver.setData: seems not possible to filter rows
 	    // depending on other layers or columns (as it takes into account
 	    // all fields in table - see getTotalFields()):
-	    return ", inventario.carreteras_concellos AS link WHERE link.codigo_concello = codigo AND link.codigo_carretera = '"
+	    return ", inventario.carretera_municipio AS link WHERE link.codigo_municipio = codigo AND link.codigo_carretera = '"
 	    + carretera
-	    + "' AND link.codigo_concello = '"
+		    + "' AND link.codigo_municipio = '"
 	    + concello
 	    + "'";
 	} else if (carretera != Catalog.CARRETERA_ALL) {
@@ -107,7 +107,7 @@ public class WhereAdapter {
 	    // See PostGisDriver.setData: seems not possible to filter rows
 	    // depending on other layers or columns (as it takes into account
 	    // all fields in table - see getTotalFields()):
-	    return ", inventario.carreteras_concellos AS link WHERE link.codigo_concello = codigo AND link.codigo_carretera = '"
+	    return ", inventario.carretera_municipio AS link WHERE link.codigo_municipio = codigo AND link.codigo_carretera = '"
 	    + carretera + "'";
 	} else if (concello != Catalog.CONCELLO_ALL) {
 	    // only concello selected

@@ -204,7 +204,7 @@ public class CatalogSearchTests {
     public void testFindPavimentoDependingOnConcello() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.tipo_pavimento WHERE codigo_concello = '27018'");
+		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.tipo_pavimento WHERE codigo_municipio = '27018'");
 	rs.next();
 	int numRows = rs.getInt("num_rows");
 
@@ -220,7 +220,7 @@ public class CatalogSearchTests {
     DBException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.ancho_plataforma WHERE codigo_concello = '27018'");
+		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.ancho_plataforma WHERE codigo_municipio = '27018'");
 	rs.next();
 	int numRows = rs.getInt("num_rows");
 
@@ -236,7 +236,7 @@ public class CatalogSearchTests {
 	    throws SQLException, DBException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.tipo_pavimento WHERE codigo_carretera = '4606' AND codigo_concello = '27018'");
+		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.tipo_pavimento WHERE codigo_carretera = '4606' AND codigo_municipio = '27018'");
 	rs.next();
 	int numRows = rs.getInt("num_rows");
 
@@ -253,7 +253,7 @@ public class CatalogSearchTests {
 	    throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.ancho_plataforma WHERE codigo_carretera = '4606' AND codigo_concello = '27018'");
+		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.ancho_plataforma WHERE codigo_carretera = '4606' AND codigo_municipio = '27018'");
 	rs.next();
 	int numRows = rs.getInt("num_rows");
 
@@ -273,7 +273,7 @@ public class CatalogSearchTests {
 
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.carreteras_concellos WHERE codigo_carretera = '4606'");
+		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.carretera_municipio WHERE codigo_carretera = '4606'");
 	rs.next();
 	int numRows = rs.getInt("num_rows");
 
@@ -289,7 +289,7 @@ public class CatalogSearchTests {
 	int numConcellos = cs2.size();
 	Statement stmt2 = c.createStatement();
 	ResultSet rs2 = stmt2
-		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.carreteras_concellos WHERE codigo_carretera = '4606'");
+		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.carretera_municipio WHERE codigo_carretera = '4606'");
 	rs2.next();
 	int numRows = rs2.getInt("num_rows");
 

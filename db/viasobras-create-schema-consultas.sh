@@ -7,4 +7,4 @@ config_file=$1
 # -------
 
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/create_schema_queries.sql
+    $viasobras_dbname < funcions/create_schema_consultas.sql

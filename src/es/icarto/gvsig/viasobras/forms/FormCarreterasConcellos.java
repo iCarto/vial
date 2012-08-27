@@ -102,7 +102,7 @@ public class FormCarreterasConcellos extends JPanel implements IForm, IWindow {
 	HashMap<String, JComponent> widgets = AbeilleParser
 		.getWidgetsFromContainer(form);
 	carretera = (JTextField) widgets.get("codigo_carretera");
-	concello = (JTextField) widgets.get("codigo_concello");
+	concello = (JTextField) widgets.get("codigo_municipio");
 	pkInicial = (JTextField) widgets.get("pk_inicial");
 	pkFinal = (JTextField) widgets.get("pk_final");
 	observaciones = (JTextArea) widgets.get("observaciones");
@@ -117,7 +117,7 @@ public class FormCarreterasConcellos extends JPanel implements IForm, IWindow {
 	try {
 	    carretera.setText(model.read((int) position)
 		    .get("codigo_carretera"));
-	    concello.setText(model.read((int) position).get("codigo_concello"));
+	    concello.setText(model.read((int) position).get("codigo_municipio"));
 	    pkInicial.setText(model.read((int) position).get("pk_inicial"));
 	    pkFinal.setText(model.read((int) position).get("pk_final"));
 	    observaciones.setText(model.read((int) position).get(
@@ -160,7 +160,7 @@ public class FormCarreterasConcellos extends JPanel implements IForm, IWindow {
 	public void actionPerformed(ActionEvent arg0) {
 	    HashMap<String, String> values = new HashMap<String, String>();
 	    values.put("codigo_carretera", carretera.getText());
-	    values.put("codigo_concello", concello.getText());
+	    values.put("codigo_municipio", concello.getText());
 	    values.put("pk_inicial", pkInicial.getText());
 	    values.put("pk_final", pkFinal.getText());
 	    values.put("observaciones", observaciones.getText());
@@ -176,7 +176,7 @@ public class FormCarreterasConcellos extends JPanel implements IForm, IWindow {
     private final class SaveAction implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 	    model.updateValue("codigo_carretera", carretera.getText());
-	    model.updateValue("codigo_concello", concello.getText());
+	    model.updateValue("codigo_municipio", concello.getText());
 	    model.updateValue("pk_inicial", pkInicial.getText());
 	    model.updateValue("pk_final", pkFinal.getText());
 	    model.updateValue("observaciones", observaciones.getText());

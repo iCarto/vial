@@ -14,7 +14,7 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 
     public static final String ID_FIELDNAME = "gid";
     public static final String CARRETERA_FIELDNAME = "codigo_carretera";
-    public static final String CONCELLO_FIELDNAME = "codigo_concello";
+    public static final String CONCELLO_FIELDNAME = "codigo_municipio";
     public static final String PK_START_FIELDNAME = "pk_inicial";
     public static final String PK_END_FIELDNAME = "pk_final";
     public static final String CARACTERISTICA_FIELDNAME = "valor";
@@ -64,7 +64,7 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 	 * codigo_concello, ...) as it give problems when saving, so the
 	 * ordering is done in Tramos() builder.
 	 */
-	String sqlQuery = "SELECT gid, codigo_carretera, codigo_concello, valor, pk_inicial, pk_final "
+	String sqlQuery = "SELECT gid, codigo_carretera, codigo_municipio, valor, pk_inicial, pk_final "
 		+ " FROM " + tableName;
 	//+ " WHERE gid = gid ORDER BY pk_inicial";
 	int[] primaryKeys = { 1 }; // primary key index = gid column index

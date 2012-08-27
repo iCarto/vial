@@ -5,7 +5,7 @@ usage() {
     echo "`basename $0` -c config_file -s schema_to_deploy"
     echo
     echo "-c: config file"
-    echo "-s: schema to deploy (elle, inventario, queries). 'all' will recreate the whole database"
+    echo "-s: schema to deploy (consultas, elle, infobase, inventario). 'all' will recreate the whole database"
     exit -1
 }
 
@@ -59,10 +59,15 @@ then
 
     echo "LOG: drop & create database"
     ./viasobras-create-db.sh $config_file
+    ./viasobras-create-schema-consultas.sh $config_file
     ./viasobras-create-schema-elle.sh $config_file
     ./viasobras-create-schema-infobase.sh $config_file
-    ./viasobras-create-schema-queries.sh $config_file
     ./viasobras-create-schema-inventario.sh $config_file
+
+elif [ $schema == "consultas" ]
+then
+    echo "LOG: drop & create schema CONSULTAS"
+    ./viasobras-create-schema-consultas.sh $config_file
 
 elif [ $schema == "elle" ]
 then
@@ -78,10 +83,5 @@ elif [ $schema == "inventario" ]
 then
     echo "LOG: drop & create schema INVENTARIO"
     ./viasobras-create-schema-inventario.sh $config_file
-
-elif [ $schema == "queries" ]
-then
-    echo "LOG: drop & create schema QUERIES"
-    ./viasobras-create-schema-queries.sh $config_file
 
 fi

@@ -1,8 +1,8 @@
-DROP SCHEMA IF EXISTS queries CASCADE;
-CREATE SCHEMA queries;
+DROP SCHEMA IF EXISTS consultas CASCADE;
+CREATE SCHEMA consultas;
 
-DROP TABLE IF EXISTS queries.queries;
-CREATE TABLE queries.queries(
+DROP TABLE IF EXISTS consultas.consultas;
+CREATE TABLE consultas.consultas(
        codigo character varying(5) NOT NULL,
        descripcion character varying(250),
        consulta character varying(1500),
@@ -12,7 +12,7 @@ CREATE TABLE queries.queries(
        CONSTRAINT pk_consultas PRIMARY KEY (codigo)
 );
 
-INSERT INTO queries.queries (codigo, descripcion, consulta, haswhere, titulo)
+INSERT INTO consultas.consultas (codigo, descripcion, consulta, haswhere, titulo)
        VALUES ('C1',
        'Longitud de tramos, por ancho de plataforma',
        'SELECT CASE WHEN valor BETWEEN 0 AND 5 THEN ''0-5''
@@ -24,7 +24,7 @@ INSERT INTO queries.queries (codigo, descripcion, consulta, haswhere, titulo)
        'NO',
        'Longitud de tramos, por ancho de plataforma');
 
-INSERT INTO queries.queries (codigo, descripcion, consulta, haswhere, titulo)
+INSERT INTO consultas.consultas (codigo, descripcion, consulta, haswhere, titulo)
        VALUES ('C2',
        'Longitud de tramos, por tipo de pavimento',
        'SELECT valor, SUM(pk_final-pk_inicial) AS "Longitud" FROM inventario.tipo_pavimento GROUP BY valor ORDER BY valor',

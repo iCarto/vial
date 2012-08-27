@@ -32,20 +32,20 @@ public class CarreterasMapper extends DBFacade {
 	try {
 	    stmt = c.createStatement();
 	    ResultSet rs = stmt
-		    .executeQuery("SELECT codigo, codigo_provincial FROM inventario.rede_carreteras ORDER BY codigo");
+		    .executeQuery("SELECT numero, codigo FROM inventario.red_carreteras ORDER BY numero");
 	    int cIndex = 0;
 	    while (rs.next()) {
-		String code = rs.getString("codigo");
-		String value = rs.getString("codigo_provincial");
+		String code = rs.getString("numero");
+		String value = rs.getString("codigo");
 		carreteras.add(new Carretera(code, value));
 		indexes.put(code, cIndex);
 		cIndex++;
 	    }
 	    ResultSet rs2 = stmt
-		    .executeQuery("SELECT codigo_carretera, codigo_concello FROM inventario.carreteras_concellos ORDER BY codigo_carretera");
+		    .executeQuery("SELECT codigo_carretera, codigo_municipio FROM inventario.carretera_municipio ORDER BY codigo_carretera");
 	    while (rs2.next()) {
 		String codeCarretera = rs2.getString("codigo_carretera");
-		String codeConcello = rs2.getString("codigo_concello");
+		String codeConcello = rs2.getString("codigo_municipio");
 		cIndex = indexes.get(codeCarretera);
 		Carretera carretera = carreteras.get(cIndex);
 		carretera.addConcelloAffected(codeConcello);

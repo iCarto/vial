@@ -46,7 +46,7 @@ Características	Provincias Galicia	provincias_galicia	3	t	\N	\N		info_base	\N
 Características	Provincias España	provincias_limitrofes	4	t	\N	\N		info_base	\N
 Características	Océano	oceano	1	t	\N	\N		info_base	\N
 Características	Concellos	concellos	5	t	\N	\N		info_base	\N
-Características	Carreteras	rede_carreteras	6	t	\N	\N		inventario	\N
+Características	Carreteras	red_carreteras	6	t	\N	\N		inventario	\N
 Características	Tipo de pavimento	tipo_pavimento	7	t	\N	\N		inventario	\N
 Características	Ancho de plataforma	ancho_plataforma	8	t	\N	\N		inventario	\N
 \.

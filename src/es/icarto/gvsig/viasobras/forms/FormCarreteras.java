@@ -46,7 +46,7 @@ public class FormCarreteras extends AbstractForm implements IWindow {
 
     private void updateJTables() {
 	ArrayList<String> colNames = new ArrayList<String>();
-	colNames.add("codigo_concello");
+	colNames.add("codigo_municipio");
 	colNames.add("pk_inicial");
 	colNames.add("pk_final");
 	colNames.add("observaciones");
@@ -57,7 +57,7 @@ public class FormCarreteras extends AbstractForm implements IWindow {
 	colAliases.add("Observaciones");
 	TableModelAlphanumeric model;
 	try {
-	    model = TableModelFactory.createFromTable("carreteras_concellos",
+	    model = TableModelFactory.createFromTable("carretera_municipio",
 		    "codigo_carretera",
 		    ((KeyValue) codigo.getSelectedItem()).getKey(), colNames,
 		    colAliases);
@@ -76,7 +76,7 @@ public class FormCarreteras extends AbstractForm implements IWindow {
     public void setListeners() {
 	super.setListeners();
 
-	// LauncherParams lp = new LauncherParams(this, "carreteras_concellos",
+	// LauncherParams lp = new LauncherParams(this, "carretera_municipio",
 	// "Ayuntamientos", "Editar ayuntamientos");
 	// antl = new AlphanumericNavTableLauncher(
 	// this, lp);

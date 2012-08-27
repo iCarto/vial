@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. db_config
+viasobras_data_orig=/home/amaneiro/03_proxectos_abertos/viasobras/datos
 
 # info_base
 shp2pgsql -d -g the_geom -W iso-8859-1 -s 23029 -I\
@@ -29,9 +29,12 @@ shp2pgsql -d -W iso-8859-1 \
 shp2pgsql -d -W iso-8859-1 \
     ${viasobras_data_orig}/inventario/aforos/aforos.dbf \
     inventario.aforos > datos/inventario/aforos.sql
-shp2pgsql -d -W iso-8859-1 \
-    ${viasobras_data_orig}/inventario/inventario/Inventario.dbf \
-    inventario.inventario > datos/inventario/inventario.sql
 shp2pgsql -d -g the_geom -W iso-8859-1 -s 23029 -I \
-    ${viasobras_data_orig}/inventario/rede_carreteras/Vias_Provinciales_datos \
-    inventario.rede_carreteras_tmp > datos/inventario/rede_carreteras_tmp.sql
+    ${viasobras_data_orig}/inventario/red_carreteras/Red_provincial \
+    inventario.red_carreteras_tmp > datos/inventario/red_carreteras_tmp.sql
+shp2pgsql -d -W iso-8859-1 \
+    ${viasobras_data_orig}/inventario/inventario/ancho_plataforma.dbf \
+    inventario.ancho_plataforma_tmp > datos/inventario/ancho_plataforma_tmp.sql
+shp2pgsql -d -W iso-8859-1 \
+    ${viasobras_data_orig}/inventario/inventario/tipo_pavimento.dbf \
+    inventario.tipo_pavimento_tmp > datos/inventario/tipo_pavimento_tmp.sql

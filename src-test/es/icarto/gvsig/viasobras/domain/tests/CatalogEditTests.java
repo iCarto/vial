@@ -50,23 +50,23 @@ public class CatalogEditTests {
     private static void setCarreteraAndConcelloForPlataforma()
 	    throws SQLException {
 	// use the area (carretera, concello) with more tramos
-	String sql = "SELECT codigo_carretera, codigo_concello, COUNT(gid) AS tramos_count FROM inventario.ancho_plataforma GROUP BY codigo_carretera, codigo_concello ORDER BY tramos_count DESC LIMIT 1";
+	String sql = "SELECT codigo_carretera, codigo_municipio, COUNT(gid) AS tramos_count FROM inventario.ancho_plataforma GROUP BY codigo_carretera, codigo_municipio ORDER BY tramos_count DESC LIMIT 1";
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt.executeQuery(sql);
 	rs.next();
 	carreteraPlataforma = rs.getString("codigo_carretera");
-	concelloPlataforma = rs.getString("codigo_concello");
+	concelloPlataforma = rs.getString("codigo_municipio");
     }
 
     private static void setCarreteraAndConcelloForPavimento()
 	    throws SQLException {
 	// use the area (carretera, concello) with more tramos
-	String sql = "SELECT codigo_carretera, codigo_concello, COUNT(gid) AS tramos_count FROM inventario.tipo_pavimento GROUP BY codigo_carretera, codigo_concello ORDER BY tramos_count DESC LIMIT 1";
+	String sql = "SELECT codigo_carretera, codigo_municipio, COUNT(gid) AS tramos_count FROM inventario.tipo_pavimento GROUP BY codigo_carretera, codigo_municipio ORDER BY tramos_count DESC LIMIT 1";
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt.executeQuery(sql);
 	rs.next();
 	carreteraPavimento = rs.getString("codigo_carretera");
-	concelloPavimento = rs.getString("codigo_concello");
+	concelloPavimento = rs.getString("codigo_municipio");
     }
 
     @Test
@@ -81,7 +81,7 @@ public class CatalogEditTests {
 	ResultSet rs = stmt
 		.executeQuery("SELECT gid FROM inventario.tipo_pavimento WHERE codigo_carretera = '"
 			+ carretera
-			+ "' AND codigo_concello = '"
+			+ "' AND codigo_municipio = '"
 			+ concello
 			+ "'");
 	boolean updated = true;
@@ -106,7 +106,7 @@ public class CatalogEditTests {
 	ResultSet rs = stmt
 		.executeQuery("SELECT gid FROM inventario.ancho_plataforma WHERE codigo_carretera = '"
 			+ carretera
-			+ "' AND codigo_concello = '"
+			+ "' AND codigo_municipio = '"
 			+ concello
 			+ "'");
 	boolean updated = true;
@@ -131,7 +131,7 @@ public class CatalogEditTests {
 	ResultSet rs = stmt
 		.executeQuery("SELECT valor FROM inventario.tipo_pavimento WHERE codigo_carretera = '"
 			+ carretera
-			+ "' AND codigo_concello = '"
+			+ "' AND codigo_municipio = '"
 			+ concello
 			+ "'");
 	boolean updated = true;
@@ -155,7 +155,7 @@ public class CatalogEditTests {
 	ResultSet rs = stmt
 		.executeQuery("SELECT valor FROM inventario.ancho_plataforma WHERE codigo_carretera = '"
 			+ carretera
-			+ "' AND codigo_concello = '"
+			+ "' AND codigo_municipio = '"
 			+ concello
 			+ "'");
 	boolean updated = true;
@@ -178,7 +178,7 @@ public class CatalogEditTests {
 	ResultSet rs = stmt
 		.executeQuery("SELECT COUNT(*) AS rowNumber FROM inventario.tipo_pavimento WHERE codigo_carretera = '"
 			+ carretera
-			+ "' AND codigo_concello = '"
+			+ "' AND codigo_municipio = '"
 			+ concello
 			+ "'");
 	rs.next();
@@ -196,7 +196,7 @@ public class CatalogEditTests {
 	ResultSet rs = stmt
 		.executeQuery("SELECT COUNT(*) AS rowNumber FROM inventario.ancho_plataforma WHERE codigo_carretera = '"
 			+ carretera
-			+ "' AND codigo_concello = '"
+			+ "' AND codigo_municipio = '"
 			+ concello
 			+ "'");
 	rs.next();
@@ -218,7 +218,7 @@ public class CatalogEditTests {
 	ResultSet rs = stmt
 		.executeQuery("SELECT gid FROM inventario.tipo_pavimento WHERE codigo_carretera = '"
 			+ carretera
-			+ "' AND codigo_concello = '"
+			+ "' AND codigo_municipio = '"
 			+ concello
 			+ "'");
 	boolean updated = true;
@@ -246,7 +246,7 @@ public class CatalogEditTests {
 	ResultSet rs = stmt
 		.executeQuery("SELECT gid FROM inventario.ancho_plataforma WHERE codigo_carretera = '"
 			+ carretera
-			+ "' AND codigo_concello = '"
+			+ "' AND codigo_municipio = '"
 			+ concello
 			+ "'");
 	boolean updated = true;
@@ -370,7 +370,7 @@ public class CatalogEditTests {
 	ResultSet rs = stmt
 		.executeQuery("SELECT gid FROM inventario.ancho_plataforma WHERE codigo_carretera = '"
 			+ carretera
-			+ "' AND codigo_concello = '"
+			+ "' AND codigo_municipio = '"
 			+ concello
 			+ "' ORDER BY gid DESC LIMIT 1");
 	rs.next();
@@ -383,7 +383,7 @@ public class CatalogEditTests {
 	ResultSet rs = stmt
 		.executeQuery("SELECT gid FROM inventario.tipo_pavimento WHERE codigo_carretera = '"
 			+ carretera
-			+ "' AND codigo_concello = '"
+			+ "' AND codigo_municipio = '"
 			+ concello
 			+ "' ORDER BY gid DESC LIMIT 1");
 	rs.next();
