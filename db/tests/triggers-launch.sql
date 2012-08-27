@@ -1,6 +1,6 @@
 BEGIN;
 
-SELECT plan(6);
+SELECT plan(8);
 
 -- Test triggers are in place
 SELECT trigger_is('inventario',
@@ -18,6 +18,12 @@ SELECT trigger_is('inventario',
 SELECT trigger_is('inventario',
                   'cotas',
                   'update_geom_cotas',
+                  'inventario',
+                  'update_geom_on_pk_change');
+
+SELECT trigger_is('inventario',
+                  'actuacions',
+                  'update_geom_actuacions',
                   'inventario',
                   'update_geom_on_pk_change');
 
@@ -43,5 +49,12 @@ INSERT INTO inventario.cotas
 SELECT isnt(the_geom, NULL, 'cotas - geom calculated on INSERT')
        FROM inventario.cotas
        WHERE gid = currval('inventario.cotas_gid_seq');
+
+INSERT INTO inventario.actuacions
+       (codigo_actuacion, codigo_carretera, pk_inicial, pk_final)
+       VALUES ('1234', '0101', 0, 2);
+SELECT isnt(the_geom, NULL, 'actuacions - geom calculated on INSERT')
+       FROM inventario.cotas
+       WHERE gid = currval('inventario.actuacions_gid_seq');
 
 ROLLBACK;

@@ -104,8 +104,4 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
 #-----------
 
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/create_actuacions.sql
-
-# TODO: this is fake data, replace it from proper inputs
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/create_actuacions_data.sql
+    $viasobras_dbname < funcions/procesar_actuacions.sql
