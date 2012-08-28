@@ -29,9 +29,8 @@ public class AlphanumericTableLoader {
     NoSuchTableException, ReadDriverException, PropertyVetoException {
 
 	// Alphanumeric tables needed by this form
-	String[] tableNames = new String[2];
+	String[] tableNames = new String[1];
 	tableNames[0] = "carretera_municipio";
-	tableNames[1] = "actuacions_concellos";
 
 	TOCTableManager t = new TOCTableManager();
 
