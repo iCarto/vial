@@ -27,8 +27,8 @@ public class FormActuacions extends AbstractForm {
     }
 
     public void initWindow() {
-	viewInfo.setHeight(540);
-	viewInfo.setWidth(450);
+	viewInfo.setHeight(575);
+	viewInfo.setWidth(425);
 	viewInfo.setTitle("Vías y Obras: actuaciones");
     }
 
