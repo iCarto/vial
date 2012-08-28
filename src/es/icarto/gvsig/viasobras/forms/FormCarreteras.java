@@ -80,7 +80,7 @@ public class FormCarreteras extends AbstractForm implements IWindow {
 	// "Ayuntamientos", "Editar ayuntamientos");
 	// antl = new AlphanumericNavTableLauncher(
 	// this, lp);
-	codigo = (JComboBox) this.getWidgetComponents().get("codigo");
+	codigo = (JComboBox) this.getWidgetComponents().get("numero");
 	ayuntamientos = (JTable) this.getWidgetComponents()
 		.get("ayuntamientos");
 	carreterasConcellos = new FormCarreterasConcellos();

@@ -7,7 +7,7 @@
     </PRIMARYKEY>
     <RECORDSET>
       <FIELD>
-        <FIELDNAME>codigo</FIELDNAME>
+        <FIELDNAME>numero</FIELDNAME>
         <DOMAINREADER>
         <DRTYPE>db</DRTYPE>
         <DRDBTABLE>red_carreteras</DRDBTABLE>
