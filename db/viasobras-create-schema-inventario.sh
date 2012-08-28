@@ -60,7 +60,7 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
 
 # Populate it from CSV
 csv_path=`pwd`/datos/inventario/carretera_municipio.csv #COPY command needs absolute path
-sql_query="\COPY inventario.carretera_municipio (codigo_carretera, codigo_municipio) FROM '$csv_path' WITH DELIMITER ','"
+sql_query="\COPY inventario.carretera_municipio (codigo_carretera, codigo_municipio, orden_tramo, pk_inicial, pk_final, longitud) FROM '$csv_path' WITH DELIMITER ';'"
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname -c "$sql_query"
 
