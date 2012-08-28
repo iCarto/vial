@@ -10,7 +10,7 @@ BEGIN
                   SELECT ST_CollectionExtract(ST_Locate_Between_Measures(c.the_geom, NEW.pk_inicial, NEW.pk_final), 2)
                          INTO NEW.the_geom
                          FROM inventario.red_carreteras AS c
-                         WHERE c.codigo=NEW.codigo_carretera;
+                         WHERE c.numero=NEW.codigo_carretera;
                   RETURN NEW;
            END IF;
 
@@ -19,7 +19,7 @@ BEGIN
                   SELECT ST_CollectionExtract(ST_Locate_Between_Measures(c.the_geom, NEW.pk_inicial, NEW.pk_final), 2)
                          INTO NEW.the_geom
                          FROM inventario.red_carreteras AS c
-                         WHERE c.codigo=NEW.codigo_carretera;
+                         WHERE c.numero=NEW.codigo_carretera;
                   RETURN NEW;
 
         END IF;

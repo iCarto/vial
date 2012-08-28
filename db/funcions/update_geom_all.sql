@@ -11,7 +11,7 @@ BEGIN
                                 a.pk_inicial,
                                 a.pk_final), 2)
                FROM inventario.red_carreteras AS c, '||the_schema_name||'.'||the_table_name||' AS a
-               WHERE c.codigo = a.codigo_carretera AND a.gid = a2.gid);';
+               WHERE c.numero = a.codigo_carretera AND a.gid = a2.gid);';
 
 END;
 $BODY$ LANGUAGE plpgsql;
