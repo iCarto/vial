@@ -1,4 +1,4 @@
-package es.icarto.gvsig.viasobras.domain.catalog;
+package es.icarto.gvsig.viasobras.domain.catalog.mappers;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -7,8 +7,6 @@ import java.sql.Statement;
 
 import javax.sql.rowset.CachedRowSet;
 
-import es.icarto.gvsig.viasobras.domain.catalog.mappers.DBFacade;
-import es.icarto.gvsig.viasobras.domain.catalog.mappers.TramosMapperAbstract;
 
 public class TramosMapperCotas extends TramosMapperAbstract {
 

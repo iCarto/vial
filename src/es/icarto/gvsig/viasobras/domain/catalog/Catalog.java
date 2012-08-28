@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.CarreterasMapper;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.ConcellosMapper;
+import es.icarto.gvsig.viasobras.domain.catalog.mappers.TramosMapperCotas;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.TramosMapperPavimento;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.TramosMapperPlataforma;
 
