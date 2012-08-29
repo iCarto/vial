@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Require having a template with PostGIS support (ie: template_postgis)
+
 config_file=$1
 . $config_file
 
