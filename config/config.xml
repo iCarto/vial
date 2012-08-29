@@ -10,6 +10,7 @@
 		
 		<extension class-name="es.icarto.gvsig.viasobras.CatalogExtension" description="FORMS_PANEL" active="true">
 			<menu text="Vías y Obras/Catálogo"
+				icon="viasobras-catalog"
 				position="01"/>
 			<tool-bar name="ViasObrasLugo">
 				<action-tool icon="viasobras-catalog" tooltip="Catálogo"
@@ -33,11 +34,13 @@
 		
 		<extension class-name="es.icarto.gvsig.viasobras.FormActuacionesExtension" description="FORMS_PANEL" active="true">
 			<menu text="Vías y Obras/Información/Actuaciones"
+				icon="viasobras-actuaciones"
 				position="04"/>
 		</extension>
 
 		<extension class-name="es.icarto.gvsig.viasobras.FormCarreterasExtension" description="FORMS_PANEL" active="true">
 			<menu text="Vías y Obras/Información/Carreteras"
+				icon="viasobras-carreteras"
 				position="05"/>
 		</extension>
 
@@ -48,6 +51,7 @@
 
 		<extension class-name="es.icarto.gvsig.viasobras.FormVariantesExtension" description="FORMS_PANEL" active="true">
 			<menu text="Vías y Obras/Información/Variantes"
+				icon="viasobras-variantes"
 				position="07"/>
 		</extension>
 

@@ -30,7 +30,7 @@ public class QueriesEstadoExtension extends Extension {
 	PluginServices.getIconTheme().registerDefault(
 		"viasobras-queries-estado",
 		this.getClass().getClassLoader()
-		.getResource("images/queries.png"));
+			.getResource("images/consultas.png"));
     }
 
 }

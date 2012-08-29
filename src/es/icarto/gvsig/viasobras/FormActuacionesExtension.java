@@ -14,6 +14,14 @@ public class FormActuacionesExtension extends Extension {
 
     private String actuacionesLayerName = "Actuaciones";
     public void initialize() {
+	registerIcons();
+    }
+
+    private void registerIcons() {
+	PluginServices.getIconTheme().registerDefault(
+		"viasobras-actuaciones",
+		this.getClass().getClassLoader()
+			.getResource("images/actuaciones.png"));
     }
 
     public void execute(String actionCommand) {

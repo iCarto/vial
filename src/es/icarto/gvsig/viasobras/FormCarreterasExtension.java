@@ -14,6 +14,14 @@ public class FormCarreterasExtension extends Extension {
 
     private String carreterasLayerName = "Carreteras";
     public void initialize() {
+	registerIcons();
+    }
+
+    private void registerIcons() {
+	PluginServices.getIconTheme().registerDefault(
+		"viasobras-carreteras",
+		this.getClass().getClassLoader()
+		.getResource("images/carreteras.png"));
     }
 
     public void execute(String actionCommand) {
