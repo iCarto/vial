@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <METADATA>
   <LAYER alias="Carreteras">
-    <TABLENAME>red_carreteras</TABLENAME>
+    <TABLENAME>carreteras</TABLENAME>
     <PRIMARYKEY>
     	<PKELEMENT>gid</PKELEMENT>
     </PRIMARYKEY>
@@ -10,7 +10,7 @@
         <FIELDNAME>numero</FIELDNAME>
         <DOMAINREADER>
         <DRTYPE>db</DRTYPE>
-        <DRDBTABLE>red_carreteras</DRDBTABLE>
+        <DRDBTABLE>carreteras</DRDBTABLE>
         <DRDBCOLUMNVALUE>numero</DRDBCOLUMNVALUE>
         <DRDBCOLUMNALIAS>codigo</DRDBCOLUMNALIAS>
         </DOMAINREADER>
@@ -18,7 +18,7 @@
     </RECORDSET>
   </LAYER>
   <LAYER alias="Actuaciones">
-    <TABLENAME>actuacions</TABLENAME>
+    <TABLENAME>actuaciones</TABLENAME>
     <PRIMARYKEY>
     	<PKELEMENT>id</PKELEMENT>
     </PRIMARYKEY>
@@ -27,7 +27,7 @@
         <FIELDNAME>codigo_carretera</FIELDNAME>
         <DOMAINREADER>
         <DRTYPE>db</DRTYPE>
-        <DRDBTABLE>red_carreteras</DRDBTABLE>
+        <DRDBTABLE>carreteras</DRDBTABLE>
         <DRDBCOLUMNVALUE>numero</DRDBCOLUMNVALUE>
         <DRDBCOLUMNALIAS>codigo</DRDBCOLUMNALIAS>
         </DOMAINREADER>

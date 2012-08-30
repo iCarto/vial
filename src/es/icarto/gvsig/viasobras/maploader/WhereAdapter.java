@@ -8,7 +8,7 @@ import es.icarto.gvsig.viasobras.domain.catalog.mappers.TramosMapperAbstract;
 public class WhereAdapter {
 
     public static final int CARRETERAS = 0;
-    public static final int CONCELLOS = 1;
+    public static final int MUNICIPIOS = 1;
     public static final int TRAMOS = 2;
 
     private static final String NONE_WHERE = "";
@@ -17,7 +17,7 @@ public class WhereAdapter {
 	switch (layer) {
 	case CARRETERAS:
 	    return getWhereCarreteras();
-	case CONCELLOS:
+	case MUNICIPIOS:
 	    return getWhereConcellos();
 	case TRAMOS:
 	    return getWhereTramos();

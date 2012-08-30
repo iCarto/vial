@@ -17,6 +17,4 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < datos/info_base/provincias_limitrofes.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < datos/info_base/concellos.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < datos/info_base/nucleos.sql
+    $viasobras_dbname < datos/info_base/municipios.sql

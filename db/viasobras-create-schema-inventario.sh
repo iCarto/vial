@@ -10,9 +10,9 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
 #---------------
 
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < datos/inventario/red_carreteras_tmp.sql
+    $viasobras_dbname < datos/inventario/carreteras_tmp.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/procesar_red_carreteras.sql
+    $viasobras_dbname < funcions/procesar_carreteras.sql
 
 # Import useful functions
 #-------------------------
@@ -88,20 +88,20 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/procesar_cotas.sql
 
-# Actuacions - concellos
+# Actuaciones - concellos
 #------------------------
 
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/create-table-inventario-actuacionsconcellos.sql
+    $viasobras_dbname < funcions/create-table-inventario-actuacionmunicipio.sql
 
 # TODO: this is fake data, replace it for proper inputs
-csv_path=`pwd`/datos/inventario/actuacions_concellos.csv #COPY command needs absolute path
-sql_query="\COPY inventario.actuacions_concellos (codigo_actuacion, codigo_concello) FROM '$csv_path' WITH DELIMITER ','"
+csv_path=`pwd`/datos/inventario/actuacion_municipio.csv #COPY command needs absolute path
+sql_query="\COPY inventario.actuacion_municipio (codigo_actuacion, codigo_municipio) FROM '$csv_path' WITH DELIMITER ','"
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname -c "$sql_query"
 
-# Actuacions
-#-----------
+# Actuaciones
+#------------
 
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/procesar_actuacions.sql
+    $viasobras_dbname < funcions/procesar_actuaciones.sql

@@ -32,7 +32,7 @@ public class CarreterasMapper extends DBFacade {
 	try {
 	    stmt = c.createStatement();
 	    ResultSet rs = stmt
-		    .executeQuery("SELECT numero, codigo FROM inventario.red_carreteras ORDER BY numero");
+		    .executeQuery("SELECT numero, codigo FROM inventario.carreteras ORDER BY numero");
 	    int cIndex = 0;
 	    while (rs.next()) {
 		String code = rs.getString("numero");

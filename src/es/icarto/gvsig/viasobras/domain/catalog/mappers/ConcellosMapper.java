@@ -36,7 +36,7 @@ public class ConcellosMapper extends DBFacade {
 	try {
 	    stmt = c.createStatement();
 	    ResultSet rs = stmt
-		    .executeQuery("SELECT codigo, nombre FROM info_base.concellos ORDER BY nombre");
+		    .executeQuery("SELECT codigo, nombre FROM info_base.municipios_lugo ORDER BY nombre");
 	    concellos = new CachedRowSetImpl();
 	    concellos.populate(rs);
 	    return new Concellos(ConcellosMapper.toList(concellos));

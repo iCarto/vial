@@ -59,13 +59,13 @@ public class FormActuacionsConcellos extends JPanel implements IWindow {
 	Connection c = dbs.getJavaConnection();
 	try {
 	    c.setAutoCommit(false);
-	    String sqlSelect = "SELECT codigo_concello FROM inventario.actuacions_concellos WHERE codigo_actuacion = ?;";
+	    String sqlSelect = "SELECT codigo_municipio FROM inventario.actuacion_municipio WHERE codigo_actuacion = ?;";
 	    PreparedStatement stSelect = c.prepareStatement(sqlSelect);
 	    stSelect.setString(1, actuacion);
 	    ResultSet rs = stSelect.executeQuery();
 	    c.commit();
 	    while (rs.next()) {
-		concellos.add(rs.getString("codigo_concello"));
+		concellos.add(rs.getString("codigo_municipio"));
 	    }
 	} catch (SQLException e) {
 	    e.printStackTrace();
@@ -81,7 +81,7 @@ public class FormActuacionsConcellos extends JPanel implements IWindow {
 	if (viewInfo == null) {
 	    viewInfo = new WindowInfo(WindowInfo.MODALDIALOG
 		    | WindowInfo.PALETTE);
-	    viewInfo.setTitle("Concellos");
+	    viewInfo.setTitle("Municipios");
 	    viewInfo.setWidth(800);
 	    viewInfo.setHeight(400);
 	}
@@ -114,8 +114,8 @@ public class FormActuacionsConcellos extends JPanel implements IWindow {
 		try {
 		    c.setAutoCommit(false);
 
-		    String sqlDelete = "DELETE FROM inventario.actuacions_concellos WHERE codigo_actuacion = ?;";
-		    String sqlInsert = "INSERT INTO inventario.actuacions_concellos (codigo_actuacion, codigo_concello) VALUES (?, ?);";
+		    String sqlDelete = "DELETE FROM inventario.actuacion_municipio WHERE codigo_actuacion = ?;";
+		    String sqlInsert = "INSERT INTO inventario.actuacion_municipio (codigo_actuacion, codigo_municipio) VALUES (?, ?);";
 
 		    PreparedStatement stDelete = c.prepareStatement(sqlDelete);
 		    stDelete.setString(1, actuacion);

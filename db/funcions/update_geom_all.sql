@@ -10,7 +10,7 @@ BEGIN
                SELECT ST_CollectionExtract(ST_Locate_Between_Measures(c.the_geom,
                                 a.pk_inicial,
                                 a.pk_final), 2)
-               FROM inventario.red_carreteras AS c, '||the_schema_name||'.'||the_table_name||' AS a
+               FROM inventario.carreteras AS c, '||the_schema_name||'.'||the_table_name||' AS a
                WHERE c.numero = a.codigo_carretera AND a.gid = a2.gid);';
 
 END;

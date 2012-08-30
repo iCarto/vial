@@ -1,8 +1,8 @@
 BEGIN;
 
 -- definition
-DROP TABLE IF EXISTS inventario.red_carreteras;
-CREATE TABLE inventario.red_carreteras (
+DROP TABLE IF EXISTS inventario.carreteras;
+CREATE TABLE inventario.carreteras (
        gid serial,
        codigo varchar(9),
        numero varchar(4),
@@ -21,13 +21,13 @@ CREATE TABLE inventario.red_carreteras (
        observaciones text,
        PRIMARY KEY(gid)
 );
-SELECT AddGeometryColumn('inventario', 'red_carreteras', 'the_geom', '23029', 'MULTILINESTRINGM', '3');
-ALTER TABLE inventario.red_carreteras DROP CONSTRAINT enforce_geotype_the_geom;
-ALTER TABLE inventario.red_carreteras DROP CONSTRAINT enforce_dims_the_geom;
+SELECT AddGeometryColumn('inventario', 'carreteras', 'the_geom', '23029', 'MULTILINESTRINGM', '3');
+ALTER TABLE inventario.carreteras DROP CONSTRAINT enforce_geotype_the_geom;
+ALTER TABLE inventario.carreteras DROP CONSTRAINT enforce_dims_the_geom;
 
 -- populate it
-INSERT INTO inventario.red_carreteras(
-       SELECT nextval('inventario.red_carreteras_gid_seq') AS gid,
+INSERT INTO inventario.carreteras(
+       SELECT nextval('inventario.carreteras_gid_seq') AS gid,
               "codigo" AS codigo,
               "numero" AS numero,
               CAST(to_char("intermunic", '9') AS boolean) AS intermunicipal,
@@ -44,15 +44,15 @@ INSERT INTO inventario.red_carreteras(
               NULL AS observaciones,
               "longitud" AS longitud,
               "the_geom" AS the_geom
-       FROM inventario.red_carreteras_tmp
+       FROM inventario.carreteras_tmp
 );
 
-SELECT DropGeometryTable('inventario','red_carreteras_tmp');
+SELECT DropGeometryTable('inventario','carreteras_tmp');
 
 -- calibrate
-UPDATE inventario.red_carreteras AS c2 SET the_geom = (
+UPDATE inventario.carreteras AS c2 SET the_geom = (
        SELECT ST_AddMeasure(the_geom, pk_inicial, pk_final)
-       FROM inventario.red_carreteras AS c
+       FROM inventario.carreteras AS c
        WHERE c.gid = c2.gid)
 ;
 
