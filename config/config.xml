@@ -11,48 +11,48 @@
 		<extension class-name="es.icarto.gvsig.viasobras.CatalogExtension" description="FORMS_PANEL" active="true">
 			<menu text="Vías y Obras/Catálogo"
 				icon="viasobras-catalog"
-				position="01"/>
-			<tool-bar name="ViasObrasLugo">
+				position="30000"/>
+			<tool-bar name="ViasObrasLugo" position="70">
 				<action-tool icon="viasobras-catalog" tooltip="Catálogo"
-					action-command="Catalog" position="50"/>
+					action-command="Catalog" position="1"/>
 			</tool-bar>
 		</extension>
 
 		<extension class-name="es.icarto.gvsig.viasobras.QueriesActuacionesExtension" description="FORMS_PANEL" active="true">
 			<menu text="Vías y Obras/Consultas/Actuaciones"
-				position="02"/>
+				position="30100"/>
 		</extension>		
 
 		<extension class-name="es.icarto.gvsig.viasobras.QueriesEstadoExtension" description="FORMS_PANEL" active="true">
 			<menu text="Vías y Obras/Consultas/Estado actual"
-				position="03"/>
-			<tool-bar name="ViasObrasLugo">
+				position="30300"/>
+			<tool-bar name="ViasObrasLugo" position="70">
 				<action-tool icon="viasobras-queries-estado" tooltip="Consultas estado actual"
-					action-command="QueriesEstado" position="60"/>
+					action-command="QueriesEstado" position="2"/>
 			</tool-bar>
 		</extension>		
 		
 		<extension class-name="es.icarto.gvsig.viasobras.FormActuacionesExtension" description="FORMS_PANEL" active="true">
 			<menu text="Vías y Obras/Información/Actuaciones"
 				icon="viasobras-actuaciones"
-				position="04"/>
+				position="30400"/>
 		</extension>
 
 		<extension class-name="es.icarto.gvsig.viasobras.FormCarreterasExtension" description="FORMS_PANEL" active="true">
 			<menu text="Vías y Obras/Información/Carreteras"
 				icon="viasobras-carreteras"
-				position="05"/>
+				position="30500"/>
 		</extension>
 
 		<extension class-name="es.icarto.gvsig.viasobras.FormRampasExtension" description="FORMS_PANEL" active="true">
 			<menu text="Vías y Obras/Información/Rampas"
-				position="06"/>
+				position="30600"/>
 		</extension>
 
 		<extension class-name="es.icarto.gvsig.viasobras.FormVariantesExtension" description="FORMS_PANEL" active="true">
 			<menu text="Vías y Obras/Información/Variantes"
 				icon="viasobras-variantes"
-				position="07"/>
+				position="30700"/>
 		</extension>
 
 	</extensions>
