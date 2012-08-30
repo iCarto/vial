@@ -7,4 +7,7 @@ config_file=$1
 # ------------------------------------
 
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/elle.sql
+    $viasobras_dbname < funcions/drop_schema_elle.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname < datos/elle/schema-elle.sql
+

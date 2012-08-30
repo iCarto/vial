@@ -7,14 +7,8 @@ config_file=$1
 # ---------
 
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/create_schema_infobase.sql
+    $viasobras_dbname < funcions/drop_schema_infobase.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < datos/info_base/oceano.sql
+    $viasobras_dbname < datos/info_base/schema-infobase.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < datos/info_base/portugal.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < datos/info_base/provincias_galicia.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < datos/info_base/provincias_limitrofes.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < datos/info_base/municipios.sql
+    $viasobras_dbname < datos/info_base/table-geometrycolumns.sql
