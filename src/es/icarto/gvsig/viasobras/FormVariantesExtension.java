@@ -13,21 +13,17 @@ public class FormVariantesExtension extends Extension {
 	PluginServices.getIconTheme().registerDefault(
 		"viasobras-variantes",
 		this.getClass().getClassLoader()
-			.getResource("images/variante.png"));
+		.getResource("images/variantes.png"));
     }
 
     public void execute(String actionCommand) {
-	// TODO Auto-generated method stub
-
     }
 
     public boolean isEnabled() {
-	// TODO Auto-generated method stub
 	return false;
     }
 
     public boolean isVisible() {
-	// TODO Auto-generated method stub
 	return true;
     }
 
