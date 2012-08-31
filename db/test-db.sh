@@ -10,9 +10,32 @@ else
     . $db_config
 fi
 
+# triggers
+echo -e "\n"
 pg_prove -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     -d $viasobras_dbname ./tests/triggers-launch.sql
+
+# orden tramo
+echo -e "\n"
+pg_prove -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    -d $viasobras_dbname ./tests/check-orden-tramo-ancho-plataforma.sql
+echo -e "\n"
+pg_prove -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    -d $viasobras_dbname ./tests/check-orden-tramo-cotas.sql
+echo -e "\n"
+pg_prove -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    -d $viasobras_dbname ./tests/check-orden-tramo-tipo-pavimento.sql
+
+# PKs
+echo -e "\n"
+pg_prove -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    -d $viasobras_dbname ./tests/check-pks-actuaciones.sql
+echo -e "\n"
 pg_prove -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     -d $viasobras_dbname ./tests/check-pks-ancho-plataforma.sql
+echo -e "\n"
+pg_prove -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    -d $viasobras_dbname ./tests/check-pks-cotas.sql
+echo -e "\n"
 pg_prove -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     -d $viasobras_dbname ./tests/check-pks-tipo-pavimento.sql
