@@ -51,7 +51,7 @@ public class TramosTableModel extends AbstractTableModel {
     }
 
     public Class getColumnClass(int colIndex) {
-	return this.metadata.getPropertyValue(colIndex).getClass();
+	return this.metadata.getClass(colIndex);
     }
 
     public int getRowCount() {

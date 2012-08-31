@@ -1,5 +1,7 @@
 package es.icarto.gvsig.viasobras.domain.catalog;
 
+import java.sql.Date;
+
 public class Tramo {
 
     // will define the order in which will appear in table
@@ -9,7 +11,8 @@ public class Tramo {
     public static final int PROPERTY_PK_START = 3;
     public static final int PROPERTY_PK_END = 4;
     public static final int PROPERTY_VALUE = 5;
-    private static final int NUMBER_OF_PROPERTIES = 6;
+    public static final int PROPERTY_UPDATING_DATE = 6;
+    private static final int NUMBER_OF_PROPERTIES = 7;
 
     // Indicates how this tramo will be processed when saving data into DB
     public static final int STATUS_ORIGINAL = 0; // do nothing
@@ -34,6 +37,7 @@ public class Tramo {
     private double pkStart;
     private double pkEnd;
     private Object value;
+    private Date updatingDate;
 
     public Tramo() {
 	this.id = NO_GID;
@@ -122,6 +126,14 @@ public class Tramo {
 	this.value = value;
     }
 
+    public Date getUpdatingDate() {
+	return updatingDate;
+    }
+
+    public void setUpdatingDate(Date updatingDate) {
+	this.updatingDate = updatingDate;
+    }
+
     public int getNumberOfProperties() {
 	return NUMBER_OF_PROPERTIES;
     }
@@ -139,7 +151,9 @@ public class Tramo {
 	case PROPERTY_CARRETERA:
 	    return "Carretera";
 	case PROPERTY_VALUE:
-	    return "Característica";
+	    return "Valor";
+	case PROPERTY_UPDATING_DATE:
+	    return "Fecha";
 	default:
 	    return "None";
 	}
@@ -159,6 +173,8 @@ public class Tramo {
 	    return getCarretera();
 	case PROPERTY_VALUE:
 	    return getValue();
+	case PROPERTY_UPDATING_DATE:
+	    return getUpdatingDate();
 	default:
 	    return null;
 	}
@@ -184,16 +200,43 @@ public class Tramo {
 	case PROPERTY_VALUE:
 	    setValue(value);
 	    break;
+	case PROPERTY_UPDATING_DATE:
+	    setUpdatingDate((Date) value);
+	    break;
 	default:
 	    // do nothing
 	}
     }
 
+    public Class getClass(int index) {
+	switch (index) {
+	case PROPERTY_PK_START:
+	    return Double.class;
+	case PROPERTY_PK_END:
+	    return Double.class;
+	case PROPERTY_CONCELLO:
+	    return String.class;
+	case PROPERTY_ORDEN_TRAMO:
+	    return String.class;
+	case PROPERTY_CARRETERA:
+	    return String.class;
+	case PROPERTY_VALUE:
+	    return Object.class;
+	case PROPERTY_UPDATING_DATE:
+	    return Date.class;
+	default:
+	    return Object.class;
+	}
+    }
+
     public String toString() {
-	String s = "Carretera: " + getCarretera() + " - Orden tramo: "
-		+ getOrdenTramo() + "- Concello: "
-		+ getConcello() + " - PK inicial " + getPkStart()
-		+ " - PK final: " + getPkEnd() + " - Valor: " + getValue();
+	String s = "Carretera: " + getCarretera()
+		+ " - Orden tramo: " + getOrdenTramo()
+		+ " - Concello: " + getConcello()
+		+ " - PK inicial " + getPkStart()
+		+ " - PK final: "+ getPkEnd()
+		+ " - Valor: " + getValue()
+		+ " - Fecha actualización: " + getUpdatingDate();
 	return s;
     }
 
