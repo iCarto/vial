@@ -25,7 +25,7 @@ INSERT INTO inventario.ancho_plataforma(
               "pk_ini" AS pk_inicial,
               "pk_fin" AS pk_final,
               "longitud_t" AS longitud,
-              NULL AS fecha_actualizacion,
+              '2012-06-01' AS fecha_actualizacion,
               "ancho_medi" AS valor,
               "observacio" AS observaciones
        FROM inventario.ancho_plataforma_tmp

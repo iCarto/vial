@@ -25,7 +25,7 @@ INSERT INTO inventario.tipo_pavimento(
               "pk_ini" AS pk_inicial,
               "pk_fin" AS pk_final,
               "longitud_t" AS longitud,
-              NULL AS fecha_actualizacion,
+              '2012-06-01' AS fecha_actualizacion,
               "tipo_de_pa" AS valor,
               "observacio" AS observaciones
        FROM inventario.tipo_pavimento_tmp

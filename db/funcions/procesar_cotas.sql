@@ -27,7 +27,7 @@ INSERT INTO inventario.cotas(
               "pk_ini" AS pk_inicial,
               "pk_fin" AS pk_final,
               "longitud_t" AS longitud,
-              NULL AS fecha_actualizacion,
+              '2012-06-01' AS fecha_actualizacion,
               "cota_fin" AS valor,
               "cota_fin" AS valor_max,
               "cota_ini" AS valor_min,
