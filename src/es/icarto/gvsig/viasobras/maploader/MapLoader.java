@@ -22,9 +22,12 @@ import es.udc.cartolab.gvsig.users.utils.DBSession;
 
 public class MapLoader {
 
-    private static final String ANCHO_DE_PLATAFORMA = "Ancho plataforma";
-    private static final String TIPO_DE_PAVIMENTO = "Tipo pavimento";
+    private static final String CARRETERAS = "Carreteras";
     private static final String MUNICIPIOS = "Municipios";
+    private static final String ANCHO_PLATAFORMA = "Ancho plataforma";
+    private static final String TIPO_PAVIMENTO = "Tipo pavimento";
+    private static final String COTAS_MAXIMAS = "Cotas máximas";
+    private static final String PKS = "PKs";
 
     public static String DEFAULT_MAP_NAME = "General";
 
@@ -33,18 +36,33 @@ public class MapLoader {
 	ELLEMap map = MapDAO.getInstance().getMap(view, mapName,
 		LoadLegend.DB_LEGEND, mapName);
 	// set filters for layers
-	String whereConcellos = WhereAdapter.getClause(WhereAdapter.MUNICIPIOS);
-	String whereTramos = WhereAdapter.getClause(WhereAdapter.TRAMOS);
+	if (map.layerInMap(CARRETERAS)) {
+	    String whereCarreteras = WhereAdapter
+		    .getClause(WhereAdapter.CARRETERAS);
+	    map.getLayer(CARRETERAS).setWhere(whereCarreteras);
+	}
 	if (map.layerInMap(MUNICIPIOS)) {
-	    map.getLayer(MUNICIPIOS).setWhere(whereConcellos);
+	    String whereMunicipios = WhereAdapter
+		    .getClause(WhereAdapter.MUNICIPIOS);
+	    map.getLayer(MUNICIPIOS).setWhere(whereMunicipios);
 	}
-	if (map.layerInMap(TIPO_DE_PAVIMENTO)) {
-	    map.getLayer(TIPO_DE_PAVIMENTO).setWhere(whereTramos);
+	if (map.layerInMap(PKS)) {
+	    String wherePKs = WhereAdapter.getClause(WhereAdapter.PKS);
+	    map.getLayer(PKS).setWhere(wherePKs);
 	}
-	if (map.layerInMap(ANCHO_DE_PLATAFORMA)) {
-	    map.getLayer(ANCHO_DE_PLATAFORMA).setWhere(whereTramos);
+	// filters for tramos
+	String whereTramos = WhereAdapter.getClause(WhereAdapter.TRAMOS);
+	if (map.layerInMap(TIPO_PAVIMENTO)) {
+	    map.getLayer(TIPO_PAVIMENTO).setWhere(whereTramos);
+	}
+	if (map.layerInMap(ANCHO_PLATAFORMA)) {
+	    map.getLayer(ANCHO_PLATAFORMA).setWhere(whereTramos);
+	}
+	if (map.layerInMap(COTAS_MAXIMAS)) {
+	    map.getLayer(COTAS_MAXIMAS).setWhere(whereTramos);
 	}
 	map.load(view.getProjection());
+	// zoom to municipios
 	if (map.layerInMap(MUNICIPIOS)) {
 	    Rectangle2D concellosExtent = view.getMapControl().getMapContext()
 		    .getLayers().getLayer(MUNICIPIOS).getFullExtent();
@@ -94,9 +112,9 @@ public class MapLoader {
 		true, null, null, "", "inventario" };
 	Object[] cotas_maximas = { "Cotas máximas", "cotas", 14, true, null,
 		null, "", "inventario" };
-	Object[] pavimento = { TIPO_DE_PAVIMENTO, "tipo_pavimento", 15,
+	Object[] pavimento = { TIPO_PAVIMENTO, "tipo_pavimento", 15,
 		true, null, null, "", "inventario" };
-	Object[] plataforma = { ANCHO_DE_PLATAFORMA, "ancho_plataforma", 16,
+	Object[] plataforma = { ANCHO_PLATAFORMA, "ancho_plataforma", 16,
 		true, null, null, "", "inventario" };
 	Object[] pks = { "PKs", "PKs_geometricos", 17, true, null, null,
 		"", "info_base" };
