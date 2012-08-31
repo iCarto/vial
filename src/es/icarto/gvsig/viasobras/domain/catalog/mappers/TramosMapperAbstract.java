@@ -14,6 +14,7 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 
     public static final String ID_FIELDNAME = "gid";
     public static final String CARRETERA_FIELDNAME = "codigo_carretera";
+    public static final String ORDEN_TRAMO_FIELDNAME = "tramo";
     public static final String CONCELLO_FIELDNAME = "codigo_municipio";
     public static final String PK_START_FIELDNAME = "pk_inicial";
     public static final String PK_END_FIELDNAME = "pk_final";
@@ -64,7 +65,7 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 	 * codigo_concello, ...) as it give problems when saving, so the
 	 * ordering is done in Tramos() builder.
 	 */
-	String sqlQuery = "SELECT gid, codigo_carretera, codigo_municipio, valor, pk_inicial, pk_final "
+	String sqlQuery = "SELECT gid, codigo_carretera, tramo, codigo_municipio, valor, pk_inicial, pk_final "
 		+ " FROM " + tableName;
 	//+ " WHERE gid = gid ORDER BY pk_inicial";
 	int[] primaryKeys = { 1 }; // primary key index = gid column index
@@ -85,6 +86,7 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 	    if (t.getStatus() == Tramo.STATUS_UPDATE) {
 		tramos.absolute(t.getPosition());
 		tramos.updateString(CARRETERA_FIELDNAME, t.getCarretera());
+		tramos.updateString(ORDEN_TRAMO_FIELDNAME, t.getOrdenTramo());
 		tramos.updateString(CONCELLO_FIELDNAME, t.getConcello());
 		tramos.updateDouble(PK_START_FIELDNAME, t.getPkStart());
 		tramos.updateDouble(PK_END_FIELDNAME, t.getPkEnd());
@@ -98,6 +100,7 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 		tramos.moveToInsertRow();
 		tramos.updateInt(ID_FIELDNAME, newID);
 		tramos.updateString(CARRETERA_FIELDNAME, t.getCarretera());
+		tramos.updateString(ORDEN_TRAMO_FIELDNAME, t.getOrdenTramo());
 		tramos.updateString(CONCELLO_FIELDNAME, t.getConcello()
 			.toString());
 		tramos.updateDouble(PK_START_FIELDNAME, t.getPkStart());

@@ -4,11 +4,12 @@ public class Tramo {
 
     // will define the order in which will appear in table
     public static final int PROPERTY_CARRETERA = 0;
-    public static final int PROPERTY_CONCELLO = 1;
-    public static final int PROPERTY_PK_START = 2;
-    public static final int PROPERTY_PK_END = 3;
-    public static final int PROPERTY_VALUE = 4;
-    private static final int NUMBER_OF_PROPERTIES = 5;
+    public static final int PROPERTY_ORDEN_TRAMO = 1;
+    public static final int PROPERTY_CONCELLO = 2;
+    public static final int PROPERTY_PK_START = 3;
+    public static final int PROPERTY_PK_END = 4;
+    public static final int PROPERTY_VALUE = 5;
+    private static final int NUMBER_OF_PROPERTIES = 6;
 
     // Indicates how this tramo will be processed when saving data into DB
     public static final int STATUS_ORIGINAL = 0; // do nothing
@@ -27,10 +28,11 @@ public class Tramo {
     public static final int NO_POSITION = -1;
     private int position = NO_POSITION;
 
+    private String carretera;
+    private String ordenTramo;
+    private String concello;
     private double pkStart;
     private double pkEnd;
-    private String concello;
-    private String carretera;
     private Object value;
 
     public Tramo() {
@@ -96,6 +98,14 @@ public class Tramo {
 	this.concello = concello;
     }
 
+    public String getOrdenTramo() {
+	return ordenTramo;
+    }
+
+    public void setOrdenTramo(String ordenTramo) {
+	this.ordenTramo = ordenTramo;
+    }
+
     public String getCarretera() {
 	return carretera;
     }
@@ -124,6 +134,8 @@ public class Tramo {
 	    return "PK final";
 	case PROPERTY_CONCELLO:
 	    return "Municipio";
+	case PROPERTY_ORDEN_TRAMO:
+	    return "Orden tramo";
 	case PROPERTY_CARRETERA:
 	    return "Carretera";
 	case PROPERTY_VALUE:
@@ -141,6 +153,8 @@ public class Tramo {
 	    return getPkEnd();
 	case PROPERTY_CONCELLO:
 	    return getConcello();
+	case PROPERTY_ORDEN_TRAMO:
+	    return getOrdenTramo();
 	case PROPERTY_CARRETERA:
 	    return getCarretera();
 	case PROPERTY_VALUE:
@@ -161,6 +175,9 @@ public class Tramo {
 	case PROPERTY_CONCELLO:
 	    setConcello((String) value);
 	    break;
+	case PROPERTY_ORDEN_TRAMO:
+	    setOrdenTramo((String) value);
+	    break;
 	case PROPERTY_CARRETERA:
 	    setCarretera((String) value);
 	    break;
@@ -173,7 +190,8 @@ public class Tramo {
     }
 
     public String toString() {
-	String s = "Carretera: " + getCarretera() + " - Concello: "
+	String s = "Carretera: " + getCarretera() + " - Orden tramo: "
+		+ getOrdenTramo() + "- Concello: "
 		+ getConcello() + " - PK inicial " + getPkStart()
 		+ " - PK final: " + getPkEnd() + " - Valor: " + getValue();
 	return s;

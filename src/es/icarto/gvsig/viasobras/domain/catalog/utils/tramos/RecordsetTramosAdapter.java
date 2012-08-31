@@ -72,10 +72,13 @@ public class RecordsetTramosAdapter {
 	    Tramo tramo = new Tramo();
 	    tramo.setId(Integer.toString(rs.getInt(TramosMapperAbstract.ID_FIELDNAME)));
 	    tramo.setPosition(rs.getRow());
-	    tramo.setPkStart(rs.getDouble(TramosMapperAbstract.PK_START_FIELDNAME));
-	    tramo.setPkEnd(rs.getDouble(TramosMapperAbstract.PK_END_FIELDNAME));
 	    tramo.setCarretera(rs.getString(TramosMapperAbstract.CARRETERA_FIELDNAME));
+	    tramo.setOrdenTramo(rs
+		    .getString(TramosMapperAbstract.ORDEN_TRAMO_FIELDNAME));
 	    tramo.setConcello(rs.getString(TramosMapperAbstract.CONCELLO_FIELDNAME));
+	    tramo.setPkStart(rs
+		    .getDouble(TramosMapperAbstract.PK_START_FIELDNAME));
+	    tramo.setPkEnd(rs.getDouble(TramosMapperAbstract.PK_END_FIELDNAME));
 	    tramo.setValue(rs
 		    .getObject(TramosMapperAbstract.CARACTERISTICA_FIELDNAME));
 	    ts.add(tramo);
