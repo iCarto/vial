@@ -27,6 +27,7 @@ public class MapLoader {
     private static final String ANCHO_PLATAFORMA = "Ancho plataforma";
     private static final String TIPO_PAVIMENTO = "Tipo pavimento";
     private static final String COTAS_MAXIMAS = "Cotas máximas";
+    private static final String AFOROS = "Aforos";
     private static final String PKS = "PKs";
 
     public static String DEFAULT_MAP_NAME = "General";
@@ -60,6 +61,11 @@ public class MapLoader {
 	}
 	if (map.layerInMap(COTAS_MAXIMAS)) {
 	    map.getLayer(COTAS_MAXIMAS).setWhere(whereTramos);
+	}
+	// filters for eventos
+	String whereEventos = WhereAdapter.getClause(WhereAdapter.EVENTOS);
+	if (map.layerInMap(AFOROS)) {
+	    map.getLayer(AFOROS).setWhere(whereEventos);
 	}
 	map.load(view.getProjection());
 	// zoom to municipios

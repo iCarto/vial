@@ -9,7 +9,8 @@ public class WhereAdapter {
     public static final int CARRETERAS = 0;
     public static final int MUNICIPIOS = 1;
     public static final int TRAMOS = 2;
-    public static final int PKS = 3;
+    public static final int EVENTOS = 3;
+    public static final int PKS = 4;
 
     private static String CODE_CARRETERA_FIELDNAME = "numero";
     private static final String NONE_WHERE = "";
@@ -22,9 +23,32 @@ public class WhereAdapter {
 	    return getWhereConcellos();
 	case TRAMOS:
 	    return getWhereTramos();
+	case EVENTOS:
+	    return getWhereEventos();
 	case PKS:
 	    return getWherePKs();
 	default:
+	    return NONE_WHERE;
+	}
+    }
+
+    private static String getWhereEventos() {
+	String carretera = Catalog.getCarreteraSelected();
+	String concello = Catalog.getConcelloSelected();
+	if ((concello != Catalog.CONCELLO_ALL)
+		&& (carretera != Catalog.CARRETERA_ALL)) { // both
+	    // selected
+	    return "WHERE " + TramosMapperAbstract.CONCELLO_FIELDNAME + " = '"
+		    + concello + "' AND "
+		    + TramosMapperAbstract.CARRETERA_FIELDNAME + " = '"
+		    + carretera + "'";
+	} else if ((carretera != Catalog.CARRETERA_ALL)) { // carretera selected
+	    return "WHERE " + TramosMapperAbstract.CARRETERA_FIELDNAME + " = '"
+		    + carretera + "'";
+	} else if ((concello != Catalog.CONCELLO_ALL)) { // concello selected
+	    return "WHERE " + TramosMapperAbstract.CONCELLO_FIELDNAME + " = '"
+		    + concello + "'";
+	} else { // none selected
 	    return NONE_WHERE;
 	}
     }
