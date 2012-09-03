@@ -17,7 +17,7 @@ public class Tramos implements Iterable<Tramo> {
 
     private TableModel tm;
     private List<Tramo> tramos;
-    private List<Tramo> tramosInvalid;
+    private List<Tramo> tramosToValidate;
     private TramosMapper mapper;
     private TramoValidator tramoValidator;
 
@@ -27,7 +27,7 @@ public class Tramos implements Iterable<Tramo> {
 	Collections.sort(this.tramos, new TramosComparator());
 	this.tm = new TramosTableModel(this);
 	this.tramoValidator = new TramoValidator();
-	this.tramosInvalid = new ArrayList<Tramo>();
+	this.tramosToValidate = new ArrayList<Tramo>();
     }
 
     public TableModel getTableModel() {
@@ -53,7 +53,7 @@ public class Tramos implements Iterable<Tramo> {
     }
 
     public Tramos save() throws SQLException {
-	tramosInvalid.clear();
+	tramosToValidate.clear();
 	return mapper.save(this);
     }
 
@@ -71,7 +71,7 @@ public class Tramos implements Iterable<Tramo> {
 		    + Double.toString(Math.random()));
 	}
 	tramos.add(tramo);
-	this.validate(tramo);
+	tramosToValidate.add(tramo);
 	return tramos.size() - 1;
     }
 
@@ -98,7 +98,7 @@ public class Tramos implements Iterable<Tramo> {
 	    // as it will affect how mapper will process it
 	    this.getTramo(id).setStatus(Tramo.STATUS_UPDATE);
 	}
-	this.validate(t);
+	tramosToValidate.add(t);
     }
 
     private Tramo getTramo(String id) {
@@ -110,17 +110,16 @@ public class Tramos implements Iterable<Tramo> {
 	return null;
     }
 
-    private void validate(Tramo t) {
-	if (!tramoValidator.validate(t)) {
-	    tramosInvalid.add(t);
-	}
-    }
-
     public boolean canSaveTramos() {
-	if (tramosInvalid.size() == 0) {
+	if (tramosToValidate.size() == 0) {
 	    return true;
 	}
-	return false;
+	for (Tramo t : tramosToValidate) {
+	    if (!tramoValidator.validate(t)) {
+		return false;
+	    }
+	}
+	return true;
     }
 
 }
