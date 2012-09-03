@@ -23,7 +23,7 @@ import es.icarto.gvsig.navtableforms.gui.tables.IForm;
 import es.icarto.gvsig.navtableforms.gui.tables.TableModelAlphanumeric;
 import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
 
-public class FormCarreterasConcellos extends JPanel implements IForm, IWindow {
+public class FormCarreterasMunicipios extends JPanel implements IForm, IWindow {
 
     private WindowInfo viewInfo;
     private JScrollPane form;
@@ -41,9 +41,9 @@ public class FormCarreterasConcellos extends JPanel implements IForm, IWindow {
     private String carreteraCode;
     private long position;
 
-    public FormCarreterasConcellos() {
+    public FormCarreterasMunicipios() {
 	super();
-	FormPanel formBody = new FormPanel("carreteras-concellos.xml");
+	FormPanel formBody = new FormPanel("carreteras-municipios.xml");
 	form = new JScrollPane(formBody);
 	initWidgets();
 	action = new CreateAction();

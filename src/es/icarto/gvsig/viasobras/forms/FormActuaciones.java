@@ -15,27 +15,27 @@ import com.jeta.forms.components.panel.FormPanel;
 import es.icarto.gvsig.navtableforms.AbstractForm;
 import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
 
-public class FormActuacions extends AbstractForm {
+public class FormActuaciones extends AbstractForm {
 
     private FormPanel form;
     private JButton ayuntamientos;
     private JTextField codigoActuacion;
 
-    public FormActuacions(FLyrVect layer) {
+    public FormActuaciones(FLyrVect layer) {
 	super(layer);
 	initWindow();
     }
 
     public void initWindow() {
 	viewInfo.setHeight(575);
-	viewInfo.setWidth(425);
+	viewInfo.setWidth(435);
 	viewInfo.setTitle("Vías y Obras: actuaciones");
     }
 
     @Override
     public FormPanel getFormBody() {
 	if (form == null) {
-	    form = new FormPanel("form-actuaciones.xml");
+	    form = new FormPanel("actuaciones.xml");
 	}
 	return form;
     }
@@ -73,7 +73,7 @@ public class FormActuacions extends AbstractForm {
 
     private void openConcellosPanel() {
 	if (!codigoActuacion.getText().equals("")) {
-	    FormActuacionsConcellos cp = new FormActuacionsConcellos(
+	    FormActuacionesMunicipios cp = new FormActuacionesMunicipios(
 		    codigoActuacion.getText());
 	    PluginServices.getMDIManager().addWindow(cp);
 	}

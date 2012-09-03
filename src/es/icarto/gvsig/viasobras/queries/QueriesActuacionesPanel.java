@@ -10,7 +10,7 @@ public class QueriesActuacionesPanel extends gvWindow {
 
     public QueriesActuacionesPanel(boolean b) {
 	super(600, 400, true);
-	form = new FormPanel("queries-actuaciones.xml");
+	form = new FormPanel("consultas-actuaciones.xml");
 	JScrollPane scrolledForm = new JScrollPane(form);
 	this.add(scrolledForm);
     }

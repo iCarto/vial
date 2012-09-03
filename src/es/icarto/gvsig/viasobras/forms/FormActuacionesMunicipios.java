@@ -23,7 +23,7 @@ import com.jeta.forms.components.panel.FormPanel;
 import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
-public class FormActuacionsConcellos extends JPanel implements IWindow {
+public class FormActuacionesMunicipios extends JPanel implements IWindow {
 
     private WindowInfo viewInfo = null;
 
@@ -35,7 +35,7 @@ public class FormActuacionsConcellos extends JPanel implements IWindow {
     private ArrayList<String> concellos;
     private HashMap<String, JComponent> concellosCHB;
 
-    public FormActuacionsConcellos(String actuacion) {
+    public FormActuacionesMunicipios(String actuacion) {
 	this.actuacion = actuacion;
 	initPanel();
 	initConcellosAffected();
@@ -43,7 +43,7 @@ public class FormActuacionsConcellos extends JPanel implements IWindow {
     }
 
     private void initPanel() {
-	form = new FormPanel("concellos.xml");
+	form = new FormPanel("actuaciones-municipios.xml");
 	scrollPane = new JScrollPane(form);
 	this.add(scrollPane);
 	JPanel panel = new JPanel();

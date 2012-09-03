@@ -64,7 +64,7 @@ public class QueriesEstadoPanel extends gvWindow {
 	} else {
 	    this.setTitle("Consultas");
 	}
-	formBody = new FormPanel("queries-estado.xml");
+	formBody = new FormPanel("consultas-estado.xml");
 	formBody.setVisible(true);
 	scrollPane = new JScrollPane(queriesTable);
 	this.add(formBody, BorderLayout.CENTER);

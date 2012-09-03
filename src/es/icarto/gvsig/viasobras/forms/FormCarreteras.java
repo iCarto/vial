@@ -25,7 +25,7 @@ public class FormCarreteras extends AbstractForm implements IWindow {
     private FormPanel form;
     private JTable ayuntamientos;
     private JComboBox codigo;
-    private FormCarreterasConcellos carreterasConcellos;
+    private FormCarreterasMunicipios carreterasConcellos;
     private JTableContextualMenu contextualMenu;
 
     public FormCarreteras(FLyrVect layer) {
@@ -85,7 +85,7 @@ public class FormCarreteras extends AbstractForm implements IWindow {
 	codigo = (JComboBox) this.getWidgetComponents().get("numero");
 	ayuntamientos = (JTable) this.getWidgetComponents()
 		.get("ayuntamientos");
-	carreterasConcellos = new FormCarreterasConcellos();
+	carreterasConcellos = new FormCarreterasMunicipios();
 	contextualMenu = new JTableContextualMenu(carreterasConcellos);
 	ayuntamientos.addMouseListener(contextualMenu);
     }
@@ -100,7 +100,7 @@ public class FormCarreteras extends AbstractForm implements IWindow {
     @Override
     public FormPanel getFormBody() {
 	if (form == null) {
-	    form = new FormPanel("form-carreteras.xml");
+	    form = new FormPanel("carreteras.xml");
 	}
 	return form;
     }
