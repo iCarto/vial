@@ -96,4 +96,8 @@ public class TramosTableModel extends AbstractTableModel {
 	return true;
     }
 
+    public boolean canSaveTramos() {
+	return this.tramos.canSaveTramos();
+    }
+
 }

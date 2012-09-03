@@ -1,6 +1,7 @@
 package es.icarto.gvsig.viasobras.domain.catalog;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 import javax.swing.table.TableModel;
 
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.TramosMapper;
+import es.icarto.gvsig.viasobras.domain.catalog.tramos.validation.TramoValidator;
 import es.icarto.gvsig.viasobras.domain.catalog.utils.tramos.TramosComparator;
 import es.icarto.gvsig.viasobras.domain.catalog.utils.tramos.TramosTableModel;
 
@@ -15,13 +17,17 @@ public class Tramos implements Iterable<Tramo> {
 
     private TableModel tm;
     private List<Tramo> tramos;
+    private List<Tramo> tramosInvalid;
     private TramosMapper mapper;
+    private TramoValidator tramoValidator;
 
     public Tramos(TramosMapper mapper, List<Tramo> tramos) {
 	this.mapper = mapper;
 	this.tramos = tramos;
 	Collections.sort(this.tramos, new TramosComparator());
 	this.tm = new TramosTableModel(this);
+	this.tramoValidator = new TramoValidator();
+	this.tramosInvalid = new ArrayList<Tramo>();
     }
 
     public TableModel getTableModel() {
@@ -47,6 +53,7 @@ public class Tramos implements Iterable<Tramo> {
     }
 
     public Tramos save() throws SQLException {
+	tramosInvalid.clear();
 	return mapper.save(this);
     }
 
@@ -64,6 +71,7 @@ public class Tramos implements Iterable<Tramo> {
 		    + Double.toString(Math.random()));
 	}
 	tramos.add(tramo);
+	this.validate(tramo);
 	return tramos.size() - 1;
     }
 
@@ -90,6 +98,7 @@ public class Tramos implements Iterable<Tramo> {
 	    // as it will affect how mapper will process it
 	    this.getTramo(id).setStatus(Tramo.STATUS_UPDATE);
 	}
+	this.validate(t);
     }
 
     private Tramo getTramo(String id) {
@@ -99,6 +108,19 @@ public class Tramos implements Iterable<Tramo> {
 	    }
 	}
 	return null;
+    }
+
+    private void validate(Tramo t) {
+	if (!tramoValidator.validate(t)) {
+	    tramosInvalid.add(t);
+	}
+    }
+
+    public boolean canSaveTramos() {
+	if (tramosInvalid.size() == 0) {
+	    return true;
+	}
+	return false;
     }
 
 }

@@ -16,6 +16,7 @@ import java.util.Properties;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -358,14 +359,28 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
     private final class SaveChangesListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 	    try {
-		((TramosTableModel) tipoPavimentoModel).saveChanges();
-		((TramosTableModel) anchoPlataformaModel).saveChanges();
-		((TramosTableModel) cotasModel).saveChanges();
-		doSearch();
+		if (((TramosTableModel) tipoPavimentoModel).canSaveTramos()
+			&& ((TramosTableModel) anchoPlataformaModel)
+			.canSaveTramos()
+			&& ((TramosTableModel) cotasModel).saveChanges()) {
+
+		    ((TramosTableModel) tipoPavimentoModel).saveChanges();
+		    ((TramosTableModel) anchoPlataformaModel).saveChanges();
+		    ((TramosTableModel) cotasModel).saveChanges();
+		    doSearch();
+		} else {
+		    showWarning();
+		}
 	    } catch (SQLException e1) {
 		NotificationManager.addError(e1);
 	    }
 	}
+    }
+
+    private void showWarning() {
+	JOptionPane.showMessageDialog(this,
+		"No se puede guardar, existen tramos inválidos",
+		"Tramos inválidos", JOptionPane.WARNING_MESSAGE);
     }
 
     private final class LoadMapListener implements ActionListener {
