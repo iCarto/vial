@@ -47,11 +47,13 @@ public class FormCarreteras extends AbstractForm implements IWindow {
     private void updateJTables() {
 	ArrayList<String> colNames = new ArrayList<String>();
 	colNames.add("codigo_municipio");
+	colNames.add("orden_tramo");
 	colNames.add("pk_inicial");
 	colNames.add("pk_final");
 	colNames.add("observaciones");
 	ArrayList<String> colAliases = new ArrayList<String>();
-	colAliases.add("Ayuntamiento");
+	colAliases.add("Municipio");
+	colAliases.add("Orden tramo");
 	colAliases.add("PK Inicial");
 	colAliases.add("PK Final");
 	colAliases.add("Observaciones");

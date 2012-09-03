@@ -31,6 +31,7 @@ public class FormCarreterasConcellos extends JPanel implements IForm, IWindow {
 
     private JTextField carretera;
     private JTextField concello;
+    private JTextField ordenTramo;
     private JTextField pkInicial;
     private JTextField pkFinal;
     private JTextArea observaciones;
@@ -103,6 +104,7 @@ public class FormCarreterasConcellos extends JPanel implements IForm, IWindow {
 		.getWidgetsFromContainer(form);
 	carretera = (JTextField) widgets.get("codigo_carretera");
 	concello = (JTextField) widgets.get("codigo_municipio");
+	ordenTramo = (JTextField) widgets.get("orden_tramo");
 	pkInicial = (JTextField) widgets.get("pk_inicial");
 	pkFinal = (JTextField) widgets.get("pk_final");
 	observaciones = (JTextArea) widgets.get("observaciones");
@@ -118,6 +120,7 @@ public class FormCarreterasConcellos extends JPanel implements IForm, IWindow {
 	    carretera.setText(model.read((int) position)
 		    .get("codigo_carretera"));
 	    concello.setText(model.read((int) position).get("codigo_municipio"));
+	    ordenTramo.setText(model.read((int) position).get("orden_tramo"));
 	    pkInicial.setText(model.read((int) position).get("pk_inicial"));
 	    pkFinal.setText(model.read((int) position).get("pk_final"));
 	    observaciones.setText(model.read((int) position).get(
@@ -126,6 +129,7 @@ public class FormCarreterasConcellos extends JPanel implements IForm, IWindow {
 	    e.printStackTrace();
 	    carretera.setText("");
 	    concello.setText("");
+	    ordenTramo.setText("");
 	    pkInicial.setText("");
 	    pkFinal.setText("");
 	    observaciones.setText("");
@@ -135,6 +139,7 @@ public class FormCarreterasConcellos extends JPanel implements IForm, IWindow {
     private void fillWidgetsForCreatingRecord() {
 	carretera.setText(carreteraCode);
 	concello.setText("");
+	ordenTramo.setText("");
 	pkInicial.setText("");
 	pkFinal.setText("");
 	observaciones.setText("");
@@ -147,7 +152,7 @@ public class FormCarreterasConcellos extends JPanel implements IForm, IWindow {
 	    viewInfo.setTitle(PluginServices.getText(this,
 		    "Carreteras / Ayuntamientos"));
 	    viewInfo.setWidth(275);
-	    viewInfo.setHeight(275);
+	    viewInfo.setHeight(300);
 	}
 	return viewInfo;
     }
@@ -161,6 +166,7 @@ public class FormCarreterasConcellos extends JPanel implements IForm, IWindow {
 	    HashMap<String, String> values = new HashMap<String, String>();
 	    values.put("codigo_carretera", carretera.getText());
 	    values.put("codigo_municipio", concello.getText());
+	    values.put("orden_tramo", ordenTramo.getText());
 	    values.put("pk_inicial", pkInicial.getText());
 	    values.put("pk_final", pkFinal.getText());
 	    values.put("observaciones", observaciones.getText());
@@ -177,6 +183,7 @@ public class FormCarreterasConcellos extends JPanel implements IForm, IWindow {
 	public void actionPerformed(ActionEvent arg0) {
 	    model.updateValue("codigo_carretera", carretera.getText());
 	    model.updateValue("codigo_municipio", concello.getText());
+	    model.updateValue("orden_tramo", ordenTramo.getText());
 	    model.updateValue("pk_inicial", pkInicial.getText());
 	    model.updateValue("pk_final", pkFinal.getText());
 	    model.updateValue("observaciones", observaciones.getText());
