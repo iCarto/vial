@@ -332,7 +332,7 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	    t.setConcello(Catalog.getConcelloSelected());
 	    t.setPkStart(Catalog.getPKStart());
 	    t.setPkEnd(Catalog.getPKEnd());
-	    ((TramosTableModel) cotasModel).addTramo(t);
+	    ((TramosTableModel) tipoPavimentoModel).addTramo(t);
 	}
     }
 
