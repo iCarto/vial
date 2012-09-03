@@ -1,4 +1,4 @@
-package es.icarto.gvsig.viasobras.domain.catalog.utils.tramos;
+package es.icarto.gvsig.viasobras.domain.catalog.utils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,7 +16,7 @@ import es.icarto.gvsig.viasobras.domain.catalog.filters.FilterTramosByCarreteraA
 import es.icarto.gvsig.viasobras.domain.catalog.filters.FilterTramosByCarreteraAndPK;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.TramosMapperAbstract;
 
-public class RecordsetTramosAdapter {
+public class TramosRecordsetAdapter {
 
     public static List<Tramo> findWhereCarretera(CachedRowSet tramos,
 	    String carretera)
@@ -37,7 +37,7 @@ public class RecordsetTramosAdapter {
 	frs.setFilter(new FilterTramosByCarreteraAndPK(TramosMapperAbstract.CARRETERA_FIELDNAME, carretera,
 		TramosMapperAbstract.PK_START_FIELDNAME, pkStart, TramosMapperAbstract.PK_END_FIELDNAME,
 		pkEnd));
-	return RecordsetTramosAdapter.toList(frs);
+	return TramosRecordsetAdapter.toList(frs);
     }
 
     public static List<Tramo> findWhereConcello(CachedRowSet tramos,
@@ -46,7 +46,7 @@ public class RecordsetTramosAdapter {
 	tramos.beforeFirst();
 	frs.populate((ResultSet) tramos);
 	frs.setFilter(new FilterTramosByAnyField(TramosMapperAbstract.CONCELLO_FIELDNAME, concello));
-	return RecordsetTramosAdapter.toList(frs);
+	return TramosRecordsetAdapter.toList(frs);
     }
 
     public static List<Tramo> findWhereCarreteraAndConcello(
@@ -58,11 +58,11 @@ public class RecordsetTramosAdapter {
 	frs.setFilter(new FilterTramosByCarreteraAndConcello(
 		TramosMapperAbstract.CARRETERA_FIELDNAME, carretera,
 		TramosMapperAbstract.CONCELLO_FIELDNAME, concello));
-	return RecordsetTramosAdapter.toList(frs);
+	return TramosRecordsetAdapter.toList(frs);
     }
 
     public static List<Tramo> findAll(CachedRowSet tramos) throws SQLException {
-	return RecordsetTramosAdapter.toList(tramos);
+	return TramosRecordsetAdapter.toList(tramos);
     }
 
     private static List<Tramo> toList(ResultSet rs) throws SQLException {

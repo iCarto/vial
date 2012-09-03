@@ -25,7 +25,7 @@ shp2pgsql -d -W iso-8859-1 \
     inventario.accidentes > datos/inventario/accidentes.sql
 shp2pgsql -d -W iso-8859-1 \
     ${viasobras_data_orig}/inventario/aforos/aforos.dbf \
-    inventario.aforos > datos/inventario/aforos.sql
+    inventario.aforos_tmp > datos/inventario/aforos_tmp.sql
 shp2pgsql -d -g the_geom -W iso-8859-1 -s 23029 -I \
     ${viasobras_data_orig}/inventario/carreteras/Red_provincial \
     inventario.carreteras_tmp > datos/inventario/carreteras_tmp.sql

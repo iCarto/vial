@@ -1,7 +1,7 @@
 -- @author: Andrés Maneiro <andres.maneiro@gmail.com>
 -- @license: GPL v3
 
-CREATE OR REPLACE FUNCTION inventario.update_geom_all(
+CREATE OR REPLACE FUNCTION inventario.update_geom_line_all(
        the_schema_name TEXT,
        the_table_name TEXT) RETURNS void AS $BODY$
 BEGIN

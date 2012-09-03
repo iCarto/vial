@@ -8,7 +8,7 @@ import com.sun.rowset.CachedRowSetImpl;
 
 import es.icarto.gvsig.viasobras.domain.catalog.Tramo;
 import es.icarto.gvsig.viasobras.domain.catalog.Tramos;
-import es.icarto.gvsig.viasobras.domain.catalog.utils.tramos.RecordsetTramosAdapter;
+import es.icarto.gvsig.viasobras.domain.catalog.utils.TramosRecordsetAdapter;
 
 public abstract class TramosMapperAbstract implements TramosMapper {
 
@@ -29,30 +29,30 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 
     public Tramos findAll() throws SQLException {
 	CachedRowSet tramos = getTramos();
-	return new Tramos(this, RecordsetTramosAdapter.findAll(tramos));
+	return new Tramos(this, TramosRecordsetAdapter.findAll(tramos));
     }
 
     public Tramos findWhereCarretera(String carretera) throws SQLException {
 	CachedRowSet tramos = getTramos();
-	return new Tramos(this, RecordsetTramosAdapter.findWhereCarretera(tramos, carretera));
+	return new Tramos(this, TramosRecordsetAdapter.findWhereCarretera(tramos, carretera));
     }
 
     public Tramos findWhereCarreteraAndPK(String carretera, double pkStart,
 	    double pkEnd) throws SQLException {
 	CachedRowSet tramos = getTramos();
-	return new Tramos(this, RecordsetTramosAdapter.findWhereCarreteraAndPK(tramos,
+	return new Tramos(this, TramosRecordsetAdapter.findWhereCarreteraAndPK(tramos,
 		carretera, pkStart, pkEnd));
     }
 
     public Tramos findWhereConcello(String concello) throws SQLException {
 	CachedRowSet tramos = getTramos();
-	return new Tramos(this, RecordsetTramosAdapter.findWhereConcello(tramos, concello));
+	return new Tramos(this, TramosRecordsetAdapter.findWhereConcello(tramos, concello));
     }
 
     public Tramos findWhereCarreteraAndConcello(String carretera,
 	    String concello) throws SQLException {
 	CachedRowSet tramos = getTramos();
-	return new Tramos(this, RecordsetTramosAdapter.findWhereCarreteraAndConcello(tramos,
+	return new Tramos(this, TramosRecordsetAdapter.findWhereCarreteraAndConcello(tramos,
 		carretera, concello));
     }
 
@@ -117,7 +117,7 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 	    }
 	}
 	tramos.acceptChanges();
-	return new Tramos(this, RecordsetTramosAdapter.findAll(tramos));
+	return new Tramos(this, TramosRecordsetAdapter.findAll(tramos));
     }
 
 }

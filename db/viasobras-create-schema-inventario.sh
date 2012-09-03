@@ -18,9 +18,13 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
 #-------------------------
 
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/update_geom_all.sql
+    $viasobras_dbname < funcions/update_geom_line_all.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/update_geom_on_pk_change.sql
+    $viasobras_dbname < funcions/update_geom_point_all.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname < funcions/update_geom_line_on_pk_change.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname < funcions/update_geom_point_on_pk_change.sql
 
 # Accidentes
 #-----------
@@ -34,11 +38,9 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
 #-------
 
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < datos/inventario/aforos.sql
+    $viasobras_dbname < datos/inventario/aforos_tmp.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
    $viasobras_dbname < funcions/procesar_aforos.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/create_aforos_event_points.sql
 
 # Municipio - codigo
 #-------------------

@@ -34,9 +34,11 @@ import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
 import es.icarto.gvsig.viasobras.domain.catalog.Carretera;
 import es.icarto.gvsig.viasobras.domain.catalog.Catalog;
 import es.icarto.gvsig.viasobras.domain.catalog.Concello;
+import es.icarto.gvsig.viasobras.domain.catalog.Evento;
 import es.icarto.gvsig.viasobras.domain.catalog.Tramo;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.DBFacade;
-import es.icarto.gvsig.viasobras.domain.catalog.utils.tramos.TramosTableModel;
+import es.icarto.gvsig.viasobras.domain.catalog.utils.EventosTableModel;
+import es.icarto.gvsig.viasobras.domain.catalog.utils.TramosTableModel;
 import es.icarto.gvsig.viasobras.maploader.MapLoader;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
@@ -50,16 +52,8 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 
     private JComboBox carreteras;
     private JComboBox concellos;
-
     private JTextField pkStart;
     private JTextField pkEnd;
-
-    private JTable tipoPavimento;
-    private TableModel tipoPavimentoModel;
-    private JTable anchoPlataforma;
-    private TableModel anchoPlataformaModel;
-    private JTable cotas;
-    private TableModel cotasModel;
 
     private JButton search;
     private JButton load;
@@ -67,12 +61,25 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 
     private JComboBox mapLoad;
 
+    private JTable tipoPavimento;
+    private TableModel tipoPavimentoModel;
     private JButton insertTramoPavimento;
     private JButton deleteTramoPavimento;
+
+    private JTable anchoPlataforma;
+    private TableModel anchoPlataformaModel;
     private JButton insertTramoPlataforma;
     private JButton deleteTramoPlataforma;
+
+    private JTable cotas;
+    private TableModel cotasModel;
     private JButton insertCota;
     private JButton deleteCota;
+
+    private JTable aforos;
+    private TableModel aforosModel;
+    private JButton insertAforo;
+    private JButton deleteAforo;
 
     public FormCatalog() {
 	form = new FormPanel("catalog.xml");
@@ -129,6 +136,12 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	pkStart.setEnabled(false);
 	pkEnd.setEnabled(false);
 
+	search = (JButton) buttons.get("buscar");
+	load = (JButton) buttons.get("cargar");
+	save = (JButton) buttons.get("guardar");
+
+	mapLoad = (JComboBox) widgets.get("mapa");
+
 	tipoPavimento = (JTable) widgets.get("tabla_tipo_pavimento");
 	insertTramoPavimento = (JButton) buttons.get("insertar_pavimento");
 	deleteTramoPavimento = (JButton) buttons.get("borrar_pavimento");
@@ -141,11 +154,9 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	insertCota = (JButton) buttons.get("insertar_cota");
 	deleteCota = (JButton) buttons.get("borrar_cota");
 
-	search = (JButton) buttons.get("buscar");
-	load = (JButton) buttons.get("cargar");
-	save = (JButton) buttons.get("guardar");
-
-	mapLoad = (JComboBox) widgets.get("mapa");
+	aforos = (JTable) widgets.get("tabla_aforos");
+	insertAforo = (JButton) buttons.get("insertar_aforo");
+	deleteAforo = (JButton) buttons.get("borrar_aforo");
     }
 
     private void initFocus() {
@@ -155,6 +166,7 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	tipoPavimento.setFocusable(false);
 	anchoPlataforma.setFocusable(false);
 	cotas.setFocusable(false);
+	aforos.setFocusable(false);
     }
 
     private void initListeners() {
@@ -184,6 +196,9 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 		new InsertTramoCotaListener());
 	deleteCota.addActionListener(
 		new DeleteTramoCotaListener());
+
+	insertAforo.addActionListener(new InsertEventoAforoListener());
+	deleteAforo.addActionListener(new DeleteEventoAforoListener());
     }
 
     private void enablePKControls() {
@@ -225,6 +240,8 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	    anchoPlataforma.setModel(anchoPlataformaModel);
 	    cotasModel = Catalog.getTramosCotas().getTableModel();
 	    cotas.setModel(cotasModel);
+	    aforosModel = Catalog.getEventosAforos().getTableModel();
+	    aforos.setModel(aforosModel);
 	    this.repaint();
 	} catch (SQLException e) {
 	    NotificationManager.addError(e);
@@ -306,13 +323,10 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 
     private final class InsertTramoPlataformaListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
-	    Tramo t = new Tramo();
-	    t.setCarretera(Catalog.getCarreteraSelected());
-	    t.setConcello(Catalog.getConcelloSelected());
-	    t.setPkStart(Catalog.getPKStart());
-	    t.setPkEnd(Catalog.getPKEnd());
+	    Tramo t = createNewTramo();
 	    ((TramosTableModel) anchoPlataformaModel).addTramo(t);
 	}
+
     }
 
     private final class DeleteTramoPavimentoListener implements ActionListener {
@@ -327,11 +341,7 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 
     private final class InsertTramoPavimentoListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
-	    Tramo t = new Tramo();
-	    t.setCarretera(Catalog.getCarreteraSelected());
-	    t.setConcello(Catalog.getConcelloSelected());
-	    t.setPkStart(Catalog.getPKStart());
-	    t.setPkEnd(Catalog.getPKEnd());
+	    Tramo t = createNewTramo();
 	    ((TramosTableModel) tipoPavimentoModel).addTramo(t);
 	}
     }
@@ -347,13 +357,26 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 
     private final class InsertTramoCotaListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
-	    Tramo t = new Tramo();
-	    t.setCarretera(Catalog.getCarreteraSelected());
-	    t.setConcello(Catalog.getConcelloSelected());
-	    t.setPkStart(Catalog.getPKStart());
-	    t.setPkEnd(Catalog.getPKEnd());
+	    Tramo t = createNewTramo();
 	    ((TramosTableModel) cotasModel).addTramo(t);
 	}
+    }
+
+    private final class DeleteEventoAforoListener implements ActionListener {
+	public void actionPerformed(ActionEvent e) {
+	    if ((aforos.getRowCount() > 0) && (aforos.getSelectedRow() != -1)) {
+		((EventosTableModel) aforosModel).deleteEvento(aforos
+			.getSelectedRow());
+	    }
+	}
+    }
+
+    private final class InsertEventoAforoListener implements ActionListener {
+	public void actionPerformed(ActionEvent e) {
+	    Evento ev = createNewEvento();
+	    ((EventosTableModel) aforosModel).addEvento(ev);
+	}
+
     }
 
     private final class SaveChangesListener implements ActionListener {
@@ -362,11 +385,13 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 		if (((TramosTableModel) tipoPavimentoModel).canSaveTramos()
 			&& ((TramosTableModel) anchoPlataformaModel)
 			.canSaveTramos()
-			&& ((TramosTableModel) cotasModel).saveChanges()) {
+			&& ((TramosTableModel) cotasModel).canSaveTramos()
+			&& ((EventosTableModel) aforosModel).canSaveEventos()) {
 
 		    ((TramosTableModel) tipoPavimentoModel).saveChanges();
 		    ((TramosTableModel) anchoPlataformaModel).saveChanges();
 		    ((TramosTableModel) cotasModel).saveChanges();
+		    ((EventosTableModel) aforosModel).saveChanges();
 		    doSearch();
 		} else {
 		    showWarning();
@@ -454,6 +479,40 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 		fillConcellos();
 	    }
 	}
+    }
+
+    private Tramo createNewTramo() {
+	Tramo t = new Tramo();
+	if (Catalog.getCarreteraSelected() != Catalog.CARRETERA_ALL) {
+	    t.setCarretera(Catalog.getCarreteraSelected());
+	}
+	if (Catalog.getConcelloSelected() != Catalog.CONCELLO_ALL) {
+	    t.setConcello(Catalog.getConcelloSelected());
+	}
+	if (Catalog.getPKStart() != Catalog.PK_NONE) {
+	    t.setPkStart(Catalog.getPKStart());
+	}
+	if (Catalog.getPKEnd() != Catalog.PK_NONE) {
+	    t.setPkEnd(Catalog.getPKEnd());
+	}
+	return t;
+    }
+
+    private Evento createNewEvento() {
+	Evento ev = new Evento();
+	if (Catalog.getCarreteraSelected() != Catalog.CARRETERA_ALL) {
+	    ev.setCarretera(Catalog.getCarreteraSelected());
+	}
+	if (Catalog.getConcelloSelected() != Catalog.CONCELLO_ALL) {
+	    ev.setConcello(Catalog.getConcelloSelected());
+	}
+	if (Catalog.getPKStart() != Catalog.PK_NONE) {
+	    ev.setPk(Catalog.getPKStart());
+	}
+	if (Catalog.getPKEnd() != Catalog.PK_NONE) {
+	    ev.setPk(Catalog.getPKEnd());
+	}
+	return ev;
     }
 
 }

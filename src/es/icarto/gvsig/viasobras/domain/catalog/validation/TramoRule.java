@@ -1,4 +1,4 @@
-package es.icarto.gvsig.viasobras.domain.catalog.tramos.validation;
+package es.icarto.gvsig.viasobras.domain.catalog.validation;
 
 import es.icarto.gvsig.viasobras.domain.catalog.Tramo;
 

@@ -1,56 +1,43 @@
-DROP TABLE IF EXISTS inventario.imds;
-CREATE TABLE inventario.imds (LIKE inventario.aforos);
-ALTER TABLE inventario.imds DROP COLUMN imd0;
-ALTER TABLE inventario.imds DROP COLUMN fecha2;
-ALTER TABLE inventario.imds DROP COLUMN a_oimd0;
-ALTER TABLE inventario.imds DROP COLUMN imd0pk;
-ALTER TABLE inventario.imds DROP COLUMN imd1;
-ALTER TABLE inventario.imds DROP COLUMN fecha3;
-ALTER TABLE inventario.imds DROP COLUMN a_oimd1;
-ALTER TABLE inventario.imds DROP COLUMN imd1pk;
-ALTER TABLE inventario.imds DROP COLUMN imd2;
-ALTER TABLE inventario.imds DROP COLUMN fecha4;
-ALTER TABLE inventario.imds DROP COLUMN a_oimd2;
-ALTER TABLE inventario.imds DROP COLUMN imd2pk;
-ALTER TABLE inventario.imds DROP COLUMN imd3;
-ALTER TABLE inventario.imds DROP COLUMN fecha5;
-ALTER TABLE inventario.imds DROP COLUMN a_oimd3;
-ALTER TABLE inventario.imds DROP COLUMN imd3pk;
+BEGIN;
 
-INSERT INTO inventario.imds (
-       SELECT gid,
-              municipio, numeroinve, tramo, nombredela, longitudmu, longitudto,
-              imd, fecha, a_o, pk,
-              observacio
-       FROM inventario.aforos
-);
-
-INSERT INTO inventario.imds (
-       SELECT nextval('inventario.aforos_gid_seq'),
-              municipio, numeroinve, tramo, nombredela, longitudmu, longitudto,
-              imd0 AS imd, fecha2 AS fecha, a_oimd0 AS a_o, imd0pk AS pk,
-              observacio
-       FROM inventario.aforos
-);
-
-INSERT INTO inventario.imds (
-       SELECT nextval('inventario.aforos_gid_seq'),
-              municipio, numeroinve, tramo, nombredela, longitudmu, longitudto,
-              imd1 AS imd, fecha3 AS fecha, a_oimd1 AS a_o, imd1pk AS pk,
-              observacio
-       FROM inventario.aforos
-);
-
--- INSERT INTO inventario.imds (
---        SELECT nextval('inventario.aforos_gid_seq'),
---               municipio, numeroinve, tramo, nombredela, longitudmu, longitudto,
---               imd2 AS imd, fecha4 AS fecha, a_oimd2 AS a_o, imd2pk AS pk,
---               observacio
---        FROM inventario.aforos
--- );
-
-DELETE FROM inventario.imds
-       WHERE imd = '0' AND a_o = '0' AND pk = '0';
-
+--definition
 DROP TABLE IF EXISTS inventario.aforos;
-ALTER TABLE inventario.imds RENAME TO aforos;
+CREATE TABLE inventario.aforos (
+       gid SERIAL,
+       codigo_carretera varchar(4),
+       codigo_municipio varchar(5),
+       orden varchar(1),
+       pk float,
+       fecha date,
+       valor float,
+       PRIMARY KEY(gid)
+);
+
+-- populate it
+INSERT INTO inventario.aforos (
+       SELECT nextval('inventario.aforos_gid_seq') AS gid,
+              "numero_inv" AS codigo_carretera,
+              to_char("codigo_mun", 'FM99999') AS codigo_municipio,
+              "tramo" AS orden,
+              "pk" AS pk,
+              to_date(to_char("a_o", '9999'), 'yyyy') AS fecha,
+              "imd" AS valor
+       FROM inventario.aforos_tmp
+);
+
+-- linear referencing
+SELECT AddGeometryColumn('inventario', 'aforos', 'the_geom', 23029, 'POINTM', 3);
+ALTER TABLE inventario.aforos DROP CONSTRAINT enforce_geotype_the_geom;
+SELECT inventario.update_geom_point_all('inventario', 'aforos');
+
+-- triggers
+DROP TRIGGER IF EXISTS update_geom_aforos ON inventario.aforos;
+CREATE TRIGGER update_geom_aforos
+       BEFORE UPDATE OR INSERT
+       ON inventario.aforos FOR EACH ROW
+       EXECUTE PROCEDURE inventario.update_geom_point_on_pk_change();
+
+DROP TABLE IF EXISTS inventario.aforos_tmp;
+
+COMMIT;
+

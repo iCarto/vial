@@ -1,31 +1,37 @@
 BEGIN;
 
-SELECT plan(8);
+SELECT plan(10);
 
 -- Test triggers are in place
 SELECT trigger_is('inventario',
                   'tipo_pavimento',
                   'update_geom_tipo_pavimento',
                   'inventario',
-                  'update_geom_on_pk_change');
+                  'update_geom_line_on_pk_change');
 
 SELECT trigger_is('inventario',
                   'ancho_plataforma',
                   'update_geom_ancho_plataforma',
                   'inventario',
-                  'update_geom_on_pk_change');
+                  'update_geom_line_on_pk_change');
 
 SELECT trigger_is('inventario',
                   'cotas',
                   'update_geom_cotas',
                   'inventario',
-                  'update_geom_on_pk_change');
+                  'update_geom_line_on_pk_change');
 
 SELECT trigger_is('inventario',
                   'actuaciones',
                   'update_geom_actuaciones',
                   'inventario',
-                  'update_geom_on_pk_change');
+                  'update_geom_line_on_pk_change');
+
+SELECT trigger_is('inventario',
+                  'aforos',
+                  'update_geom_aforos',
+                  'inventario',
+                  'update_geom_point_on_pk_change');
 
 -- Test they work
 
@@ -56,5 +62,12 @@ INSERT INTO inventario.actuaciones
 SELECT isnt(the_geom, NULL, 'actuaciones - geom calculated on INSERT')
        FROM inventario.cotas
        WHERE gid = currval('inventario.actuaciones_gid_seq');
+
+INSERT INTO inventario.aforos
+       (codigo_carretera, codigo_municipio, valor, pk)
+       VALUES ('0101', '27018', 12, 2);
+SELECT isnt(the_geom, NULL, 'aforos - geom calculated on INSERT')
+       FROM inventario.aforos
+       WHERE gid = currval('inventario.aforos_gid_seq');
 
 ROLLBACK;

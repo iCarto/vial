@@ -39,13 +39,13 @@ DROP TABLE IF EXISTS inventario.ancho_plataforma_tmp;
 -- linear referencing
 SELECT AddGeometryColumn('inventario', 'ancho_plataforma', 'the_geom', '23029', 'MULTILINESTRINGM', 3);
 ALTER TABLE inventario.ancho_plataforma DROP CONSTRAINT enforce_geotype_the_geom;
-SELECT inventario.update_geom_all('inventario', 'ancho_plataforma');
+SELECT inventario.update_geom_line_all('inventario', 'ancho_plataforma');
 
 -- triggers
 DROP TRIGGER IF EXISTS update_geom_ancho_plataforma ON inventario.ancho_plataforma;
 CREATE TRIGGER update_geom_ancho_plataforma
        BEFORE UPDATE OR INSERT
        ON inventario.ancho_plataforma FOR EACH ROW
-       EXECUTE PROCEDURE inventario.update_geom_on_pk_change();
+       EXECUTE PROCEDURE inventario.update_geom_line_on_pk_change();
 
 COMMIT;

@@ -39,13 +39,13 @@ DROP TABLE IF EXISTS inventario.tipo_pavimento_tmp;
 -- linear referencing
 SELECT AddGeometryColumn('inventario', 'tipo_pavimento', 'the_geom', '23029', 'MULTILINESTRINGM', 3);
 ALTER TABLE inventario.tipo_pavimento DROP CONSTRAINT enforce_geotype_the_geom;
-SELECT inventario.update_geom_all('inventario', 'tipo_pavimento');
+SELECT inventario.update_geom_line_all('inventario', 'tipo_pavimento');
 
 -- triggers
 DROP TRIGGER IF EXISTS update_geom_tipo_pavimento ON inventario.tipo_pavimento;
 CREATE TRIGGER update_geom_tipo_pavimento
        BEFORE UPDATE OR INSERT
        ON inventario.tipo_pavimento FOR EACH ROW
-       EXECUTE PROCEDURE inventario.update_geom_on_pk_change();
+       EXECUTE PROCEDURE inventario.update_geom_line_on_pk_change();
 
 COMMIT;

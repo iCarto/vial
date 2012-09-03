@@ -43,13 +43,13 @@ DROP TABLE IF EXISTS inventario.cotas_tmp;
 -- linear referencing
 SELECT AddGeometryColumn('inventario', 'cotas', 'the_geom', '23029', 'MULTILINESTRINGM', 3);
 ALTER TABLE inventario.cotas DROP CONSTRAINT enforce_geotype_the_geom;
-SELECT inventario.update_geom_all('inventario', 'cotas');
+SELECT inventario.update_geom_line_all('inventario', 'cotas');
 
 -- triggers
 DROP TRIGGER IF EXISTS update_geom_cotas ON inventario.cotas;
 CREATE TRIGGER update_geom_cotas
        BEFORE UPDATE OR INSERT
        ON inventario.cotas FOR EACH ROW
-       EXECUTE PROCEDURE inventario.update_geom_on_pk_change();
+       EXECUTE PROCEDURE inventario.update_geom_line_on_pk_change();
 
 COMMIT;

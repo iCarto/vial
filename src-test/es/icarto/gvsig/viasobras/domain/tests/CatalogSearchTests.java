@@ -18,6 +18,7 @@ import com.iver.cit.gvsig.fmap.drivers.DBException;
 
 import es.icarto.gvsig.viasobras.domain.catalog.Catalog;
 import es.icarto.gvsig.viasobras.domain.catalog.Concellos;
+import es.icarto.gvsig.viasobras.domain.catalog.Eventos;
 import es.icarto.gvsig.viasobras.domain.catalog.Tramos;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.DBFacade;
 
@@ -68,6 +69,11 @@ public class CatalogSearchTests {
     @Test
     public void testNotNullCotas() throws SQLException {
 	assertNotNull(Catalog.getTramosCotas());
+    }
+
+    @Test
+    public void testNotNullAforos() throws SQLException {
+	assertNotNull(Catalog.getEventosAforos());
     }
 
     @Test
@@ -124,6 +130,20 @@ public class CatalogSearchTests {
     }
 
     @Test
+    public void testFindAforosAll() throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT COUNT(*) AS num_rows FROM inventario.aforos");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Eventos eventos = Catalog.getEventosAforos();
+
+	assertEquals(numRows, eventos.size());
+    }
+
+    @Test
     public void testFindPavimentoDependingOnCarretera() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
@@ -166,6 +186,21 @@ public class CatalogSearchTests {
 	Tramos tramos = Catalog.getTramosCotas();
 
 	assertEquals(numRows, tramos.size());
+    }
+
+    @Test
+    public void testFindAforosDependingOnCarretera() throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.aforos WHERE codigo_carretera = '4606'");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Catalog.setCarretera("4606");
+	Eventos eventos = Catalog.getEventosAforos();
+
+	assertEquals(numRows, eventos.size());
     }
 
     @Test
@@ -220,6 +255,23 @@ public class CatalogSearchTests {
     }
 
     @Test
+    public void testFindAforosDependingOnPK() throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.aforos WHERE codigo_carretera = '4606' AND pk >= 0 AND pk <= 10");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Catalog.setCarretera("4606");
+	Catalog.setPKStart(0.0);
+	Catalog.setPKEnd(10.0);
+	Eventos eventos = Catalog.getEventosAforos();
+
+	assertEquals(numRows, eventos.size());
+    }
+
+    @Test
     public void testFindPavimentoDependingOnPKStart() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
@@ -265,6 +317,22 @@ public class CatalogSearchTests {
 	Tramos tramos = Catalog.getTramosCotas();
 
 	assertEquals(numRows, tramos.size());
+    }
+
+    @Test
+    public void testFindAforosDependingOnPKStart() throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.aforos WHERE codigo_carretera = '4606' AND pk >= 2.0");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Catalog.setCarretera("4606");
+	Catalog.setPKStart(2.0);
+	Eventos eventos = Catalog.getEventosAforos();
+
+	assertEquals(numRows, eventos.size());
     }
 
     @Test
@@ -316,6 +384,22 @@ public class CatalogSearchTests {
     }
 
     @Test
+    public void testFindAforosDependingOnPKEnd() throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.aforos WHERE codigo_carretera = '4606' AND pk <= 8.0");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Catalog.setCarretera("4606");
+	Catalog.setPKEnd(8.0);
+	Eventos eventos = Catalog.getEventosAforos();
+
+	assertEquals(numRows, eventos.size());
+    }
+
+    @Test
     public void testFindPavimentoDependingOnConcello() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
@@ -360,6 +444,22 @@ public class CatalogSearchTests {
 	Tramos tramos = Catalog.getTramosCotas();
 
 	assertEquals(numRows, tramos.size());
+    }
+
+    @Test
+    public void testFindAforosDependingOnConcello() throws SQLException,
+    DBException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.aforos WHERE codigo_municipio = '27018'");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Catalog.setConcello("27018"); // Fonsagrada
+	Eventos eventos = Catalog.getEventosAforos();
+
+	assertEquals(numRows, eventos.size());
     }
 
     @Test
@@ -411,6 +511,23 @@ public class CatalogSearchTests {
 	Tramos tramos = Catalog.getTramosCotas();
 
 	assertEquals(numRows, tramos.size());
+    }
+
+    @Test
+    public void testFindAforosDependingOnCarreteraAndConcello()
+	    throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.aforos WHERE codigo_carretera = '4606' AND codigo_municipio = '27018'");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Catalog.setCarretera("4606");
+	Catalog.setConcello("27018"); // Fonsagrada
+	Eventos eventos = Catalog.getEventosAforos();
+
+	assertEquals(numRows, eventos.size());
     }
 
     @Test

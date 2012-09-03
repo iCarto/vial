@@ -29,13 +29,13 @@ INSERT INTO inventario.actuaciones (codigo_actuacion, codigo_carretera, pk_inici
 -- linear referencing
 SELECT AddGeometryColumn('inventario', 'actuaciones', 'the_geom', '23029', 'MULTILINESTRINGM', 3);
 ALTER TABLE inventario.actuaciones DROP CONSTRAINT enforce_geotype_the_geom;
-SELECT inventario.update_geom_all('inventario', 'actuaciones');
+SELECT inventario.update_geom_line_all('inventario', 'actuaciones');
 
 -- triggers
 DROP TRIGGER IF EXISTS update_geom_actuaciones ON inventario.actuaciones;
 CREATE TRIGGER update_geom_actuaciones
        BEFORE UPDATE OR INSERT
        ON inventario.actuaciones FOR EACH ROW
-       EXECUTE PROCEDURE inventario.update_geom_on_pk_change();
+       EXECUTE PROCEDURE inventario.update_geom_line_on_pk_change();
 
 COMMIT;

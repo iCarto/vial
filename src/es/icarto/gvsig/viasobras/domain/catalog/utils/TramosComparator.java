@@ -1,4 +1,4 @@
-package es.icarto.gvsig.viasobras.domain.catalog.utils.tramos;
+package es.icarto.gvsig.viasobras.domain.catalog.utils;
 
 import java.util.Comparator;
 

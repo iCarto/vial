@@ -9,9 +9,9 @@ import java.util.List;
 import javax.swing.table.TableModel;
 
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.TramosMapper;
-import es.icarto.gvsig.viasobras.domain.catalog.tramos.validation.TramoValidator;
-import es.icarto.gvsig.viasobras.domain.catalog.utils.tramos.TramosComparator;
-import es.icarto.gvsig.viasobras.domain.catalog.utils.tramos.TramosTableModel;
+import es.icarto.gvsig.viasobras.domain.catalog.utils.TramosComparator;
+import es.icarto.gvsig.viasobras.domain.catalog.utils.TramosTableModel;
+import es.icarto.gvsig.viasobras.domain.catalog.validation.TramoValidator;
 
 public class Tramos implements Iterable<Tramo> {
 

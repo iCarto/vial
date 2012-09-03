@@ -25,6 +25,9 @@ pg_prove -h $viasobras_server -p $viasobras_port -U $viasobras_user \
 echo -e "\n"
 pg_prove -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     -d $viasobras_dbname ./tests/check-orden-tramo-tipo-pavimento.sql
+echo -e "\n"
+pg_prove -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    -d $viasobras_dbname ./tests/check-orden-tramo-aforos.sql
 
 # PKs
 echo -e "\n"

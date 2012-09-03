@@ -1,11 +1,11 @@
-package es.icarto.gvsig.viasobras.domain.catalog.tramos.validation;
+package es.icarto.gvsig.viasobras.domain.catalog.validation;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import es.icarto.gvsig.viasobras.domain.catalog.Tramo;
-import es.icarto.gvsig.viasobras.domain.catalog.tramos.validation.rules.areMandatoryFieldsFilled;
-import es.icarto.gvsig.viasobras.domain.catalog.tramos.validation.rules.isPKStartLowerOrEqualsThanPKEnd;
+import es.icarto.gvsig.viasobras.domain.catalog.validation.rules.MandatoryFieldsFilled;
+import es.icarto.gvsig.viasobras.domain.catalog.validation.rules.PKStartLowerOrEqualsThanPKEnd;
 
 
 public class TramoValidator {
@@ -14,8 +14,8 @@ public class TramoValidator {
 
     public TramoValidator() {
 	this.rules = new ArrayList<TramoRule>();
-	this.rules.add(new isPKStartLowerOrEqualsThanPKEnd());
-	this.rules.add(new areMandatoryFieldsFilled());
+	this.rules.add(new PKStartLowerOrEqualsThanPKEnd());
+	this.rules.add(new MandatoryFieldsFilled());
     }
 
     public boolean validate(Tramo tramo) {

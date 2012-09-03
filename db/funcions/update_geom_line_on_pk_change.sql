@@ -1,7 +1,7 @@
 -- @author: Andrés Maneiro <andres.maneiro@gmail.com>
 -- @license: GPL v3
 
-CREATE OR REPLACE FUNCTION inventario.update_geom_on_pk_change() RETURNS trigger AS $BODY$
+CREATE OR REPLACE FUNCTION inventario.update_geom_line_on_pk_change() RETURNS trigger AS $BODY$
 BEGIN
 
         IF (TG_OP = 'UPDATE') THEN
