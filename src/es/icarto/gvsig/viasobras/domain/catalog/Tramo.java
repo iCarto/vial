@@ -201,7 +201,7 @@ public class Tramo {
 	    setValue(value);
 	    break;
 	case PROPERTY_UPDATING_DATE:
-	    setUpdatingDate((Date) value);
+	    setUpdatingDate(Date.valueOf((String) value));
 	    break;
 	default:
 	    // do nothing

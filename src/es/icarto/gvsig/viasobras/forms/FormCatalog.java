@@ -1,5 +1,6 @@
 package es.icarto.gvsig.viasobras.forms;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -7,12 +8,15 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
+import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -22,6 +26,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutFocusTraversalPolicy;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
 import com.iver.andami.messages.NotificationManager;
@@ -40,6 +46,7 @@ import es.icarto.gvsig.viasobras.domain.catalog.mappers.DBFacade;
 import es.icarto.gvsig.viasobras.domain.catalog.utils.EventosTableModel;
 import es.icarto.gvsig.viasobras.domain.catalog.utils.TramosTableModel;
 import es.icarto.gvsig.viasobras.maploader.MapLoader;
+import es.udc.cartolab.gvsig.navtable.format.DateFormatNT;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
 public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
@@ -232,16 +239,55 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 
     private void fillTables() {
 	try {
+	    TableCellRenderer dateCellRenderer = new DefaultTableCellRenderer() {
+		SimpleDateFormat f = DateFormatNT.getDateFormat();
+		public Component getTableCellRendererComponent(JTable table,
+			Object value, boolean isSelected, boolean hasFocus,
+			int row, int column) {
+		    if (value instanceof Date) {
+			value = f.format(value);
+		    }
+		    return super.getTableCellRendererComponent(table, value,
+			    isSelected, hasFocus, row, column);
+		}
+	    };
+	    DefaultCellEditor dateCellEditor = new DefaultCellEditor(
+		    new JTextField());
+
 	    tipoPavimentoModel = Catalog.getTramosTipoPavimento()
 		    .getTableModel();
 	    tipoPavimento.setModel(tipoPavimentoModel);
+	    tipoPavimento.getColumnModel()
+	    .getColumn(Tramo.PROPERTY_UPDATING_DATE)
+	    .setCellRenderer(dateCellRenderer);
+	    tipoPavimento.getColumnModel()
+	    .getColumn(Tramo.PROPERTY_UPDATING_DATE)
+	    .setCellEditor(dateCellEditor);
+
 	    anchoPlataformaModel = Catalog.getTramosAnchoPlataforma()
 		    .getTableModel();
 	    anchoPlataforma.setModel(anchoPlataformaModel);
+	    anchoPlataforma.getColumnModel()
+	    .getColumn(Tramo.PROPERTY_UPDATING_DATE)
+	    .setCellRenderer(dateCellRenderer);
+	    anchoPlataforma.getColumnModel()
+	    .getColumn(Tramo.PROPERTY_UPDATING_DATE)
+	    .setCellEditor(dateCellEditor);
+
 	    cotasModel = Catalog.getTramosCotas().getTableModel();
 	    cotas.setModel(cotasModel);
+	    cotas.getColumnModel().getColumn(Tramo.PROPERTY_UPDATING_DATE)
+	    .setCellRenderer(dateCellRenderer);
+	    cotas.getColumnModel().getColumn(Tramo.PROPERTY_UPDATING_DATE)
+	    .setCellEditor(dateCellEditor);
+
 	    aforosModel = Catalog.getEventosAforos().getTableModel();
 	    aforos.setModel(aforosModel);
+	    aforos.getColumnModel().getColumn(Evento.PROPERTY_DATE)
+	    .setCellRenderer(dateCellRenderer);
+	    aforos.getColumnModel().getColumn(Evento.PROPERTY_DATE)
+	    .setCellEditor(dateCellEditor);
+
 	    this.repaint();
 	} catch (SQLException e) {
 	    NotificationManager.addError(e);

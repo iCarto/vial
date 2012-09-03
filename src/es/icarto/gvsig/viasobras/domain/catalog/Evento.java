@@ -184,7 +184,7 @@ public class Evento {
 	    setValue(value);
 	    break;
 	case PROPERTY_DATE:
-	    setUpdatingDate((Date) value);
+	    setUpdatingDate(Date.valueOf((String) value));
 	    break;
 	default:
 	    // do nothing
