@@ -10,8 +10,8 @@ config_file=$1
 . $config_file
 
 pg_dump --no-owner -v -h $viasobras_server -U $viasobras_user -w \
-    -n info_base -f ./db/schema-infobase.sql $viasobras_dbname
+    -n info_base -f ./datos/info_base/schema-infobase.sql $viasobras_dbname
 
 pg_dump --no-owner -v -h $viasobras_server -U $viasobras_user -w \
-     -a -t public.geometry_columns -f ./db/table-geometrycolumns.sql $viasobras_dbname
+     -a -t public.geometry_columns -f ./datos/info_base/table-geometrycolumns.sql $viasobras_dbname
 

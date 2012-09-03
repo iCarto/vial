@@ -10,5 +10,5 @@ config_file=$1
 . $config_file
 
 pg_dump --no-owner -v -h $viasobras_server -U $viasobras_user -w \
-    -n elle -f ./db/schema-elle.sql $viasobras_dbname
+    -n elle -f ./datos/elle/schema-elle.sql $viasobras_dbname
 
