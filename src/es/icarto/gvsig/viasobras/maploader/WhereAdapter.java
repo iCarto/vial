@@ -2,6 +2,7 @@ package es.icarto.gvsig.viasobras.maploader;
 
 import es.icarto.gvsig.viasobras.domain.catalog.Catalog;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.ConcellosMapper;
+import es.icarto.gvsig.viasobras.domain.catalog.mappers.EventosMapperAbstract;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.TramosMapperAbstract;
 
 public class WhereAdapter {
@@ -35,20 +36,49 @@ public class WhereAdapter {
     private static String getWhereEventos() {
 	String carretera = Catalog.getCarreteraSelected();
 	String concello = Catalog.getConcelloSelected();
+	Double pkStart = Catalog.getPKStart();
+	Double pkEnd = Catalog.getPKEnd();
 	if ((concello != Catalog.CONCELLO_ALL)
-		&& (carretera != Catalog.CARRETERA_ALL)) { // both
-	    // selected
-	    return "WHERE " + TramosMapperAbstract.CONCELLO_FIELDNAME + " = '"
-		    + concello + "' AND "
-		    + TramosMapperAbstract.CARRETERA_FIELDNAME + " = '"
-		    + carretera + "'";
-	} else if ((carretera != Catalog.CARRETERA_ALL)) { // carretera selected
-	    return "WHERE " + TramosMapperAbstract.CARRETERA_FIELDNAME + " = '"
-		    + carretera + "'";
-	} else if ((concello != Catalog.CONCELLO_ALL)) { // concello selected
-	    return "WHERE " + TramosMapperAbstract.CONCELLO_FIELDNAME + " = '"
-		    + concello + "'";
-	} else { // none selected
+		&& (carretera != Catalog.CARRETERA_ALL)) {
+	    // both carretera & concello selected
+	    return "WHERE " + EventosMapperAbstract.CONCELLO_FIELDNAME + " = '"
+	    + concello + "' AND "
+	    + EventosMapperAbstract.CARRETERA_FIELDNAME + " = '"
+	    + carretera + "'";
+	} else if (concello != Catalog.CONCELLO_ALL) {
+	    // only concello selected
+	    return "WHERE " + EventosMapperAbstract.CONCELLO_FIELDNAME + " = '"
+	    + concello + "'";
+	} else if (carretera != Catalog.CARRETERA_ALL) {
+	    // only carretera selected
+	    if ((pkStart == Catalog.PK_NONE) && (pkEnd == Catalog.PK_NONE)) {
+		return "WHERE " + EventosMapperAbstract.CARRETERA_FIELDNAME
+			+ " = '"
+			+ carretera + "'";
+	    } else if ((pkStart != Catalog.PK_NONE)
+		    && (pkEnd == Catalog.PK_NONE)) {
+		// carretera & pkStart
+		return "WHERE " + EventosMapperAbstract.CARRETERA_FIELDNAME
+			+ " = '" + carretera + "' AND "
+			+ EventosMapperAbstract.PK_FIELDNAME + " >= '"
+			+ Double.toString(pkStart) + "'";
+	    } else if ((pkStart == Catalog.PK_NONE)
+		    && (pkEnd != Catalog.PK_NONE)) {
+		// carretera & pkEnd
+		return "WHERE " + EventosMapperAbstract.CARRETERA_FIELDNAME
+			+ " = '" + carretera + "' AND "
+			+ EventosMapperAbstract.PK_FIELDNAME + " <= '"
+			+ Double.toString(pkEnd) + "'";
+	    } else {
+		// carretera & pkStart & pkEnd
+		return "WHERE " + EventosMapperAbstract.CARRETERA_FIELDNAME
+			+ " = '" + carretera + "' AND "
+			+ EventosMapperAbstract.PK_FIELDNAME + " >= '"
+			+ Double.toString(pkStart) + "' AND "
+			+ EventosMapperAbstract.PK_FIELDNAME + " <= '"
+			+ Double.toString(pkEnd) + "'";
+	    }
+	} else{ // none selected
 	    return NONE_WHERE;
 	}
     }
@@ -56,19 +86,47 @@ public class WhereAdapter {
     private static String getWhereTramos() {
 	String carretera = Catalog.getCarreteraSelected();
 	String concello = Catalog.getConcelloSelected();
+	Double pkStart = Catalog.getPKStart();
+	Double pkEnd = Catalog.getPKEnd();
 	if ((concello != Catalog.CONCELLO_ALL)
-		&& (carretera != Catalog.CARRETERA_ALL)) { // both
-	    // selected
+		&& (carretera != Catalog.CARRETERA_ALL)) {
+	    // both concello & carretera selected
 	    return "WHERE " + TramosMapperAbstract.CONCELLO_FIELDNAME + " = '"
 	    + concello + "' AND "
 	    + TramosMapperAbstract.CARRETERA_FIELDNAME + " = '"
 	    + carretera + "'";
-	} else if ((carretera != Catalog.CARRETERA_ALL)) { // carretera selected
-	    return "WHERE " + TramosMapperAbstract.CARRETERA_FIELDNAME + " = '"
-	    + carretera + "'";
-	} else if ((concello != Catalog.CONCELLO_ALL)) { // concello selected
+	} else if (concello != Catalog.CONCELLO_ALL) {
+	    // concello selected
 	    return "WHERE " + TramosMapperAbstract.CONCELLO_FIELDNAME + " = '"
 	    + concello + "'";
+	} else if ((carretera != Catalog.CARRETERA_ALL)) {
+	    // only carretera selected
+	    if ((pkStart == Catalog.PK_NONE) && (pkEnd == Catalog.PK_NONE)) {
+		return "WHERE " + TramosMapperAbstract.CARRETERA_FIELDNAME
+			+ " = '" + carretera + "'";
+	    } else if ((pkStart != Catalog.PK_NONE)
+		    && (pkEnd == Catalog.PK_NONE)) {
+		// carretera & pkStart
+		return "WHERE " + TramosMapperAbstract.CARRETERA_FIELDNAME
+			+ " = '" + carretera + "' AND "
+			+ TramosMapperAbstract.PK_START_FIELDNAME + " >= '"
+			+ Double.toString(pkStart) + "'";
+	    } else if ((pkStart == Catalog.PK_NONE)
+		    && (pkEnd != Catalog.PK_NONE)) {
+		// carretera & pkEnd
+		return "WHERE " + TramosMapperAbstract.CARRETERA_FIELDNAME
+			+ " = '" + carretera + "' AND "
+			+ TramosMapperAbstract.PK_END_FIELDNAME + " <= '"
+			+ Double.toString(pkEnd) + "'";
+	    } else {
+		// carretera & pkStart & pkEnd
+		return "WHERE " + EventosMapperAbstract.CARRETERA_FIELDNAME
+			+ " = '" + carretera + "' AND "
+			+ TramosMapperAbstract.PK_START_FIELDNAME + " >= '"
+			+ Double.toString(pkStart) + "' AND "
+			+ TramosMapperAbstract.PK_END_FIELDNAME + " <= '"
+			+ Double.toString(pkEnd) + "'";
+	    }
 	} else { // none selected
 	    return NONE_WHERE;
 	}
