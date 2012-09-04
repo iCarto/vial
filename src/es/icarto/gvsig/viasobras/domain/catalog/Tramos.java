@@ -76,16 +76,23 @@ public class Tramos implements Iterable<Tramo> {
     }
 
     public boolean removeTramo(String id) {
+	// remove it from tramos to validate
+	Tramo tramo = this.getTramo(id);
+	if (tramosToValidate.contains(tramo)) {
+	    tramosToValidate.remove(tramo);
+	}
+	// update status
 	if (id.equals(Tramo.NO_GID)) {
 	    return false;
-	}
-	for (Tramo t : tramos) {
-	    if (t.getId().equals(id)) {
-		t.setStatus(Tramo.STATUS_DELETE);
-		return true;
+	} else {
+	    for (Tramo t : tramos) {
+		if (t.getId().equals(id)) {
+		    t.setStatus(Tramo.STATUS_DELETE);
+		    return true;
+		}
 	    }
+	    return false;
 	}
-	return false;
     }
 
     public boolean updateTramo(String id, int propertyIndex,
