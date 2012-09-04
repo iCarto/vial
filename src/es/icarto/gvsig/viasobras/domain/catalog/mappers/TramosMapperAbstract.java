@@ -1,6 +1,7 @@
 package es.icarto.gvsig.viasobras.domain.catalog.mappers;
 
 import java.sql.SQLException;
+import java.sql.Types;
 
 import javax.sql.rowset.CachedRowSet;
 
@@ -12,6 +13,7 @@ import es.icarto.gvsig.viasobras.domain.catalog.utils.TramosRecordsetAdapter;
 
 public abstract class TramosMapperAbstract implements TramosMapper {
 
+    public static final int VALUE_FIELD_POSITION = 7;
     public static final String ID_FIELDNAME = "gid";
     public static final String CARRETERA_FIELDNAME = "codigo_carretera";
     public static final String ORDEN_TRAMO_FIELDNAME = "tramo";
@@ -83,6 +85,7 @@ public abstract class TramosMapperAbstract implements TramosMapper {
     public Tramos save(Tramos ts) throws SQLException {
 	int newID = getLastAvailableID();
 	CachedRowSet tramos = getTramos();
+	int valueType = tramos.getMetaData().getColumnType(VALUE_FIELD_POSITION);
 	for (Tramo t : ts) {
 	    if (t.getStatus() == Tramo.STATUS_UPDATE) {
 		tramos.absolute(t.getPosition());
@@ -91,7 +94,7 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 		tramos.updateString(CONCELLO_FIELDNAME, t.getConcello());
 		tramos.updateDouble(PK_START_FIELDNAME, t.getPkStart());
 		tramos.updateDouble(PK_END_FIELDNAME, t.getPkEnd());
-		tramos.updateObject(CARACTERISTICA_FIELDNAME, t.getValue());
+		updateValue(tramos, t, valueType);
 		tramos.updateDate(FECHA_ACTUALIZACION_FIELDNAME,
 			t.getUpdatingDate());
 		tramos.updateRow();
@@ -108,7 +111,7 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 			.toString());
 		tramos.updateDouble(PK_START_FIELDNAME, t.getPkStart());
 		tramos.updateDouble(PK_END_FIELDNAME, t.getPkEnd());
-		tramos.updateObject(CARACTERISTICA_FIELDNAME, t.getValue());
+		updateValue(tramos, t, valueType);
 		tramos.updateDate(FECHA_ACTUALIZACION_FIELDNAME,
 			t.getUpdatingDate());
 		tramos.insertRow();
@@ -118,6 +121,26 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 	}
 	tramos.acceptChanges();
 	return new Tramos(this, TramosRecordsetAdapter.findAll(tramos));
+    }
+
+    private void updateValue(CachedRowSet tramos, Tramo t, int valueType)
+	    throws SQLException {
+	switch (valueType) {
+	case Types.VARCHAR:
+	    tramos.updateString(CARACTERISTICA_FIELDNAME, (String) t.getValue());
+	    break;
+	case Types.DOUBLE:
+	    if (t.getValue() == null) {
+		tramos.updateNull(CARACTERISTICA_FIELDNAME);
+	    } else {
+		tramos.updateDouble(CARACTERISTICA_FIELDNAME,
+			(Double) t.getValue());
+	    }
+	    break;
+	default:
+	    tramos.updateObject(CARACTERISTICA_FIELDNAME, t.getValue());
+	    break;
+	}
     }
 
 }

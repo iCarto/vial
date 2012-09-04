@@ -2,6 +2,7 @@ package es.icarto.gvsig.viasobras.domain.catalog.utils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,6 +69,8 @@ public class TramosRecordsetAdapter {
     private static List<Tramo> toList(ResultSet rs) throws SQLException {
 	List<Tramo> ts = new ArrayList<Tramo>();
 	rs.beforeFirst();
+	int valueType = rs.getMetaData().getColumnType(
+		TramosMapperAbstract.VALUE_FIELD_POSITION);
 	while (rs.next()) {
 	    Tramo tramo = new Tramo();
 	    tramo.setId(Integer.toString(rs.getInt(TramosMapperAbstract.ID_FIELDNAME)));
@@ -79,13 +82,43 @@ public class TramosRecordsetAdapter {
 	    tramo.setPkStart(rs
 		    .getDouble(TramosMapperAbstract.PK_START_FIELDNAME));
 	    tramo.setPkEnd(rs.getDouble(TramosMapperAbstract.PK_END_FIELDNAME));
-	    tramo.setValue(rs
-		    .getObject(TramosMapperAbstract.CARACTERISTICA_FIELDNAME));
+	    tramo.setValue(getValueByType(rs, valueType));
+	    tramo.setValueClass(getClassByType(valueType));
 	    tramo.setUpdatingDate(rs
 		    .getDate(TramosMapperAbstract.FECHA_ACTUALIZACION_FIELDNAME));
 	    ts.add(tramo);
 	}
 	return ts;
+    }
+
+    private static Class getClassByType(int valueType) {
+	switch (valueType) {
+	case Types.VARCHAR:
+	    return String.class;
+	case Types.DOUBLE:
+	    return Double.class;
+	default:
+	    return Object.class;
+	}
+    }
+
+    private static Object getValueByType(ResultSet rs, int valueType)
+	    throws SQLException {
+	switch (valueType) {
+	case Types.VARCHAR:
+	    return rs.getString(TramosMapperAbstract.CARACTERISTICA_FIELDNAME);
+	case Types.DOUBLE:
+	    Double d = rs
+	    .getDouble(TramosMapperAbstract.CARACTERISTICA_FIELDNAME);
+	    if (rs.wasNull()) {
+		return null;
+	    } else {
+		return d;
+	    }
+	default:
+	    return rs.getObject(TramosMapperAbstract.CARACTERISTICA_FIELDNAME);
+	}
+
     }
 
 }

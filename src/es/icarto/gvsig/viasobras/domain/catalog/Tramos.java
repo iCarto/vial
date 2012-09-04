@@ -88,17 +88,21 @@ public class Tramos implements Iterable<Tramo> {
 	return false;
     }
 
-    public void updateTramo(String id, int propertyIndex, Object propertyValue) {
+    public boolean updateTramo(String id, int propertyIndex,
+	    Object propertyValue) {
 	Tramo t = this.getTramo(id);
-	t.setProperty(propertyIndex, propertyValue);
-	int status = t.getStatus();
-	if ((status == Tramo.STATUS_ORIGINAL)
-		|| (status == Tramo.STATUS_UPDATE)) {
-	    // if tramo has INSERT status we should not set as UPDATE,
-	    // as it will affect how mapper will process it
-	    this.getTramo(id).setStatus(Tramo.STATUS_UPDATE);
+	if (t.setProperty(propertyIndex, propertyValue)) {
+	    int status = t.getStatus();
+	    if ((status == Tramo.STATUS_ORIGINAL)
+		    || (status == Tramo.STATUS_UPDATE)) {
+		// if tramo has INSERT status we should not set as UPDATE,
+		// as it will affect how mapper will process it
+		this.getTramo(id).setStatus(Tramo.STATUS_UPDATE);
+	    }
+	    tramosToValidate.add(t);
+	    return true;
 	}
-	tramosToValidate.add(t);
+	return false;
     }
 
     private Tramo getTramo(String id) {

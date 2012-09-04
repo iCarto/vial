@@ -70,8 +70,9 @@ public class TramosTableModel extends AbstractTableModel {
     public void setValueAt(Object value, int row, int col) {
 	int rowInTramos = rows.get(row);
 	String id = tramos.getFromList(rowInTramos).getId();
-	tramos.updateTramo(id, col, value);
-	this.fireTableCellUpdated(row, col);
+	if (tramos.updateTramo(id, col, value)) {
+	    this.fireTableCellUpdated(row, col);
+	}
     }
 
     public void addTramo(Tramo t) {

@@ -37,6 +37,7 @@ public class Tramo {
     private double pkStart;
     private double pkEnd;
     private Object value;
+    private Class valueClass = Object.class;
     private Date updatingDate;
 
     public Tramo() {
@@ -126,6 +127,10 @@ public class Tramo {
 	this.value = value;
     }
 
+    public void setValueClass(Class valueClass) {
+	this.valueClass = valueClass;
+    }
+
     public Date getUpdatingDate() {
 	return updatingDate;
     }
@@ -180,31 +185,42 @@ public class Tramo {
 	}
     }
 
-    public void setProperty(int index, Object value) {
+    public boolean setProperty(int index, Object value) {
 	switch (index) {
 	case PROPERTY_PK_START:
-	    setPkStart((Double) value);
-	    break;
+	    if (value != null) {
+		setPkStart((Double) value);
+		return true;
+	    }
+	    return false;
 	case PROPERTY_PK_END:
-	    setPkEnd((Double) value);
-	    break;
+	    if (value != null) {
+		setPkEnd((Double) value);
+		return true;
+	    }
+	    return false;
 	case PROPERTY_CONCELLO:
 	    setConcello((String) value);
-	    break;
+	    return true;
 	case PROPERTY_ORDEN_TRAMO:
 	    setOrdenTramo((String) value);
-	    break;
+	    return true;
 	case PROPERTY_CARRETERA:
 	    setCarretera((String) value);
-	    break;
+	    return true;
 	case PROPERTY_VALUE:
 	    setValue(value);
-	    break;
+	    return true;
 	case PROPERTY_UPDATING_DATE:
-	    setUpdatingDate(Date.valueOf((String) value));
-	    break;
+	    try {
+		setUpdatingDate(Date.valueOf((String) value));
+		return true;
+	    } catch (IllegalArgumentException e) {
+		return false;
+	    }
 	default:
 	    // do nothing
+	    return false;
 	}
     }
 
@@ -221,7 +237,9 @@ public class Tramo {
 	case PROPERTY_CARRETERA:
 	    return String.class;
 	case PROPERTY_VALUE:
-	    return Object.class;
+	    // should be set when retrieving the value from database
+	    // see TramosRecordsetAdapter.toList()
+	    return valueClass;
 	case PROPERTY_UPDATING_DATE:
 	    return Date.class;
 	default:
@@ -230,12 +248,10 @@ public class Tramo {
     }
 
     public String toString() {
-	String s = "Carretera: " + getCarretera()
-		+ " - Orden tramo: " + getOrdenTramo()
-		+ " - Concello: " + getConcello()
-		+ " - PK inicial " + getPkStart()
-		+ " - PK final: "+ getPkEnd()
-		+ " - Valor: " + getValue()
+	String s = "Carretera: " + getCarretera() + " - Orden tramo: "
+		+ getOrdenTramo() + " - Concello: " + getConcello()
+		+ " - PK inicial " + getPkStart() + " - PK final: "
+		+ getPkEnd() + " - Valor: " + getValue()
 		+ " - Fecha actualización: " + getUpdatingDate();
 	return s;
     }
