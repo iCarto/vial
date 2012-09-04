@@ -46,7 +46,6 @@ import es.icarto.gvsig.viasobras.domain.catalog.mappers.DBFacade;
 import es.icarto.gvsig.viasobras.domain.catalog.utils.EventosTableModel;
 import es.icarto.gvsig.viasobras.domain.catalog.utils.TramosTableModel;
 import es.icarto.gvsig.viasobras.maploader.MapLoader;
-import es.udc.cartolab.gvsig.navtable.format.DateFormatNT;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
 public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
@@ -240,7 +239,7 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
     private void fillTables() {
 	try {
 	    TableCellRenderer dateCellRenderer = new DefaultTableCellRenderer() {
-		SimpleDateFormat f = DateFormatNT.getDateFormat();
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
 		public Component getTableCellRendererComponent(JTable table,
 			Object value, boolean isSelected, boolean hasFocus,
 			int row, int column) {
