@@ -99,9 +99,16 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 			t.getUpdatingDate());
 		tramos.updateRow();
 	    } else if (t.getStatus() == Tramo.STATUS_DELETE) {
-		tramos.absolute(t.getPosition());
-		tramos.deleteRow();
-		tramos.beforeFirst();
+		if (t.getPosition() != Tramo.NO_POSITION) {
+		    // Tramo.NO_POSITION means that the user is deleting a new
+		    // created tramo, with no assigned position
+		    // That "virtual" tramo (as it is not in the datasource yet)
+		    // will be "deleted" automatically when refreshing the
+		    // CachedRowSet so no need to delete here
+		    tramos.absolute(t.getPosition());
+		    tramos.deleteRow();
+		    tramos.beforeFirst();
+		}
 	    } else if (t.getStatus() == Tramo.STATUS_INSERT) {
 		tramos.moveToInsertRow();
 		tramos.updateInt(ID_FIELDNAME, newID);
