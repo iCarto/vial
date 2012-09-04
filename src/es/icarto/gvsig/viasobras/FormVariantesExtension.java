@@ -3,6 +3,9 @@ package es.icarto.gvsig.viasobras;
 import com.iver.andami.PluginServices;
 import com.iver.andami.plugins.Extension;
 
+import es.icarto.gvsig.viasobras.forms.FormVariantes;
+import es.udc.cartolab.gvsig.users.utils.DBSession;
+
 public class FormVariantesExtension extends Extension {
 
     public void initialize() {
@@ -17,10 +20,13 @@ public class FormVariantesExtension extends Extension {
     }
 
     public void execute(String actionCommand) {
+	FormVariantes dialog = new FormVariantes();
+	PluginServices.getMDIManager().addCentredWindow(dialog);
     }
 
     public boolean isEnabled() {
-	return false;
+	DBSession dbs = DBSession.getCurrentSession();
+	return (dbs != null) && (dbs.getJavaConnection() != null);
     }
 
     public boolean isVisible() {
