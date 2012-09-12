@@ -13,6 +13,7 @@ import com.iver.cit.gvsig.fmap.layers.FLyrVect;
 import com.jeta.forms.components.panel.FormPanel;
 
 import es.icarto.gvsig.navtableforms.AbstractForm;
+import es.icarto.gvsig.navtableforms.gui.buttons.FilesLinkButton;
 import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
 
 public class FormActuaciones extends AbstractForm {
@@ -30,6 +31,9 @@ public class FormActuaciones extends AbstractForm {
 	viewInfo.setHeight(575);
 	viewInfo.setWidth(550);
 	viewInfo.setTitle("Vías y Obras: actuaciones");
+
+	this.getActionsToolBar().add(
+		new FilesLinkButton(this, new FormActuacionesFilesLinkData()));
     }
 
     @Override

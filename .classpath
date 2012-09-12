@@ -26,5 +26,6 @@
 	<classpathentry kind="lib" path="lib/iText-rtf-2.1.5.jar"/>
 	<classpathentry kind="lib" path="/libFMap/lib/gdbms-0.8-SNAPSHOT.jar" sourcepath="/libGDBMS"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/libExceptions"/>
+	<classpathentry kind="lib" path="/_fwAndami/lib/org.gvsig.ui.jar" sourcepath="/libUIComponent/src"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
