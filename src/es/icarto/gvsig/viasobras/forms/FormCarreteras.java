@@ -78,16 +78,14 @@ public class FormCarreteras extends AbstractForm implements IWindow {
     public void setListeners() {
 	super.setListeners();
 
-	// LauncherParams lp = new LauncherParams(this, "carretera_municipio",
-	// "Ayuntamientos", "Editar ayuntamientos");
-	// antl = new AlphanumericNavTableLauncher(
-	// this, lp);
 	codigo = (JComboBox) this.getWidgetComponents().get("numero");
 	ayuntamientos = (JTable) this.getWidgetComponents()
 		.get("ayuntamientos");
 	carreterasConcellos = new FormCarreterasMunicipios();
 	contextualMenu = new JTableContextualMenu(carreterasConcellos);
 	ayuntamientos.addMouseListener(contextualMenu);
+	// for the popUp to work on empty tables
+	ayuntamientos.setFillsViewportHeight(true);
     }
 
     @Override
