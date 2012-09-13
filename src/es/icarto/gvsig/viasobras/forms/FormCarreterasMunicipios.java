@@ -53,7 +53,7 @@ public class FormCarreterasMunicipios extends JPanel implements IForm, IWindow {
     /**
      * setModel & setCarreteraCode should be set before executing it
      */
-    public void createRecord(long position) {
+    public void actionCreateRecord() {
 	this.position = -1;
 	save.removeActionListener(action);
 	action = new CreateAction();
@@ -66,7 +66,7 @@ public class FormCarreterasMunicipios extends JPanel implements IForm, IWindow {
     /**
      * setModel should be set before executing it
      */
-    public void updateRecord(long position) {
+    public void actionUpdateRecord(long position) {
 	this.position = position;
 	save.removeActionListener(action);
 	action = new SaveAction();
@@ -79,7 +79,7 @@ public class FormCarreterasMunicipios extends JPanel implements IForm, IWindow {
     /**
      * setModel should be set before executing it
      */
-    public void deleteRecord(long position) {
+    public void actionDeleteRecord(long position) {
 	try {
 	    model.delete((int) position);
 	} catch (Exception e) {
