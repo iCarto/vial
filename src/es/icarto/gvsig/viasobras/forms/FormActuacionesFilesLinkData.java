@@ -3,12 +3,11 @@ package es.icarto.gvsig.viasobras.forms;
 import com.iver.andami.PluginServices;
 import com.iver.utiles.XMLEntity;
 
-import es.icarto.gvsig.navtableforms.gui.buttons.FilesLinkData;
+import es.icarto.gvsig.navtableforms.gui.buttons.fileslink.FilesLinkData;
 import es.icarto.gvsig.viasobras.preferences.ViasObrasPreferences;
 
-public class FormActuacionesFilesLinkData extends FilesLinkData {
+public class FormActuacionesFilesLinkData implements FilesLinkData {
 
-    @Override
     public String getBaseDirectory() {
 	String filesDir;
 	PluginServices ps = PluginServices.getPluginServices(this);
@@ -22,7 +21,6 @@ public class FormActuacionesFilesLinkData extends FilesLinkData {
 	return filesDir;
     }
 
-    @Override
     public String getRegisterField() {
 	return "codigo_actuacion";
     }

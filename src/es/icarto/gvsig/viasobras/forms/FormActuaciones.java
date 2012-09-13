@@ -13,7 +13,7 @@ import com.iver.cit.gvsig.fmap.layers.FLyrVect;
 import com.jeta.forms.components.panel.FormPanel;
 
 import es.icarto.gvsig.navtableforms.AbstractForm;
-import es.icarto.gvsig.navtableforms.gui.buttons.FilesLinkButton;
+import es.icarto.gvsig.navtableforms.gui.buttons.fileslink.FilesLinkButton;
 import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
 
 public class FormActuaciones extends AbstractForm {
