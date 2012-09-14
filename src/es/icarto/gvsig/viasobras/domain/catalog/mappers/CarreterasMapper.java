@@ -30,12 +30,14 @@ public class CarreterasMapper extends DBFacade {
 	try {
 	    stmt = c.createStatement();
 	    ResultSet rs = stmt
-		    .executeQuery("SELECT numero, codigo FROM inventario.carreteras ORDER BY numero");
+		    .executeQuery("SELECT numero, codigo, denominacion FROM inventario.carreteras ORDER BY numero");
 	    int cIndex = 0;
 	    while (rs.next()) {
 		String code = rs.getString("numero");
 		String value = rs.getString("codigo");
-		carreteras.add(new Carretera(code, value));
+		String denominacion = rs.getString("denominacion");
+		carreteras
+			.add(new Carretera(code, value + " - " + denominacion));
 		indexes.put(code, cIndex);
 		cIndex++;
 	    }
