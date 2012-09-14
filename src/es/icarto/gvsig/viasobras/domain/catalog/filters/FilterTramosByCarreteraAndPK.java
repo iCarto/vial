@@ -52,14 +52,14 @@ public class FilterTramosByCarreteraAndPK implements Predicate {
 		boolean b;
 		switch (filterType) {
 		case BAND_PASS_FILTER:
-		    b = (this.pkStart <= rs.getDouble(this.pkStartFieldName))
-			    && (this.pkEnd >= rs.getDouble(this.pkEndFieldName));
+		    b = (this.pkStart <= rs.getDouble(this.pkEndFieldName))
+		    && (this.pkEnd >= rs.getDouble(this.pkStartFieldName));
 		    break;
 		case LOW_PASS_FILTER:
-		    b = (this.pkEnd >= rs.getDouble(this.pkEndFieldName));
+		    b = (this.pkEnd >= rs.getDouble(this.pkStartFieldName));
 		    break;
 		case HIGH_PASS_FILTER:
-		    b = (this.pkStart <= rs.getDouble(this.pkStartFieldName));
+		    b = (this.pkStart <= rs.getDouble(this.pkEndFieldName));
 		    break;
 		default:
 		    b = false;
