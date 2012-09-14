@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import es.icarto.gvsig.viasobras.domain.catalog.Carretera;
+import es.icarto.gvsig.viasobras.domain.catalog.Concello;
 import es.icarto.gvsig.viasobras.domain.catalog.Tramo;
 import es.icarto.gvsig.viasobras.domain.catalog.Tramos;
 
@@ -70,6 +72,11 @@ public class TramosTableModel extends AbstractTableModel {
     public void setValueAt(Object value, int row, int col) {
 	int rowInTramos = rows.get(row);
 	String id = tramos.getFromList(rowInTramos).getId();
+	if (value instanceof Concello) {
+	    value = ((Concello) value).getCode();
+	} else if (value instanceof Carretera) {
+	    value = ((Carretera) value).getCode();
+	}
 	if (tramos.updateTramo(id, col, value)) {
 	    this.fireTableCellUpdated(row, col);
 	}

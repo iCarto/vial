@@ -250,6 +250,16 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	    DefaultCellEditor dateCellEditor = new DefaultCellEditor(
 		    new JTextField());
 
+	    JComboBox comboConcellos = new JComboBox();
+	    for (Concello c : Catalog.getConcellos()) {
+		comboConcellos.addItem(c);
+	    }
+
+	    JComboBox comboCarreteras = new JComboBox();
+	    for (Carretera c : Catalog.getCarreteras()) {
+		comboCarreteras.addItem(c);
+	    }
+
 	    tipoPavimentoModel = Catalog.getTramosTipoPavimento()
 		    .getTableModel();
 	    tipoPavimento.setModel(tipoPavimentoModel);
@@ -259,6 +269,10 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	    tipoPavimento.getColumnModel()
 	    .getColumn(Tramo.PROPERTY_UPDATING_DATE)
 	    .setCellEditor(dateCellEditor);
+	    tipoPavimento.getColumnModel().getColumn(Tramo.PROPERTY_CONCELLO)
+	    .setCellEditor(new DefaultCellEditor(comboConcellos));
+	    tipoPavimento.getColumnModel().getColumn(Tramo.PROPERTY_CARRETERA)
+		    .setCellEditor(new DefaultCellEditor(comboCarreteras));
 
 	    anchoPlataformaModel = Catalog.getTramosAnchoPlataforma()
 		    .getTableModel();
@@ -269,6 +283,11 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	    anchoPlataforma.getColumnModel()
 	    .getColumn(Tramo.PROPERTY_UPDATING_DATE)
 	    .setCellEditor(dateCellEditor);
+	    anchoPlataforma.getColumnModel().getColumn(Tramo.PROPERTY_CONCELLO)
+	    .setCellEditor(new DefaultCellEditor(comboConcellos));
+	    anchoPlataforma.getColumnModel()
+		    .getColumn(Tramo.PROPERTY_CARRETERA)
+		    .setCellEditor(new DefaultCellEditor(comboCarreteras));
 
 	    cotasModel = Catalog.getTramosCotas().getTableModel();
 	    cotas.setModel(cotasModel);
@@ -276,6 +295,10 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	    .setCellRenderer(dateCellRenderer);
 	    cotas.getColumnModel().getColumn(Tramo.PROPERTY_UPDATING_DATE)
 	    .setCellEditor(dateCellEditor);
+	    cotas.getColumnModel().getColumn(Tramo.PROPERTY_CONCELLO)
+	    .setCellEditor(new DefaultCellEditor(comboConcellos));
+	    cotas.getColumnModel().getColumn(Tramo.PROPERTY_CARRETERA)
+		    .setCellEditor(new DefaultCellEditor(comboCarreteras));
 
 	    aforosModel = Catalog.getEventosAforos().getTableModel();
 	    aforos.setModel(aforosModel);
@@ -283,6 +306,10 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	    .setCellRenderer(dateCellRenderer);
 	    aforos.getColumnModel().getColumn(Evento.PROPERTY_DATE)
 	    .setCellEditor(dateCellEditor);
+	    aforos.getColumnModel().getColumn(Tramo.PROPERTY_CONCELLO)
+	    .setCellEditor(new DefaultCellEditor(comboConcellos));
+	    aforos.getColumnModel().getColumn(Tramo.PROPERTY_CARRETERA)
+		    .setCellEditor(new DefaultCellEditor(comboCarreteras));
 
 	    this.repaint();
 	} catch (SQLException e) {
