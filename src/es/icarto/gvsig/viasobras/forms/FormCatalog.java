@@ -61,7 +61,6 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
     private JTextField pkStart;
     private JTextField pkEnd;
 
-    private JButton search;
     private JButton load;
     private JButton save;
 
@@ -142,7 +141,6 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	pkStart.setEnabled(false);
 	pkEnd.setEnabled(false);
 
-	search = (JButton) buttons.get("buscar");
 	load = (JButton) buttons.get("cargar");
 	save = (JButton) buttons.get("guardar");
 
@@ -183,7 +181,6 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	SearchListener mySearchListener = new SearchListener();
 	pkStart.addKeyListener(mySearchListener);
 	pkEnd.addKeyListener(mySearchListener);
-	search.addActionListener(mySearchListener);
 
 	load.addActionListener(new LoadMapListener());
 	save.addActionListener(new SaveChangesListener());
@@ -506,6 +503,7 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 		    Catalog.setConcello(c.getCode());
 		    disablePKControls();
 		}
+		doSearch();
 	    }
 	}
     }
@@ -522,6 +520,7 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 		    enablePKControls();
 		}
 		fillConcellos();
+		doSearch();
 	    }
 	}
     }
