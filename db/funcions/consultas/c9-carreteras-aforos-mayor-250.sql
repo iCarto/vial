@@ -1,12 +1,12 @@
-SELECT a.codigo_carretera, \
+SELECT i.codigo_carretera, \
        m.nombre, \
-       a.orden, \
-       a.valor, \
-       a.pk, \
-       a.fecha \
- FROM inventario.aforos AS a, \
+       i.orden, \
+       i.valor, \
+       i.pk, \
+       i.fecha \
+ FROM inventario.aforos AS i, \
       inventario.municipio_codigo AS m \
- WHERE a.codigo_municipio = m.codigo \
-       AND a.valor > 250 \
+ WHERE i.codigo_municipio = m.codigo \
+       AND i.valor > 250 \
        [[WHERE]] \
- ORDER BY a.codigo_carretera, a.orden, a.fecha;
+ ORDER BY i.codigo_carretera, i.orden, i.fecha;
