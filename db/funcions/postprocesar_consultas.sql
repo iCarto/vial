@@ -2,7 +2,7 @@ INSERT INTO consultas.consultas
        SELECT 'C1',
               'Inventario de carreteras',
               sql_string,
-              'NO',
+              'SI',
               'Inventario de carreteras',
               ''
        FROM public.consultas_sql
@@ -12,7 +12,7 @@ INSERT INTO consultas.consultas
        SELECT 'C2',
               'Ancho de firme',
               sql_string,
-              'NO',
+              'SI',
               'Ancho de firme',
               ''
        FROM public.consultas_sql
@@ -22,7 +22,7 @@ INSERT INTO consultas.consultas
        SELECT 'C3',
               'Ancho de firme < 5',
               sql_string,
-              'NO',
+              'SI',
               'Ancho de firme < 5',
               ''
        FROM public.consultas_sql
@@ -32,7 +32,7 @@ INSERT INTO consultas.consultas
        SELECT 'C4',
               'Ancho de firme >5 y <7',
               sql_string,
-              'NO',
+              'SI',
               'Ancho de firme >5 y <7',
               ''
        FROM public.consultas_sql
@@ -42,7 +42,7 @@ INSERT INTO consultas.consultas
        SELECT 'C5',
               'Ancho de firme > 7',
               sql_string,
-              'NO',
+              'SI',
               'Ancho de firme > 7',
               ''
        FROM public.consultas_sql
@@ -52,7 +52,7 @@ INSERT INTO consultas.consultas
        SELECT 'C6',
               'Tipo de firme',
               sql_string,
-              'NO',
+              'SI',
               'Tipo de firme',
               ''
        FROM public.consultas_sql
@@ -62,7 +62,7 @@ INSERT INTO consultas.consultas
        SELECT 'C7',
               'Tipo de firme = MB',
               sql_string,
-              'NO',
+              'SI',
               'Tipo de firme = MB',
               ''
        FROM public.consultas_sql
@@ -82,7 +82,7 @@ INSERT INTO consultas.consultas
        SELECT 'C9',
               'Aforos > 250',
               sql_string,
-              'NO',
+              'SI',
               'Aforos > 250',
               ''
        FROM public.consultas_sql

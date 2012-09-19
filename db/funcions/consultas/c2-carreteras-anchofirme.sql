@@ -15,5 +15,5 @@ SELECT l.codigo_carretera AS "Código (LU-P)", \
        AND l.codigo_carretera = p.codigo_carretera \
        AND l.codigo_municipio = p.codigo_municipio \
        AND l.orden_tramo = p.tramo \
-       AND p.valor < 5 \
+       [[WHERE]] \
  ORDER BY l.codigo_carretera, orden_tramo, p.pk_inicial, p.pk_final;

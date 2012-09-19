@@ -17,6 +17,7 @@ SELECT i.codigo_carretera AS "Código (LU-P)", \
  WHERE aux.codigo_carretera = i.codigo_carretera \
        AND c.numero = i.codigo_carretera \
        AND m.codigo = i.codigo_municipio \
+       [[WHERE]] \
  GROUP BY "Código (LU-P)", \
           "Tramo", \
           "Municipio", \

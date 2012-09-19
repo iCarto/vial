@@ -425,7 +425,7 @@ public class QueriesEstadoPanel extends gvWindow {
 	    }
 	    if (!Catalog.getCarreteraSelected().equalsIgnoreCase(
 		    Catalog.CARRETERA_ALL)) {
-		whereC = whereC + " carretera = '"
+		whereC = whereC + " i.codigo_carretera = '"
 			+ ((Carretera) carreteras.getSelectedItem()).getCode()
 			+ "'";
 	    } else {
@@ -433,7 +433,7 @@ public class QueriesEstadoPanel extends gvWindow {
 	    }
 	    if (!Catalog.getConcelloSelected().equalsIgnoreCase(
 		    Catalog.CONCELLO_ALL)) {
-		whereC = whereC + " AND municipio = '"
+		whereC = whereC + " AND i.codigo_municipio = '"
 			+ ((Concello) concellos.getSelectedItem()).getCode()
 			+ "'";
 	    }

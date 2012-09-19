@@ -8,4 +8,5 @@ SELECT a.codigo_carretera, \
       inventario.municipio_codigo AS m \
  WHERE a.codigo_municipio = m.codigo \
        AND a.valor > 250 \
+       [[WHERE]] \
  ORDER BY a.codigo_carretera, a.orden, a.fecha;
