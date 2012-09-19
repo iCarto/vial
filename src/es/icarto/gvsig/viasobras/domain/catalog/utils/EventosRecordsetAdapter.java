@@ -11,9 +11,9 @@ import javax.sql.rowset.FilteredRowSet;
 import com.sun.rowset.FilteredRowSetImpl;
 
 import es.icarto.gvsig.viasobras.domain.catalog.Evento;
-import es.icarto.gvsig.viasobras.domain.catalog.filters.FilterTramosByAnyField;
-import es.icarto.gvsig.viasobras.domain.catalog.filters.FilterTramosByCarreteraAndConcello;
-import es.icarto.gvsig.viasobras.domain.catalog.filters.FilterTramosByCarreteraAndPK;
+import es.icarto.gvsig.viasobras.domain.catalog.filters.FilterRecordsetByField;
+import es.icarto.gvsig.viasobras.domain.catalog.filters.FilterRecordsetByCarreteraAndConcello;
+import es.icarto.gvsig.viasobras.domain.catalog.filters.FilterRecordsetByCarreteraAndPK;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.EventosMapperAbstract;
 
 public class EventosRecordsetAdapter {
@@ -24,7 +24,7 @@ public class EventosRecordsetAdapter {
 	FilteredRowSet frs = new FilteredRowSetImpl();
 	eventos.beforeFirst();
 	frs.populate((ResultSet) eventos);
-	frs.setFilter(new FilterTramosByAnyField(
+	frs.setFilter(new FilterRecordsetByField(
 		EventosMapperAbstract.CARRETERA_FIELDNAME, carretera));
 	return toList(frs);
     }
@@ -35,7 +35,7 @@ public class EventosRecordsetAdapter {
 	FilteredRowSet frs = new FilteredRowSetImpl();
 	eventos.beforeFirst();
 	frs.populate((ResultSet) eventos);
-	frs.setFilter(new FilterTramosByCarreteraAndPK(
+	frs.setFilter(new FilterRecordsetByCarreteraAndPK(
 		EventosMapperAbstract.CARRETERA_FIELDNAME, carretera,
 		EventosMapperAbstract.PK_FIELDNAME, pkStart,
 		EventosMapperAbstract.PK_FIELDNAME, pkEnd));
@@ -47,7 +47,7 @@ public class EventosRecordsetAdapter {
 	FilteredRowSet frs = new FilteredRowSetImpl();
 	eventos.beforeFirst();
 	frs.populate((ResultSet) eventos);
-	frs.setFilter(new FilterTramosByAnyField(
+	frs.setFilter(new FilterRecordsetByField(
 		EventosMapperAbstract.CONCELLO_FIELDNAME, concello));
 	return EventosRecordsetAdapter.toList(frs);
     }
@@ -58,7 +58,7 @@ public class EventosRecordsetAdapter {
 	FilteredRowSet frs = new FilteredRowSetImpl();
 	eventos.beforeFirst();
 	frs.populate((ResultSet) eventos);
-	frs.setFilter(new FilterTramosByCarreteraAndConcello(
+	frs.setFilter(new FilterRecordsetByCarreteraAndConcello(
 		EventosMapperAbstract.CARRETERA_FIELDNAME, carretera,
 		EventosMapperAbstract.CONCELLO_FIELDNAME, concello));
 	return EventosRecordsetAdapter.toList(frs);

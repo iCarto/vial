@@ -12,9 +12,9 @@ import javax.sql.rowset.FilteredRowSet;
 import com.sun.rowset.FilteredRowSetImpl;
 
 import es.icarto.gvsig.viasobras.domain.catalog.Tramo;
-import es.icarto.gvsig.viasobras.domain.catalog.filters.FilterTramosByAnyField;
-import es.icarto.gvsig.viasobras.domain.catalog.filters.FilterTramosByCarreteraAndConcello;
-import es.icarto.gvsig.viasobras.domain.catalog.filters.FilterTramosByCarreteraAndPK;
+import es.icarto.gvsig.viasobras.domain.catalog.filters.FilterRecordsetByField;
+import es.icarto.gvsig.viasobras.domain.catalog.filters.FilterRecordsetByCarreteraAndConcello;
+import es.icarto.gvsig.viasobras.domain.catalog.filters.FilterRecordsetByCarreteraAndPK;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.TramosMapperAbstract;
 
 public class TramosRecordsetAdapter {
@@ -25,7 +25,7 @@ public class TramosRecordsetAdapter {
 	FilteredRowSet frs = new FilteredRowSetImpl();
 	tramos.beforeFirst();
 	frs.populate((ResultSet) tramos);
-	frs.setFilter(new FilterTramosByAnyField(TramosMapperAbstract.CARRETERA_FIELDNAME, carretera));
+	frs.setFilter(new FilterRecordsetByField(TramosMapperAbstract.CARRETERA_FIELDNAME, carretera));
 	return toList(frs);
     }
 
@@ -35,7 +35,7 @@ public class TramosRecordsetAdapter {
 	FilteredRowSet frs = new FilteredRowSetImpl();
 	tramos.beforeFirst();
 	frs.populate((ResultSet) tramos);
-	frs.setFilter(new FilterTramosByCarreteraAndPK(TramosMapperAbstract.CARRETERA_FIELDNAME, carretera,
+	frs.setFilter(new FilterRecordsetByCarreteraAndPK(TramosMapperAbstract.CARRETERA_FIELDNAME, carretera,
 		TramosMapperAbstract.PK_START_FIELDNAME, pkStart, TramosMapperAbstract.PK_END_FIELDNAME,
 		pkEnd));
 	return TramosRecordsetAdapter.toList(frs);
@@ -46,7 +46,7 @@ public class TramosRecordsetAdapter {
 	FilteredRowSet frs = new FilteredRowSetImpl();
 	tramos.beforeFirst();
 	frs.populate((ResultSet) tramos);
-	frs.setFilter(new FilterTramosByAnyField(TramosMapperAbstract.CONCELLO_FIELDNAME, concello));
+	frs.setFilter(new FilterRecordsetByField(TramosMapperAbstract.CONCELLO_FIELDNAME, concello));
 	return TramosRecordsetAdapter.toList(frs);
     }
 
@@ -56,7 +56,7 @@ public class TramosRecordsetAdapter {
 	FilteredRowSet frs = new FilteredRowSetImpl();
 	tramos.beforeFirst();
 	frs.populate((ResultSet) tramos);
-	frs.setFilter(new FilterTramosByCarreteraAndConcello(
+	frs.setFilter(new FilterRecordsetByCarreteraAndConcello(
 		TramosMapperAbstract.CARRETERA_FIELDNAME, carretera,
 		TramosMapperAbstract.CONCELLO_FIELDNAME, concello));
 	return TramosRecordsetAdapter.toList(frs);

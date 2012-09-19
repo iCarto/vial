@@ -5,14 +5,14 @@ import java.sql.SQLException;
 import javax.sql.RowSet;
 import javax.sql.rowset.Predicate;
 
-public class FilterTramosByCarreteraAndConcello implements Predicate {
+public class FilterRecordsetByCarreteraAndConcello implements Predicate {
 
     private String carretera;
     private String concello;
     private String carreteraFieldName;
     private String concelloFieldName;
 
-    public FilterTramosByCarreteraAndConcello(String carreteraFieldName,
+    public FilterRecordsetByCarreteraAndConcello(String carreteraFieldName,
 	    String carretera, String concelloFieldName, String concello) {
 	this.carretera = carretera;
 	this.concello = concello;
