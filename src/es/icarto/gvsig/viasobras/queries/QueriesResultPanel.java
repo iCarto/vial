@@ -20,6 +20,7 @@ package es.icarto.gvsig.viasobras.queries;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -37,7 +38,7 @@ public class QueriesResultPanel extends gvWindow implements ActionListener {
     private JEditorPane resultTA;
     private JButton exportB;
     private JComboBox fileTypeCB;
-    String[] fileFormats = { "HTML", "RTF", "PDF" };
+    String[] fileFormats = { "HTML", "RTF", "PDF", "CSV" };
     private ArrayList<ResultTableModel> resultsMap;
     private String[] filters;
 
@@ -107,13 +108,27 @@ public class QueriesResultPanel extends gvWindow implements ActionListener {
 		    ResultTableModel.writeResultTableToRtfReport(fileName,
 			    resultsMap, filters);
 		}
-	    } else {
+	    } else if (fileTypeCB.getSelectedIndex() == 2) {
 		SaveFileDialog sfd = new SaveFileDialog("PDF files", "pdf");
 		File f = sfd.showDialog();
 		if (f != null) {
 		    String fileName = f.getAbsolutePath();
 		    ResultTableModel.writeResultTableToPdfReport(fileName,
 			    resultsMap, filters);
+		}
+	    } else {
+		for (ResultTableModel model : resultsMap) {
+		    SaveFileDialog sfd = new SaveFileDialog("CSV files", "csv");
+		    File f = sfd.showDialog();
+		    if (f != null) {
+			try {
+			    ResultsWriter.saveToFile(f, ResultsWriter.CSV,
+				    model);
+			} catch (FileNotFoundException e1) {
+			    NotificationManager.showMessageError(
+				    "error_saving_file", e1);
+			}
+		    }
 		}
 	    }
 	}
