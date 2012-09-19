@@ -207,7 +207,7 @@ public class CatalogSearchTests {
     public void testFindPavimentoDependingOnPK() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT Count(*) As num_rows FROM inventario.tipo_pavimento WHERE codigo_carretera = '4606' AND pk_inicial >= 0 AND pk_final <= 10");
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.tipo_pavimento WHERE codigo_carretera = '4606' AND pk_inicial <= 10 AND pk_final >= 0");
 	rs.next();
 	int numRows = rs.getInt("num_rows");
 
@@ -224,7 +224,7 @@ public class CatalogSearchTests {
     public void testFindPlataformaDependingOnPK() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT Count(*) As num_rows FROM inventario.ancho_plataforma WHERE codigo_carretera = '4606' AND pk_inicial >= 0 AND pk_final <= 10");
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.ancho_plataforma WHERE codigo_carretera = '4606' AND pk_inicial <= 10 AND pk_final >= 0");
 	rs.next();
 	int numRows = rs.getInt("num_rows");
 
@@ -241,7 +241,7 @@ public class CatalogSearchTests {
     public void testFindCotasDependingOnPK() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT Count(*) As num_rows FROM inventario.cotas WHERE codigo_carretera = '4606' AND pk_inicial >= 0 AND pk_final <= 10");
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.cotas WHERE codigo_carretera = '4606' AND pk_inicial <= 10 AND pk_final >= 0");
 	rs.next();
 	int numRows = rs.getInt("num_rows");
 
@@ -275,7 +275,7 @@ public class CatalogSearchTests {
     public void testFindPavimentoDependingOnPKStart() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT Count(*) As num_rows FROM inventario.tipo_pavimento WHERE codigo_carretera = '4606' AND pk_inicial >= 2.0");
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.tipo_pavimento WHERE codigo_carretera = '4606' AND pk_final >= 2.0");
 	rs.next();
 	int numRows = rs.getInt("num_rows");
 
@@ -291,7 +291,7 @@ public class CatalogSearchTests {
     public void testFindPlataformaDependingOnPKStart() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT Count(*) As num_rows FROM inventario.ancho_plataforma WHERE codigo_carretera = '4606' AND pk_inicial >= 2.0");
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.ancho_plataforma WHERE codigo_carretera = '4606' AND pk_final >= 2.0");
 	rs.next();
 	int numRows = rs.getInt("num_rows");
 
@@ -307,7 +307,7 @@ public class CatalogSearchTests {
     public void testFindCotasDependingOnPKStart() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT Count(*) As num_rows FROM inventario.cotas WHERE codigo_carretera = '4606' AND pk_inicial >= 2.0");
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.cotas WHERE codigo_carretera = '4606' AND pk_final >= 2.0");
 	rs.next();
 	int numRows = rs.getInt("num_rows");
 
@@ -339,7 +339,7 @@ public class CatalogSearchTests {
     public void testFindPavimentoDependingOnPKEnd() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT Count(*) As num_rows FROM inventario.tipo_pavimento WHERE codigo_carretera = '4606' AND pk_final <= 8.0");
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.tipo_pavimento WHERE codigo_carretera = '4606' AND pk_inicial <= 8.0");
 	rs.next();
 	int numRows = rs.getInt("num_rows");
 
@@ -355,7 +355,7 @@ public class CatalogSearchTests {
     public void testFindPlataformaDependingOnPKEnd() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT Count(*) As num_rows FROM inventario.ancho_plataforma WHERE codigo_carretera = '4606' AND pk_final <= 8.0");
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.ancho_plataforma WHERE codigo_carretera = '4606' AND pk_inicial <= 8.0");
 	rs.next();
 	int numRows = rs.getInt("num_rows");
 
@@ -371,7 +371,7 @@ public class CatalogSearchTests {
     public void testFindCotasDependingOnPKEnd() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
-		.executeQuery("SELECT Count(*) As num_rows FROM inventario.cotas WHERE codigo_carretera = '4606' AND pk_final <= 8.0");
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.cotas WHERE codigo_carretera = '4606' AND pk_inicial <= 8.0");
 	rs.next();
 	int numRows = rs.getInt("num_rows");
 
