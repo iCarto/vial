@@ -70,10 +70,10 @@ INSERT INTO consultas.consultas
 
 INSERT INTO consultas.consultas
        SELECT 'C8',
-              'Carreteras por categoría',
+              'Tipo de firme = TS',
               sql_string,
-              'NO',
-              'Carreteras por categoría',
+              'SI',
+              'Tipo de firme = TS',
               ''
        FROM public.consultas_sql
        WHERE id=8;
@@ -87,5 +87,25 @@ INSERT INTO consultas.consultas
               ''
        FROM public.consultas_sql
        WHERE id=9;
+
+INSERT INTO consultas.consultas
+       SELECT 'C10',
+              'Aforos > 500',
+              sql_string,
+              'SI',
+              'Aforos > 500',
+              ''
+       FROM public.consultas_sql
+       WHERE id=10;
+
+INSERT INTO consultas.consultas
+       SELECT 'C11',
+              'Aforos > 1000',
+              sql_string,
+              'SI',
+              'Aforos > 1000',
+              ''
+       FROM public.consultas_sql
+       WHERE id=11;
 
 DROP TABLE IF EXISTS public.consultas_sql;
