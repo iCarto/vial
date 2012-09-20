@@ -6,7 +6,7 @@ CREATE TABLE inventario.aforos (
        gid SERIAL,
        codigo_carretera varchar(4),
        codigo_municipio varchar(5),
-       orden varchar(1),
+       tramo varchar(1),
        pk float,
        fecha date,
        valor float,
@@ -18,7 +18,7 @@ INSERT INTO inventario.aforos (
        SELECT nextval('inventario.aforos_gid_seq') AS gid,
               "numero_inv" AS codigo_carretera,
               to_char("codigo_mun", 'FM99999') AS codigo_municipio,
-              "tramo" AS orden,
+              "tramo" AS tramo,
               "pk" AS pk,
               to_date(to_char("a_o", '9999'), 'yyyy') AS fecha,
               "imd" AS valor

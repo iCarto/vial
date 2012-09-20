@@ -14,7 +14,7 @@ public abstract class EventosMapperAbstract implements EventosMapper {
 
     public static final String ID_FIELDNAME = "gid";
     public static final String CARRETERA_FIELDNAME = "codigo_carretera";
-    public static final String ORDEN_FIELDNAME = "orden";
+    public static final String ORDEN_FIELDNAME = "tramo";
     public static final String CONCELLO_FIELDNAME = "codigo_municipio";
     public static final String PK_FIELDNAME = "pk";
     public static final String CARACTERISTICA_FIELDNAME = "valor";
@@ -69,7 +69,7 @@ public abstract class EventosMapperAbstract implements EventosMapper {
 	 * codigo_concello, ...) as it give problems when saving, so the
 	 * ordering is done in Eventos() builder.
 	 */
-	String sqlQuery = "SELECT gid, codigo_carretera, codigo_municipio, orden, pk, valor, fecha "
+	String sqlQuery = "SELECT gid, codigo_carretera, codigo_municipio, tramo, pk, valor, fecha "
 		+ " FROM " + tableName;
 	//+ " WHERE gid = gid ORDER BY pk_inicial";
 	int[] primaryKeys = { 1 }; // primary key index = gid column index
