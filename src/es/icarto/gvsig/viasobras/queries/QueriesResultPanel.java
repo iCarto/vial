@@ -33,12 +33,12 @@ import net.miginfocom.swing.MigLayout;
 
 import com.iver.andami.messages.NotificationManager;
 
-public class QueriesResultPanel extends gvWindow implements ActionListener {
+public class QueriesResultPanel extends gvWindow {
 
     private JEditorPane resultTA;
     private JButton exportB;
     private JComboBox fileTypeCB;
-    String[] fileFormats = { "HTML", "RTF", "PDF", "CSV" };
+    String[] fileFormats = { "CSV", "HTML", "PDF", "RTF" };
     private ArrayList<ResultTableModel> resultsMap;
     private String[] filters;
 
@@ -66,7 +66,7 @@ public class QueriesResultPanel extends gvWindow implements ActionListener {
 	JScrollPane scrollPane = new JScrollPane(resultTA);
 	JPanel panel = new JPanel();
 	exportB = new JButton("Exportar");
-	exportB.addActionListener(this);
+	exportB.addActionListener(new ExportToListener());
 	panel.add(exportB);
 	fileTypeCB = new JComboBox(fileFormats);
 	panel.add(fileTypeCB);
@@ -88,9 +88,9 @@ public class QueriesResultPanel extends gvWindow implements ActionListener {
 	this.filters = filters;
     }
 
-    public void actionPerformed(ActionEvent e) {
-	if (e.getSource() == exportB) {
-	    if (fileTypeCB.getSelectedIndex() == 0) {
+    private final class ExportToListener implements ActionListener {
+	public void actionPerformed(ActionEvent arg0) {
+	    if (fileTypeCB.getSelectedItem().equals("HTML")) {
 		SaveFileDialog sfd = new SaveFileDialog("HTML files", "html",
 			"htm");
 		File f = sfd.showDialog();
@@ -100,7 +100,7 @@ public class QueriesResultPanel extends gvWindow implements ActionListener {
 				"error_saving_file", null);
 		    }
 		}
-	    } else if (fileTypeCB.getSelectedIndex() == 1) {
+	    } else if (fileTypeCB.getSelectedItem().equals("RTF")) {
 		SaveFileDialog sfd = new SaveFileDialog("RTF files", "rtf");
 		File f = sfd.showDialog();
 		if (f != null) {
@@ -108,7 +108,7 @@ public class QueriesResultPanel extends gvWindow implements ActionListener {
 		    ResultTableModel.writeResultTableToRtfReport(fileName,
 			    resultsMap, filters);
 		}
-	    } else if (fileTypeCB.getSelectedIndex() == 2) {
+	    } else if (fileTypeCB.getSelectedItem().equals("PDF")) {
 		SaveFileDialog sfd = new SaveFileDialog("PDF files", "pdf");
 		File f = sfd.showDialog();
 		if (f != null) {
@@ -116,7 +116,7 @@ public class QueriesResultPanel extends gvWindow implements ActionListener {
 		    ResultTableModel.writeResultTableToPdfReport(fileName,
 			    resultsMap, filters);
 		}
-	    } else {
+	    } else if (fileTypeCB.getSelectedItem().equals("CSV")) {
 		for (ResultTableModel model : resultsMap) {
 		    SaveFileDialog sfd = new SaveFileDialog("CSV files", "csv");
 		    File f = sfd.showDialog();
