@@ -30,7 +30,11 @@ public class ResultsWriter {
 	    csvFile = csvFile + model.getValueAt(row, 0);
 	    for (int col = 1; col < model.getColumnCount(); col++) {
 		csvFile = csvFile + SEPARATOR_FIELD;
-		csvFile = csvFile + model.getValueAt(row, col);
+		Object value = model.getValueAt(row, col);
+		if(value instanceof String) {
+		    value = ((String) value).replaceAll("(\\r|\\n)", "");
+		}
+		csvFile = csvFile + value;
 	    }
 	    csvFile = csvFile + SEPARATOR_ROW;
 	}
