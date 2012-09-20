@@ -1,6 +1,6 @@
-SELECT i.codigo_carretera AS "Código (LU-P)", \
+SELECT m.nombre AS "Municipio", \
+       i.codigo_carretera AS "Código (LU-P)", \
        i.orden_tramo AS "Tramo", \
-       m.nombre AS "Municipio", \
        c.denominacion AS "Denominación", \
        p.valor AS "Tipo pavimento", \
        p.pk_inicial "PK inicial", \
@@ -16,4 +16,4 @@ SELECT i.codigo_carretera AS "Código (LU-P)", \
        AND i.codigo_municipio = p.codigo_municipio \
        AND i.orden_tramo = p.tramo \
        [[WHERE]] \
- ORDER BY i.codigo_carretera, i.orden_tramo, p.pk_inicial, p.pk_final;
+ ORDER BY m.nombre, i.codigo_carretera, i.orden_tramo, p.pk_inicial, p.pk_final;

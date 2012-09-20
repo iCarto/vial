@@ -14,6 +14,6 @@ SELECT m.nombre AS "Municipio", \
        AND i.codigo_municipio = m.codigo \
        AND i.codigo_carretera = p.codigo_carretera \
        AND i.codigo_municipio = p.codigo_municipio \
-       AND p.valor = 'MB' \
+       AND p.valor = 'TS' \
        [[WHERE]] \
  ORDER BY m.nombre, i.codigo_carretera, orden_tramo;

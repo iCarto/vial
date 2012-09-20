@@ -7,6 +7,6 @@ SELECT m.nombre AS "Municipio", \
  FROM inventario.aforos AS i, \
       inventario.municipio_codigo AS m \
  WHERE i.codigo_municipio = m.codigo \
-       AND i.valor > 250 \
+       AND i.valor > 500 \
        [[WHERE]] \
  ORDER BY m.nombre, i.codigo_carretera, i.orden, i.fecha;

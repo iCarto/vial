@@ -1,6 +1,6 @@
-SELECT i.codigo_carretera AS "Código (LU-P)", \
+SELECT m.nombre AS "Municipio", \
+       i.codigo_carretera AS "Código (LU-P)", \
        i.orden_tramo AS "Tramo", \
-       m.nombre AS "Municipio", \
        c.denominacion AS "Denominación", \
        p.valor AS "Ancho (m)", \
        p.pk_inicial "PK inicial", \
@@ -17,4 +17,4 @@ SELECT i.codigo_carretera AS "Código (LU-P)", \
        AND i.orden_tramo = p.tramo \
        AND p.valor > 5 AND p.valor < 7 \
        [[WHERE]] \
- ORDER BY i.codigo_carretera, orden_tramo, p.pk_inicial, p.pk_final;
+ ORDER BY m.nombre, i.codigo_carretera, orden_tramo, p.pk_inicial, p.pk_final;
