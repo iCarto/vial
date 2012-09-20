@@ -1,5 +1,5 @@
 INSERT INTO consultas.consultas
-       SELECT 'C1',
+       SELECT 'C01',
               'Inventario de carreteras',
               sql_string,
               'SI',
@@ -9,7 +9,7 @@ INSERT INTO consultas.consultas
        WHERE id=1;
 
 INSERT INTO consultas.consultas
-       SELECT 'C2',
+       SELECT 'C02',
               'Ancho de firme',
               sql_string,
               'SI',
@@ -19,7 +19,7 @@ INSERT INTO consultas.consultas
        WHERE id=2;
 
 INSERT INTO consultas.consultas
-       SELECT 'C3',
+       SELECT 'C03',
               'Ancho de firme < 5',
               sql_string,
               'SI',
@@ -29,7 +29,7 @@ INSERT INTO consultas.consultas
        WHERE id=3;
 
 INSERT INTO consultas.consultas
-       SELECT 'C4',
+       SELECT 'C04',
               'Ancho de firme >5 y <7',
               sql_string,
               'SI',
@@ -39,7 +39,7 @@ INSERT INTO consultas.consultas
        WHERE id=4;
 
 INSERT INTO consultas.consultas
-       SELECT 'C5',
+       SELECT 'C05',
               'Ancho de firme > 7',
               sql_string,
               'SI',
@@ -49,7 +49,7 @@ INSERT INTO consultas.consultas
        WHERE id=5;
 
 INSERT INTO consultas.consultas
-       SELECT 'C6',
+       SELECT 'C06',
               'Tipo de firme',
               sql_string,
               'SI',
@@ -59,7 +59,7 @@ INSERT INTO consultas.consultas
        WHERE id=6;
 
 INSERT INTO consultas.consultas
-       SELECT 'C7',
+       SELECT 'C07',
               'Tipo de firme = MB',
               sql_string,
               'SI',
@@ -69,7 +69,7 @@ INSERT INTO consultas.consultas
        WHERE id=7;
 
 INSERT INTO consultas.consultas
-       SELECT 'C8',
+       SELECT 'C08',
               'Tipo de firme = TS',
               sql_string,
               'SI',
@@ -79,7 +79,7 @@ INSERT INTO consultas.consultas
        WHERE id=8;
 
 INSERT INTO consultas.consultas
-       SELECT 'C9',
+       SELECT 'C09',
               'Aforos > 250',
               sql_string,
               'SI',
