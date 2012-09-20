@@ -99,7 +99,6 @@ public class Report {
 	try {
 	    document.add(titleP);
 	} catch (DocumentException e) {
-	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
 
@@ -361,7 +360,6 @@ public class Report {
 	    document.close();
 
 	} catch (FileNotFoundException e) {
-	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
     }
@@ -433,7 +431,4 @@ public class Report {
 	}
     }
 
-    public void onEndPage(PdfWriter pdfWriter, Document document) {
-	// you do what you want here
-    }
 }
