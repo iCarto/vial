@@ -16,6 +16,7 @@ import com.lowagie.text.Element;
 import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
 import com.lowagie.text.HeaderFooter;
+import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
 import com.lowagie.text.Rectangle;
@@ -343,7 +344,7 @@ public class Report {
 
     public void writeRtfReport(String fileName,
 	    ArrayList<ResultTableModel> resultMap, String[] filters) {
-	Document document = new Document();
+	Document document = new Document(PageSize.A4.rotate());
 	RtfWriter2 writer;
 	try {
 	    // Open RTF file and prepare it to write on
@@ -366,7 +367,7 @@ public class Report {
 
     public void writePdfReport(String fileName,
 	    ArrayList<ResultTableModel> resultMap, String[] filters) {
-	Document document = new Document();
+	Document document = new Document(PageSize.A4.rotate());
 	try {
 	    PdfWriter writer = PdfWriter.getInstance(document,
 		    new FileOutputStream(fileName));
