@@ -18,6 +18,15 @@ BEGIN
 -- * over the range (pk_inicial > pk_final_range): update its pk_inicial & pk_final by summing the offset
 
 -- Tramos touching range pk
+EXECUTE 'INSERT INTO inventario.tipo_pavimento (
+            codigo_carretera, codigo_municipio, tramo, pk_inicial, pk_final,
+            longitud, fecha_actualizacion, valor, observaciones)
+         SELECT codigo_carretera, codigo_municipio, tramo, '||pk_inicial_range||' AS pk_inicial, pk_final,
+                longitud, fecha_actualizacion, valor, observaciones
+         FROM inventario.tipo_pavimento
+         WHERE codigo_carretera = '''||the_carretera_code||'''
+               AND pk_inicial < '||pk_inicial_range||'
+               AND pk_final > '||pk_inicial_range||';';
 EXECUTE 'UPDATE '||the_schema_name||'.'||the_table_name||'
        SET pk_final = '||pk_inicial_range||'
        WHERE codigo_carretera = '''||the_carretera_code||'''
