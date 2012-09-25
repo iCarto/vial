@@ -5,7 +5,7 @@ CREATE OR REPLACE FUNCTION inventario.update_geom_line_on_pk_change() RETURNS tr
 BEGIN
 
         IF (TG_OP = 'UPDATE') THEN
-           IF ((NEW.pk_inicial <> OLD.pk_final) OR (NEW.pk_inicial <> OLD.pk_final)) THEN
+           IF ((NEW.pk_inicial <> OLD.pk_inicial) OR (NEW.pk_final <> OLD.pk_final)) THEN
 
                   SELECT ST_CollectionExtract(ST_Locate_Between_Measures(c.the_geom, NEW.pk_inicial, NEW.pk_final), 2)
                          INTO NEW.the_geom
