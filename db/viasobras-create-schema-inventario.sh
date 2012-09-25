@@ -6,14 +6,6 @@ config_file=$1
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/create_schema_inventario.sql
 
-# Red carreteras
-#---------------
-
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < datos/inventario/carreteras_tmp.sql
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/procesar_carreteras.sql
-
 # Import useful functions
 #-------------------------
 
@@ -25,6 +17,22 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/update_geom_line_on_pk_change.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/update_geom_point_on_pk_change.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname < funcions/update_geom_line_on_pk_carretera_change.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname < funcions/calibrate_carretera_all.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname < funcions/calibrate_carretera.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname < funcions/calibrate_carretera_and_tramos.sql
+
+# Red carreteras
+#---------------
+
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname < datos/inventario/carreteras_tmp.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname < funcions/procesar_carreteras.sql
 
 # Accidentes
 #-----------

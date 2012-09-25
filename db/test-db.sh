@@ -13,7 +13,9 @@ fi
 # triggers
 echo -e "\n"
 pg_prove -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    -d $viasobras_dbname ./tests/triggers-launch.sql
+    -d $viasobras_dbname ./tests/triggers-launch-carretera.sql
+pg_prove -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    -d $viasobras_dbname ./tests/triggers-launch-caracteristicas.sql
 
 # orden tramo
 echo -e "\n"

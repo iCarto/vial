@@ -50,10 +50,13 @@ INSERT INTO inventario.carreteras(
 SELECT DropGeometryTable('inventario','carreteras_tmp');
 
 -- calibrate
-UPDATE inventario.carreteras AS c2 SET the_geom = (
-       SELECT ST_AddMeasure(the_geom, pk_inicial, pk_final)
-       FROM inventario.carreteras AS c
-       WHERE c.gid = c2.gid)
-;
+SELECT inventario.calibrate_carretera_all();
+
+-- triggers
+DROP TRIGGER IF EXISTS calibrate_carretera_and_tramos ON inventario.carreteras;
+CREATE TRIGGER calibrate_carretera_and_tramos
+       AFTER UPDATE OR INSERT
+       ON inventario.carreteras FOR EACH ROW
+       EXECUTE PROCEDURE inventario.calibrate_carretera_and_tramos();
 
 COMMIT;
