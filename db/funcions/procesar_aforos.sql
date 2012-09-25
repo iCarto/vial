@@ -10,7 +10,8 @@ CREATE TABLE inventario.aforos (
        pk float,
        fecha date,
        valor float,
-       PRIMARY KEY(gid)
+       PRIMARY KEY(gid),
+       FOREIGN KEY (codigo_carretera) REFERENCES inventario.carreteras (numero) ON DELETE CASCADE
 );
 
 -- populate it

@@ -13,7 +13,8 @@ CREATE TABLE inventario.tipo_pavimento (
        fecha_actualizacion date,
        valor varchar(6),
        observaciones text,
-       PRIMARY KEY(gid)
+       PRIMARY KEY (gid),
+       FOREIGN KEY (codigo_carretera) REFERENCES inventario.carreteras (numero) ON DELETE CASCADE
 );
 
 -- populate it

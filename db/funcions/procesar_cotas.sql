@@ -15,7 +15,8 @@ CREATE TABLE inventario.cotas (
        valor_max double precision, --cota max
        valor_min double precision, --cota min
        observaciones text,
-       PRIMARY KEY(gid)
+       PRIMARY KEY(gid),
+       FOREIGN KEY (codigo_carretera) REFERENCES inventario.carreteras (numero) ON DELETE CASCADE
 );
 
 -- populate it

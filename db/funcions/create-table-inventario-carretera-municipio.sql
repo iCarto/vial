@@ -8,5 +8,6 @@ CREATE TABLE inventario.carretera_municipio(
        pk_final_tramo float,
        longitud_tramo float,
        observaciones_tramo text,
-       CONSTRAINT pk_carretera_municipio PRIMARY KEY (codigo_municipio, codigo_carretera, orden_tramo)
+       CONSTRAINT pk_carretera_municipio PRIMARY KEY (codigo_municipio, codigo_carretera, orden_tramo),
+       FOREIGN KEY (codigo_carretera) REFERENCES inventario.carreteras (numero) ON DELETE CASCADE
 );

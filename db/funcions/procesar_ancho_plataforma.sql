@@ -13,7 +13,8 @@ CREATE TABLE inventario.ancho_plataforma (
        fecha_actualizacion date,
        valor double precision,
        observaciones text,
-       PRIMARY KEY(gid)
+       PRIMARY KEY(gid),
+       FOREIGN KEY (codigo_carretera) REFERENCES inventario.carreteras (numero) ON DELETE CASCADE
 );
 
 -- populate it

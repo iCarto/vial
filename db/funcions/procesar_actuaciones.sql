@@ -15,7 +15,8 @@ CREATE TABLE inventario.actuaciones(
        contratista varchar(24),
        fecha date,
        observaciones text,
-       CONSTRAINT pk_actuaciones PRIMARY KEY(gid)
+       CONSTRAINT pk_actuaciones PRIMARY KEY(gid),
+       FOREIGN KEY (codigo_carretera) REFERENCES inventario.carreteras (numero) ON DELETE CASCADE
 );
 
 -- populate it: This is fake data!
