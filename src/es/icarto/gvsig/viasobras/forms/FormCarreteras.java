@@ -1,7 +1,10 @@
 package es.icarto.gvsig.viasobras.forms;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 
@@ -18,6 +21,7 @@ import es.icarto.gvsig.navtableforms.gui.tables.JTableContextualMenu;
 import es.icarto.gvsig.navtableforms.gui.tables.TableModelAlphanumeric;
 import es.icarto.gvsig.navtableforms.gui.tables.TableModelFactory;
 import es.icarto.gvsig.navtableforms.ormlite.domain.KeyValue;
+import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
 import es.udc.cartolab.gvsig.navtable.listeners.PositionEvent;
 
 public class FormCarreteras extends AbstractForm implements IWindow {
@@ -27,6 +31,8 @@ public class FormCarreteras extends AbstractForm implements IWindow {
     private JComboBox codigo;
     private FormCarreterasMunicipios carreterasConcellos;
     private JTableContextualMenu contextualMenu;
+    private JButton rampas;
+    private JButton variantes;
 
     public FormCarreteras(FLyrVect layer) {
 	super(layer);
@@ -34,8 +40,8 @@ public class FormCarreteras extends AbstractForm implements IWindow {
     }
 
     private void initWindow() {
-	viewInfo.setHeight(550);
-	viewInfo.setWidth(540);
+	viewInfo.setHeight(590);
+	viewInfo.setWidth(550);
 	viewInfo.setTitle("Vías Obras: carreteras");
     }
 
@@ -86,6 +92,23 @@ public class FormCarreteras extends AbstractForm implements IWindow {
 	ayuntamientos.addMouseListener(contextualMenu);
 	// for the popUp to work on empty tables
 	ayuntamientos.setFillsViewportHeight(true);
+
+	variantes = (JButton) AbeilleParser.getButtonsFromContainer(form).get(
+		"variantes");
+	variantes.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent arg0) {
+		FormVariantes dialog = new FormVariantes();
+		PluginServices.getMDIManager().addCentredWindow(dialog);
+	    }
+	});
+	rampas = (JButton) AbeilleParser.getButtonsFromContainer(form).get(
+		"rampas");
+	rampas.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+		FormRampas dialog = new FormRampas();
+		PluginServices.getMDIManager().addCentredWindow(dialog);
+	    }
+	});
     }
 
     @Override
