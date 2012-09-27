@@ -45,4 +45,11 @@ INSERT INTO inventario.carreteras_lugo(
        FROM inventario.carreteras_tmp
 );
 
+-- triggers
+DROP TRIGGER IF EXISTS mirror_carreteras_lugo ON inventario.carreteras_lugo;
+CREATE TRIGGER mirror_carreteras_lugo
+       AFTER UPDATE OR INSERT
+       ON inventario.carreteras_lugo FOR EACH ROW
+       EXECUTE PROCEDURE inventario.mirror_carreteras_lugo();
+
 COMMIT;

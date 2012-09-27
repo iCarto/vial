@@ -27,6 +27,8 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/calibrate_carretera_and_tramos.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/update_tramos_in_range.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname < funcions/mirror_carreteras_lugo.sql
 
 # Red carreteras
 #---------------

@@ -59,4 +59,9 @@ CREATE TRIGGER calibrate_carretera_and_tramos
        ON inventario.carreteras FOR EACH ROW
        EXECUTE PROCEDURE inventario.calibrate_carretera_and_tramos();
 
+-- constraints
+ALTER TABLE inventario.carreteras ADD FOREIGN KEY(numero)
+      REFERENCES inventario.carreteras_lugo(numero)
+      ON DELETE CASCADE;
+
 COMMIT;
