@@ -46,6 +46,12 @@ INSERT INTO inventario.carreteras_lugo(
 );
 
 -- triggers
+DROP TRIGGER IF EXISTS update_longitud ON inventario.carreteras_lugo;
+CREATE TRIGGER update_longitud
+       BEFORE UPDATE OR INSERT
+       ON inventario.carreteras_lugo FOR EACH ROW
+       EXECUTE PROCEDURE inventario.update_longitud();
+
 DROP TRIGGER IF EXISTS mirror_carreteras_lugo ON inventario.carreteras_lugo;
 CREATE TRIGGER mirror_carreteras_lugo
        AFTER UPDATE OR INSERT
