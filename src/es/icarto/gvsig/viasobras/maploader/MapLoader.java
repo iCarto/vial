@@ -107,12 +107,12 @@ public class MapLoader {
 	Object[] red_carreteras = { "Red Carreteras", "red_carreteras", 9,
 		true, null, null,
 		"INFRAESTRUCTURAS", "info_base" };
-	Object[] red_provincial = { "Red Provincial", "carreteras", 10,
+	Object[] red_provincial = { "Red Provincial", "carreteras_lugo", 10,
 		true, null, null,
 		"INFRAESTRUCTURAS", "inventario" };
 	Object[] municipios = { MUNICIPIOS, "municipios_lugo", 11, true, null,
 		null, "", "info_base" };
-	Object[] carreteras = { "Carreteras", "carreteras", 12, true, null,
+	Object[] carreteras = { "Carreteras", "carreteras_lugo", 12, true, null,
 		null, "", "inventario" };
 	Object[] actuaciones = { "Actuaciones", "actuaciones", 13,
 		true, null, null, "", "inventario" };
