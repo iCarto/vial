@@ -3,21 +3,36 @@
 viasobras_data_orig=/home/amaneiro/03_proxectos_abertos/viasobras/datos
 
 # # info_base
-# shp2pgsql -d -g the_geom -W iso-8859-1 -s 23029 -I\
-#     ${viasobras_data_orig}/info_base/contorno/Oceano \
-#     info_base.oceano > datos/info_base/oceano.sql
-# shp2pgsql -d -g the_geom -W iso-8859-1 -s 23029 -I\
-#     ${viasobras_data_orig}/info_base/contorno/Portugal \
-#     info_base.portugal > datos/info_base/portugal.sql
-# shp2pgsql -d -g the_geom -W iso-8859-1 -s 23029 -I\
-#     ${viasobras_data_orig}/info_base/contorno/Provincias_Galicia \
-#     info_base.provincias_galicia > datos/info_base/provincias_galicia.sql
-# shp2pgsql -d -g the_geom -W iso-8859-1 -s 23029 -I\
-#     ${viasobras_data_orig}/info_base/contorno/Provincias_limitrofes \
-#     info_base.provincias_limitrofes > datos/info_base/provincias_limitrofes.sql
-# shp2pgsql -d -g the_geom -W iso-8859-1 -s 23029 -I\
-#     ${viasobras_data_orig}/info_base/municipios/municipios_lugo_text \
+# shp2pgsql -d -g the_geom -W iso-8859-1 -s 25829 -I\
+#     ${viasobras_data_orig}/info_base/Embalse_Clip_89 \
+#     info_base.embalse > datos/info_base/embalse.sql
+# shp2pgsql -d -g the_geom -W iso-8859-1 -s 25829 -I\
+#     ${viasobras_data_orig}/info_base/municipios_lugo_text_89 \
 #     info_base.municipios_lugo > datos/info_base/municipios_lugo.sql
+# shp2pgsql -d -g the_geom -W iso-8859-1 -s 25829 -I\
+#     ${viasobras_data_orig}/info_base/municipios_text_89 \
+#     info_base.municipios > datos/info_base/municipios.sql
+# shp2pgsql -d -g the_geom -W iso-8859-1 -s 25829 -I\
+#     ${viasobras_data_orig}/info_base/Oceano_89 \
+#     info_base.oceano > datos/info_base/oceano.sql
+# shp2pgsql -d -g the_geom -W iso-8859-1 -s 25829 -I\
+#     ${viasobras_data_orig}/info_base/Portugal_89 \
+#     info_base.portugal > datos/info_base/portugal.sql
+# shp2pgsql -d -g the_geom -W iso-8859-1 -s 25829 -I\
+#     ${viasobras_data_orig}/info_base/Provincias_Galicia_89 \
+#     info_base.provincias_galicia > datos/info_base/provincias_galicia.sql
+# shp2pgsql -d -g the_geom -W iso-8859-1 -s 25829 -I\
+#     ${viasobras_data_orig}/info_base/Provincias_limitrofes_89 \
+#     info_base.provincias_limitrofes > datos/info_base/provincias_limitrofes.sql
+# shp2pgsql -d -g the_geom -W iso-8859-1 -s 25829 -I\
+#     ${viasobras_data_orig}/info_base/red_carreteras_89 \
+#     info_base.red_carreteras > datos/info_base/red_carreteras.sql
+# shp2pgsql -d -g the_geom -W iso-8859-1 -s 25829 -I\
+#     ${viasobras_data_orig}/info_base/Rio_A_Clip_89 \
+#     info_base.rio_a > datos/info_base/rio_a.sql
+# shp2pgsql -d -g the_geom -W iso-8859-1 -s 25829 -I\
+#     ${viasobras_data_orig}/info_base/Rio_L_Clip_89 \
+#     info_base.rio_l > datos/info_base/rio_l.sql
 
 # carreteras
 shp2pgsql -d -g the_geom -W iso-8859-1 -s 25829 -I \
