@@ -40,7 +40,7 @@ public class FormCarreteras extends AbstractForm implements IWindow {
     }
 
     private void initWindow() {
-	viewInfo.setHeight(590);
+	viewInfo.setHeight(650);
 	viewInfo.setWidth(550);
 	viewInfo.setTitle("Vías Obras: carreteras");
     }
