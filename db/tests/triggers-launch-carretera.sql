@@ -28,14 +28,14 @@ SELECT trigger_is('inventario',
 
 INSERT INTO inventario.carreteras_lugo
        (numero, pk_inicial, pk_final, the_geom)
-       VALUES('6666', 0, 100, ST_GeomFromText('MULTILINESTRING((-70.729212 42.373848,-70.67569 42.375098))', 23029));
+       VALUES('6666', 0, 100, ST_GeomFromText('MULTILINESTRING((-70.729212 42.373848,-70.67569 42.375098))', 25829));
 SELECT is(GeometryType(the_geom), 'MULTILINESTRINGM', 'carreteras - geom calibrated on INSERT')
        FROM inventario.carreteras
        WHERE numero = '6666';
 
 INSERT INTO inventario.carreteras_lugo
        (numero, pk_inicial, pk_final, the_geom)
-       VALUES('9999', 2, 23.5, ST_GeomFromText('MULTILINESTRING((-70.729212 42.373848,-70.67569 42.375098))', 23029));
+       VALUES('9999', 2, 23.5, ST_GeomFromText('MULTILINESTRING((-70.729212 42.373848,-70.67569 42.375098))', 25829));
 SELECT is(longitud, '21500', 'carreteras - longitud calculated on INSERT')
        FROM inventario.carreteras
        WHERE numero = '9999';
