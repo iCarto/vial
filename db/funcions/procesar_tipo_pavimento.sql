@@ -38,7 +38,7 @@ DELETE FROM inventario.tipo_pavimento WHERE
 DROP TABLE IF EXISTS inventario.tipo_pavimento_tmp;
 
 -- linear referencing
-SELECT AddGeometryColumn('inventario', 'tipo_pavimento', 'the_geom', '23029', 'MULTILINESTRINGM', 3);
+SELECT AddGeometryColumn('inventario', 'tipo_pavimento', 'the_geom', '25829', 'MULTILINESTRINGM', 3);
 ALTER TABLE inventario.tipo_pavimento DROP CONSTRAINT enforce_geotype_the_geom;
 SELECT inventario.update_geom_line_all('inventario', 'tipo_pavimento');
 

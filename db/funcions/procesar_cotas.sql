@@ -42,7 +42,7 @@ DELETE FROM inventario.cotas WHERE
 DROP TABLE IF EXISTS inventario.cotas_tmp;
 
 -- linear referencing
-SELECT AddGeometryColumn('inventario', 'cotas', 'the_geom', '23029', 'MULTILINESTRINGM', 3);
+SELECT AddGeometryColumn('inventario', 'cotas', 'the_geom', '25829', 'MULTILINESTRINGM', 3);
 ALTER TABLE inventario.cotas DROP CONSTRAINT enforce_geotype_the_geom;
 SELECT inventario.update_geom_line_all('inventario', 'cotas');
 

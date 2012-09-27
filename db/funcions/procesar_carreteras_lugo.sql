@@ -21,7 +21,7 @@ CREATE TABLE inventario.carreteras_lugo (
        observaciones text,
        PRIMARY KEY(gid)
 );
-SELECT AddGeometryColumn('inventario', 'carreteras_lugo', 'the_geom', '23029', 'MULTILINESTRING', '2');
+SELECT AddGeometryColumn('inventario', 'carreteras_lugo', 'the_geom', '25829', 'MULTILINESTRING', '2');
 
 -- populate it
 INSERT INTO inventario.carreteras_lugo(

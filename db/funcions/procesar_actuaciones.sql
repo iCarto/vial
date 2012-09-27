@@ -28,7 +28,7 @@ INSERT INTO inventario.actuaciones (codigo_actuacion, codigo_carretera, pk_inici
        VALUES ('0002', '0103', 0, 2);
 
 -- linear referencing
-SELECT AddGeometryColumn('inventario', 'actuaciones', 'the_geom', '23029', 'MULTILINESTRINGM', 3);
+SELECT AddGeometryColumn('inventario', 'actuaciones', 'the_geom', '25829', 'MULTILINESTRINGM', 3);
 ALTER TABLE inventario.actuaciones DROP CONSTRAINT enforce_geotype_the_geom;
 SELECT inventario.update_geom_line_all('inventario', 'actuaciones');
 

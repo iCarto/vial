@@ -21,7 +21,7 @@ CREATE TABLE inventario.carreteras (
        observaciones text,
        PRIMARY KEY(gid)
 );
-SELECT AddGeometryColumn('inventario', 'carreteras', 'the_geom', '23029', 'MULTILINESTRINGM', '3');
+SELECT AddGeometryColumn('inventario', 'carreteras', 'the_geom', '25829', 'MULTILINESTRINGM', '3');
 ALTER TABLE inventario.carreteras DROP CONSTRAINT enforce_geotype_the_geom;
 ALTER TABLE inventario.carreteras DROP CONSTRAINT enforce_dims_the_geom;
 

@@ -1,5 +1,5 @@
 
-SELECT AddGeometryColumn('inventario', 'accidentes', 'the_geom', 23029, 'POINTM', 3);
+SELECT AddGeometryColumn('inventario', 'accidentes', 'the_geom', 25829, 'POINTM', 3);
 
 UPDATE inventario.accidentes AS a2 SET the_geom = (
        SELECT (ST_Dump(the_geom)).geom

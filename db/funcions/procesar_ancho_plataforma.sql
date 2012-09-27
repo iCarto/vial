@@ -38,7 +38,7 @@ DELETE FROM inventario.ancho_plataforma WHERE
 DROP TABLE IF EXISTS inventario.ancho_plataforma_tmp;
 
 -- linear referencing
-SELECT AddGeometryColumn('inventario', 'ancho_plataforma', 'the_geom', '23029', 'MULTILINESTRINGM', 3);
+SELECT AddGeometryColumn('inventario', 'ancho_plataforma', 'the_geom', '25829', 'MULTILINESTRINGM', 3);
 ALTER TABLE inventario.ancho_plataforma DROP CONSTRAINT enforce_geotype_the_geom;
 SELECT inventario.update_geom_line_all('inventario', 'ancho_plataforma');
 
