@@ -39,8 +39,8 @@ INSERT INTO inventario.carreteras_lugo(
               NULL AS categoria,
               "topografia" AS topografia,
               "tipo_suelo" AS tipo_suelo,
-              NULL AS observaciones,
               "longitud" AS longitud,
+              NULL AS observaciones,
               "the_geom" AS the_geom
        FROM inventario.carreteras_tmp
 );
