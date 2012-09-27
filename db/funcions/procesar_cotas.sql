@@ -53,4 +53,10 @@ CREATE TRIGGER update_geom_cotas
        ON inventario.cotas FOR EACH ROW
        EXECUTE PROCEDURE inventario.update_geom_line_on_pk_change();
 
+DROP TRIGGER IF EXISTS update_longitud ON inventario.cotas;
+CREATE TRIGGER update_longitud
+       BEFORE UPDATE OR INSERT
+       ON inventario.cotas FOR EACH ROW
+       EXECUTE PROCEDURE inventario.update_longitud();
+
 COMMIT;

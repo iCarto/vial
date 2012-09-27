@@ -49,4 +49,10 @@ CREATE TRIGGER update_geom_tipo_pavimento
        ON inventario.tipo_pavimento FOR EACH ROW
        EXECUTE PROCEDURE inventario.update_geom_line_on_pk_change();
 
+DROP TRIGGER IF EXISTS update_longitud ON inventario.tipo_pavimento;
+CREATE TRIGGER update_longitud
+       BEFORE UPDATE OR INSERT
+       ON inventario.tipo_pavimento FOR EACH ROW
+       EXECUTE PROCEDURE inventario.update_longitud();
+
 COMMIT;

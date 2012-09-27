@@ -29,6 +29,10 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/update_tramos_in_range.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/mirror_carreteras_lugo.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname < funcions/update_longitud.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname < funcions/update_longitud_carretera_municipio.sql
 
 # Red carreteras
 #---------------

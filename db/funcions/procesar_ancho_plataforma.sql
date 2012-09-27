@@ -49,4 +49,10 @@ CREATE TRIGGER update_geom_ancho_plataforma
        ON inventario.ancho_plataforma FOR EACH ROW
        EXECUTE PROCEDURE inventario.update_geom_line_on_pk_change();
 
+DROP TRIGGER IF EXISTS update_longitud ON inventario.ancho_plataforma;
+CREATE TRIGGER update_longitud
+       BEFORE UPDATE OR INSERT
+       ON inventario.ancho_plataforma FOR EACH ROW
+       EXECUTE PROCEDURE inventario.update_longitud();
+
 COMMIT;
