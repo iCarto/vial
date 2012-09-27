@@ -21,7 +21,7 @@ CREATE TABLE inventario.ancho_plataforma (
 INSERT INTO inventario.ancho_plataforma(
        SELECT nextval('inventario.ancho_plataforma_gid_seq') AS gid,
               "numero_inv" AS codigo_carretera,
-              to_char("cod_munici", 'FM99999') AS codigo_municipio,
+              to_char("cod_mun_lu", 'FM99999') AS codigo_municipio,
               "tramo" AS tramo,
               "pk_ini" AS pk_inicial,
               "pk_fin" AS pk_final,
