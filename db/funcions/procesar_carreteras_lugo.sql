@@ -17,7 +17,7 @@ CREATE TABLE inventario.carreteras_lugo (
        categoria varchar(18),
        topografia varchar(5),
        tipo_suelo varchar(5),
-       longitud float,
+       longitud integer,
        observaciones text,
        PRIMARY KEY(gid)
 );

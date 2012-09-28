@@ -9,7 +9,7 @@ CREATE TABLE inventario.tipo_pavimento (
        tramo varchar(1),
        pk_inicial float,
        pk_final float,
-       longitud float,
+       longitud integer,
        fecha_actualizacion date,
        valor varchar(6),
        observaciones text,

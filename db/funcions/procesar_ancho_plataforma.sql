@@ -9,7 +9,7 @@ CREATE TABLE inventario.ancho_plataforma (
        tramo varchar(1),
        pk_inicial float,
        pk_final float,
-       longitud float,
+       longitud integer,
        fecha_actualizacion date,
        valor double precision,
        observaciones text,

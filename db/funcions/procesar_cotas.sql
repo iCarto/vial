@@ -9,7 +9,7 @@ CREATE TABLE inventario.cotas (
        tramo varchar(1),
        pk_inicial float,
        pk_final float,
-       longitud float,
+       longitud integer,
        fecha_actualizacion date,
        valor double precision, -- cota max
        valor_max double precision, --cota max
