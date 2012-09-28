@@ -87,7 +87,7 @@ public class FormCarreteras extends AbstractForm implements IWindow {
 	codigo = (JComboBox) this.getWidgetComponents().get("numero");
 	ayuntamientos = (JTable) this.getWidgetComponents()
 		.get("ayuntamientos");
-	carreterasConcellos = new FormCarreterasMunicipios();
+	carreterasConcellos = new FormCarreterasMunicipios(this);
 	contextualMenu = new JTableContextualMenu(carreterasConcellos);
 	ayuntamientos.addMouseListener(contextualMenu);
 	// for the popUp to work on empty tables

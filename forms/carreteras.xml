@@ -551,6 +551,7 @@
           <at name="classname">javax.swing.JTextField</at>
           <at name="properties">
            <object classname="com.jeta.forms.store.support.PropertyMap">
+            <at name="enabled">false</at>
             <at name="height">20</at>
             <at name="width">71</at>
             <at name="name">pk_inicial</at>
@@ -1807,6 +1808,7 @@
           <at name="classname">javax.swing.JTextField</at>
           <at name="properties">
            <object classname="com.jeta.forms.store.support.PropertyMap">
+            <at name="enabled">false</at>
             <at name="height">20</at>
             <at name="width">71</at>
             <at name="name">pk_final</at>

@@ -1,6 +1,6 @@
 BEGIN;
 
-SELECT plan(10);
+SELECT plan(15);
 
 SELECT trigger_is('inventario',
                   'carreteras',
@@ -32,6 +32,12 @@ SELECT trigger_is('inventario',
                   'inventario',
                   'update_pks_1000');
 
+SELECT trigger_is('inventario',
+                  'carretera_municipio',
+                  'update_pks_carreteras',
+                  'inventario',
+                  'update_pks_carreteras');
+
 INSERT INTO inventario.carreteras_lugo
        (numero, pk_inicial, pk_final, the_geom)
        VALUES('6666', 0, 100, ST_GeomFromText('MULTILINESTRING((-70.729212 42.373848,-70.67569 42.375098))', 25829));
@@ -55,6 +61,12 @@ SELECT is(longitud_tramo, '6650', 'carretera_municipio - longitud calculated on 
 SELECT is(COUNT(*), '7', 'PKS on tramo')
        FROM inventario.pks_1000
        WHERE codigo_carretera = '9999' AND codigo_municipio = '27001';
+SELECT is(pk_inicial, '3', 'PK inicial autocalculated on INSERT')
+       FROM inventario.carreteras_lugo
+       WHERE numero = '9999';
+SELECT is(pk_final, '9.65', 'PK final autocalculated on INSERT')
+       FROM inventario.carreteras_lugo
+       WHERE numero = '9999';
 
 UPDATE inventario.carretera_municipio
        SET pk_inicial_tramo = 6
@@ -63,5 +75,11 @@ UPDATE inventario.carretera_municipio
 SELECT is(COUNT(*), '4', 'PKS on tramo')
        FROM inventario.pks_1000
        WHERE codigo_carretera = '9999' AND codigo_municipio = '27001';
+SELECT is(pk_inicial, '6', 'PK inicial autocalculated on INSERT')
+       FROM inventario.carreteras_lugo
+       WHERE numero = '9999';
+SELECT is(pk_final, '9.65', 'PK final autocalculated on INSERT')
+       FROM inventario.carreteras_lugo
+       WHERE numero = '9999';
 
 ROLLBACK;

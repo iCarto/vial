@@ -15,15 +15,18 @@ import com.hardcode.gdbms.driver.exceptions.ReadDriverException;
 import com.iver.andami.PluginServices;
 import com.iver.andami.messages.NotificationManager;
 import com.iver.andami.ui.mdiManager.IWindow;
+import com.iver.andami.ui.mdiManager.IWindowListener;
 import com.iver.andami.ui.mdiManager.WindowInfo;
 import com.iver.cit.gvsig.fmap.edition.IEditableSource;
 import com.jeta.forms.components.panel.FormPanel;
 
+import es.icarto.gvsig.navtableforms.AbstractForm;
 import es.icarto.gvsig.navtableforms.gui.tables.IForm;
 import es.icarto.gvsig.navtableforms.gui.tables.TableModelAlphanumeric;
 import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
 
-public class FormCarreterasMunicipios extends JPanel implements IForm, IWindow {
+public class FormCarreterasMunicipios extends JPanel implements IForm, IWindow,
+IWindowListener {
 
     private WindowInfo viewInfo;
     private JScrollPane form;
@@ -37,12 +40,14 @@ public class FormCarreterasMunicipios extends JPanel implements IForm, IWindow {
     private JTextArea observaciones;
     private JButton save;
     private ActionListener action;
+    private AbstractForm parentForm;
 
     private String carreteraCode;
     private long position;
 
-    public FormCarreterasMunicipios() {
+    public FormCarreterasMunicipios(AbstractForm parentForm) {
 	super();
+	this.parentForm = parentForm;
 	FormPanel formBody = new FormPanel("carreteras-municipios.xml");
 	form = new JScrollPane(formBody);
 	initWidgets();
@@ -174,6 +179,7 @@ public class FormCarreterasMunicipios extends JPanel implements IForm, IWindow {
 	    try {
 		model.create(values);
 		fillWidgetsForCreatingRecord();
+		refreshParentForm();
 	    } catch (Exception e) {
 		NotificationManager.addError(e);
 	    }
@@ -190,9 +196,27 @@ public class FormCarreterasMunicipios extends JPanel implements IForm, IWindow {
 	    model.updateValue("observaciones_tramo", observaciones.getText());
 	    try {
 		model.update((int) position);
+		refreshParentForm();
 	    } catch (Exception e) {
 		NotificationManager.addError(e);
 	    }
+	}
+    }
+
+    public void windowActivated() {
+    }
+
+    public void windowClosed() {
+	refreshParentForm();
+    }
+
+    private void refreshParentForm() {
+	// will force to refresh the values from layer
+	try {
+	    this.parentForm.reloadRecordset();
+	    this.parentForm.setPosition(this.parentForm.getPosition());
+	} catch (ReadDriverException e) {
+	    e.printStackTrace();
 	}
     }
 
