@@ -1,7 +1,6 @@
 package es.icarto.gvsig.viasobras.maploader;
 
 import es.icarto.gvsig.viasobras.domain.catalog.Catalog;
-import es.icarto.gvsig.viasobras.domain.catalog.mappers.ConcellosMapper;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.EventosMapperAbstract;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.TramosMapperAbstract;
 
@@ -14,6 +13,7 @@ public class WhereAdapter {
     public static final int PKS = 4;
 
     private static String CODE_CARRETERA_FIELDNAME = "numero";
+    private static String CODE_MUNICIPIO_FIELDNAME = "cod_mun_lu";
     private static final String NONE_WHERE = "";
 
     public static String getClause(int layer) {
@@ -144,7 +144,7 @@ public class WhereAdapter {
 	    // all fields in table - see getTotalFields()):
 	    return ", inventario.carretera_municipio AS link WHERE link.codigo_carretera = " + CODE_CARRETERA_FIELDNAME
 		    + " AND link.codigo_municipio = '" + concello + "' "
-		    + "AND link.codigo_carretera = '" + carretera + "'";
+		    + " AND link.codigo_carretera = '" + carretera + "'";
 	} else if (concello != Catalog.CONCELLO_ALL) {
 	    // only concello selected
 	    //
@@ -176,9 +176,12 @@ public class WhereAdapter {
 	    // See PostGisDriver.setData: seems not possible to filter rows
 	    // depending on other layers or columns (as it takes into account
 	    // all fields in table - see getTotalFields()):
-	    return ", inventario.carretera_municipio AS link WHERE link.codigo_municipio = codigo "
-	    + "AND link.codigo_carretera = '" + carretera + "' "
-	    + "AND link.codigo_municipio = '"+ concello + "'";
+	    return ", inventario.carretera_municipio AS link WHERE link.codigo_municipio = "
+	    + CODE_MUNICIPIO_FIELDNAME
+	    + " AND link.codigo_carretera = '"
+	    + carretera
+	    + "' "
+	    + " AND link.codigo_municipio = '" + concello + "'";
 	} else if (carretera != Catalog.CARRETERA_ALL) {
 	    // only carretera selected
 	    //
@@ -187,11 +190,13 @@ public class WhereAdapter {
 	    // See PostGisDriver.setData: seems not possible to filter rows
 	    // depending on other layers or columns (as it takes into account
 	    // all fields in table - see getTotalFields()):
-	    return ", inventario.carretera_municipio AS link WHERE link.codigo_municipio = codigo "
-	    + "AND link.codigo_carretera = '" + carretera + "'";
+	    return ", inventario.carretera_municipio AS link WHERE link.codigo_municipio = "
+	    + CODE_MUNICIPIO_FIELDNAME
+	    + " AND link.codigo_carretera = '" + carretera + "'";
 	} else if (concello != Catalog.CONCELLO_ALL) {
 	    // only concello selected
-	    return "WHERE " + ConcellosMapper.CODE + " = '" + concello + "'";
+	    return "WHERE " + CODE_MUNICIPIO_FIELDNAME + " = '" + concello
+		    + "'";
 	} else {
 	    // none selected
 	    return NONE_WHERE;
