@@ -25,9 +25,8 @@ public class WhereAdapter {
 	case TRAMOS:
 	    return getWhereTramos();
 	case EVENTOS:
-	    return getWhereEventos();
 	case PKS:
-	    return getWherePKs();
+	    return getWhereEventos();
 	default:
 	    return NONE_WHERE;
 	}
@@ -129,15 +128,6 @@ public class WhereAdapter {
 	    }
 	} else { // none selected
 	    return NONE_WHERE;
-	}
-    }
-
-    private static String getWherePKs() {
-	String carretera = Catalog.getCarreteraSelected();
-	if (carretera == Catalog.CARRETERA_ALL) {
-	    return NONE_WHERE;
-	} else {
-	    return "WHERE numero = '" + carretera + "'";
 	}
     }
 
