@@ -4,7 +4,7 @@ BEGIN;
 DROP TABLE IF EXISTS inventario.carreteras_lugo;
 CREATE TABLE inventario.carreteras_lugo (
        gid serial,
-       codigo varchar(9) UNIQUE,
+       codigo varchar(9),
        numero varchar(4) UNIQUE,
        intermunicipal boolean,
        denominacion varchar(256),
@@ -51,6 +51,12 @@ CREATE TRIGGER update_longitud
        BEFORE UPDATE OR INSERT
        ON inventario.carreteras_lugo FOR EACH ROW
        EXECUTE PROCEDURE inventario.update_longitud();
+
+DROP TRIGGER IF EXISTS update_codigo_carretera ON inventario.carreteras_lugo;
+CREATE TRIGGER update_codigo_carretera
+       BEFORE UPDATE OR INSERT
+       ON inventario.carreteras_lugo FOR EACH ROW
+       EXECUTE PROCEDURE inventario.update_codigo_carretera();
 
 DROP TRIGGER IF EXISTS mirror_carreteras_lugo ON inventario.carreteras_lugo;
 CREATE TRIGGER mirror_carreteras_lugo

@@ -4,7 +4,7 @@ BEGIN;
 DROP TABLE IF EXISTS inventario.carreteras;
 CREATE TABLE inventario.carreteras (
        gid serial,
-       codigo varchar(9) UNIQUE,
+       codigo varchar(9),
        numero varchar(4) UNIQUE,
        intermunicipal boolean,
        denominacion varchar(256),
