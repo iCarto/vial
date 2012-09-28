@@ -21,15 +21,15 @@ public class EventosComparator implements Comparator<Evento> {
 	}
 
 	//carretera code t1 = t2
-	int e1Concello = Integer.parseInt(e1.getConcello());
-	int e2Concello = Integer.parseInt(e2.getConcello());
-	if (e1Concello > e2Concello) {
+	String e1Orden = e1.getOrden();
+	String e2Orden = e2.getOrden();
+	if (e1Orden.compareTo(e2Orden) > 0) {
 	    return FIRST_IS_UPPER;
-	} else if (e1Concello < e2Concello) {
+	} else if (e1Orden.compareTo(e2Orden) < 0) {
 	    return SECOND_IS_UPPER;
 	}
 
-	//concello code t1 = t2
+	// orden tramo t1 = t2
 	double e1PkStart = e1.getPk();
 	double e2PkStart = e2.getPk();
 	if (e1PkStart > e2PkStart) {

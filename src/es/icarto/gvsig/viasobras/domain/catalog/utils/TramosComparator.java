@@ -21,15 +21,16 @@ public class TramosComparator implements Comparator<Tramo> {
 	}
 
 	//carretera code t1 = t2
-	int t1Concello = Integer.parseInt(t1.getConcello());
-	int t2Concello = Integer.parseInt(t2.getConcello());
-	if (t1Concello > t2Concello) {
+	String t1Orden = t1.getOrdenTramo();
+	String t2Orden = t2.getOrdenTramo();
+	t1Orden.compareTo(t2Orden);
+	if (t1Orden.compareTo(t2Orden) > 0) {
 	    return FIRST_IS_UPPER;
-	} else if (t1Concello < t2Concello) {
+	} else if (t1Orden.compareTo(t2Orden) < 0) {
 	    return SECOND_IS_UPPER;
 	}
 
-	//concello code t1 = t2
+	// orden tramo t1 = t2
 	double t1PkStart = t1.getPkStart();
 	double t2PkStart = t2.getPkStart();
 	if (t1PkStart > t2PkStart) {
