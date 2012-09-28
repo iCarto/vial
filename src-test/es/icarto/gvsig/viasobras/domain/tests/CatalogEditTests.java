@@ -596,6 +596,7 @@ public class CatalogEditTests {
 
     private int insertPavimento(String carretera, String concello)
 	    throws SQLException {
+	String ordenTramo = "A";
 	double pkStart = 10.2;
 	double pkEnd = 10.5;
 	String myValue = "AAA";
@@ -607,6 +608,7 @@ public class CatalogEditTests {
 	Tramos tipoPavimento = Catalog.getTramosTipoPavimento();
 	Tramo tramo = new Tramo();
 	tramo.setCarretera(carretera);
+	tramo.setOrdenTramo(ordenTramo);
 	tramo.setConcello(concello);
 	tramo.setPkStart(pkStart);
 	tramo.setPkEnd(pkEnd);
@@ -619,6 +621,7 @@ public class CatalogEditTests {
 
     private int insertPlataforma(String carretera, String concello)
 	    throws SQLException {
+	String ordenTramo = "A";
 	double pkStart = 10.2;
 	double pkEnd = 10.4;
 	double myValue = 666;
@@ -630,6 +633,7 @@ public class CatalogEditTests {
 	Tramos anchoPlataforma = Catalog.getTramosAnchoPlataforma();
 	Tramo tramo = new Tramo();
 	tramo.setCarretera(carretera);
+	tramo.setOrdenTramo(ordenTramo);
 	tramo.setConcello(concello);
 	tramo.setPkStart(pkStart);
 	tramo.setPkEnd(pkEnd);
@@ -642,6 +646,7 @@ public class CatalogEditTests {
 
     private int insertCota(String carretera, String concello)
 	    throws SQLException {
+	String ordenTramo = "A";
 	double pkStart = 10.2;
 	double pkEnd = 10.4;
 	double myValue = 666;
@@ -653,6 +658,7 @@ public class CatalogEditTests {
 	Tramos tramos = Catalog.getTramosCotas();
 	Tramo tramo = new Tramo();
 	tramo.setCarretera(carretera);
+	tramo.setOrdenTramo(ordenTramo);
 	tramo.setConcello(concello);
 	tramo.setPkStart(pkStart);
 	tramo.setPkEnd(pkEnd);
@@ -665,6 +671,7 @@ public class CatalogEditTests {
 
     private int insertAforo(String carretera, String concello)
 	    throws SQLException {
+	String ordenTramo = "A";
 	double pk = 10.2;
 	double myValue = 666;
 
@@ -675,6 +682,7 @@ public class CatalogEditTests {
 	Eventos eventos = Catalog.getEventosAforos();
 	Evento evento = new Evento();
 	evento.setCarretera(carretera);
+	evento.setOrden(ordenTramo);
 	evento.setConcello(concello);
 	evento.setPk(pk);
 	evento.setValue(myValue);
