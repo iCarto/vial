@@ -19,14 +19,6 @@ CREATE TABLE inventario.actuaciones(
        FOREIGN KEY (codigo_carretera) REFERENCES inventario.carreteras (numero) ON DELETE CASCADE
 );
 
--- populate it: This is fake data!
-INSERT INTO inventario.actuaciones (codigo_actuacion, codigo_carretera, pk_inicial, pk_final)
-       VALUES ('0000', '0101', 0, 2);
-INSERT INTO inventario.actuaciones (codigo_actuacion, codigo_carretera, pk_inicial, pk_final)
-       VALUES ('0001', '0102', 0, 2);
-INSERT INTO inventario.actuaciones (codigo_actuacion, codigo_carretera, pk_inicial, pk_final)
-       VALUES ('0002', '0103', 0, 2);
-
 -- linear referencing
 SELECT AddGeometryColumn('inventario', 'actuaciones', 'the_geom', '25829', 'MULTILINESTRINGM', 3);
 ALTER TABLE inventario.actuaciones DROP CONSTRAINT enforce_geotype_the_geom;
