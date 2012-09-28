@@ -12,5 +12,7 @@ CREATE TABLE inventario.pks_1000(
 );
 
 SELECT inventario.create_pks_1000();
-SELECT AddGeometryColumn('inventario', 'pks_1000', 'the_geom', '25829', 'POINTM', 3);
+SELECT AddGeometryColumn('inventario', 'pks_1000', 'the_geom', '25829', 'POINT', 2);
+ALTER TABLE inventario.pks_1000 DROP CONSTRAINT enforce_geotype_the_geom;
+ALTER TABLE inventario.pks_1000 DROP CONSTRAINT enforce_dims_the_geom;
 SELECT inventario.update_geom_point_all('inventario', 'pks_1000');
