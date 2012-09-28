@@ -53,7 +53,7 @@ SELECT is(longitud_tramo, '6650', 'carretera_municipio - longitud calculated on 
        FROM inventario.carretera_municipio
        WHERE codigo_carretera = '9999' AND codigo_municipio = '27001' AND orden_tramo = 'A';
 SELECT is(COUNT(*), '7', 'PKS on tramo')
-       FROM public.pks
+       FROM inventario.pks_1000
        WHERE codigo_carretera = '9999' AND codigo_municipio = '27001';
 
 UPDATE inventario.carretera_municipio
@@ -61,7 +61,7 @@ UPDATE inventario.carretera_municipio
        WHERE codigo_carretera = '9999'
              AND codigo_municipio = '27001';
 SELECT is(COUNT(*), '4', 'PKS on tramo')
-       FROM public.pks
+       FROM inventario.pks_1000
        WHERE codigo_carretera = '9999' AND codigo_municipio = '27001';
 
 ROLLBACK;

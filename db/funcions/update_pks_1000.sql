@@ -6,12 +6,12 @@ BEGIN
 
         IF(TG_OP = 'INSERT') THEN
 
-                 EXECUTE 'DELETE FROM public.pks
+                 EXECUTE 'DELETE FROM inventario.pks_1000
                           WHERE codigo_carretera = '''||NEW.codigo_carretera||'''
                                 AND codigo_municipio = '''||NEW.codigo_municipio||''';';
 
-                 EXECUTE 'INSERT INTO public.pks(
-                          SELECT nextval(''public.pks_gid_seq''),
+                 EXECUTE 'INSERT INTO inventario.pks_1000(
+                          SELECT nextval(''inventario.pks_1000_gid_seq''),
                                  '''||NEW.codigo_carretera||''',
                                  '''||NEW.codigo_municipio||''',
                                  generate_series(
@@ -28,14 +28,15 @@ BEGIN
                  RETURN NEW;
 
         ELSE IF ((TG_OP = 'UPDATE')
-             AND ((NEW.pk_inicial_tramo <> OLD.pk_inicial_tramo) OR (NEW.pk_final_tramo <> OLD.pk_final_tramo))) THEN
+             AND ((NEW.pk_inicial_tramo <> OLD.pk_inicial_tramo)
+                   OR (NEW.pk_final_tramo <> OLD.pk_final_tramo))) THEN
 
-                 EXECUTE 'DELETE FROM public.pks
+                 EXECUTE 'DELETE FROM inventario.pks_1000
                           WHERE codigo_carretera = '''||NEW.codigo_carretera||'''
                                 AND codigo_municipio = '''||NEW.codigo_municipio||''';';
 
-                 EXECUTE 'INSERT INTO public.pks(
-                          SELECT nextval(''public.pks_gid_seq''),
+                 EXECUTE 'INSERT INTO inventario.pks_1000(
+                          SELECT nextval(''inventario.pks_1000_gid_seq''),
                                  '''||NEW.codigo_carretera||''',
                                  '''||NEW.codigo_municipio||''',
                                  generate_series(

@@ -1,16 +1,16 @@
-DROP TABLE IF EXISTS public.pks;
-DROP SEQUENCE IF EXISTS pks_pk_seq;
+DROP TABLE IF EXISTS inventario.pks_1000;
+DROP SEQUENCE IF EXISTS pks_1000_pk_seq;
 
-CREATE SEQUENCE pks_pk_seq INCREMENT BY 1 START WITH 1;
-CREATE TABLE public.pks(
+CREATE SEQUENCE pks_1000_pk_seq INCREMENT BY 1 START WITH 1;
+CREATE TABLE inventario.pks_1000(
         gid serial,
         codigo_carretera varchar(4),
         codigo_municipio varchar(5),
-        pk int DEFAULT nextval('pks_pk_seq') NOT NULL,
+        pk int DEFAULT nextval('pks_1000_pk_seq') NOT NULL,
         PRIMARY KEY(gid),
         FOREIGN KEY(codigo_carretera) REFERENCES inventario.carreteras(numero) ON DELETE CASCADE
 );
 
-SELECT inventario.create_pks();
-SELECT AddGeometryColumn('public', 'pks', 'the_geom', '25829', 'POINTM', 3);
-SELECT inventario.update_geom_point_all('public', 'pks');
+SELECT inventario.create_pks_1000();
+SELECT AddGeometryColumn('inventario', 'pks_1000', 'the_geom', '25829', 'POINTM', 3);
+SELECT inventario.update_geom_point_all('inventario', 'pks_1000');

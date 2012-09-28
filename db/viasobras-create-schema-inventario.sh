@@ -34,7 +34,7 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/update_longitud_carretera_municipio.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/create_pks.sql
+    $viasobras_dbname < funcions/create_pks_1000.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/update_pks_1000.sql
 
@@ -88,6 +88,14 @@ sql_query="\COPY inventario.carretera_municipio (codigo_carretera, orden_tramo, 
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname -c "$sql_query"
 
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname < funcions/procesar_carretera_municipio.sql
+
+# PKS
+#-----
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname < funcions/procesar_pks_from_carreteras.sql
+
 # Ancho plataforma
 #-----------------
 
@@ -95,11 +103,6 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < datos/inventario/ancho_plataforma_tmp.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/procesar_ancho_plataforma.sql
-
-# PKS
-#-----
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/procesar_pks_from_carreteras.sql
 
 # Tipo pavimento
 #---------------
