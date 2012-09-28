@@ -94,8 +94,7 @@ public abstract class EventosMapperAbstract implements EventosMapper {
 		eventos.updateString(CONCELLO_FIELDNAME, t.getConcello());
 		eventos.updateDouble(PK_FIELDNAME, t.getPk());
 		eventos.updateObject(CARACTERISTICA_FIELDNAME, t.getValue());
-		eventos.updateDate(FECHA_ACTUALIZACION_FIELDNAME,
-			t.getUpdatingDate());
+		updateDate(eventos, t);
 		eventos.updateRow();
 	    } else if (t.getStatus() == Evento.STATUS_DELETE) {
 		eventos.absolute(t.getPosition());
@@ -110,8 +109,7 @@ public abstract class EventosMapperAbstract implements EventosMapper {
 			.toString());
 		eventos.updateDouble(PK_FIELDNAME, t.getPk());
 		eventos.updateObject(CARACTERISTICA_FIELDNAME, t.getValue());
-		eventos.updateDate(FECHA_ACTUALIZACION_FIELDNAME,
-			t.getUpdatingDate());
+		updateDate(eventos, t);
 		eventos.insertRow();
 		eventos.moveToCurrentRow();
 		newID++;
@@ -119,6 +117,35 @@ public abstract class EventosMapperAbstract implements EventosMapper {
 	}
 	eventos.acceptChanges();
 	return new Eventos(this, EventosRecordsetAdapter.findAll(eventos));
+    }
+
+    private void updateDate(CachedRowSet eventos, Evento t) throws SQLException {
+	/*
+	 * BIG BUG in CachedRowSet: if one sets all values in a column to NULL
+	 * and then serializes the CachedRowSet then deserializing and
+	 * attempting an update would result in an Exception where apparently
+	 * the column type is not being set so defaults to the type of the prior
+	 * column:
+	 * 
+	 * org.postgresql.util.PSQLException: ERROR column "fecha_actualizacion"
+	 * is of type character varying but expression is of type Date
+	 * 
+	 * http://books.google.es/books?id=4yjiwDMmOZMC&lpg=PA232&ots=9yQFXXfd5H&
+	 * pg=PA232#v=onepage&q&f=false
+	 * 
+	 * So, the trick we do here is: in case the date is NULL, set it to
+	 * first milisecond from epoch (1970-01-01). When reading back from
+	 * database will check if the data is higher than this and, if not, will
+	 * return a NULL. See EventosRecordsetAdapter.getDate()
+	 */
+	if (t.getUpdatingDate() == null) {
+	    eventos.updateDate(FECHA_ACTUALIZACION_FIELDNAME,
+		    new java.sql.Date(
+			    0));
+	} else {
+	    eventos.updateDate(FECHA_ACTUALIZACION_FIELDNAME,
+		    t.getUpdatingDate());
+	}
     }
 
 }

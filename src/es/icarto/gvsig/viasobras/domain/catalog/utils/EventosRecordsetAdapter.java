@@ -1,5 +1,6 @@
 package es.icarto.gvsig.viasobras.domain.catalog.utils;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,9 +12,9 @@ import javax.sql.rowset.FilteredRowSet;
 import com.sun.rowset.FilteredRowSetImpl;
 
 import es.icarto.gvsig.viasobras.domain.catalog.Evento;
-import es.icarto.gvsig.viasobras.domain.catalog.filters.FilterRecordsetByField;
 import es.icarto.gvsig.viasobras.domain.catalog.filters.FilterRecordsetByCarreteraAndConcello;
 import es.icarto.gvsig.viasobras.domain.catalog.filters.FilterRecordsetByCarreteraAndPK;
+import es.icarto.gvsig.viasobras.domain.catalog.filters.FilterRecordsetByField;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.EventosMapperAbstract;
 
 public class EventosRecordsetAdapter {
@@ -87,11 +88,37 @@ public class EventosRecordsetAdapter {
 		    .getDouble(EventosMapperAbstract.PK_FIELDNAME));
 	    evento.setValue(rs
 		    .getObject(EventosMapperAbstract.CARACTERISTICA_FIELDNAME));
-	    evento.setUpdatingDate(rs
-		    .getDate(EventosMapperAbstract.FECHA_ACTUALIZACION_FIELDNAME));
+	    evento.setUpdatingDate(getDate(rs
+		    .getDate(EventosMapperAbstract.FECHA_ACTUALIZACION_FIELDNAME)));
 	    ts.add(evento);
 	}
 	return ts;
+    }
+
+    private static Date getDate(Date date) {
+	/*
+	 * BIG BUG in CachedRowSet: if one sets all values in a column to NULL
+	 * and then serializes the CachedRowSet then deserializing and
+	 * attempting an update would result in an Exception where apparently
+	 * the column type is not being set so defaults to the type of the prior
+	 * column:
+	 * 
+	 * org.postgresql.util.PSQLException: ERROR column "fecha_actualizacion"
+	 * is of type character varying but expression is of type Date
+	 * 
+	 * http://books.google.es/books?id=4yjiwDMmOZMC&lpg=PA232&ots=9yQFXXfd5H&
+	 * pg=PA232#v=onepage&q&f=false
+	 * 
+	 * So, the trick we do here is: in case the date is NULL, set it to
+	 * first milisecond from epoch (1970-01-01). When reading back from
+	 * database will check if the data is higher than this and, if not, will
+	 * return a NULL. See TramosMapperAbstract.updateDate()
+	 */
+	if (date.before(new java.sql.Date(1))) {
+	    return null;
+	} else {
+	    return date;
+	}
     }
 
 }

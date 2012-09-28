@@ -95,8 +95,7 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 		tramos.updateDouble(PK_START_FIELDNAME, t.getPkStart());
 		tramos.updateDouble(PK_END_FIELDNAME, t.getPkEnd());
 		updateValue(tramos, t, valueType);
-		tramos.updateDate(FECHA_ACTUALIZACION_FIELDNAME,
-			t.getUpdatingDate());
+		updateDate(tramos, t);
 		tramos.updateRow();
 	    } else if (t.getStatus() == Tramo.STATUS_DELETE) {
 		if (t.getPosition() != Tramo.NO_POSITION) {
@@ -119,8 +118,7 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 		tramos.updateDouble(PK_START_FIELDNAME, t.getPkStart());
 		tramos.updateDouble(PK_END_FIELDNAME, t.getPkEnd());
 		updateValue(tramos, t, valueType);
-		tramos.updateDate(FECHA_ACTUALIZACION_FIELDNAME,
-			t.getUpdatingDate());
+		updateDate(tramos, t);
 		tramos.insertRow();
 		tramos.moveToCurrentRow();
 		newID++;
@@ -130,11 +128,44 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 	return new Tramos(this, TramosRecordsetAdapter.findAll(tramos));
     }
 
+    private void updateDate(CachedRowSet tramos, Tramo t) throws SQLException {
+	/*
+	 * BIG BUG in CachedRowSet: if one sets all values in a column to NULL
+	 * and then serializes the CachedRowSet then deserializing and
+	 * attempting an update would result in an Exception where apparently
+	 * the column type is not being set so defaults to the type of the prior
+	 * column:
+	 * 
+	 * org.postgresql.util.PSQLException: ERROR column "fecha_actualizacion"
+	 * is of type character varying but expression is of type Date
+	 * 
+	 * http://books.google.es/books?id=4yjiwDMmOZMC&lpg=PA232&ots=9yQFXXfd5H&
+	 * pg=PA232#v=onepage&q&f=false
+	 * 
+	 * So, the trick we do here is: in case the date is NULL, set it to
+	 * first milisecond from epoch (1970-01-01). When reading back from
+	 * database will check if the data is higher than this and, if not, will
+	 * return a NULL. See TramosRecordsetAdapter.getDate()
+	 */
+	if (t.getUpdatingDate() == null) {
+	    tramos.updateDate(FECHA_ACTUALIZACION_FIELDNAME, new java.sql.Date(
+		    0));
+	} else {
+	    tramos.updateDate(FECHA_ACTUALIZACION_FIELDNAME,
+		    t.getUpdatingDate());
+	}
+    }
+
     private void updateValue(CachedRowSet tramos, Tramo t, int valueType)
 	    throws SQLException {
 	switch (valueType) {
 	case Types.VARCHAR:
-	    tramos.updateString(CARACTERISTICA_FIELDNAME, (String) t.getValue());
+	    if (t.getValue() == null) {
+		tramos.updateNull(CARACTERISTICA_FIELDNAME);
+	    } else {
+		tramos.updateString(CARACTERISTICA_FIELDNAME,
+			(String) t.getValue());
+	    }
 	    break;
 	case Types.DOUBLE:
 	    if (t.getValue() == null) {
