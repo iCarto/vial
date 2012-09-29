@@ -124,6 +124,8 @@ public class TramosRecordsetAdapter {
 	    return String.class;
 	case Types.DOUBLE:
 	    return Double.class;
+	case Types.INTEGER:
+	    return Integer.class;
 	default:
 	    return Object.class;
 	}

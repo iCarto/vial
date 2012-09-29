@@ -35,6 +35,7 @@ public class Evento {
     private String concello;
     private double pk;
     private Object value;
+    private Class valueClass = Object.class;
     private Date updatingDate;
 
     public Evento() {
@@ -114,6 +115,10 @@ public class Evento {
 
     public void setValue(Object value) {
 	this.value = value;
+    }
+
+    public void setValueClass(Class valueClass) {
+	this.valueClass = valueClass;
     }
 
     public Date getUpdatingDate() {
@@ -202,7 +207,9 @@ public class Evento {
 	case PROPERTY_CARRETERA:
 	    return String.class;
 	case PROPERTY_VALUE:
-	    return Double.class;
+	    // should be set when retrieving the value from database
+	    // see EventosRecordsetAdapter.toList()
+	    return valueClass;
 	case PROPERTY_DATE:
 	    return Date.class;
 	default:

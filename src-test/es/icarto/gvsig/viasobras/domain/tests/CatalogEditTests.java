@@ -276,7 +276,7 @@ public class CatalogEditTests {
     public void testUpdateAforo() throws SQLException {
 	String carretera = carreteraAforo;
 	String concello = concelloAforo;
-	double value = 666;
+	int value = 666;
 	updateAforo(carretera, concello, value);
 
 	// check if the later made effect
@@ -673,7 +673,7 @@ public class CatalogEditTests {
 	    throws SQLException {
 	String ordenTramo = "A";
 	double pk = 10.2;
-	double myValue = 666;
+	int myValue = 666;
 
 	// add new tramo
 	Catalog.clear();

@@ -12,6 +12,7 @@ import es.icarto.gvsig.viasobras.domain.catalog.utils.EventosRecordsetAdapter;
 
 public abstract class EventosMapperAbstract implements EventosMapper {
 
+    public static final int VALUE_FIELD_POSITION = 6;
     public static final String ID_FIELDNAME = "gid";
     public static final String CARRETERA_FIELDNAME = "codigo_carretera";
     public static final String ORDEN_FIELDNAME = "tramo";

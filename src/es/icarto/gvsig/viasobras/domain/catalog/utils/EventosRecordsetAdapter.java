@@ -3,6 +3,7 @@ package es.icarto.gvsig.viasobras.domain.catalog.utils;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,6 +74,8 @@ public class EventosRecordsetAdapter {
     private static List<Evento> toList(ResultSet rs) throws SQLException {
 	List<Evento> ts = new ArrayList<Evento>();
 	rs.beforeFirst();
+	int valueType = rs.getMetaData().getColumnType(
+		EventosMapperAbstract.VALUE_FIELD_POSITION);
 	while (rs.next()) {
 	    Evento evento = new Evento();
 	    evento.setId(Integer.toString(rs
@@ -88,11 +91,25 @@ public class EventosRecordsetAdapter {
 		    .getDouble(EventosMapperAbstract.PK_FIELDNAME));
 	    evento.setValue(rs
 		    .getObject(EventosMapperAbstract.CARACTERISTICA_FIELDNAME));
+	    evento.setValueClass(getClassByType(valueType));
 	    evento.setUpdatingDate(getDate(rs
 		    .getDate(EventosMapperAbstract.FECHA_ACTUALIZACION_FIELDNAME)));
 	    ts.add(evento);
 	}
 	return ts;
+    }
+
+    private static Class getClassByType(int valueType) {
+	switch (valueType) {
+	case Types.VARCHAR:
+	    return String.class;
+	case Types.DOUBLE:
+	    return Double.class;
+	case Types.INTEGER:
+	    return Integer.class;
+	default:
+	    return Object.class;
+	}
     }
 
     private static Date getDate(Date date) {

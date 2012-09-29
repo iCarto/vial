@@ -9,7 +9,7 @@ CREATE TABLE inventario.aforos (
        tramo varchar(1),
        pk float,
        fecha date,
-       valor float,
+       valor integer,
        PRIMARY KEY(gid),
        FOREIGN KEY (codigo_carretera) REFERENCES inventario.carreteras (numero) ON DELETE CASCADE
 );
