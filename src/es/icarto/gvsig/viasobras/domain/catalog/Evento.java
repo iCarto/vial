@@ -171,28 +171,37 @@ public class Evento {
 	}
     }
 
-    public void setProperty(int index, Object value) {
+    public boolean setProperty(int index, Object value) {
 	switch (index) {
 	case PROPERTY_PK:
-	    setPk((Double) value);
-	    break;
+	    if (value != null) {
+		setPk((Double) value);
+		return true;
+	    }
+	    return false;
 	case PROPERTY_CONCELLO:
 	    setConcello((String) value);
-	    break;
+	    return true;
 	case PROPERTY_ORDEN:
 	    setOrden((String) value);
-	    break;
+	    return true;
 	case PROPERTY_CARRETERA:
 	    setCarretera((String) value);
-	    break;
+	    return true;
 	case PROPERTY_VALUE:
 	    setValue(value);
-	    break;
+	    return true;
 	case PROPERTY_DATE:
-	    setUpdatingDate(Date.valueOf((String) value));
-	    break;
+	    try {
+		setUpdatingDate(Date.valueOf((String) value));
+		return true;
+	    } catch (IllegalArgumentException e) {
+		setUpdatingDate(null);
+		return true;
+	    }
 	default:
 	    // do nothing
+	    return false;
 	}
     }
 

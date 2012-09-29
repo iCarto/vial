@@ -70,8 +70,9 @@ public class EventosTableModel extends AbstractTableModel {
     public void setValueAt(Object value, int row, int col) {
 	int rowInEventos = rows.get(row);
 	String id = eventos.getFromList(rowInEventos).getId();
-	eventos.updateEvento(id, col, value);
-	this.fireTableCellUpdated(row, col);
+	if (eventos.updateEvento(id, col, value)) {
+	    this.fireTableCellUpdated(row, col);
+	}
     }
 
     public void addEvento(Evento e) {

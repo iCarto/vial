@@ -88,17 +88,21 @@ public class Eventos implements Iterable<Evento> {
 	return false;
     }
 
-    public void updateEvento(String id, int propertyIndex, Object propertyValue) {
+    public boolean updateEvento(String id, int propertyIndex,
+	    Object propertyValue) {
 	Evento e = this.getEvento(id);
-	e.setProperty(propertyIndex, propertyValue);
-	int status = e.getStatus();
-	if ((status == Evento.STATUS_ORIGINAL)
-		|| (status == Evento.STATUS_UPDATE)) {
-	    // if evento has INSERT status we should not set as UPDATE,
-	    // as it will affect how mapper will process it
-	    this.getEvento(id).setStatus(Evento.STATUS_UPDATE);
+	if (e.setProperty(propertyIndex, propertyValue)) {
+	    int status = e.getStatus();
+	    if ((status == Evento.STATUS_ORIGINAL)
+		    || (status == Evento.STATUS_UPDATE)) {
+		// if evento has INSERT status we should not set as UPDATE,
+		// as it will affect how mapper will process it
+		this.getEvento(id).setStatus(Evento.STATUS_UPDATE);
+	    }
+	    eventosToValidate.add(e);
+	    return true;
 	}
-	eventosToValidate.add(e);
+	return false;
     }
 
     private Evento getEvento(String id) {

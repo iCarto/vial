@@ -216,7 +216,8 @@ public class Tramo {
 		setUpdatingDate(Date.valueOf((String) value));
 		return true;
 	    } catch (IllegalArgumentException e) {
-		return false;
+		setUpdatingDate(null);
+		return true;
 	    }
 	default:
 	    // do nothing
