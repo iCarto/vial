@@ -18,7 +18,7 @@ CREATE TABLE inventario.aforos (
 INSERT INTO inventario.aforos (
        SELECT nextval('inventario.aforos_gid_seq') AS gid,
               "numero_inv" AS codigo_carretera,
-              to_char("codigo_mun", 'FM99999') AS codigo_municipio,
+              to_char("cod_mun_lu", 'FM99999') AS codigo_municipio,
               "tramo" AS tramo,
               "pk" AS pk,
               to_date(to_char("a_o", '9999'), 'yyyy') AS fecha,
