@@ -52,6 +52,18 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/procesar_carreteras.sql
 
+# Rampas & variantes
+#-------------------
+
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname < datos/inventario/variantes_rampas_tmp.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname < funcions/procesar_variantes.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname < funcions/procesar_rampas.sql
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname < funcions/procesar_variantes_rampas.sql
+
 # Accidentes
 #-----------
 

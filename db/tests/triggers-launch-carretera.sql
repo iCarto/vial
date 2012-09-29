@@ -1,6 +1,6 @@
 BEGIN;
 
-SELECT plan(17);
+SELECT plan(21);
 
 SELECT trigger_is('inventario',
                   'carreteras',
@@ -43,6 +43,18 @@ SELECT trigger_is('inventario',
                   'update_codigo_carretera',
                   'inventario',
                   'update_codigo_carretera');
+
+SELECT trigger_is('inventario',
+                  'rampas',
+                  'update_longitud',
+                  'inventario',
+                  'update_longitud');
+
+SELECT trigger_is('inventario',
+                  'variantes',
+                  'update_longitud',
+                  'inventario',
+                  'update_longitud');
 
 INSERT INTO inventario.carreteras_lugo
        (numero, pk_inicial, pk_final, the_geom)
@@ -90,5 +102,19 @@ SELECT is(pk_inicial, '6', 'PK inicial autocalculated on INSERT')
 SELECT is(pk_final, '9.65', 'PK final autocalculated on INSERT')
        FROM inventario.carreteras_lugo
        WHERE numero = '9999';
+
+INSERT INTO inventario.rampas
+       (codigo_carretera, pk_inicial, pk_final, the_geom)
+       VALUES('9999', 2, 23.5, ST_GeomFromText('MULTILINESTRING((-70.729212 42.373848,-70.67569 42.375098))', 25829));
+SELECT is(longitud, '21500', 'rampas - longitud calculated on INSERT')
+       FROM inventario.rampas
+       WHERE codigo_carretera = '9999';
+
+INSERT INTO inventario.variantes
+       (codigo_carretera, pk_inicial, pk_final, the_geom)
+       VALUES('9999', 2, 23.5, ST_GeomFromText('MULTILINESTRING((-70.729212 42.373848,-70.67569 42.375098))', 25829));
+SELECT is(longitud, '21500', 'variantes - longitud calculated on INSERT')
+       FROM inventario.variantes
+       WHERE codigo_carretera = '9999';
 
 ROLLBACK;

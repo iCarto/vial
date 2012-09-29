@@ -42,6 +42,11 @@ shp2pgsql -d -g the_geom -W iso-8859-1 -s 25829 -I \
     ${viasobras_data_orig}/inventario/carreteras/Red_provincial_89 \
     inventario.carreteras_tmp > datos/inventario/carreteras_tmp.sql
 
+# rampas & variantes
+shp2pgsql -d -g the_geom -W iso-8859-1 -s 25829 -I \
+    ${viasobras_data_orig}/inventario/carreteras/Variantes_rampas_89 \
+    inventario.variantes_rampas_tmp > datos/inventario/variantes_rampas_tmp.sql
+
 # caracteristicas
 shp2pgsql -d -W iso-8859-1 \
     ${viasobras_data_orig}/inventario/inventario/ancho_plataforma.dbf \
