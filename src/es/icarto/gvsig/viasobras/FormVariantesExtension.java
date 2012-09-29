@@ -2,7 +2,9 @@ package es.icarto.gvsig.viasobras;
 
 import com.iver.andami.PluginServices;
 import com.iver.andami.plugins.Extension;
+import com.iver.cit.gvsig.fmap.layers.FLyrVect;
 
+import es.icarto.gvsig.navtableforms.utils.TOCLayerManager;
 import es.icarto.gvsig.viasobras.forms.FormVariantes;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
@@ -20,13 +22,22 @@ public class FormVariantesExtension extends Extension {
     }
 
     public void execute(String actionCommand) {
-	FormVariantes dialog = new FormVariantes();
-	PluginServices.getMDIManager().addCentredWindow(dialog);
+	TOCLayerManager toc = new TOCLayerManager();
+	FLyrVect l = toc.getLayerByName(FormVariantes.VARIANTES_LAYERNAME);
+	if (l != null) {
+	    FormVariantes dialog = new FormVariantes(l);
+	    if (dialog.init()) {
+		PluginServices.getMDIManager().addCentredWindow(dialog);
+	    }
+	}
     }
 
     public boolean isEnabled() {
+	TOCLayerManager toc = new TOCLayerManager();
 	DBSession dbs = DBSession.getCurrentSession();
-	return (dbs != null) && (dbs.getJavaConnection() != null);
+	return (dbs != null)
+		&& (dbs.getJavaConnection() != null)
+		&& (toc.getLayerByName(FormVariantes.VARIANTES_LAYERNAME) != null);
     }
 
     public boolean isVisible() {

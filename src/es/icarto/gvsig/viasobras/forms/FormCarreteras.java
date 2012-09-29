@@ -98,8 +98,12 @@ public class FormCarreteras extends AbstractForm implements IWindow {
 		"variantes");
 	variantes.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent arg0) {
-		FormVariantes dialog = new FormVariantes();
-		PluginServices.getMDIManager().addCentredWindow(dialog);
+		TOCLayerManager toc = new TOCLayerManager();
+		FLyrVect l = toc.getLayerByName(FormRampas.RAMPAS_LAYERNAME);
+		if (l != null) {
+		    FormVariantes dialog = new FormVariantes(l);
+		    PluginServices.getMDIManager().addCentredWindow(dialog);
+		}
 	    }
 	});
 	rampas = (JButton) AbeilleParser.getButtonsFromContainer(form).get(

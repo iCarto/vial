@@ -1,21 +1,26 @@
 package es.icarto.gvsig.viasobras.forms;
 
-import javax.swing.JPanel;
+import org.apache.log4j.Logger;
 
+import com.iver.andami.PluginServices;
 import com.iver.andami.ui.mdiManager.IWindow;
-import com.iver.andami.ui.mdiManager.WindowInfo;
+import com.iver.cit.gvsig.fmap.layers.FLyrVect;
 import com.jeta.forms.components.panel.FormPanel;
 
-public class FormVariantes extends JPanel implements IWindow {
+import es.icarto.gvsig.navtableforms.AbstractForm;
+
+public class FormVariantes extends AbstractForm implements IWindow {
 
     private FormPanel form;
-    private WindowInfo viewInfo = null;
 
-    public FormVariantes() {
-	form = getFormBody();
-	super.add(form);
+    public static final String VARIANTES_LAYERNAME = "Tramos antiguos";
+
+    public FormVariantes(FLyrVect layer) {
+	super(layer);
+	initWindow();
     }
 
+    @Override
     public FormPanel getFormBody() {
 	if (form == null) {
 	    form = new FormPanel("variantes-ui.xml");
@@ -23,19 +28,30 @@ public class FormVariantes extends JPanel implements IWindow {
 	return form;
     }
 
-    public WindowInfo getWindowInfo() {
-	if (viewInfo == null) {
-	    viewInfo = new WindowInfo(WindowInfo.MODELESSDIALOG
-		    | WindowInfo.RESIZABLE | WindowInfo.PALETTE);
-	    viewInfo.setTitle("Vías y Obras: variantes");
-	    viewInfo.setWidth(325);
-	    viewInfo.setHeight(450);
-	}
-	return viewInfo;
+    public void initWindow() {
+	viewInfo.setTitle("Vías y Obras: variantes");
+	viewInfo.setWidth(560);
+	viewInfo.setHeight(640);
     }
 
     public Object getWindowProfile() {
 	return null;
+    }
+
+    @Override
+    public String getXMLPath() {
+	return PluginServices.getPluginServices("es.icarto.gvsig.viasobras")
+		.getClassLoader().getResource("viasobras-metadata.xml")
+		.getPath();
+    }
+
+    @Override
+    public Logger getLoggerName() {
+	return Logger.getLogger("VariantesForm");
+    }
+
+    @Override
+    protected void fillSpecificValues() {
     }
 
 }

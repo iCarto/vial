@@ -30,7 +30,7 @@
     </RECORDSET>
   </LAYER>
 
-  <LAYER alias="Variantes">
+  <LAYER alias="Tramos antiguos">
       <FIELD>
       	<FIELDNAME>orden_variante</FIELDNAME>
       	<VALIDATIONRULE>INTEGER_POSITIVE</VALIDATIONRULE>

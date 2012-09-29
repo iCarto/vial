@@ -47,7 +47,7 @@ public class FormRampas extends AbstractForm implements IWindow {
 
     @Override
     public Logger getLoggerName() {
-	return Logger.getLogger("CarreterasForm");
+	return Logger.getLogger("RampasForm");
     }
 
     @Override
