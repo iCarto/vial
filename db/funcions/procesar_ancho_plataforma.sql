@@ -32,9 +32,6 @@ INSERT INTO inventario.ancho_plataforma(
        FROM inventario.ancho_plataforma_tmp
 );
 
-DELETE FROM inventario.ancho_plataforma WHERE
-       pk_inicial IS NULL AND pk_final IS NULL;
-
 DROP TABLE IF EXISTS inventario.ancho_plataforma_tmp;
 
 -- linear referencing

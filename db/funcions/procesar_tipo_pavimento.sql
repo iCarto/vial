@@ -32,9 +32,6 @@ INSERT INTO inventario.tipo_pavimento(
        FROM inventario.tipo_pavimento_tmp
 );
 
-DELETE FROM inventario.tipo_pavimento WHERE
-       pk_inicial IS NULL OR pk_final IS NULL;
-
 DROP TABLE IF EXISTS inventario.tipo_pavimento_tmp;
 
 -- linear referencing

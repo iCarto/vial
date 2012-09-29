@@ -36,9 +36,6 @@ INSERT INTO inventario.cotas(
        FROM inventario.cotas_tmp
 );
 
-DELETE FROM inventario.cotas WHERE
-       pk_inicial IS NULL AND pk_final IS NULL;
-
 DROP TABLE IF EXISTS inventario.cotas_tmp;
 
 -- linear referencing
