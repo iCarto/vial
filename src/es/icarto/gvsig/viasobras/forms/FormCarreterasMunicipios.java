@@ -37,6 +37,7 @@ IWindowListener {
     private JTextField ordenTramo;
     private JTextField pkInicial;
     private JTextField pkFinal;
+    private JTextField longitud;
     private JTextArea observaciones;
     private JButton save;
     private ActionListener action;
@@ -112,6 +113,7 @@ IWindowListener {
 	ordenTramo = (JTextField) widgets.get("orden_tramo");
 	pkInicial = (JTextField) widgets.get("pk_inicial_tramo");
 	pkFinal = (JTextField) widgets.get("pk_final_tramo");
+	longitud = (JTextField) widgets.get("longitud_tramo");
 	observaciones = (JTextArea) widgets.get("observaciones_tramo");
 
 	carretera.setEnabled(false);
@@ -129,6 +131,8 @@ IWindowListener {
 	    pkInicial.setText(model.read((int) position)
 		    .get("pk_inicial_tramo"));
 	    pkFinal.setText(model.read((int) position).get("pk_final_tramo"));
+	    longitud.setText(model.read((int) position).get(
+		    "longitud_tramo"));
 	    observaciones.setText(model.read((int) position).get(
 		    "observaciones_tramo"));
 	} catch (ReadDriverException e) {
@@ -138,6 +142,7 @@ IWindowListener {
 	    ordenTramo.setText("");
 	    pkInicial.setText("");
 	    pkFinal.setText("");
+	    longitud.setText("");
 	    observaciones.setText("");
 	}
     }
@@ -148,6 +153,7 @@ IWindowListener {
 	ordenTramo.setText("");
 	pkInicial.setText("");
 	pkFinal.setText("");
+	longitud.setText("");
 	observaciones.setText("");
     }
 
@@ -175,6 +181,7 @@ IWindowListener {
 	    values.put("orden_tramo", ordenTramo.getText());
 	    values.put("pk_inicial_tramo", pkInicial.getText());
 	    values.put("pk_final_tramo", pkFinal.getText());
+	    values.put("longitud_tramo", longitud.getText());
 	    values.put("observaciones_tramo", observaciones.getText());
 	    try {
 		model.create(values);
@@ -193,10 +200,12 @@ IWindowListener {
 	    model.updateValue("orden_tramo", ordenTramo.getText());
 	    model.updateValue("pk_inicial_tramo", pkInicial.getText());
 	    model.updateValue("pk_final_tramo", pkFinal.getText());
+	    model.updateValue("longitud_tramo", longitud.getText());
 	    model.updateValue("observaciones_tramo", observaciones.getText());
 	    try {
 		model.update((int) position);
 		refreshParentForm();
+		fillWidgetsForUpdatingRecord((int) position);
 	    } catch (Exception e) {
 		NotificationManager.addError(e);
 	    }

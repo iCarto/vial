@@ -57,12 +57,14 @@ public class FormCarreteras extends AbstractForm implements IWindow {
 	colNames.add("orden_tramo");
 	colNames.add("pk_inicial_tramo");
 	colNames.add("pk_final_tramo");
+	colNames.add("longitud_tramo");
 	colNames.add("observaciones_tramo");
 	ArrayList<String> colAliases = new ArrayList<String>();
 	colAliases.add("Municipio");
 	colAliases.add("Orden tramo");
 	colAliases.add("PK Inicial");
 	colAliases.add("PK Final");
+	colAliases.add("Longitud");
 	colAliases.add("Observaciones");
 	TableModelAlphanumeric model;
 	try {
