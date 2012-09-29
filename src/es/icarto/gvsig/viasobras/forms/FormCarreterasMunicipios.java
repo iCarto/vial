@@ -48,7 +48,7 @@ IWindowListener {
     public FormCarreterasMunicipios(AbstractForm parentForm) {
 	super();
 	this.parentForm = parentForm;
-	FormPanel formBody = new FormPanel("carreteras-municipios.xml");
+	FormPanel formBody = new FormPanel("carretera-municipio-ui.xml");
 	form = new JScrollPane(formBody);
 	initWidgets();
 	action = new CreateAction();

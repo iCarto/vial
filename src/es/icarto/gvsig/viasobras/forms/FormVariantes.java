@@ -18,7 +18,7 @@ public class FormVariantes extends JPanel implements IWindow {
 
     public FormPanel getFormBody() {
 	if (form == null) {
-	    form = new FormPanel("variantes.xml");
+	    form = new FormPanel("variantes-ui.xml");
 	}
 	return form;
     }

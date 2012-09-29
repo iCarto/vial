@@ -22,6 +22,7 @@ import es.icarto.gvsig.navtableforms.gui.tables.TableModelAlphanumeric;
 import es.icarto.gvsig.navtableforms.gui.tables.TableModelFactory;
 import es.icarto.gvsig.navtableforms.ormlite.domain.KeyValue;
 import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
+import es.icarto.gvsig.navtableforms.utils.TOCLayerManager;
 import es.udc.cartolab.gvsig.navtable.listeners.PositionEvent;
 
 public class FormCarreteras extends AbstractForm implements IWindow {
@@ -105,8 +106,12 @@ public class FormCarreteras extends AbstractForm implements IWindow {
 		"rampas");
 	rampas.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
-		FormRampas dialog = new FormRampas();
-		PluginServices.getMDIManager().addCentredWindow(dialog);
+		TOCLayerManager toc = new TOCLayerManager();
+		FLyrVect l = toc.getLayerByName(FormRampas.RAMPAS_LAYERNAME);
+		if (l != null) {
+		    FormRampas dialog = new FormRampas(l);
+		    PluginServices.getMDIManager().addCentredWindow(dialog);
+		}
 	    }
 	});
     }
@@ -121,7 +126,7 @@ public class FormCarreteras extends AbstractForm implements IWindow {
     @Override
     public FormPanel getFormBody() {
 	if (form == null) {
-	    form = new FormPanel("carreteras.xml");
+	    form = new FormPanel("carreteras-ui.xml");
 	}
 	return form;
     }
@@ -134,7 +139,8 @@ public class FormCarreteras extends AbstractForm implements IWindow {
     @Override
     public String getXMLPath() {
 	return PluginServices.getPluginServices("es.icarto.gvsig.viasobras")
-		.getClassLoader().getResource("viasobras.xml").getPath();
+		.getClassLoader().getResource("viasobras-metadata.xml")
+		.getPath();
     }
 
     @Override

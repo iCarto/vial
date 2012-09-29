@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<METADATA>
+  <LAYER alias="Rampas">
+      <FIELD>
+      	<FIELDNAME>orden_rampa</FIELDNAME>
+      	<VALIDATIONRULE>INTEGER_POSITIVE</VALIDATIONRULE>
+      	<VALIDATIONRULE>MANDATORY</VALIDATIONRULE>
+      </FIELD>
+      <FIELD>
+      	<FIELDNAME>orden_rampa_tramo</FIELDNAME>
+      	<VALIDATIONRULE>INTEGER_POSITIVE</VALIDATIONRULE>
+      	<VALIDATIONRULE>MANDATORY</VALIDATIONRULE>
+      </FIELD>
+      <FIELD>
+        <FIELDNAME>codigo_carretera</FIELDNAME>
+        <DOMAINREADER>
+        <DRTYPE>db</DRTYPE>
+        <DRDBTABLE>carreteras</DRDBTABLE>
+        <DRDBCOLUMNVALUE>numero</DRDBCOLUMNVALUE>
+        <DRDBCOLUMNALIAS>codigo</DRDBCOLUMNALIAS>
+        </DOMAINREADER>
+      </FIELD>
+      <FIELD>
+        <FIELDNAME>codigo_municipio</FIELDNAME>
+        <DOMAINREADER>
+        <DRTYPE>db</DRTYPE>
+        <DRDBTABLE>municipio_codigo</DRDBTABLE>
+        <DRDBCOLUMNVALUE>codigo</DRDBCOLUMNVALUE>
+        <DRDBCOLUMNALIAS>nombre</DRDBCOLUMNALIAS>
+        </DOMAINREADER>
+      </FIELD>  	
+  </LAYER>
+</METADATA>

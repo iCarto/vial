@@ -37,7 +37,6 @@
 	</path>
 
 	<target name="copy-data-files">
-		<copy file="data/viasobras.xml" todir="${dist}" overwrite="yes"/>
 		<copy file="config/config.xml" todir="${dist}" overwrite="yes"/>
 		<copy todir="${dist}">
 			<fileset dir="config" includes="text*.properties" />

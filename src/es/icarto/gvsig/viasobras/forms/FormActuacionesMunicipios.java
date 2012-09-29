@@ -43,7 +43,7 @@ public class FormActuacionesMunicipios extends JPanel implements IWindow {
     }
 
     private void initPanel() {
-	form = new FormPanel("actuaciones-municipios.xml");
+	form = new FormPanel("actuacion-municipio-ui.xml");
 	scrollPane = new JScrollPane(form);
 	this.add(scrollPane);
 	JPanel panel = new JPanel();

@@ -39,7 +39,7 @@ public class FormActuaciones extends AbstractForm {
     @Override
     public FormPanel getFormBody() {
 	if (form == null) {
-	    form = new FormPanel("actuaciones.xml");
+	    form = new FormPanel("actuaciones-ui.xml");
 	}
 	return form;
     }
@@ -47,7 +47,8 @@ public class FormActuaciones extends AbstractForm {
     @Override
     public String getXMLPath() {
 	return PluginServices.getPluginServices("es.icarto.gvsig.viasobras")
-		.getClassLoader().getResource("viasobras.xml").getPath();
+		.getClassLoader().getResource("viasobras-metadata.xml")
+		.getPath();
     }
 
     @Override

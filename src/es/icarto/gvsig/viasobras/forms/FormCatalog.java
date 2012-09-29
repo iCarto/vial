@@ -87,7 +87,7 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
     private JButton deleteAforo;
 
     public FormCatalog() {
-	form = new FormPanel("catalogo.xml");
+	form = new FormPanel("catalogo-ui.xml");
 	initDomainMapper();
 	Catalog.clear();
 	initForm();

@@ -1,34 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <METADATA>
-  <LAYER alias="Carreteras">
-    <TABLENAME>carreteras_lugo</TABLENAME>
-    <PRIMARYKEY>
-    	<PKELEMENT>gid</PKELEMENT>
-    </PRIMARYKEY>
-    <RECORDSET>
-      <FIELD>
-        <FIELDNAME>numero</FIELDNAME>
-        <DOMAINREADER>
-        <DRTYPE>db</DRTYPE>
-        <DRDBTABLE>carreteras</DRDBTABLE>
-        <DRDBCOLUMNVALUE>numero</DRDBCOLUMNVALUE>
-        <DRDBCOLUMNALIAS>codigo</DRDBCOLUMNALIAS>
-        </DOMAINREADER>
-      </FIELD>
-      <FIELD>
-      	<FIELDNAME>origen_via_pk</FIELDNAME>
-      	<VALIDATIONRULE>DOUBLE_POSITIVE</VALIDATIONRULE>
-      </FIELD>
-      <FIELD>
-      	<FIELDNAME>final_via_pk</FIELDNAME>
-      	<VALIDATIONRULE>DOUBLE_POSITIVE</VALIDATIONRULE>
-      </FIELD>
-      <FIELD>
-      	<FIELDNAME>longitud</FIELDNAME>
-      	<VALIDATIONRULE>DOUBLE_POSITIVE</VALIDATIONRULE>
-      </FIELD>
-    </RECORDSET>
-  </LAYER>
   <LAYER alias="Actuaciones">
     <TABLENAME>actuaciones</TABLENAME>
     <PRIMARYKEY>

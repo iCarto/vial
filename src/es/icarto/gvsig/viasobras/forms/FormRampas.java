@@ -1,41 +1,57 @@
 package es.icarto.gvsig.viasobras.forms;
 
-import javax.swing.JPanel;
+import org.apache.log4j.Logger;
 
+import com.iver.andami.PluginServices;
 import com.iver.andami.ui.mdiManager.IWindow;
-import com.iver.andami.ui.mdiManager.WindowInfo;
+import com.iver.cit.gvsig.fmap.layers.FLyrVect;
 import com.jeta.forms.components.panel.FormPanel;
 
-public class FormRampas extends JPanel implements IWindow {
+import es.icarto.gvsig.navtableforms.AbstractForm;
+
+public class FormRampas extends AbstractForm implements IWindow {
+
+    public static final String RAMPAS_LAYERNAME = "Rampas";
 
     private FormPanel form;
-    private WindowInfo viewInfo = null;
 
-    public FormRampas() {
-	form = getFormBody();
-	super.add(form);
+    public FormRampas(FLyrVect layer) {
+	super(layer);
+	initWindow();
     }
 
+    public void initWindow() {
+	viewInfo.setTitle("Vías y Obras: rampas");
+	viewInfo.setWidth(560);
+	viewInfo.setHeight(640);
+    }
+
+    @Override
     public FormPanel getFormBody() {
 	if (form == null) {
-	    form = new FormPanel("rampas.xml");
+	    form = new FormPanel("rampas-ui.xml");
 	}
 	return form;
     }
 
-    public WindowInfo getWindowInfo() {
-	if (viewInfo == null) {
-	    viewInfo = new WindowInfo(WindowInfo.MODELESSDIALOG
-		    | WindowInfo.RESIZABLE | WindowInfo.PALETTE);
-	    viewInfo.setTitle("Vías y Obras: rampas");
-	    viewInfo.setWidth(325);
-	    viewInfo.setHeight(425);
-	}
-	return viewInfo;
-    }
-
     public Object getWindowProfile() {
 	return null;
+    }
+
+    @Override
+    public String getXMLPath() {
+	return PluginServices.getPluginServices("es.icarto.gvsig.viasobras")
+		.getClassLoader().getResource("viasobras-metadata.xml")
+		.getPath();
+    }
+
+    @Override
+    public Logger getLoggerName() {
+	return Logger.getLogger("CarreterasForm");
+    }
+
+    @Override
+    protected void fillSpecificValues() {
     }
 
 }
