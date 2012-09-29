@@ -17,6 +17,11 @@ pg_prove -h $viasobras_server -p $viasobras_port -U $viasobras_user \
 pg_prove -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     -d $viasobras_dbname ./tests/triggers-launch-caracteristicas.sql
 
+#Variantes & rampas: estado
+echo -e "\n"
+pg_prove -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    -d $viasobras_dbname ./tests/check-estado-variantes-rampas.sql
+
 # orden tramo
 echo -e "\n"
 pg_prove -h $viasobras_server -p $viasobras_port -U $viasobras_user \

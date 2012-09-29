@@ -44,6 +44,13 @@ INSERT INTO inventario.rampas(
         WHERE tipo=1 -- 1=rampas, 2=variantes
 );
 
+UPDATE inventario.rampas
+       SET estado = 'USO'
+       WHERE (estado IS NULL) OR (estado <> 'DESUSO' AND estado <> 'ABANDONO');
+UPDATE inventario.rampas
+       SET estado = 'DESUSO'
+       WHERE estado = 'ABANDONO';
+
 -- triggers
 
 DROP TRIGGER IF EXISTS update_longitud ON inventario.rampas;
