@@ -14,7 +14,7 @@ CREATE TABLE inventario.rampas(
        origen_via_pk float,
        longitud integer,
        estado varchar(10),
-       ancho_pavimento double precision,
+       ancho_plataforma double precision,
        tipo_pavimento varchar(6),
        observaciones text,
        PRIMARY KEY(gid),
@@ -34,7 +34,7 @@ INSERT INTO inventario.rampas(
               "pk_l_ini" AS origen_via_pk,
               "longitud__" AS longitud,
               "estado" AS estado,
-              "ancho_medi" AS ancho_pavimento,
+              "ancho_medi" AS ancho_plataforma,
               "tipo_de_pa" AS tipo_pavimento,
               "observacio" AS observaciones,
               "the_geom" AS the_geom
