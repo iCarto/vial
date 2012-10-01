@@ -49,7 +49,11 @@
 		<extension class-name="es.icarto.gvsig.viasobras.FormActuacionAltaExtension" description="FORMS_PANEL" active="true">
 			<menu action-command="separator" text="Vías y Obras" position="30399" is_separator="true"/>
 			<menu text="Vías y Obras/Alta actuación"
+				icon="viasobras-actuacion-alta"
 				position="30400"/>
+			<tool-bar name="ViasObrasLugo" position="70">
+				<action-tool icon="viasobras-actuacion-alta" tooltip="Alta actuación" action-command="FormActuacionAlta" position="5"/>
+			</tool-bar>
 		</extension>		
 
 		<extension class-name="es.icarto.gvsig.viasobras.FormActuacionesExtension" description="FORMS_PANEL" active="true">
@@ -57,7 +61,7 @@
 				icon="viasobras-actuaciones"
 				position="30500"/>
 			<tool-bar name="ViasObrasLugo" position="70">
-				<action-tool icon="viasobras-actuaciones" tooltip="Actuaciones" action-command="FormActuaciones" position="5"/>
+				<action-tool icon="viasobras-actuaciones" tooltip="Actuaciones" action-command="FormActuaciones" position="6"/>
 			</tool-bar>
 		</extension>
 
@@ -68,7 +72,7 @@
 				position="30600"/>
 			<tool-bar name="ViasObrasLugo" position="70">
 				<action-tool icon="viasobras-consultas" tooltip="Consultas estado actual"
-					action-command="QueriesEstado" position="6"/>
+					action-command="QueriesEstado" position="7"/>
 			</tool-bar>
 		</extension>		
 

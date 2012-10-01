@@ -57,7 +57,7 @@ public class QueriesEstadoPanel extends gvWindow {
     private JComboBox concellos;
 
     public QueriesEstadoPanel(boolean report) {
-	super(600, 450, true);
+	super(630, 450, true);
 	this.isReport = report;
 	if (isReport) {
 	    this.setTitle("Informes");

@@ -14,6 +14,14 @@ public class FormActuacionAltaExtension extends Extension {
     private String actuacionesLayerName = "Actuaciones";
 
     public void initialize() {
+	registerIcons();
+    }
+
+    private void registerIcons() {
+	PluginServices.getIconTheme().registerDefault(
+		"viasobras-actuacion-alta",
+		this.getClass().getClassLoader()
+		.getResource("images/actuacion_alta.png"));
     }
 
     public void execute(String actionCommand) {

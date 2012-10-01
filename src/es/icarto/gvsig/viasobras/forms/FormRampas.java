@@ -22,8 +22,8 @@ public class FormRampas extends AbstractForm implements IWindow {
 
     public void initWindow() {
 	viewInfo.setTitle("Vías y Obras: rampas");
-	viewInfo.setHeight(560);
-	viewInfo.setWidth(550);
+	viewInfo.setHeight(590);
+	viewInfo.setWidth(580);
     }
 
     @Override
