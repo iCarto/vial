@@ -82,8 +82,8 @@ public class FormActuacionesMunicipios extends JPanel implements IWindow {
 	    viewInfo = new WindowInfo(WindowInfo.MODALDIALOG
 		    | WindowInfo.PALETTE);
 	    viewInfo.setTitle("Municipios");
+	    viewInfo.setHeight(300);
 	    viewInfo.setWidth(800);
-	    viewInfo.setHeight(400);
 	}
 	return viewInfo;
     }

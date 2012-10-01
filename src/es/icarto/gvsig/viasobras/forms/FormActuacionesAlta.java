@@ -91,8 +91,8 @@ public class FormActuacionesAlta extends JPanel implements IWindow {
 	    viewInfo = new WindowInfo(WindowInfo.MODELESSDIALOG
 		    | WindowInfo.RESIZABLE | WindowInfo.PALETTE);
 	    viewInfo.setTitle("Vías Obras: alta actuación");
+	    viewInfo.setHeight(480);
 	    viewInfo.setWidth(560);
-	    viewInfo.setHeight(430);
 	}
 	return viewInfo;
     }
