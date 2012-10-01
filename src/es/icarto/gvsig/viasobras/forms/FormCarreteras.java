@@ -101,10 +101,13 @@ public class FormCarreteras extends AbstractForm implements IWindow {
 	variantes.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent arg0) {
 		TOCLayerManager toc = new TOCLayerManager();
-		FLyrVect l = toc.getLayerByName(FormRampas.RAMPAS_LAYERNAME);
+		FLyrVect l = toc
+			.getLayerByName(FormVariantes.VARIANTES_LAYERNAME);
 		if (l != null) {
 		    FormVariantes dialog = new FormVariantes(l);
-		    PluginServices.getMDIManager().addCentredWindow(dialog);
+		    if (dialog.init()) {
+			PluginServices.getMDIManager().addCentredWindow(dialog);
+		    }
 		}
 	    }
 	});
@@ -116,7 +119,9 @@ public class FormCarreteras extends AbstractForm implements IWindow {
 		FLyrVect l = toc.getLayerByName(FormRampas.RAMPAS_LAYERNAME);
 		if (l != null) {
 		    FormRampas dialog = new FormRampas(l);
-		    PluginServices.getMDIManager().addCentredWindow(dialog);
+		    if (dialog.init()) {
+			PluginServices.getMDIManager().addCentredWindow(dialog);
+		    }
 		}
 	    }
 	});
