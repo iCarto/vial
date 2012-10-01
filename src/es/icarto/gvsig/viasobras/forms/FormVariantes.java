@@ -34,6 +34,15 @@ public class FormVariantes extends AbstractForm implements IWindow {
 	viewInfo.setWidth(580);
     }
 
+    @Override
+    protected void enableSaveButton(boolean bool) {
+	if (!isChangedValues()) {
+	    saveB.setEnabled(false);
+	} else {
+	    saveB.setEnabled(bool);
+	}
+    }
+
     public Object getWindowProfile() {
 	return null;
     }

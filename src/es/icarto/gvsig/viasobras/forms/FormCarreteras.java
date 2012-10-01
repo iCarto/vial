@@ -47,6 +47,15 @@ public class FormCarreteras extends AbstractForm implements IWindow {
     }
 
     @Override
+    protected void enableSaveButton(boolean bool) {
+	if (!isChangedValues()) {
+	    saveB.setEnabled(false);
+	} else {
+	    saveB.setEnabled(bool);
+	}
+    }
+
+    @Override
     protected void fillSpecificValues() {
 	updateJTables();
     }

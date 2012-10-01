@@ -27,6 +27,15 @@ public class FormRampas extends AbstractForm implements IWindow {
     }
 
     @Override
+    protected void enableSaveButton(boolean bool) {
+	if (!isChangedValues()) {
+	    saveB.setEnabled(false);
+	} else {
+	    saveB.setEnabled(bool);
+	}
+    }
+
+    @Override
     public FormPanel getFormBody() {
 	if (form == null) {
 	    form = new FormPanel("rampas-ui.xml");
