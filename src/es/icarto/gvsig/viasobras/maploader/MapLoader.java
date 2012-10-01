@@ -24,6 +24,8 @@ public class MapLoader {
 
     private static final String CARRETERAS = "Carreteras";
     private static final String MUNICIPIOS = "Municipios";
+    private static final String VARIANTES = "Tramos antiguos";
+    private static final String RAMPAS = "Rampas";
     private static final String ANCHO_PLATAFORMA = "Ancho plataforma";
     private static final String TIPO_PAVIMENTO = "Tipo pavimento";
     private static final String COTAS_MAXIMAS = "Cotas máximas";
@@ -61,6 +63,12 @@ public class MapLoader {
 	}
 	if (map.layerInMap(COTAS_MAXIMAS)) {
 	    map.getLayer(COTAS_MAXIMAS).setWhere(whereTramos);
+	}
+	if (map.layerInMap(VARIANTES)) {
+	    map.getLayer(VARIANTES).setWhere(whereTramos);
+	}
+	if (map.layerInMap(RAMPAS)) {
+	    map.getLayer(RAMPAS).setWhere(whereTramos);
 	}
 	// filters for eventos
 	String whereEventos = WhereAdapter.getClause(WhereAdapter.EVENTOS);
