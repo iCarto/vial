@@ -29,9 +29,9 @@ public class FormVariantes extends AbstractForm implements IWindow {
     }
 
     public void initWindow() {
-	viewInfo.setTitle("Vías y Obras: variantes");
-	viewInfo.setWidth(560);
-	viewInfo.setHeight(640);
+	viewInfo.setTitle("Vías y Obras: tramos antiguos");
+	viewInfo.setHeight(560);
+	viewInfo.setWidth(550);
     }
 
     public Object getWindowProfile() {

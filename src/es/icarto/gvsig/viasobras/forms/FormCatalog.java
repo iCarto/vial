@@ -341,7 +341,7 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 		    | WindowInfo.PALETTE);
 	    viewInfo.setTitle("Vias Obras");
 	    viewInfo.setWidth(960);
-	    viewInfo.setHeight(500);
+	    viewInfo.setHeight(540);
 	}
 	return viewInfo;
     }

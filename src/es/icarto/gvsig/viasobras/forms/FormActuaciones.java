@@ -28,8 +28,8 @@ public class FormActuaciones extends AbstractForm {
     }
 
     public void initWindow() {
-	viewInfo.setHeight(630);
-	viewInfo.setWidth(560);
+	viewInfo.setHeight(560);
+	viewInfo.setWidth(550);
 	viewInfo.setTitle("Vías y Obras: actuaciones");
 
 	this.getActionsToolBar().add(

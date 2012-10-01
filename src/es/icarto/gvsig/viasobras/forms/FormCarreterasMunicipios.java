@@ -196,8 +196,8 @@ IWindowListener {
 		    | WindowInfo.RESIZABLE | WindowInfo.PALETTE);
 	    viewInfo.setTitle(PluginServices.getText(this,
 		    "Carreteras / Ayuntamientos"));
-	    viewInfo.setWidth(275);
-	    viewInfo.setHeight(300);
+	    viewInfo.setHeight(350);
+	    viewInfo.setWidth(350);
 	}
 	return viewInfo;
     }
