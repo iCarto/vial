@@ -2,11 +2,18 @@ package es.icarto.gvsig.viasobras.forms;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -28,6 +35,8 @@ import es.icarto.gvsig.navtableforms.ormlite.ORMLite;
 import es.icarto.gvsig.navtableforms.ormlite.domain.DomainValues;
 import es.icarto.gvsig.navtableforms.ormlite.domain.KeyValue;
 import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
+import es.udc.cartolab.gvsig.navtable.format.DoubleFormatNT;
+import es.udc.cartolab.gvsig.users.utils.DBSession;
 
 public class FormCarreterasMunicipios extends JPanel implements IForm, IWindow,
 IWindowListener {
@@ -46,6 +55,9 @@ IWindowListener {
     private JButton save;
     private ActionListener action;
     private AbstractForm parentForm;
+
+    private String concelloValue;
+    private String ordenTramoValue;
 
     private String carreteraCode;
     private long position;
@@ -142,9 +154,11 @@ IWindowListener {
 	    carretera.setText(model.read((int) position)
 		    .get("codigo_carretera"));
 	    fillConcellos();
-	    setConcelloSelected(model.read((int) position).get(
-		    "codigo_municipio"));
-	    ordenTramo.setText(model.read((int) position).get("orden_tramo"));
+	    concelloValue = model.read((int) position).get(
+		    "codigo_municipio");
+	    setConcelloSelected(concelloValue);
+	    ordenTramoValue = model.read((int) position).get("orden_tramo");
+	    ordenTramo.setText(ordenTramoValue);
 	    pkInicial.setText(model.read((int) position)
 		    .get("pk_inicial_tramo"));
 	    pkFinal.setText(model.read((int) position).get("pk_final_tramo"));
@@ -208,6 +222,15 @@ IWindowListener {
 
     private final class CreateAction implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
+	    if (isPKInicialVoid() || isPKFinalVoid() || isOrdenTramoVoid()) {
+		showWarningPanel("Aviso: campos obligatorios",
+			"Debe rellenar los campos Orden Tramo, PK inicial y PK final");
+		return;
+	    } else if (isConcelloTramoAlreadyInDB()) {
+		showWarningPanel("Aviso: campos únicos",
+			"El tramo introducido ya existe para el municipio seleccionado.");
+		return;
+	    }
 	    HashMap<String, String> values = new HashMap<String, String>();
 	    values.put("codigo_carretera", carretera.getText());
 	    values.put("codigo_municipio",
@@ -229,20 +252,114 @@ IWindowListener {
 
     private final class SaveAction implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
+	    if (isPKInicialVoid() || isPKFinalVoid() || isOrdenTramoVoid()) {
+		showWarningPanel("Aviso: campos obligatorios",
+			"Debe rellenar los campos Orden Tramo, PK inicial y PK final");
+		return;
+	    }
+	    if (hasConcelloOrOrdenChanged()) {
+		if (isConcelloTramoAlreadyInDB()) {
+		    showWarningPanel("Aviso: campos únicos",
+			    "El tramo introducido ya existe para el municipio seleccionado.");
+		    return;
+		}
+	    }
+	    ordenTramoValue = ordenTramo.getText();
+	    concelloValue = ((KeyValue) concello.getSelectedItem()).getKey();
 	    model.updateValue("codigo_carretera", carretera.getText());
-	    model.updateValue("codigo_municipio",
-		    ((KeyValue) concello.getSelectedItem()).getKey());
-	    model.updateValue("orden_tramo", ordenTramo.getText());
+	    model.updateValue("codigo_municipio", concelloValue);
+	    model.updateValue("orden_tramo", ordenTramoValue);
 	    model.updateValue("pk_inicial_tramo", pkInicial.getText());
 	    model.updateValue("pk_final_tramo", pkFinal.getText());
+	    if (longitud.getText().equals("")) {
+		longitud.setText("0");
+		// will be autocalculated from PKs
+	    }
 	    model.updateValue("longitud_tramo", longitud.getText());
 	    model.updateValue("observaciones_tramo", observaciones.getText());
 	    try {
 		model.update((int) position);
 		refreshParentForm();
-		fillWidgetsForUpdatingRecord((int) position);
 	    } catch (Exception e) {
 		NotificationManager.addError(e);
+	    }
+	}
+
+	private boolean hasConcelloOrOrdenChanged() {
+	    if (!concelloValue.equals(((KeyValue) concello.getSelectedItem())
+		    .getKey()) || !ordenTramoValue.equals(ordenTramo.getText())) {
+		return true;
+	    }
+	    return false;
+	}
+    }
+
+    private boolean isOrdenTramoVoid() {
+	if (ordenTramo.getText().equals("")) {
+	    return true;
+	}
+	return false;
+    }
+
+    private boolean isPKFinalVoid() {
+	if (pkFinal.getText().equals("")) {
+	    return true;
+	}
+	try {
+	    NumberFormat doubleFormat = DoubleFormatNT.getDisplayingFormat();
+	    doubleFormat.parse(pkFinal.getText());
+	    return false;
+	} catch (ParseException e) {
+	    e.printStackTrace();
+	    return true;
+	}
+    }
+
+    private boolean isPKInicialVoid() {
+	if (pkInicial.getText().equals("")) {
+	    return true;
+	}
+	try {
+	    NumberFormat doubleFormat = DoubleFormatNT.getDisplayingFormat();
+	    doubleFormat.parse(pkInicial.getText());
+	    return false;
+	} catch (ParseException e) {
+	    e.printStackTrace();
+	    return true;
+	}
+    }
+
+    private boolean isConcelloTramoAlreadyInDB() {
+	DBSession dbs = DBSession.getCurrentSession();
+	Connection c = dbs.getJavaConnection();
+	try {
+	    c.setAutoCommit(false);
+	    String sqlSelect = "SELECT codigo_carretera, codigo_municipio, orden_tramo "
+		    + " FROM inventario.carretera_municipio "
+		    + " WHERE codigo_carretera = ? AND codigo_municipio = ? AND orden_tramo = ?;";
+	    PreparedStatement stSelect = c.prepareStatement(sqlSelect);
+	    stSelect.setString(1, carretera.getText());
+	    stSelect.setString(2,
+		    ((KeyValue) concello.getSelectedItem()).getKey());
+	    stSelect.setString(3, ordenTramo.getText());
+	    stSelect.execute();
+	    c.commit();
+	    ResultSet rs = stSelect.executeQuery();
+	    rs.last();
+	    int numberOfRows = rs.getRow();
+	    c.close();
+	    if (numberOfRows > 0) {
+		return true;
+	    }
+	    return false;
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	    try {
+		c.close();
+	    } catch (SQLException e1) {
+		e1.printStackTrace();
+	    } finally {
+		return true;
 	    }
 	}
     }
@@ -262,6 +379,12 @@ IWindowListener {
 	} catch (ReadDriverException e) {
 	    e.printStackTrace();
 	}
+    }
+
+    private void showWarningPanel(String title, String message) {
+	JOptionPane.showMessageDialog(this, message,
+		PluginServices.getText(this, title),
+		JOptionPane.WARNING_MESSAGE);
     }
 
 }
