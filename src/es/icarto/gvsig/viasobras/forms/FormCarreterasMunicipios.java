@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -23,6 +24,9 @@ import com.jeta.forms.components.panel.FormPanel;
 import es.icarto.gvsig.navtableforms.AbstractForm;
 import es.icarto.gvsig.navtableforms.gui.tables.IForm;
 import es.icarto.gvsig.navtableforms.gui.tables.TableModelAlphanumeric;
+import es.icarto.gvsig.navtableforms.ormlite.ORMLite;
+import es.icarto.gvsig.navtableforms.ormlite.domain.DomainValues;
+import es.icarto.gvsig.navtableforms.ormlite.domain.KeyValue;
 import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
 
 public class FormCarreterasMunicipios extends JPanel implements IForm, IWindow,
@@ -33,7 +37,7 @@ IWindowListener {
     private TableModelAlphanumeric model;
 
     private JTextField carretera;
-    private JTextField concello;
+    private JComboBox concello;
     private JTextField ordenTramo;
     private JTextField pkInicial;
     private JTextField pkFinal;
@@ -109,7 +113,8 @@ IWindowListener {
 	HashMap<String, JComponent> widgets = AbeilleParser
 		.getWidgetsFromContainer(form);
 	carretera = (JTextField) widgets.get("codigo_carretera");
-	concello = (JTextField) widgets.get("codigo_municipio");
+	concello = (JComboBox) widgets.get("codigo_municipio");
+	fillConcellos();
 	ordenTramo = (JTextField) widgets.get("orden_tramo");
 	pkInicial = (JTextField) widgets.get("pk_inicial_tramo");
 	pkFinal = (JTextField) widgets.get("pk_final_tramo");
@@ -122,11 +127,23 @@ IWindowListener {
 		"guardar");
     }
 
+    private void fillWidgetsForCreatingRecord() {
+	carretera.setText(carreteraCode);
+	fillConcellos();
+	ordenTramo.setText("");
+	pkInicial.setText("");
+	pkFinal.setText("");
+	longitud.setText("");
+	observaciones.setText("");
+    }
+
     private void fillWidgetsForUpdatingRecord(long position) {
 	try {
 	    carretera.setText(model.read((int) position)
 		    .get("codigo_carretera"));
-	    concello.setText(model.read((int) position).get("codigo_municipio"));
+	    fillConcellos();
+	    setConcelloSelected(model.read((int) position).get(
+		    "codigo_municipio"));
 	    ordenTramo.setText(model.read((int) position).get("orden_tramo"));
 	    pkInicial.setText(model.read((int) position)
 		    .get("pk_inicial_tramo"));
@@ -138,7 +155,8 @@ IWindowListener {
 	} catch (ReadDriverException e) {
 	    e.printStackTrace();
 	    carretera.setText("");
-	    concello.setText("");
+	    concello.removeAll();
+	    fillConcellos();
 	    ordenTramo.setText("");
 	    pkInicial.setText("");
 	    pkFinal.setText("");
@@ -147,14 +165,29 @@ IWindowListener {
 	}
     }
 
-    private void fillWidgetsForCreatingRecord() {
-	carretera.setText(carreteraCode);
-	concello.setText("");
-	ordenTramo.setText("");
-	pkInicial.setText("");
-	pkFinal.setText("");
-	longitud.setText("");
-	observaciones.setText("");
+    private void setConcelloSelected(String concelloCode) {
+	for(int i=0; i<concello.getItemCount(); i++) {
+	    if (((KeyValue) concello.getItemAt(i)).getKey()
+		    .equals(concelloCode)) {
+		concello.setSelectedIndex(i);
+	    }
+	}
+    }
+
+    private void fillConcellos() {
+	DomainValues dv = ORMLite.getAplicationDomainObject(getXMLPath())
+		.getDomainValuesForComponent("codigo_municipio");
+	concello.removeAllItems();
+	for (KeyValue kv : dv.getValues()) {
+	    concello.addItem(kv);
+	}
+	concello.setSelectedIndex(0);
+    }
+
+    public String getXMLPath() {
+	return PluginServices.getPluginServices("es.icarto.gvsig.viasobras")
+		.getClassLoader().getResource("viasobras-metadata.xml")
+		.getPath();
     }
 
     public WindowInfo getWindowInfo() {
@@ -177,7 +210,8 @@ IWindowListener {
 	public void actionPerformed(ActionEvent arg0) {
 	    HashMap<String, String> values = new HashMap<String, String>();
 	    values.put("codigo_carretera", carretera.getText());
-	    values.put("codigo_municipio", concello.getText());
+	    values.put("codigo_municipio",
+		    ((KeyValue) concello.getSelectedItem()).getKey());
 	    values.put("orden_tramo", ordenTramo.getText());
 	    values.put("pk_inicial_tramo", pkInicial.getText());
 	    values.put("pk_final_tramo", pkFinal.getText());
@@ -196,7 +230,8 @@ IWindowListener {
     private final class SaveAction implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 	    model.updateValue("codigo_carretera", carretera.getText());
-	    model.updateValue("codigo_municipio", concello.getText());
+	    model.updateValue("codigo_municipio",
+		    ((KeyValue) concello.getSelectedItem()).getKey());
 	    model.updateValue("orden_tramo", ordenTramo.getText());
 	    model.updateValue("pk_inicial_tramo", pkInicial.getText());
 	    model.updateValue("pk_final_tramo", pkFinal.getText());
