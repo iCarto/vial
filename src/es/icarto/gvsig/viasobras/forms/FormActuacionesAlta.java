@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -28,6 +29,7 @@ import com.jeta.forms.components.panel.FormPanel;
 import es.icarto.gvsig.navtableforms.ormlite.ORMLite;
 import es.icarto.gvsig.navtableforms.ormlite.domain.DomainValues;
 import es.icarto.gvsig.navtableforms.ormlite.domain.KeyValue;
+import es.udc.cartolab.gvsig.navtable.format.DoubleFormatNT;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
 public class FormActuacionesAlta extends JPanel implements IWindow {
@@ -112,6 +114,19 @@ public class FormActuacionesAlta extends JPanel implements IWindow {
 			"El código de actuación introducido ya existe.");
 		return;
 	    }
+	    double pkInicialValue, pkFinalValue;
+	    try {
+		NumberFormat doubleFormat = DoubleFormatNT
+			.getDisplayingFormat();
+		pkInicialValue = (Double) doubleFormat.parse(
+			pkInicial.getText()).doubleValue();
+		pkFinalValue = (Double) doubleFormat.parse(pkFinal.getText())
+			.doubleValue();
+	    } catch (ParseException pe) {
+		showWarningPanel("Aviso: PKs",
+			"Revise los valores en los campos PKs.");
+		return;
+	    }
 	    DBSession dbs = DBSession.getCurrentSession();
 	    Connection c = dbs.getJavaConnection();
 	    try {
@@ -123,17 +138,20 @@ public class FormActuacionesAlta extends JPanel implements IWindow {
 		String codigoCarreteraValue = ((KeyValue) codigoCarretera
 			.getSelectedItem()).getKey();
 		stInsert.setString(1, codigoCarreteraValue);
-		stInsert.setDouble(2, Double.parseDouble(pkInicial.getText()));
-		stInsert.setDouble(3, Double.parseDouble(pkFinal.getText()));
+		stInsert.setDouble(2, pkInicialValue);
+		stInsert.setDouble(3, pkFinalValue);
 		stInsert.setString(4, codigoActuacion.getText());
 		stInsert.setString(5, (String) tipo.getSelectedItem()
 			.toString());
 		stInsert.setString(6, descripcion.getText());
 		stInsert.setString(7, tituloProyecto.getText());
 		try {
-		    double importeValue = Double.parseDouble(importe.getText());
+		    NumberFormat doubleFormat = DoubleFormatNT
+			    .getDisplayingFormat();
+		    double importeValue = (Double) doubleFormat.parse(
+			    importe.getText()).doubleValue();
 		    stInsert.setDouble(8, importeValue);
-		} catch (NumberFormatException nfe) {
+		} catch (ParseException pe) {
 		    stInsert.setNull(8, java.sql.Types.DOUBLE);
 		}
 		try {
@@ -147,12 +165,18 @@ public class FormActuacionesAlta extends JPanel implements IWindow {
 		stInsert.setString(11, observaciones.getText());
 		stInsert.execute();
 		c.commit();
+		c.close();
 		showWarningPanel("Actuación guardada", "La actuación "
 			+ codigoActuacion.getText()
 			+ " ha sido guardada correctamente");
 	    } catch (SQLException e1) {
 		e1.printStackTrace();
 		NotificationManager.addError(e1);
+		try {
+		    c.close();
+		} catch (SQLException e2) {
+		    e2.printStackTrace();
+		}
 	    }
 	}
     }
@@ -175,9 +199,11 @@ public class FormActuacionesAlta extends JPanel implements IWindow {
 	    return true;
 	}
 	try {
-	    Double.parseDouble(pkFinal.getText());
+	    NumberFormat doubleFormat = DoubleFormatNT.getDisplayingFormat();
+	    doubleFormat.parse(pkFinal.getText());
 	    return false;
-	} catch (NumberFormatException nfe) {
+	} catch (ParseException e) {
+	    e.printStackTrace();
 	    return true;
 	}
     }
@@ -187,9 +213,11 @@ public class FormActuacionesAlta extends JPanel implements IWindow {
 	    return true;
 	}
 	try {
-	    Double.parseDouble(pkInicial.getText());
+	    NumberFormat doubleFormat = DoubleFormatNT.getDisplayingFormat();
+	    doubleFormat.parse(pkInicial.getText());
 	    return false;
-	} catch (NumberFormatException nfe) {
+	} catch (ParseException e) {
+	    e.printStackTrace();
 	    return true;
 	}
     }
@@ -209,6 +237,7 @@ public class FormActuacionesAlta extends JPanel implements IWindow {
 	    ResultSet rs = stSelect.executeQuery();
 	    rs.last();
 	    int numberOfRows = rs.getRow();
+	    c.close();
 	    if (numberOfRows > 0) {
 		return true;
 	    }

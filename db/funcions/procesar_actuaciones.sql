@@ -20,8 +20,9 @@ CREATE TABLE inventario.actuaciones(
 );
 
 -- linear referencing
-SELECT AddGeometryColumn('inventario', 'actuaciones', 'the_geom', '25829', 'MULTILINESTRINGM', 3);
+SELECT AddGeometryColumn('inventario', 'actuaciones', 'the_geom', '25829', 'MULTILINESTRING', 2);
 ALTER TABLE inventario.actuaciones DROP CONSTRAINT enforce_geotype_the_geom;
+ALTER TABLE inventario.actuaciones DROP CONSTRAINT enforce_dims_the_geom;
 SELECT inventario.update_geom_line_all('inventario', 'actuaciones');
 
 -- triggers
