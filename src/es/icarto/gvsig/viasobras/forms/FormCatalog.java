@@ -250,7 +250,7 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
     private void fillTables() {
 	try {
 	    TableCellRenderer dateCellRenderer = new DefaultTableCellRenderer() {
-		SimpleDateFormat f = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
 		public Component getTableCellRendererComponent(JTable table,
 			Object value, boolean isSelected, boolean hasFocus,
 			int row, int column) {
