@@ -11,7 +11,9 @@ CREATE TABLE inventario.aforos (
        fecha date,
        valor integer,
        PRIMARY KEY(gid),
-       FOREIGN KEY (codigo_carretera) REFERENCES inventario.carreteras (numero) ON DELETE CASCADE
+       FOREIGN KEY (codigo_carretera) REFERENCES inventario.carreteras (numero)
+               ON DELETE CASCADE
+               ON UPDATE CASCADE
 );
 
 -- populate it

@@ -18,7 +18,9 @@ CREATE TABLE inventario.rampas(
        tipo_pavimento varchar(6),
        observaciones text,
        PRIMARY KEY(gid),
-       FOREIGN KEY(codigo_carretera) REFERENCES inventario.carreteras(numero) ON DELETE CASCADE
+       FOREIGN KEY(codigo_carretera) REFERENCES inventario.carreteras(numero)
+               ON DELETE CASCADE
+               ON UPDATE CASCADE
 );
 SELECT AddGeometryColumn('inventario', 'rampas', 'the_geom', '25829', 'MULTILINESTRING', 2);
 

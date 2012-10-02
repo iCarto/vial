@@ -16,7 +16,9 @@ CREATE TABLE inventario.actuaciones(
        fecha date,
        observaciones text,
        CONSTRAINT pk_actuaciones PRIMARY KEY(gid),
-       FOREIGN KEY (codigo_carretera) REFERENCES inventario.carreteras (numero) ON DELETE CASCADE
+       FOREIGN KEY (codigo_carretera) REFERENCES inventario.carreteras (numero)
+               ON DELETE CASCADE
+               ON UPDATE CASCADE
 );
 
 -- linear referencing
