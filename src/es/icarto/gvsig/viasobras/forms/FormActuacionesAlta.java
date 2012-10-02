@@ -3,7 +3,6 @@ package es.icarto.gvsig.viasobras.forms;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -174,7 +173,8 @@ public class FormActuacionesAlta extends JPanel implements IWindow {
 		}
 		try {
 		    DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		    Date date = (Date) formatter.parse(fecha.getText());
+		    java.sql.Date date = new java.sql.Date(formatter.parse(
+			    fecha.getText()).getTime());
 		    stInsert.setDate(9, date);
 		} catch (ParseException e1) {
 		    stInsert.setNull(9, java.sql.Types.DATE);
