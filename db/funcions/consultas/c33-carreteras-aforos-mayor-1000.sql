@@ -1,6 +1,6 @@
 SELECT m.nombre AS "Municipio", \
        i.codigo_carretera AS "Código (LU-P)", \
-       i.orden AS "Tramo", \
+       i.tramo AS "Tramo", \
        i.valor AS "Aforo", \
        i.pk AS "PK", \
        i.fecha AS "Fecha aforo" \
@@ -9,4 +9,4 @@ SELECT m.nombre AS "Municipio", \
  WHERE i.codigo_municipio = m.codigo \
        AND i.valor > 1000 \
        [[WHERE]] \
- ORDER BY m.nombre, i.codigo_carretera, i.orden, i.fecha;
+ ORDER BY m.nombre, i.codigo_carretera, i.tramo, i.fecha;
