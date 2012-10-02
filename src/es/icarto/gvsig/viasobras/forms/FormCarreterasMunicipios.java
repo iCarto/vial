@@ -227,11 +227,20 @@ IWindowListener {
 
     private final class CreateAction implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
-	    if (isPKInicialVoid() || isPKFinalVoid() || isOrdenTramoVoid()) {
-		showWarningPanel("Aviso: campos obligatorios",
-			"Debe rellenar los campos Orden Tramo, PK inicial y PK final");
+	    if (isOrdenTramoVoid()) {
+		showWarningPanel("Aviso: tramo",
+			"El campo tramo debe contener un valor válido, ej: A");
+	    }
+	    if (isPKInicialOK()) {
+		showWarningPanel("Aviso: PK inicial",
+			"El campo PK inicial debe contener un número válido, ej: 2,5");
 		return;
-	    } else if (isConcelloTramoAlreadyInDB()) {
+	    }
+	    if (isPKFinalOK()) {
+		showWarningPanel("Aviso: PK final",
+			"El campo PK final debe contener un número válido, ej: 3,2");
+	    }
+	    if (isConcelloTramoAlreadyInDB()) {
 		showWarningPanel("Aviso: campos únicos",
 			"El tramo introducido ya existe para el municipio seleccionado.");
 		return;
@@ -261,10 +270,18 @@ IWindowListener {
 
     private final class SaveAction implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
-	    if (isPKInicialVoid() || isPKFinalVoid() || isOrdenTramoVoid()) {
-		showWarningPanel("Aviso: campos obligatorios",
-			"Debe rellenar los campos Orden Tramo, PK inicial y PK final");
+	    if (isOrdenTramoVoid()) {
+		showWarningPanel("Aviso: tramo",
+			"El campo tramo debe contener un valor válido, ej: A");
+	    }
+	    if (isPKInicialOK()) {
+		showWarningPanel("Aviso: PK inicial",
+			"El campo PK inicial debe contener un número válido, ej: 2,5");
 		return;
+	    }
+	    if (isPKFinalOK()) {
+		showWarningPanel("Aviso: PK final",
+			"El campo PK final debe contener un número válido, ej: 3,2");
 	    }
 	    if (hasConcelloOrOrdenChanged()) {
 		if (isConcelloTramoAlreadyInDB()) {
@@ -310,7 +327,7 @@ IWindowListener {
 	return false;
     }
 
-    private boolean isPKFinalVoid() {
+    private boolean isPKFinalOK() {
 	if (pkFinal.getText().equals("")) {
 	    return true;
 	}
@@ -324,7 +341,7 @@ IWindowListener {
 	}
     }
 
-    private boolean isPKInicialVoid() {
+    private boolean isPKInicialOK() {
 	if (pkInicial.getText().equals("")) {
 	    return true;
 	}

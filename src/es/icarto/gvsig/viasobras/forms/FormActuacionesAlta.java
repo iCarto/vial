@@ -110,11 +110,22 @@ public class FormActuacionesAlta extends JPanel implements IWindow {
 
     private final class SaveAction implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
-	    if (isPKInicialVoid() || isPKFinalVoid() || isCodigoActuacionVoid()) {
-		showWarningPanel("Aviso: campos obligatorios",
-			"Debe rellenar los campos Código actuacion, PK inicial y PK final");
+	    if (isPKInicialOK()) {
+		showWarningPanel("Aviso: PK inicial",
+			"El campo PK inicial debe contener un número válido, ej: 2,5");
 		return;
-	    } else if (isCodigoActuacionAlreadyInDB()) {
+	    }
+	    if (isPKFinalOK()) {
+		showWarningPanel("Aviso: PK final",
+			"El campo PK final debe contener un número válido, ej: 3,2");
+		return;
+	    }
+	    if (isCodigoActuacionVoid()) {
+		showWarningPanel("Aviso: código actuación",
+			"El código de actuación no puede estar vacío.");
+		return;
+	    }
+	    if (isCodigoActuacionAlreadyInDB()) {
 		showWarningPanel("Aviso: campos únicos",
 			"El código de actuación introducido ya existe.");
 		return;
@@ -203,7 +214,7 @@ public class FormActuacionesAlta extends JPanel implements IWindow {
 	return false;
     }
 
-    private boolean isPKFinalVoid() {
+    private boolean isPKFinalOK() {
 	if (pkFinal.getText().equals("")) {
 	    return true;
 	}
@@ -217,7 +228,7 @@ public class FormActuacionesAlta extends JPanel implements IWindow {
 	}
     }
 
-    private boolean isPKInicialVoid() {
+    private boolean isPKInicialOK() {
 	if (pkInicial.getText().equals("")) {
 	    return true;
 	}
