@@ -195,7 +195,9 @@ IWindowListener {
     }
 
     private void fillConcellos() {
-	DomainValues dv = ORMLite.getAplicationDomainObject(getXMLPath())
+	ORMLite ormlite = new ORMLite();
+	DomainValues dv = ormlite.getAplicationDomainObject(
+		getXMLPath())
 		.getDomainValuesForComponent("codigo_municipio");
 	concello.removeAllItems();
 	for (KeyValue kv : dv.getValues()) {
@@ -214,8 +216,7 @@ IWindowListener {
 	if (viewInfo == null) {
 	    viewInfo = new WindowInfo(WindowInfo.MODALDIALOG
 		    | WindowInfo.RESIZABLE | WindowInfo.PALETTE);
-	    viewInfo.setTitle(PluginServices.getText(this,
-		    "Carreteras / Ayuntamientos"));
+	    viewInfo.setTitle("Vías y Obras: carretera / municipio");
 	    viewInfo.setHeight(350);
 	    viewInfo.setWidth(350);
 	}

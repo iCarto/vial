@@ -5,6 +5,7 @@ import com.iver.andami.messages.NotificationManager;
 import com.iver.andami.plugins.Extension;
 import com.iver.cit.gvsig.fmap.layers.FLyrVect;
 
+import es.icarto.gvsig.navtableforms.ormlite.ORMLite;
 import es.icarto.gvsig.navtableforms.utils.TOCLayerManager;
 import es.icarto.gvsig.viasobras.forms.FormCarreteras;
 import es.icarto.gvsig.viasobras.forms.utils.AlphanumericTableLoader;
@@ -30,6 +31,12 @@ public class FormCarreterasExtension extends Extension {
 	try {
 	    AlphanumericTableLoader.loadTables();
 	    if (l != null) {
+		ORMLite ormlite = new ORMLite();
+		String xmlFile = PluginServices
+			.getPluginServices("es.icarto.gvsig.viasobras")
+			.getClassLoader().getResource("viasobras-metadata.xml")
+			.getPath();
+		ormlite.reloadCache(xmlFile);
 		FormCarreteras dialog = new FormCarreteras(l);
 		if (dialog.init()) {
 		    PluginServices.getMDIManager().addWindow(dialog);

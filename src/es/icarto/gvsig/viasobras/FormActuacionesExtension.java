@@ -9,6 +9,7 @@ import com.iver.andami.preferences.IPreference;
 import com.iver.andami.preferences.IPreferenceExtension;
 import com.iver.cit.gvsig.fmap.layers.FLyrVect;
 
+import es.icarto.gvsig.navtableforms.ormlite.ORMLite;
 import es.icarto.gvsig.navtableforms.utils.TOCLayerManager;
 import es.icarto.gvsig.viasobras.forms.FormActuaciones;
 import es.icarto.gvsig.viasobras.forms.utils.AlphanumericTableLoader;
@@ -44,6 +45,12 @@ IPreferenceExtension {
 	    AlphanumericTableLoader.loadTables();
 	    if (l != null) {
 		if (l.getSource().getRecordset().getRowCount() > 0) {
+		    ORMLite ormlite = new ORMLite();
+		    String xmlFile = PluginServices
+			    .getPluginServices("es.icarto.gvsig.viasobras")
+			    .getClassLoader()
+			    .getResource("viasobras-metadata.xml").getPath();
+		    ormlite.reloadCache(xmlFile);
 		    FormActuaciones dialog = new FormActuaciones(l);
 		    if (dialog.init()) {
 			PluginServices.getMDIManager().addCentredWindow(dialog);

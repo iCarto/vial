@@ -75,8 +75,9 @@ public class FormActuacionesAlta extends JPanel implements IWindow {
     private void initWidgets() {
 	codigoCarretera = (JComboBox) form.getComboBox("codigo_carretera");
 	codigoCarretera.removeAllItems();
-	DomainValues dv = ORMLite.getAplicationDomainObject(getXMLPath())
-		.getDomainValuesForComponent("codigo_carretera");
+	ORMLite ormlite = new ORMLite();
+	DomainValues dv = ormlite.getAplicationDomainObject(
+		getXMLPath()).getDomainValuesForComponent("codigo_carretera");
 	if (dv != null) {
 	    for (KeyValue kv : dv.getValues()) {
 		codigoCarretera.addItem(kv);
@@ -98,7 +99,7 @@ public class FormActuacionesAlta extends JPanel implements IWindow {
 	if (viewInfo == null) {
 	    viewInfo = new WindowInfo(WindowInfo.MODALDIALOG
 		    | WindowInfo.RESIZABLE | WindowInfo.PALETTE);
-	    viewInfo.setTitle("Vías Obras: alta actuación");
+	    viewInfo.setTitle("Vías y Obras: alta actuación");
 	    viewInfo.setHeight(480);
 	    viewInfo.setWidth(560);
 	}

@@ -81,7 +81,7 @@ public class FormActuacionesMunicipios extends JPanel implements IWindow {
 	if (viewInfo == null) {
 	    viewInfo = new WindowInfo(WindowInfo.MODALDIALOG
 		    | WindowInfo.PALETTE);
-	    viewInfo.setTitle("Municipios");
+	    viewInfo.setTitle("Vías y Obras: actuación / municipio");
 	    viewInfo.setHeight(300);
 	    viewInfo.setWidth(800);
 	}
