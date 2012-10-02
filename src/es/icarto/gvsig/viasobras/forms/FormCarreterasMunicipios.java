@@ -82,6 +82,7 @@ IWindowListener {
 	save.addActionListener(action);
 	fillWidgetsForCreatingRecord();
 	this.add(form);
+	this.setFocusCycleRoot(true);
 	PluginServices.getMDIManager().addWindow(this);
     }
 

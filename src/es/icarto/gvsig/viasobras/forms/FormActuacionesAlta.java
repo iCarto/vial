@@ -69,6 +69,7 @@ public class FormActuacionesAlta extends JPanel implements IWindow {
 	panel.add(save);
 	this.add(panel);
 	initWidgets();
+	this.setFocusCycleRoot(true);
     }
 
     private void initWidgets() {
@@ -95,7 +96,7 @@ public class FormActuacionesAlta extends JPanel implements IWindow {
 
     public WindowInfo getWindowInfo() {
 	if (viewInfo == null) {
-	    viewInfo = new WindowInfo(WindowInfo.MODELESSDIALOG
+	    viewInfo = new WindowInfo(WindowInfo.MODALDIALOG
 		    | WindowInfo.RESIZABLE | WindowInfo.PALETTE);
 	    viewInfo.setTitle("Vías Obras: alta actuación");
 	    viewInfo.setHeight(480);
