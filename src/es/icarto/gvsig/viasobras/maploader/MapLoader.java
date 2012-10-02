@@ -27,7 +27,7 @@ public class MapLoader {
     private static final String MUNICIPIOS = "Municipios";
     private static final String VARIANTES = "Tramos antiguos";
     private static final String RAMPAS = "Rampas";
-    private static final String ANCHO_PLATAFORMA = "Ancho plataforma";
+    private static final String ANCHO_PLATAFORMA = "Ancho calzada";
     private static final String TIPO_PAVIMENTO = "Tipo pavimento";
     private static final String COTAS_MAXIMAS = "Cotas máximas";
     private static final String AFOROS = "Aforos";
