@@ -8,6 +8,7 @@ CREATE TABLE inventario.actuaciones(
        codigo_carretera text,
        pk_inicial float,
        pk_final float,
+       longitud integer,
        tipo text,
        descripcion text,
        titulo_proyecto text,
@@ -33,5 +34,11 @@ CREATE TRIGGER update_geom_actuaciones
        BEFORE UPDATE OR INSERT
        ON inventario.actuaciones FOR EACH ROW
        EXECUTE PROCEDURE inventario.update_geom_line_on_pk_change();
+
+DROP TRIGGER IF EXISTS update_longitud_actuacion ON inventario.actuaciones;
+CREATE TRIGGER update_longitud_actuacion
+       BEFORE UPDATE OR INSERT
+       ON inventario.actuaciones FOR EACH ROW
+       EXECUTE PROCEDURE inventario.update_longitud();
 
 COMMIT;

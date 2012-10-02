@@ -1,6 +1,6 @@
 BEGIN;
 
-SELECT plan(18);
+SELECT plan(20);
 
 -- Test triggers are in place
 SELECT trigger_is('inventario',
@@ -57,6 +57,12 @@ SELECT trigger_is('inventario',
                   'inventario',
                   'update_geom_point_on_pk_change');
 
+SELECT trigger_is('inventario',
+                  'actuaciones',
+                  'update_longitud_actuacion',
+                  'inventario',
+                  'update_longitud');
+
 -- Test they work
 
 INSERT INTO inventario.tipo_pavimento
@@ -97,7 +103,7 @@ SELECT isnt(the_geom, NULL, 'cotas - geom calculated on INSERT')
 INSERT INTO inventario.cotas
        (codigo_carretera, codigo_municipio, valor, pk_inicial, pk_final)
        VALUES('0101', '27018', 450, 2, 7.5);
-SELECT is(longitud, '5500', 'cotas - geom calculated on INSERT')
+SELECT is(longitud, '5500', 'cotas - longitud calculated on INSERT')
        FROM inventario.cotas
        WHERE gid = currval('inventario.cotas_gid_seq');
 
@@ -105,7 +111,10 @@ INSERT INTO inventario.actuaciones
        (codigo_actuacion, codigo_carretera, pk_inicial, pk_final)
        VALUES ('1234', '0101', 0, 2);
 SELECT isnt(the_geom, NULL, 'actuaciones - geom calculated on INSERT')
-       FROM inventario.cotas
+       FROM inventario.actuaciones
+       WHERE gid = currval('inventario.actuaciones_gid_seq');
+SELECT is(longitud, '2000', 'actuaciones - longitud calculated on INSERT')
+       FROM inventario.actuaciones
        WHERE gid = currval('inventario.actuaciones_gid_seq');
 
 INSERT INTO inventario.aforos
