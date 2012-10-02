@@ -11,7 +11,7 @@ CREATE TABLE inventario.tipo_pavimento (
        pk_final float,
        longitud integer,
        fecha_actualizacion date,
-       valor varchar(6),
+       valor text,
        observaciones text,
        PRIMARY KEY (gid),
        FOREIGN KEY (codigo_carretera) REFERENCES inventario.carreteras (numero)
