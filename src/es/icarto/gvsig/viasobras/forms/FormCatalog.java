@@ -86,6 +86,11 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
     private JButton insertAforo;
     private JButton deleteAforo;
 
+    private JTable accidentes;
+    private TableModel accidentesModel;
+    private JButton insertAccidente;
+    private JButton deleteAccidente;
+
     public FormCatalog() {
 	form = new FormPanel("catalogo-ui.xml");
 	initDomainMapper();
@@ -161,6 +166,11 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	aforos = (JTable) widgets.get("tabla_aforos");
 	insertAforo = (JButton) buttons.get("insertar_aforo");
 	deleteAforo = (JButton) buttons.get("borrar_aforo");
+
+	accidentes = (JTable) widgets.get("tabla_accidentes");
+	insertAccidente = (JButton) buttons.get("insertar_accidente");
+	deleteAccidente = (JButton) buttons.get("borrar_accidente");
+
     }
 
     private void initFocus() {
@@ -171,6 +181,7 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	anchoPlataforma.setFocusable(false);
 	cotas.setFocusable(false);
 	aforos.setFocusable(false);
+	accidentes.setFocusable(false);
     }
 
     private void initListeners() {
@@ -202,6 +213,9 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 
 	insertAforo.addActionListener(new InsertEventoAforoListener());
 	deleteAforo.addActionListener(new DeleteEventoAforoListener());
+
+	insertAccidente.addActionListener(new InsertEventoAccidenteListener());
+	deleteAccidente.addActionListener(new DeleteEventoAccidenteListener());
     }
 
     private void enablePKControls() {
@@ -236,7 +250,7 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
     private void fillTables() {
 	try {
 	    TableCellRenderer dateCellRenderer = new DefaultTableCellRenderer() {
-		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat f = new SimpleDateFormat("dd-MM-yyyy");
 		public Component getTableCellRendererComponent(JTable table,
 			Object value, boolean isSelected, boolean hasFocus,
 			int row, int column) {
@@ -282,6 +296,13 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	    aforos.getColumnModel().getColumn(Evento.PROPERTY_DATE)
 	    .setCellRenderer(dateCellRenderer);
 	    aforos.getColumnModel().getColumn(Evento.PROPERTY_DATE)
+	    .setCellEditor(dateCellEditor);
+
+	    accidentesModel = Catalog.getEventosAccidentes().getTableModel();
+	    accidentes.setModel(accidentesModel);
+	    accidentes.getColumnModel().getColumn(Evento.PROPERTY_DATE)
+	    .setCellRenderer(dateCellRenderer);
+	    accidentes.getColumnModel().getColumn(Evento.PROPERTY_DATE)
 	    .setCellEditor(dateCellEditor);
 
 	    this.repaint();
@@ -422,6 +443,25 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 
     }
 
+    private final class InsertEventoAccidenteListener implements ActionListener {
+	public void actionPerformed(ActionEvent e) {
+	    Evento ev = createNewEvento();
+	    ((EventosTableModel) accidentesModel).addEvento(ev);
+	}
+
+    }
+
+    private final class DeleteEventoAccidenteListener implements
+    ActionListener {
+	public void actionPerformed(ActionEvent e) {
+	    if ((accidentes.getRowCount() > 0)
+		    && (accidentes.getSelectedRow() != -1)) {
+		((EventosTableModel) accidentesModel).deleteEvento(accidentes
+			.getSelectedRow());
+	    }
+	}
+    }
+
     private final class SaveChangesListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 	    try {
@@ -429,12 +469,16 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 			&& ((TramosTableModel) anchoPlataformaModel)
 			.canSaveTramos()
 			&& ((TramosTableModel) cotasModel).canSaveTramos()
-			&& ((EventosTableModel) aforosModel).canSaveEventos()) {
+			&& ((EventosTableModel) aforosModel).canSaveEventos()
+			&& ((EventosTableModel) accidentesModel)
+			.canSaveEventos()) {
 
 		    ((TramosTableModel) tipoPavimentoModel).saveChanges();
 		    ((TramosTableModel) anchoPlataformaModel).saveChanges();
 		    ((TramosTableModel) cotasModel).saveChanges();
 		    ((EventosTableModel) aforosModel).saveChanges();
+		    ((EventosTableModel) accidentesModel).saveChanges();
+
 		    doSearch();
 		} else {
 		    showWarning();

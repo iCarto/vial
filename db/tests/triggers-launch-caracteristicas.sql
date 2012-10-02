@@ -1,6 +1,6 @@
 BEGIN;
 
-SELECT plan(16);
+SELECT plan(18);
 
 -- Test triggers are in place
 SELECT trigger_is('inventario',
@@ -48,6 +48,12 @@ SELECT trigger_is('inventario',
 SELECT trigger_is('inventario',
                   'aforos',
                   'update_geom_aforos',
+                  'inventario',
+                  'update_geom_point_on_pk_change');
+
+SELECT trigger_is('inventario',
+                  'accidentes',
+                  'update_geom_accidentes',
                   'inventario',
                   'update_geom_point_on_pk_change');
 
@@ -108,5 +114,12 @@ INSERT INTO inventario.aforos
 SELECT isnt(the_geom, NULL, 'aforos - geom calculated on INSERT')
        FROM inventario.aforos
        WHERE gid = currval('inventario.aforos_gid_seq');
+
+INSERT INTO inventario.accidentes
+       (codigo_carretera, codigo_municipio, valor, pk)
+       VALUES ('0101', '27018', '201209090987654321', 2);
+SELECT isnt(the_geom, NULL, 'accidentes - geom calculated on INSERT')
+       FROM inventario.accidentes
+       WHERE gid = currval('inventario.accidentes_gid_seq');
 
 ROLLBACK;

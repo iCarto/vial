@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.CarreterasMapper;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.ConcellosMapper;
+import es.icarto.gvsig.viasobras.domain.catalog.mappers.EventosMapperAccidentes;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.EventosMapperAforos;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.TramosMapperCotas;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.TramosMapperPavimento;
@@ -24,6 +25,7 @@ public class Catalog {
     private static TramosMapperPlataforma plataformaMapper;
     private static TramosMapperCotas cotasMapper;
     private static EventosMapperAforos aforosMapper;
+    private static EventosMapperAccidentes accidentesMapper;
 
     public static Carreteras getCarreteras() throws SQLException {
 	return CarreterasMapper.findAll();
@@ -114,6 +116,27 @@ public class Catalog {
 	    eventos = aforosMapper.findWhereCarretera(carretera);
 	} else {
 	    eventos = aforosMapper.findWhereCarreteraAndConcello(carretera,
+		    concello);
+	}
+	return eventos;
+    }
+
+    public static Eventos getEventosAccidentes() throws SQLException {
+	Eventos eventos;
+	accidentesMapper = new EventosMapperAccidentes();
+	if ((carretera == CARRETERA_ALL) && (concello == CONCELLO_ALL)) {
+	    eventos = accidentesMapper.findAll();
+	} else if ((carretera == CARRETERA_ALL) && (concello != CONCELLO_ALL)) {
+	    eventos = accidentesMapper.findWhereConcello(concello);
+	} else if ((carretera != CARRETERA_ALL) && (concello == CONCELLO_ALL)
+		&& ((pkStart != PK_NONE) || (pkEnd != PK_NONE))) {
+	    eventos = accidentesMapper.findWhereCarreteraAndPK(carretera,
+		    pkStart,
+		    pkEnd);
+	} else if ((carretera != CARRETERA_ALL) && (concello == CONCELLO_ALL)) {
+	    eventos = accidentesMapper.findWhereCarretera(carretera);
+	} else {
+	    eventos = accidentesMapper.findWhereCarreteraAndConcello(carretera,
 		    concello);
 	}
 	return eventos;

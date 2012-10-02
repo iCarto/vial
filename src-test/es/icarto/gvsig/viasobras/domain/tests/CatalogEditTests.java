@@ -30,6 +30,8 @@ public class CatalogEditTests {
     private static String concelloCota;
     private static String carreteraAforo;
     private static String concelloAforo;
+    private static String carreteraAccidente;
+    private static String concelloAccidente;
 
     @BeforeClass
     public static void connectToDatabase() throws SQLException,
@@ -50,10 +52,22 @@ public class CatalogEditTests {
 		p.getProperty(DBFacade.PASSWORD));
 	DBFacade.setConnection(c, p);
 	// useful methods to know municipio/carretera with most tramos
+	setCarreteraAndConcelloForAccidente();
 	setCarreteraAndConcelloForAforo();
 	setCarreteraAndConcelloForCota();
 	setCarreteraAndConcelloForPavimento();
 	setCarreteraAndConcelloForPlataforma();
+    }
+
+    private static void setCarreteraAndConcelloForAccidente()
+	    throws SQLException {
+	// use the area (carretera, concello) with more tramos
+	String sql = "SELECT codigo_carretera, codigo_municipio, COUNT(gid) AS tramos_count FROM inventario.accidentes GROUP BY codigo_carretera, codigo_municipio ORDER BY tramos_count DESC LIMIT 1";
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt.executeQuery(sql);
+	rs.next();
+	carreteraAccidente = rs.getString("codigo_carretera");
+	concelloAccidente = rs.getString("codigo_municipio");
     }
 
     private static void setCarreteraAndConcelloForPlataforma()
@@ -201,6 +215,31 @@ public class CatalogEditTests {
     }
 
     @Test
+    public void testDeleteAccidente() throws SQLException {
+	String carretera = carreteraAccidente;
+	String concello = concelloAccidente;
+	String lastID = getLastId("inventario.accidentes", carretera, concello);
+	String gid = deleteAccidente(carretera, concello, lastID);
+
+	// check if the later made effect
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT gid FROM inventario.accidentes WHERE codigo_carretera = '"
+			+ carretera
+			+ "' AND codigo_municipio = '"
+			+ concello
+			+ "'");
+	boolean updated = true;
+	while (rs.next()) {
+	    if (Integer.toString(rs.getInt("gid")).equals(gid)) {
+		updated = false;
+		break;
+	    }
+	}
+	assertEquals(true, updated);
+    }
+
+    @Test
     public void testUpdatePavimento() throws SQLException {
 	String carretera = carreteraPavimento;
 	String concello = concelloPavimento;
@@ -297,6 +336,30 @@ public class CatalogEditTests {
     }
 
     @Test
+    public void testUpdateAccidente() throws SQLException {
+	String carretera = carreteraAccidente;
+	String concello = concelloAccidente;
+	String value = "2012090809876";
+	updateAccidente(carretera, concello, value);
+
+	// check if the later made effect
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT valor FROM inventario.accidentes WHERE codigo_carretera = '"
+			+ carretera
+			+ "' AND codigo_municipio = '"
+			+ concello
+			+ "'");
+	boolean updated = true;
+	while (rs.next()) {
+	    if (!rs.getString("valor").equals(value)) {
+		updated = false;
+	    }
+	}
+	assertEquals(true, updated);
+    }
+
+    @Test
     public void testInsertPavimento() throws SQLException {
 	String carretera = carreteraPavimento;
 	String concello = concelloPavimento;
@@ -360,6 +423,24 @@ public class CatalogEditTests {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
 		.executeQuery("SELECT COUNT(*) AS rowNumber FROM inventario.aforos WHERE codigo_carretera = '"
+			+ carretera
+			+ "' AND codigo_municipio = '"
+			+ concello
+			+ "'");
+	rs.next();
+	assertEquals(tramosNumber, rs.getInt("rowNumber"));
+    }
+
+    @Test
+    public void testInsertAccidente() throws SQLException {
+	String carretera = carreteraAccidente;
+	String concello = concelloAccidente;
+	int tramosNumber = insertAccidente(carretera, concello);
+
+	// check if the later made effect
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT COUNT(*) AS rowNumber FROM inventario.accidentes WHERE codigo_carretera = '"
 			+ carretera
 			+ "' AND codigo_municipio = '"
 			+ concello
@@ -521,6 +602,19 @@ public class CatalogEditTests {
 	return gid;
     }
 
+    private String deleteAccidente(String carretera, String concello,
+	    String gid)
+		    throws SQLException {
+	// add new tramo
+	Catalog.clear();
+	Catalog.setCarretera(carretera);
+	Catalog.setConcello(concello);
+	Eventos eventos = Catalog.getEventosAccidentes();
+	eventos.removeEvento(gid);
+	eventos.save();
+	return gid;
+    }
+
     private String deleteAforo(String carretera, String concello,
 	    String gid) throws SQLException {
 	// add new tramo
@@ -577,6 +671,20 @@ public class CatalogEditTests {
 	    t.setStatus(Tramo.STATUS_UPDATE);
 	}
 	cotas.save();
+    }
+
+    private void updateAccidente(String carretera, String concello, String value)
+	    throws SQLException {
+	// modify and save tramos
+	Catalog.clear();
+	Catalog.setCarretera(carretera);
+	Catalog.setConcello(concello);
+	Eventos eventos = Catalog.getEventosAccidentes();
+	for (Evento e : eventos) {
+	    e.setValue(value);
+	    e.setStatus(Tramo.STATUS_UPDATE);
+	}
+	eventos.save();
     }
 
     private void updateAforo(String carretera, String concello,
@@ -680,6 +788,29 @@ public class CatalogEditTests {
 	Catalog.setCarretera(carretera);
 	Catalog.setConcello(concello);
 	Eventos eventos = Catalog.getEventosAforos();
+	Evento evento = new Evento();
+	evento.setCarretera(carretera);
+	evento.setOrden(ordenTramo);
+	evento.setConcello(concello);
+	evento.setPk(pk);
+	evento.setValue(myValue);
+	eventos.addEvento(evento);
+	eventos.save();
+	int eventosNumber = eventos.size();
+	return eventosNumber;
+    }
+
+    private int insertAccidente(String carretera, String concello)
+	    throws SQLException {
+	String ordenTramo = "A";
+	double pk = 10.2;
+	String myValue = "201209010987654321";
+
+	// add new tramo
+	Catalog.clear();
+	Catalog.setCarretera(carretera);
+	Catalog.setConcello(concello);
+	Eventos eventos = Catalog.getEventosAccidentes();
 	Evento evento = new Evento();
 	evento.setCarretera(carretera);
 	evento.setOrden(ordenTramo);

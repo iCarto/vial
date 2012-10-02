@@ -77,6 +77,11 @@ public class CatalogSearchTests {
     }
 
     @Test
+    public void testNotNullAccidentes() throws SQLException {
+	assertNotNull(Catalog.getEventosAccidentes());
+    }
+
+    @Test
     public void testCarreterasLoaded() throws SQLException {
 	boolean ok;
 	if (Catalog.getCarreteras().size() > 0) {
@@ -144,6 +149,20 @@ public class CatalogSearchTests {
     }
 
     @Test
+    public void testFindAccidentesAll() throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT COUNT(*) AS num_rows FROM inventario.accidentes");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Eventos eventos = Catalog.getEventosAccidentes();
+
+	assertEquals(numRows, eventos.size());
+    }
+
+    @Test
     public void testFindPavimentoDependingOnCarretera() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
@@ -199,6 +218,21 @@ public class CatalogSearchTests {
 	Catalog.clear();
 	Catalog.setCarretera("4606");
 	Eventos eventos = Catalog.getEventosAforos();
+
+	assertEquals(numRows, eventos.size());
+    }
+
+    @Test
+    public void testFindAccidentesDependingOnCarretera() throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.accidentes WHERE codigo_carretera = '4606'");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Catalog.setCarretera("4606");
+	Eventos eventos = Catalog.getEventosAccidentes();
 
 	assertEquals(numRows, eventos.size());
     }
@@ -272,6 +306,23 @@ public class CatalogSearchTests {
     }
 
     @Test
+    public void testFindAccidentesDependingOnPK() throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.accidentes WHERE codigo_carretera = '4606' AND pk >= 0 AND pk <= 10");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Catalog.setCarretera("4606");
+	Catalog.setPKStart(0.0);
+	Catalog.setPKEnd(10.0);
+	Eventos eventos = Catalog.getEventosAccidentes();
+
+	assertEquals(numRows, eventos.size());
+    }
+
+    @Test
     public void testFindPavimentoDependingOnPKStart() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
@@ -331,6 +382,22 @@ public class CatalogSearchTests {
 	Catalog.setCarretera("4606");
 	Catalog.setPKStart(2.0);
 	Eventos eventos = Catalog.getEventosAforos();
+
+	assertEquals(numRows, eventos.size());
+    }
+
+    @Test
+    public void testFindAccidentesDependingOnPKStart() throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.accidentes WHERE codigo_carretera = '4606' AND pk >= 2.0");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Catalog.setCarretera("4606");
+	Catalog.setPKStart(2.0);
+	Eventos eventos = Catalog.getEventosAccidentes();
 
 	assertEquals(numRows, eventos.size());
     }
@@ -400,6 +467,22 @@ public class CatalogSearchTests {
     }
 
     @Test
+    public void testFindAccidentesDependingOnPKEnd() throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT Count(*) As num_rows FROM inventario.accidentes WHERE codigo_carretera = '4606' AND pk <= 8.0");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Catalog.setCarretera("4606");
+	Catalog.setPKEnd(8.0);
+	Eventos eventos = Catalog.getEventosAccidentes();
+
+	assertEquals(numRows, eventos.size());
+    }
+
+    @Test
     public void testFindPavimentoDependingOnConcello() throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt
@@ -458,6 +541,22 @@ public class CatalogSearchTests {
 	Catalog.clear();
 	Catalog.setConcello("27018"); // Fonsagrada
 	Eventos eventos = Catalog.getEventosAforos();
+
+	assertEquals(numRows, eventos.size());
+    }
+
+    @Test
+    public void testFindAccidentesDependingOnConcello() throws SQLException,
+    DBException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.accidentes WHERE codigo_municipio = '27018'");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Catalog.setConcello("27018"); // Fonsagrada
+	Eventos eventos = Catalog.getEventosAccidentes();
 
 	assertEquals(numRows, eventos.size());
     }
@@ -526,6 +625,23 @@ public class CatalogSearchTests {
 	Catalog.setCarretera("4606");
 	Catalog.setConcello("27018"); // Fonsagrada
 	Eventos eventos = Catalog.getEventosAforos();
+
+	assertEquals(numRows, eventos.size());
+    }
+
+    @Test
+    public void testFindAccidentesDependingOnCarreteraAndConcello()
+	    throws SQLException {
+	Statement stmt = c.createStatement();
+	ResultSet rs = stmt
+		.executeQuery("SELECT Count(*) AS num_rows FROM inventario.accidentes WHERE codigo_carretera = '4606' AND codigo_municipio = '27018'");
+	rs.next();
+	int numRows = rs.getInt("num_rows");
+
+	Catalog.clear();
+	Catalog.setCarretera("4606");
+	Catalog.setConcello("27018"); // Fonsagrada
+	Eventos eventos = Catalog.getEventosAccidentes();
 
 	assertEquals(numRows, eventos.size());
     }

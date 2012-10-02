@@ -4,6 +4,7 @@ import java.awt.geom.Rectangle2D;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import com.iver.andami.PluginServices;
@@ -30,6 +31,7 @@ public class MapLoader {
     private static final String TIPO_PAVIMENTO = "Tipo pavimento";
     private static final String COTAS_MAXIMAS = "Cotas máximas";
     private static final String AFOROS = "Aforos";
+    private static final String ACCIDENTES = "Accidentes";
     private static final String PKS = "PKs";
 
     public static String DEFAULT_MAP_NAME = "General";
@@ -75,6 +77,10 @@ public class MapLoader {
 	if (map.layerInMap(AFOROS)) {
 	    map.getLayer(AFOROS).setWhere(whereEventos);
 	}
+	if (map.layerInMap(ACCIDENTES)) {
+	    map.getLayer(ACCIDENTES).setWhere(whereEventos);
+	}
+
 	map.load(view.getProjection());
 	// zoom to municipios
 	if (map.layerInMap(MUNICIPIOS)) {
@@ -182,7 +188,9 @@ public class MapLoader {
 	String[] maps;
 	try {
 	    maps = MapDAO.getInstance().getMaps();
-	    return Arrays.asList(maps);
+	    List<String> mapsAsList = Arrays.asList(maps);
+	    Collections.sort(mapsAsList);
+	    return mapsAsList;
 	} catch (SQLException e) {
 	    maps = new String[] { "" };
 	    return Arrays.asList(maps);

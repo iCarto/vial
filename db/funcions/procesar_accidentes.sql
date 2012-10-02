@@ -4,14 +4,16 @@ BEGIN;
 DROP TABLE IF EXISTS inventario.accidentes;
 CREATE TABLE inventario.accidentes (
        gid SERIAL,
-       codigo_carretera varchar(4),
-       codigo_municipio varchar(5),
-       tramo varchar(1),
+       codigo_carretera text,
+       codigo_municipio text,
+       tramo text,
        pk float,
        fecha date,
-       valor varchar(13),
+       valor text,
        PRIMARY KEY(gid),
-       FOREIGN KEY (codigo_carretera) REFERENCES inventario.carreteras (numero) ON DELETE CASCADE
+       FOREIGN KEY (codigo_carretera) REFERENCES inventario.carreteras (numero)
+               ON DELETE CASCADE
+               ON UPDATE CASCADE
 );
 
 -- populate it
