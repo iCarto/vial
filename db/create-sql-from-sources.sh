@@ -65,5 +65,5 @@ shp2pgsql -d -W iso-8859-1 \
 
 # accidentes
 shp2pgsql -d -W iso-8859-1 \
-    ${viasobras_data_orig}/inventario/accidentes/accidentes_2006_2012.dbf \
-    inventario.accidentes > datos/inventario/accidentes.sql
+    ${viasobras_data_orig}/inventario/accidentes/accidentes.dbf \
+    inventario.accidentes_tmp > datos/inventario/accidentes_tmp.sql

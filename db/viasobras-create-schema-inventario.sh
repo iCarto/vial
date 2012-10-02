@@ -68,9 +68,9 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
 #-----------
 
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < datos/inventario/accidentes.sql
+    $viasobras_dbname < datos/inventario/accidentes_tmp.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/create_accidentes_event_points.sql
+    $viasobras_dbname < funcions/procesar_accidentes.sql
 
 # Aforos
 #-------
