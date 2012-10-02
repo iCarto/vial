@@ -4,9 +4,9 @@ BEGIN;
 DROP TABLE IF EXISTS inventario.variantes;
 CREATE TABLE inventario.variantes(
        gid serial,
-       codigo_carretera varchar(4),
-       codigo_municipio varchar(5),
-       tramo varchar(1),
+       codigo_carretera text,
+       codigo_municipio text,
+       tramo text,
        orden_variante integer,
        orden_variante_tramo integer,
        pk_inicial float,

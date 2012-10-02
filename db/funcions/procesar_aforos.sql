@@ -4,8 +4,8 @@ BEGIN;
 DROP TABLE IF EXISTS inventario.aforos;
 CREATE TABLE inventario.aforos (
        gid SERIAL,
-       codigo_carretera varchar(4),
-       codigo_municipio varchar(5),
+       codigo_carretera text,
+       codigo_municipio text,
        tramo text,
        pk float,
        fecha date,
