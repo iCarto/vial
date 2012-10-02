@@ -38,7 +38,8 @@ public class Report {
     private Font cellBoldStyle = FontFactory.getFont("arial", 6, Font.BOLD);
     private Font bodyBoldStyle = FontFactory.getFont("arial", 8, Font.BOLD);
 
-    private static final float TITULAR_COLUMN_WIDTH = 200f;
+    private static final float DENOMINACION_COLUMN_WIDTH = 200f;
+    private static final float MUNICIPIOS_COLUMN_WIDTH = 200f;
 
     private Locale loc = new Locale("es");
 
@@ -144,11 +145,14 @@ public class Report {
     private float[] getColumnsWidth(PdfPTable table, int columnCount) {
 	float[] columnsWidth = new float[columnCount];
 	for (int i = 0; i < columnCount; i++) {
-	    if (i == 1) {
-		columnsWidth[i] = TITULAR_COLUMN_WIDTH;
+	    if (i == 3) {
+		columnsWidth[i] = DENOMINACION_COLUMN_WIDTH;
+	    } else if (i == 8) {
+		columnsWidth[i] = MUNICIPIOS_COLUMN_WIDTH;
 	    } else {
-		columnsWidth[i] = (table.getTotalWidth() - TITULAR_COLUMN_WIDTH)
-			/ (columnCount - 1);
+		columnsWidth[i] = (table.getTotalWidth()
+			- DENOMINACION_COLUMN_WIDTH - MUNICIPIOS_COLUMN_WIDTH)
+			/ (columnCount - 2);
 	    }
 	}
 	return columnsWidth;
@@ -300,11 +304,11 @@ public class Report {
 				    .getName()
 				    .equalsIgnoreCase("java.lang.Integer")
 				    || result
-					    .getValueAt(row, column)
-					    .getClass()
-					    .getName()
-					    .equalsIgnoreCase(
-						    "java.lang.Double")) {
+				    .getValueAt(row, column)
+				    .getClass()
+				    .getName()
+				    .equalsIgnoreCase(
+					    "java.lang.Double")) {
 				valueFormatted = nf.format(result.getValueAt(
 					row, column));
 				value = new Paragraph(valueFormatted,
@@ -420,7 +424,7 @@ public class Report {
 				    bodyBoldStyle);
 			    PdfPCell columnCell = new PdfPCell(column);
 			    columnCell
-				    .setHorizontalAlignment(Element.ALIGN_CENTER);
+			    .setHorizontalAlignment(Element.ALIGN_CENTER);
 			    table.addCell(columnCell);
 			}
 			document.add(table);
