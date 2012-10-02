@@ -6,7 +6,7 @@ CREATE TABLE inventario.aforos (
        gid SERIAL,
        codigo_carretera varchar(4),
        codigo_municipio varchar(5),
-       tramo varchar(1),
+       tramo text,
        pk float,
        fecha date,
        valor integer,

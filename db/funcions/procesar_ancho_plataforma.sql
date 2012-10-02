@@ -6,7 +6,7 @@ CREATE TABLE inventario.ancho_plataforma (
        gid serial,
        codigo_carretera varchar(4),
        codigo_municipio varchar(5),
-       tramo varchar(1),
+       tramo text,
        pk_inicial float,
        pk_final float,
        longitud integer,
