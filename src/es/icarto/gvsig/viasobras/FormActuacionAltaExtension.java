@@ -29,7 +29,7 @@ public class FormActuacionAltaExtension extends Extension {
 	FLyrVect l = toc.getLayerByName(actuacionesLayerName);
 	try {
 	    if (l != null) {
-		FormActuacionesAlta dialog = new FormActuacionesAlta();
+		FormActuacionesAlta dialog = new FormActuacionesAlta(l);
 		PluginServices.getMDIManager().addCentredWindow(dialog);
 	    }
 	} catch (Exception e) {

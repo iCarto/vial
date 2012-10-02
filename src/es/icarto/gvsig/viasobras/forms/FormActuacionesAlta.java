@@ -24,6 +24,8 @@ import com.iver.andami.PluginServices;
 import com.iver.andami.messages.NotificationManager;
 import com.iver.andami.ui.mdiManager.IWindow;
 import com.iver.andami.ui.mdiManager.WindowInfo;
+import com.iver.cit.gvsig.exceptions.layers.ReloadLayerException;
+import com.iver.cit.gvsig.fmap.layers.FLyrVect;
 import com.jeta.forms.components.panel.FormPanel;
 
 import es.icarto.gvsig.navtableforms.ormlite.ORMLite;
@@ -50,7 +52,10 @@ public class FormActuacionesAlta extends JPanel implements IWindow {
     private JTextField contratista;
     private JTextArea observaciones;
 
-    public FormActuacionesAlta() {
+    private FLyrVect layer;
+
+    public FormActuacionesAlta(FLyrVect layer) {
+	this.layer = layer;
 	initPanel();
     }
 
@@ -169,6 +174,7 @@ public class FormActuacionesAlta extends JPanel implements IWindow {
 		showWarningPanel("Actuación guardada", "La actuación "
 			+ codigoActuacion.getText()
 			+ " ha sido guardada correctamente");
+		layer.reload();
 	    } catch (SQLException e1) {
 		e1.printStackTrace();
 		NotificationManager.addError(e1);
@@ -177,6 +183,9 @@ public class FormActuacionesAlta extends JPanel implements IWindow {
 		} catch (SQLException e2) {
 		    e2.printStackTrace();
 		}
+	    } catch (ReloadLayerException e3) {
+		e3.printStackTrace();
+		NotificationManager.addError(e3);
 	    }
 	}
     }

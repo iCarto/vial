@@ -1,5 +1,7 @@
 package es.icarto.gvsig.viasobras;
 
+import javax.swing.JOptionPane;
+
 import com.iver.andami.PluginServices;
 import com.iver.andami.messages.NotificationManager;
 import com.iver.andami.plugins.Extension;
@@ -41,9 +43,14 @@ IPreferenceExtension {
 	try {
 	    AlphanumericTableLoader.loadTables();
 	    if (l != null) {
-		FormActuaciones dialog = new FormActuaciones(l);
-		if (dialog.init()) {
-		    PluginServices.getMDIManager().addCentredWindow(dialog);
+		if (l.getSource().getRecordset().getRowCount() > 0) {
+		    FormActuaciones dialog = new FormActuaciones(l);
+		    if (dialog.init()) {
+			PluginServices.getMDIManager().addCentredWindow(dialog);
+		    }
+		} else {
+		    JOptionPane.showMessageDialog(null,
+			    PluginServices.getText(this, "emptyLayer"));
 		}
 	    }
 	} catch (Exception e) {
