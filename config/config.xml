@@ -72,7 +72,7 @@
 		</extension>
 
 		<extension class-name="es.icarto.gvsig.viasobras.QueriesEstadoExtension" description="FORMS_PANEL" active="true">
-			<menu action-command="separator" text="Vías y Obras" position="30599" is_separator="true"/>
+			<menu action-command="separator" text="Vías y Obras" position="30699" is_separator="true"/>
 			<menu text="Vías y Obras/Consultas"
 				icon="viasobras-consultas"
 				position="30700"/>
