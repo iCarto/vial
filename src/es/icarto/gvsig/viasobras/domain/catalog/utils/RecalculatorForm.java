@@ -4,13 +4,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -26,6 +29,7 @@ import es.icarto.gvsig.navtableforms.ormlite.domain.DomainValues;
 import es.icarto.gvsig.navtableforms.ormlite.domain.KeyValue;
 import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.DBFacade;
+import es.udc.cartolab.gvsig.navtable.format.DoubleFormatNT;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
 public class RecalculatorForm extends JPanel implements IWindow {
@@ -92,19 +96,114 @@ public class RecalculatorForm extends JPanel implements IWindow {
 	initDomainMapper();
 	try {
 	    Connection c = DBFacade.getConnection();
-	    Statement st = c.createStatement();
-	    st.executeQuery("SELECT inventario.recalculate_caracteristicas('"
-		    + ((KeyValue) codigoCarretera.getSelectedItem()).getKey()
-		    + "')");
-	    st.close();
-	    System.out.println("Recalculando "
-		    + ((KeyValue) codigoCarretera.getSelectedItem()).getKey());
+	    c.setAutoCommit(false);
+	    PreparedStatement st;
+	    String sqlQuery;
+	    if (reajustar.isSelected()) {
+		if (isPKInicialOK()) {
+		    showWarningPanel(
+			    "Vías y Obras: recalcular características",
+			    "El PK inicial debe contener un valor válido, por ejemplo: 2,5");
+		    return false;
+		}
+		if(isPKFinalOK()) {
+		    showWarningPanel(
+			    "Vías y Obras: recalcular características",
+			    "El PK final debe contener un valor válido, por ejemplo: 3,2");
+		    return false;
+		}
+		if(isOffsetOK()) {
+		    showWarningPanel(
+			    "Vías y Obras: recalcular características",
+			    "El PK inicial debe contener un valor válido, por ejemplo: 0,5");
+		    return false;
+		}
+		NumberFormat doubleFormat = DoubleFormatNT
+			.getDisplayingFormat();
+		double pkInicialValue, pkFinalValue, offsetValue;
+		try {
+		    pkInicialValue = (Double) doubleFormat.parse(
+			    pkInicial.getText()).doubleValue();
+		    pkFinalValue = (Double) doubleFormat.parse(
+			    pkFinal.getText()).doubleValue();
+		    offsetValue = (Double) doubleFormat.parse(
+			    offset.getText()).doubleValue();
+		} catch (ParseException e) {
+		    showWarningPanel("Aviso: PKs",
+			    "Revise los valores en los campos PKs");
+		    return false;
+		}
+		sqlQuery = "SELECT inventario.readjust_tramos(?, ?, ?, ?)";
+		st = c.prepareStatement(sqlQuery);
+		st.setString(1,
+			((KeyValue) codigoCarretera.getSelectedItem()).getKey());
+		st.setDouble(2, pkInicialValue);
+		st.setDouble(3, pkFinalValue);
+		st.setDouble(4, offsetValue);
+	    } else {
+		sqlQuery = "SELECT inventario.recalculate_caracteristicas(?)";
+		st = c.prepareStatement(sqlQuery);
+		st.setString(1,
+			((KeyValue) codigoCarretera.getSelectedItem()).getKey());
+	    }
+	    st.execute();
+	    c.commit();
+	    showWarningPanel("Aviso: recalcular",
+		    "Reajuste realizado con éxito");
 	    return true;
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	    NotificationManager.addError(e);
 	    return false;
 	}
+    }
+
+    private boolean isPKInicialOK() {
+	if (pkInicial.getText().equals("")) {
+	    return true;
+	}
+	try {
+	    NumberFormat doubleFormat = DoubleFormatNT.getDisplayingFormat();
+	    doubleFormat.parse(pkInicial.getText());
+	    return false;
+	} catch (ParseException e) {
+	    e.printStackTrace();
+	    return true;
+	}
+    }
+
+    private boolean isPKFinalOK() {
+	if (pkFinal.getText().equals("")) {
+	    return true;
+	}
+	try {
+	    NumberFormat doubleFormat = DoubleFormatNT.getDisplayingFormat();
+	    doubleFormat.parse(pkFinal.getText());
+	    return false;
+	} catch (ParseException e) {
+	    e.printStackTrace();
+	    return true;
+	}
+    }
+
+    private boolean isOffsetOK() {
+	if (offset.getText().equals("")) {
+	    return true;
+	}
+	try {
+	    NumberFormat doubleFormat = DoubleFormatNT.getDisplayingFormat();
+	    doubleFormat.parse(offset.getText());
+	    return false;
+	} catch (ParseException e) {
+	    e.printStackTrace();
+	    return true;
+	}
+    }
+
+    private void showWarningPanel(String title, String message) {
+	JOptionPane.showMessageDialog(this, message,
+		PluginServices.getText(this, title),
+		JOptionPane.WARNING_MESSAGE);
     }
 
     private void initDomainMapper() {
