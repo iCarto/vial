@@ -235,7 +235,7 @@ public class RecalculatorForm extends JPanel implements IWindow {
 		    | WindowInfo.RESIZABLE | WindowInfo.PALETTE);
 	    windowInfo.setTitle("Vías y Obras: recalcular características");
 	    windowInfo.setHeight(230);
-	    windowInfo.setWidth(350);
+	    windowInfo.setWidth(300);
 	}
 	return windowInfo;
     }
