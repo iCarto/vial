@@ -24,7 +24,7 @@
     </at>
     <at name="componentclass">com.jeta.forms.gui.form.FormComponent</at>
    </super>
-   <at name="id">C:\APLICACIONES\gvSIG_VO\bin\gvSIG\extensiones\es.icarto.gvsig.viasobras\actuaciones-alta-ui.xml</at>
+   <at name="id">/home/amaneiro/workspaces/viasobras/extViasObras/forms/actuaciones-alta-ui.xml</at>
    <at name="path">actuaciones-alta-ui.xml</at>
    <at name="rowspecs">CENTER:1.0MM:NONE,CENTER:1.0MM:NONE,CENTER:9.0MM:NONE,CENTER:5.0MM:NONE,CENTER:1.0MM:NONE,CENTER:1.0MM:NONE,CENTER:DEFAULT:NONE,CENTER:1.0MM:NONE,CENTER:6.0MM:NONE,CENTER:1.0MM:NONE,CENTER:6.0MM:NONE,CENTER:1.0MM:NONE,CENTER:1.0MM:NONE,CENTER:1.0MM:NONE,CENTER:3.0MM:NONE,CENTER:1.0MM:NONE,CENTER:6.0MM:NONE,CENTER:1.0MM:NONE,CENTER:6.0MM:NONE,CENTER:1.0MM:NONE,CENTER:6.0MM:NONE,CENTER:1.0MM:NONE,CENTER:6.0MM:NONE,CENTER:1.0MM:NONE,CENTER:6.0MM:NONE,CENTER:1.0MM:NONE,CENTER:6.0MM:NONE,CENTER:1.0MM:NONE,CENTER:3.0MM:NONE,CENTER:1.0MM:NONE,CENTER:6.0MM:NONE,CENTER:1.0MM:NONE,CENTER:6.0MM:NONE,CENTER:6.0MM:NONE,CENTER:1.0MM:NONE,CENTER:1.0MM:NONE,CENTER:1.0MM:NONE,CENTER:1.0MM:NONE</at>
    <at name="colspecs">FILL:2.0MM:NONE,FILL:2.0MM:NONE,FILL:2.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:15.0MM:NONE,FILL:2.0MM:NONE,FILL:2.0MM:NONE,FILL:2.0MM:NONE</at>
@@ -1273,7 +1273,7 @@
           <at name="classname">javax.swing.JComboBox</at>
           <at name="properties">
            <object classname="com.jeta.forms.store.support.PropertyMap">
-            <at name="height">16</at>
+            <at name="height">18</at>
             <at name="selectedItem">
              <object classname="com.jeta.forms.store.properties.ListItemProperty">
               <at name="name">listitem</at>
@@ -1297,6 +1297,36 @@
                   <object classname="com.jeta.forms.store.properties.ListItemProperty">
                    <at name="name">listitem</at>
                    <at name="label"> </at>
+                   <at name="icon">
+                    <object classname="com.jeta.forms.store.properties.IconProperty">
+                     <at name="embedded">false</at>
+                     <at name="width">0</at>
+                     <at name="height">0</at>
+                    </object>
+                   </at>
+                  </object>
+                 </at>
+                </item>
+                <item >
+                 <at name="value">
+                  <object classname="com.jeta.forms.store.properties.ListItemProperty">
+                   <at name="name">listitem</at>
+                   <at name="label">Autorizaciones</at>
+                   <at name="icon">
+                    <object classname="com.jeta.forms.store.properties.IconProperty">
+                     <at name="embedded">false</at>
+                     <at name="width">0</at>
+                     <at name="height">0</at>
+                    </object>
+                   </at>
+                  </object>
+                 </at>
+                </item>
+                <item >
+                 <at name="value">
+                  <object classname="com.jeta.forms.store.properties.ListItemProperty">
+                   <at name="name">listitem</at>
+                   <at name="label">Accidentes</at>
                    <at name="icon">
                     <object classname="com.jeta.forms.store.properties.IconProperty">
                      <at name="embedded">false</at>
@@ -1337,6 +1367,126 @@
                   </object>
                  </at>
                 </item>
+                <item >
+                 <at name="value">
+                  <object classname="com.jeta.forms.store.properties.ListItemProperty">
+                   <at name="name">listitem</at>
+                   <at name="label">Denuncias</at>
+                   <at name="icon">
+                    <object classname="com.jeta.forms.store.properties.IconProperty">
+                     <at name="embedded">false</at>
+                     <at name="width">0</at>
+                     <at name="height">0</at>
+                    </object>
+                   </at>
+                  </object>
+                 </at>
+                </item>
+                <item >
+                 <at name="value">
+                  <object classname="com.jeta.forms.store.properties.ListItemProperty">
+                   <at name="name">listitem</at>
+                   <at name="label">Expropiaciones</at>
+                   <at name="icon">
+                    <object classname="com.jeta.forms.store.properties.IconProperty">
+                     <at name="embedded">false</at>
+                     <at name="width">0</at>
+                     <at name="height">0</at>
+                    </object>
+                   </at>
+                  </object>
+                 </at>
+                </item>
+                <item >
+                 <at name="value">
+                  <object classname="com.jeta.forms.store.properties.ListItemProperty">
+                   <at name="name">listitem</at>
+                   <at name="label">Incidencias</at>
+                   <at name="icon">
+                    <object classname="com.jeta.forms.store.properties.IconProperty">
+                     <at name="embedded">false</at>
+                     <at name="width">0</at>
+                     <at name="height">0</at>
+                    </object>
+                   </at>
+                  </object>
+                 </at>
+                </item>
+                <item >
+                 <at name="value">
+                  <object classname="com.jeta.forms.store.properties.ListItemProperty">
+                   <at name="name">listitem</at>
+                   <at name="label">Inventario</at>
+                   <at name="icon">
+                    <object classname="com.jeta.forms.store.properties.IconProperty">
+                     <at name="embedded">false</at>
+                     <at name="width">0</at>
+                     <at name="height">0</at>
+                    </object>
+                   </at>
+                  </object>
+                 </at>
+                </item>
+                <item >
+                 <at name="value">
+                  <object classname="com.jeta.forms.store.properties.ListItemProperty">
+                   <at name="name">listitem</at>
+                   <at name="label">Otros</at>
+                   <at name="icon">
+                    <object classname="com.jeta.forms.store.properties.IconProperty">
+                     <at name="embedded">false</at>
+                     <at name="width">0</at>
+                     <at name="height">0</at>
+                    </object>
+                   </at>
+                  </object>
+                 </at>
+                </item>
+                <item >
+                 <at name="value">
+                  <object classname="com.jeta.forms.store.properties.ListItemProperty">
+                   <at name="name">listitem</at>
+                   <at name="label">Travesías</at>
+                   <at name="icon">
+                    <object classname="com.jeta.forms.store.properties.IconProperty">
+                     <at name="embedded">false</at>
+                     <at name="width">0</at>
+                     <at name="height">0</at>
+                    </object>
+                   </at>
+                  </object>
+                 </at>
+                </item>
+                <item >
+                 <at name="value">
+                  <object classname="com.jeta.forms.store.properties.ListItemProperty">
+                   <at name="name">listitem</at>
+                   <at name="label">Transferencias</at>
+                   <at name="icon">
+                    <object classname="com.jeta.forms.store.properties.IconProperty">
+                     <at name="embedded">false</at>
+                     <at name="width">0</at>
+                     <at name="height">0</at>
+                    </object>
+                   </at>
+                  </object>
+                 </at>
+                </item>
+                <item >
+                 <at name="value">
+                  <object classname="com.jeta.forms.store.properties.ListItemProperty">
+                   <at name="name">listitem</at>
+                   <at name="label">Vialidad</at>
+                   <at name="icon">
+                    <object classname="com.jeta.forms.store.properties.IconProperty">
+                     <at name="embedded">false</at>
+                     <at name="width">0</at>
+                     <at name="height">0</at>
+                    </object>
+                   </at>
+                  </object>
+                 </at>
+                </item>
                </object>
               </at>
              </object>
@@ -1350,7 +1500,7 @@
             </at>
             <at name="width">110</at>
             <at name="name">tipo</at>
-            <at name="itemCount">3</at>
+            <at name="itemCount">13</at>
             <at name="border">
              <object classname="com.jeta.forms.store.properties.CompoundBorderProperty">
               <super classname="com.jeta.forms.store.properties.BorderProperty">
@@ -1650,7 +1800,7 @@
           <at name="classname">javax.swing.JComboBox</at>
           <at name="properties">
            <object classname="com.jeta.forms.store.support.PropertyMap">
-            <at name="height">18</at>
+            <at name="height">19</at>
             <at name="items">
              <object classname="com.jeta.forms.store.properties.ItemsProperty">
               <at name="name">items</at>
