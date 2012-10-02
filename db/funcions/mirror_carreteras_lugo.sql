@@ -21,7 +21,9 @@ BEGIN
                         tipo_suelo = NEW.tipo_suelo,
                         longitud = NEW.longitud,
                         observaciones = NEW.observaciones,
-                        the_geom = NEW.the_geom
+                        the_geom = (SELECT ST_AddMeasure(NEW.the_geom,
+                                              NEW.pk_inicial,
+                                              NEW.pk_final))
                      WHERE numero = NEW.numero;
                   RETURN NEW;
 
@@ -59,7 +61,9 @@ BEGIN
                          NEW.tipo_suelo,
                          NEW.longitud,
                          NEW.observaciones,
-                         NEW.the_geom);
+                         (SELECT ST_AddMeasure(NEW.the_geom,
+                                              NEW.pk_inicial,
+                                              NEW.pk_final)));
 
                    RETURN NEW;
 

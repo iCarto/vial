@@ -52,13 +52,6 @@ SELECT DropGeometryTable('inventario','carreteras_tmp');
 -- calibrate
 SELECT inventario.calibrate_carretera_all();
 
--- triggers
-DROP TRIGGER IF EXISTS calibrate_carretera_and_tramos ON inventario.carreteras;
-CREATE TRIGGER calibrate_carretera_and_tramos
-       AFTER UPDATE OR INSERT
-       ON inventario.carreteras FOR EACH ROW
-       EXECUTE PROCEDURE inventario.calibrate_carretera_and_tramos();
-
 -- constraints
 ALTER TABLE inventario.carreteras ADD FOREIGN KEY(numero)
       REFERENCES inventario.carreteras_lugo(numero)

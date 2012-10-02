@@ -24,7 +24,7 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/calibrate_carretera.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/calibrate_carretera_and_tramos.sql
+    $viasobras_dbname < funcions/recalculate_caracteristicas.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/update_tramos_in_range.sql
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
