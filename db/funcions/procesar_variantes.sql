@@ -14,9 +14,9 @@ CREATE TABLE inventario.variantes(
        origen_via_pk float,
        final_via_pk float,
        longitud integer,
-       estado varchar(10),
+       estado text,
        ancho_plataforma double precision,
-       tipo_pavimento varchar(6),
+       tipo_pavimento text,
        observaciones text,
        PRIMARY KEY(gid),
        FOREIGN KEY(codigo_carretera) REFERENCES inventario.carreteras(numero)
