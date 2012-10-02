@@ -9,9 +9,11 @@ import java.sql.Statement;
 import java.util.Properties;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 import com.iver.andami.PluginServices;
 import com.iver.andami.messages.NotificationManager;
@@ -33,6 +35,10 @@ public class RecalculatorForm extends JPanel implements IWindow {
     private JScrollPane scrollPane;
     private FormPanel form;
     private JComboBox codigoCarretera;
+    private JCheckBox reajustar;
+    private JTextField pkInicial;
+    private JTextField pkFinal;
+    private JTextField offset;
 
     public RecalculatorForm() {
 	initPanel();
@@ -57,6 +63,15 @@ public class RecalculatorForm extends JPanel implements IWindow {
 		codigoCarretera.addItem(kv);
 	    }
 	}
+
+	reajustar = (JCheckBox) form.getCheckBox("reajustar");
+	pkInicial = (JTextField) form.getTextField("pk_inicial");
+	pkInicial.setEnabled(false);
+	pkFinal = (JTextField) form.getTextField("pk_final");
+	pkFinal.setEnabled(false);
+	offset = (JTextField) form.getTextField("offset");
+	offset.setEnabled(false);
+	reajustar.addActionListener(new ReajustarActivation());
 
 	executeButton = (JButton) AbeilleParser.getButtonsFromContainer(form)
 		.get("ejecutar");
@@ -120,7 +135,7 @@ public class RecalculatorForm extends JPanel implements IWindow {
 	    windowInfo = new WindowInfo(WindowInfo.MODALDIALOG
 		    | WindowInfo.RESIZABLE | WindowInfo.PALETTE);
 	    windowInfo.setTitle("Vías y Obras: recalcular características");
-	    windowInfo.setHeight(90);
+	    windowInfo.setHeight(230);
 	    windowInfo.setWidth(350);
 	}
 	return windowInfo;
@@ -128,6 +143,14 @@ public class RecalculatorForm extends JPanel implements IWindow {
 
     public Object getWindowProfile() {
 	return null;
+    }
+
+    private final class ReajustarActivation implements ActionListener {
+	public void actionPerformed(ActionEvent arg0) {
+	    pkInicial.setEnabled(reajustar.isSelected());
+	    pkFinal.setEnabled(reajustar.isSelected());
+	    offset.setEnabled(reajustar.isSelected());
+	}
     }
 
 }
