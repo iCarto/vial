@@ -136,20 +136,14 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/procesar_cotas.sql
 
-# Actuaciones - concellos
-#------------------------
-
-psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-    $viasobras_dbname < funcions/create-table-inventario-actuacionmunicipio.sql
-
-# # TODO: this is fake data, replace it for proper inputs
-# csv_path=`pwd`/datos/inventario/actuacion_municipio.csv #COPY command needs absolute path
-# sql_query="\COPY inventario.actuacion_municipio (codigo_actuacion, codigo_municipio) FROM '$csv_path' WITH DELIMITER ','"
-# psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
-#     $viasobras_dbname -c "$sql_query"
-
 # Actuaciones
 #------------
 
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/procesar_actuaciones.sql
+
+# Actuaciones - concellos
+#------------------------
+
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname < funcions/create-table-inventario-actuacionmunicipio.sql
