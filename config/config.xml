@@ -29,11 +29,11 @@
 		</extension>
 
 		<extension class-name="es.icarto.gvsig.viasobras.FormVariantesExtension" description="FORMS_PANEL" active="true">
-			<menu text="Vías y Obras/Variantes"
+			<menu text="Vías y Obras/Tramos antiguos"
 				icon="viasobras-variantes"
 				position="30200"/>
 			<tool-bar name="ViasObrasLugo" position="70">
-				<action-tool icon="viasobras-variantes" tooltip="Variantes" action-command="FormVariantes" position="3"/>
+				<action-tool icon="viasobras-variantes" tooltip="Tramos antiguos" action-command="FormVariantes" position="3"/>
 			</tool-bar>
 		</extension>
 		
