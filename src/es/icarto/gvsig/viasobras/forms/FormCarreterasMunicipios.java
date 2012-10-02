@@ -140,6 +140,9 @@ IWindowListener {
     }
 
     private void fillWidgetsForCreatingRecord() {
+	concelloValue = "";
+	ordenTramoValue = "";
+
 	carretera.setText(carreteraCode);
 	fillConcellos();
 	ordenTramo.setText("");
@@ -151,13 +154,15 @@ IWindowListener {
 
     private void fillWidgetsForUpdatingRecord(long position) {
 	try {
+	    // vars to track changes
+	    concelloValue = model.read((int) position).get("codigo_municipio");
+	    ordenTramoValue = model.read((int) position).get("orden_tramo");
+
+	    // widgets
 	    carretera.setText(model.read((int) position)
 		    .get("codigo_carretera"));
 	    fillConcellos();
-	    concelloValue = model.read((int) position).get(
-		    "codigo_municipio");
 	    setConcelloSelected(concelloValue);
-	    ordenTramoValue = model.read((int) position).get("orden_tramo");
 	    ordenTramo.setText(ordenTramoValue);
 	    pkInicial.setText(model.read((int) position)
 		    .get("pk_inicial_tramo"));
@@ -238,6 +243,10 @@ IWindowListener {
 	    values.put("orden_tramo", ordenTramo.getText());
 	    values.put("pk_inicial_tramo", pkInicial.getText());
 	    values.put("pk_final_tramo", pkFinal.getText());
+	    if (longitud.getText().equals("")) {
+		longitud.setText("0");
+		// will be autocalculated from PKs
+	    }
 	    values.put("longitud_tramo", longitud.getText());
 	    values.put("observaciones_tramo", observaciones.getText());
 	    try {
