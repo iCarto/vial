@@ -9,12 +9,12 @@ CREATE OR REPLACE FUNCTION inventario.readjust_tramos(
 ) RETURNS void AS $BODY$
 BEGIN
 
-        PERFORM inventario.update_geom_line_on_pk_carretera_change(
-                'inventario', 'tipo_pavimento', the_carretera_code);
-        PERFORM inventario.update_geom_line_on_pk_carretera_change(
-                'inventario', 'ancho_plataforma', the_carretera_code);
-        PERFORM inventario.update_geom_line_on_pk_carretera_change(
-                'inventario', 'cotas', the_carretera_code);
+        PERFORM inventario.update_tramos_in_range(
+                'inventario', 'tipo_pavimento', the_carretera_code, the_pk_inicial, the_pk_final, the_offset);
+        PERFORM inventario.update_tramos_in_range(
+                'inventario', 'ancho_plataforma', the_carretera_code, the_pk_inicial, the_pk_final, the_offset);
+        PERFORM inventario.update_tramos_in_range(
+                'inventario', 'cotas', the_carretera_code, the_pk_inicial, the_pk_final, the_offset);
 
 END;
 $BODY$ LANGUAGE plpgsql;
