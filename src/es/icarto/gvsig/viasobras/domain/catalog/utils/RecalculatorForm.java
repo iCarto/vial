@@ -59,9 +59,9 @@ public class RecalculatorForm extends JPanel implements IWindow {
     private void initWidgets() {
 	codigoCarretera = (JComboBox) form.getComboBox("codigo_carretera");
 	codigoCarretera.removeAllItems();
-	ORMLite ormlite = new ORMLite();
-	DomainValues dv = ormlite.getAplicationDomainObject(getXMLPath())
-		.getDomainValuesForComponent("codigo_carretera");
+	ORMLite ormlite = new ORMLite(getXMLPath());
+	DomainValues dv = ormlite.getAppDomain().getDomainValuesForComponent(
+		"numero");
 	if (dv != null) {
 	    for (KeyValue kv : dv.getValues()) {
 		codigoCarretera.addItem(kv);
@@ -88,7 +88,8 @@ public class RecalculatorForm extends JPanel implements IWindow {
 
     public String getXMLPath() {
 	return PluginServices.getPluginServices("es.icarto.gvsig.viasobras")
-		.getClassLoader().getResource("viasobras-metadata.xml")
+		.getClassLoader()
+		.getResource("recalcular-caracteristicas-metadata.xml")
 		.getPath();
     }
 

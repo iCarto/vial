@@ -159,7 +159,7 @@ public class FormCarreteras extends AbstractForm implements IWindow {
     @Override
     public String getXMLPath() {
 	return PluginServices.getPluginServices("es.icarto.gvsig.viasobras")
-		.getClassLoader().getResource("viasobras-metadata.xml")
+		.getClassLoader().getResource("carreteras-metadata.xml")
 		.getPath();
     }
 

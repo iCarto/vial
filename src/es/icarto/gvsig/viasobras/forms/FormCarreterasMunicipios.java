@@ -195,10 +195,9 @@ IWindowListener {
     }
 
     private void fillConcellos() {
-	ORMLite ormlite = new ORMLite();
-	DomainValues dv = ormlite.getAplicationDomainObject(
-		getXMLPath())
-		.getDomainValuesForComponent("codigo_municipio");
+	ORMLite ormlite = new ORMLite(getXMLPath());
+	DomainValues dv = ormlite.getAppDomain().getDomainValuesForComponent(
+		"codigo_municipio");
 	concello.removeAllItems();
 	for (KeyValue kv : dv.getValues()) {
 	    concello.addItem(kv);
@@ -208,7 +207,8 @@ IWindowListener {
 
     public String getXMLPath() {
 	return PluginServices.getPluginServices("es.icarto.gvsig.viasobras")
-		.getClassLoader().getResource("viasobras-metadata.xml")
+		.getClassLoader()
+		.getResource("carretera-municipio-metadata.xml")
 		.getPath();
     }
 

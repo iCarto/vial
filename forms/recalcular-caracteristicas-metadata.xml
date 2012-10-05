@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LAYER alias="Carreteras">
+	<FIELD>
+		<FIELDNAME>numero</FIELDNAME>
+		<DOMAINREADER>
+			<DRTYPE>db</DRTYPE>
+			<DRDBTABLE>carreteras</DRDBTABLE>
+			<DRDBCOLUMNVALUE>numero</DRDBCOLUMNVALUE>
+			<DRDBCOLUMNALIAS>codigo</DRDBCOLUMNALIAS>
+		</DOMAINREADER>
+	</FIELD>
+</LAYER>

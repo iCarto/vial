@@ -47,7 +47,7 @@ public class FormActuaciones extends AbstractForm {
     @Override
     public String getXMLPath() {
 	return PluginServices.getPluginServices("es.icarto.gvsig.viasobras")
-		.getClassLoader().getResource("viasobras-metadata.xml")
+		.getClassLoader().getResource("actuaciones-metadata.xml")
 		.getPath();
     }
 

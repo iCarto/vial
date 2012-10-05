@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<LAYER alias="Carretera / Municipio">
+	<FIELD>
+		<FIELDNAME>codigo_municipio</FIELDNAME>
+		<DOMAINREADER>
+			<DRTYPE>db</DRTYPE>
+			<DRDBTABLE>municipio_codigo</DRDBTABLE>
+			<DRDBCOLUMNVALUE>codigo</DRDBCOLUMNVALUE>
+			<DRDBCOLUMNALIAS>nombre</DRDBCOLUMNALIAS>
+		</DOMAINREADER>
+	</FIELD>
+</LAYER>

@@ -4,7 +4,6 @@ import com.iver.andami.PluginServices;
 import com.iver.andami.plugins.Extension;
 import com.iver.cit.gvsig.fmap.layers.FLyrVect;
 
-import es.icarto.gvsig.navtableforms.ormlite.ORMLite;
 import es.icarto.gvsig.navtableforms.utils.TOCLayerManager;
 import es.icarto.gvsig.viasobras.forms.FormVariantes;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
@@ -26,12 +25,6 @@ public class FormVariantesExtension extends Extension {
 	TOCLayerManager toc = new TOCLayerManager();
 	FLyrVect l = toc.getLayerByName(FormVariantes.VARIANTES_LAYERNAME);
 	if (l != null) {
-	    ORMLite ormlite = new ORMLite();
-	    String xmlFile = PluginServices
-		    .getPluginServices("es.icarto.gvsig.viasobras")
-		    .getClassLoader().getResource("viasobras-metadata.xml")
-		    .getPath();
-	    ormlite.reloadCache(xmlFile);
 	    FormVariantes dialog = new FormVariantes(l);
 	    if (dialog.init()) {
 		PluginServices.getMDIManager().addCentredWindow(dialog);

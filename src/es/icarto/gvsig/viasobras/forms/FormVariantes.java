@@ -50,7 +50,7 @@ public class FormVariantes extends AbstractForm implements IWindow {
     @Override
     public String getXMLPath() {
 	return PluginServices.getPluginServices("es.icarto.gvsig.viasobras")
-		.getClassLoader().getResource("viasobras-metadata.xml")
+		.getClassLoader().getResource("variantes-metadata.xml")
 		.getPath();
     }
 
