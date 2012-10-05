@@ -20,7 +20,7 @@ import es.icarto.gvsig.navtableforms.AbstractForm;
 import es.icarto.gvsig.navtableforms.gui.tables.JTableContextualMenu;
 import es.icarto.gvsig.navtableforms.gui.tables.TableModelAlphanumeric;
 import es.icarto.gvsig.navtableforms.gui.tables.TableModelFactory;
-import es.icarto.gvsig.navtableforms.ormlite.domain.KeyValue;
+import es.icarto.gvsig.navtableforms.ormlite.domainvalues.KeyValue;
 import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
 import es.icarto.gvsig.navtableforms.utils.TOCLayerManager;
 import es.udc.cartolab.gvsig.navtable.listeners.PositionEvent;

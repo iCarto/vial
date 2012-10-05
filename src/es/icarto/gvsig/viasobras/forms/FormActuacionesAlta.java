@@ -28,8 +28,8 @@ import com.iver.cit.gvsig.fmap.layers.FLyrVect;
 import com.jeta.forms.components.panel.FormPanel;
 
 import es.icarto.gvsig.navtableforms.ormlite.ORMLite;
-import es.icarto.gvsig.navtableforms.ormlite.domain.DomainValues;
-import es.icarto.gvsig.navtableforms.ormlite.domain.KeyValue;
+import es.icarto.gvsig.navtableforms.ormlite.domainvalues.DomainValues;
+import es.icarto.gvsig.navtableforms.ormlite.domainvalues.KeyValue;
 import es.udc.cartolab.gvsig.navtable.format.DoubleFormatNT;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 

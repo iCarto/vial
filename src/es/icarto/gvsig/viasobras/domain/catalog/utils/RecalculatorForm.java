@@ -25,8 +25,8 @@ import com.iver.andami.ui.mdiManager.WindowInfo;
 import com.jeta.forms.components.panel.FormPanel;
 
 import es.icarto.gvsig.navtableforms.ormlite.ORMLite;
-import es.icarto.gvsig.navtableforms.ormlite.domain.DomainValues;
-import es.icarto.gvsig.navtableforms.ormlite.domain.KeyValue;
+import es.icarto.gvsig.navtableforms.ormlite.domainvalues.DomainValues;
+import es.icarto.gvsig.navtableforms.ormlite.domainvalues.KeyValue;
 import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.DBFacade;
 import es.udc.cartolab.gvsig.navtable.format.DoubleFormatNT;
