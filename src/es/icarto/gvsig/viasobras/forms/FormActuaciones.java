@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
@@ -14,13 +16,13 @@ import com.jeta.forms.components.panel.FormPanel;
 
 import es.icarto.gvsig.navtableforms.AbstractForm;
 import es.icarto.gvsig.navtableforms.gui.buttons.fileslink.FilesLinkButton;
-import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
 
 public class FormActuaciones extends AbstractForm {
 
-    private FormPanel form;
     private JButton ayuntamientos;
     private JTextField codigoActuacion;
+    private JComboBox tipoActuacion;
+    private JTabbedPane subForms;
 
     public FormActuaciones(FLyrVect layer) {
 	super(layer);
@@ -28,7 +30,7 @@ public class FormActuaciones extends AbstractForm {
     }
 
     public void initWindow() {
-	viewInfo.setHeight(590);
+	viewInfo.setHeight(800);
 	viewInfo.setWidth(580);
 	viewInfo.setTitle("Vías y Obras: actuaciones");
 
@@ -38,10 +40,19 @@ public class FormActuaciones extends AbstractForm {
 
     @Override
     public FormPanel getFormBody() {
-	if (form == null) {
-	    form = new FormPanel("actuaciones-ui.xml");
+	if (formBody == null) {
+	    formBody = new FormPanel("actuaciones-ui.xml");
+	    subForms = (JTabbedPane) formBody.getComponentByName("tipos");
+	    disableTabs();
 	}
-	return form;
+	return formBody;
+    }
+
+    private void disableTabs() {
+	for (int index = 0; index < subForms.getTabCount(); index++) {
+	    subForms.setEnabledAt(index, false);
+	}
+	subForms.setSelectedIndex(-1);
     }
 
     @Override
@@ -64,16 +75,18 @@ public class FormActuaciones extends AbstractForm {
     public void setListeners() {
 	super.setListeners();
 
-	ayuntamientos = (JButton) AbeilleParser.getButtonsFromContainer(form)
-		.get("ayuntamientos");
+	ayuntamientos = (JButton) formBody.getComponentByName("ayuntamientos");
 	ayuntamientos.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 		openConcellosPanel();
 	    }
 	});
 
-	codigoActuacion = (JTextField) this.getWidgetComponents().get(
-		"codigo_actuacion");
+	codigoActuacion = (JTextField) formBody
+		.getComponentByName("codigo_actuacion");
+
+	tipoActuacion = (JComboBox) formBody.getComponentByName("tipo");
+	tipoActuacion.addActionListener(new ChangeFormTab());
     }
 
     private void openConcellosPanel() {
@@ -81,6 +94,18 @@ public class FormActuaciones extends AbstractForm {
 	    FormActuacionesMunicipios cp = new FormActuacionesMunicipios(
 		    codigoActuacion.getText());
 	    PluginServices.getMDIManager().addWindow(cp);
+	}
+    }
+
+    private final class ChangeFormTab implements ActionListener {
+	public void actionPerformed(ActionEvent arg0) {
+	    if (subForms != null) {
+		if (subForms.getSelectedIndex() != -1) {
+		    subForms.setEnabledAt(subForms.getSelectedIndex(), false);
+		}
+		subForms.setEnabledAt(tipoActuacion.getSelectedIndex(), true);
+		subForms.setSelectedIndex(tipoActuacion.getSelectedIndex());
+	    }
 	}
     }
 

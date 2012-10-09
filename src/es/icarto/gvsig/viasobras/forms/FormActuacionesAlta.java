@@ -6,17 +6,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import com.iver.andami.PluginServices;
@@ -44,12 +41,6 @@ public class FormActuacionesAlta extends JPanel implements IWindow {
     private JTextField pkFinal;
     private JTextField codigoActuacion;
     private JComboBox tipo;
-    private JTextField descripcion;
-    private JTextField tituloProyecto;
-    private JTextField importe;
-    private JTextField fecha;
-    private JTextField contratista;
-    private JTextArea observaciones;
 
     private FLyrVect layer;
 
@@ -86,12 +77,6 @@ public class FormActuacionesAlta extends JPanel implements IWindow {
 	pkFinal = (JTextField) form.getTextField("pk_final");
 	codigoActuacion = (JTextField) form.getTextField("codigo_actuacion");
 	tipo = (JComboBox) form.getComboBox("tipo");
-	descripcion = (JTextField) form.getTextField("descripcion");
-	tituloProyecto = (JTextField) form.getTextField("titulo_proyecto");
-	importe = (JTextField) form.getComponentByName("importe");
-	fecha = (JTextField) form.getTextField("fecha");
-	contratista = (JTextField) form.getTextField("contratista");
-	observaciones = (JTextArea) form.getComponentByName("observaciones");
     }
 
     public WindowInfo getWindowInfo() {
@@ -99,7 +84,7 @@ public class FormActuacionesAlta extends JPanel implements IWindow {
 	    viewInfo = new WindowInfo(WindowInfo.MODALDIALOG
 		    | WindowInfo.RESIZABLE | WindowInfo.PALETTE);
 	    viewInfo.setTitle("Vías y Obras: alta actuación");
-	    viewInfo.setHeight(480);
+	    viewInfo.setHeight(250);
 	    viewInfo.setWidth(560);
 	}
 	return viewInfo;
@@ -149,8 +134,8 @@ public class FormActuacionesAlta extends JPanel implements IWindow {
 	    try {
 		c.setAutoCommit(false);
 		String sqlInsert = "INSERT INTO inventario.actuaciones "
-			+ "(codigo_carretera, pk_inicial, pk_final, codigo_actuacion, tipo, descripcion, titulo_proyecto, importe, fecha, contratista, observaciones) "
-			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			+ "(codigo_carretera, pk_inicial, pk_final, codigo_actuacion, tipo) "
+			+ "VALUES (?, ?, ?, ?, ?)";
 		PreparedStatement stInsert = c.prepareStatement(sqlInsert);
 		String codigoCarreteraValue = ((KeyValue) codigoCarretera
 			.getSelectedItem()).getKey();
@@ -160,27 +145,6 @@ public class FormActuacionesAlta extends JPanel implements IWindow {
 		stInsert.setString(4, codigoActuacion.getText());
 		stInsert.setString(5, (String) tipo.getSelectedItem()
 			.toString());
-		stInsert.setString(6, descripcion.getText());
-		stInsert.setString(7, tituloProyecto.getText());
-		try {
-		    NumberFormat doubleFormat = DoubleFormatNT
-			    .getDisplayingFormat();
-		    double importeValue = (Double) doubleFormat.parse(
-			    importe.getText()).doubleValue();
-		    stInsert.setDouble(8, importeValue);
-		} catch (ParseException pe) {
-		    stInsert.setNull(8, java.sql.Types.DOUBLE);
-		}
-		try {
-		    DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		    java.sql.Date date = new java.sql.Date(formatter.parse(
-			    fecha.getText()).getTime());
-		    stInsert.setDate(9, date);
-		} catch (ParseException e1) {
-		    stInsert.setNull(9, java.sql.Types.DATE);
-		}
-		stInsert.setString(10, contratista.getText());
-		stInsert.setString(11, observaciones.getText());
 		stInsert.execute();
 		c.commit();
 		c.close();
