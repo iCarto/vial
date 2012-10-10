@@ -1,12 +1,9 @@
 DROP TABLE IF EXISTS inventario.pks_1000;
-DROP SEQUENCE IF EXISTS pks_1000_pk_seq;
-
-CREATE SEQUENCE pks_1000_pk_seq INCREMENT BY 1 START WITH 1;
 CREATE TABLE inventario.pks_1000(
         gid serial,
         codigo_carretera text,
         codigo_municipio text,
-        pk int DEFAULT nextval('pks_1000_pk_seq') NOT NULL,
+        pk int NOT NULL,
         PRIMARY KEY(gid),
         FOREIGN KEY(codigo_carretera) REFERENCES inventario.carreteras(numero) ON DELETE CASCADE
 );
