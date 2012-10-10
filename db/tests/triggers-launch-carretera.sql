@@ -1,12 +1,6 @@
 BEGIN;
 
-SELECT plan(21);
-
-SELECT trigger_is('inventario',
-                  'carreteras',
-                  'calibrate_carretera_and_tramos',
-                  'inventario',
-                  'calibrate_carretera_and_tramos');
+SELECT plan(20);
 
 SELECT trigger_is('inventario',
                   'carreteras_lugo',
