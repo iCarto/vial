@@ -1680,7 +1680,7 @@
           <at name="properties">
            <object classname="com.jeta.forms.store.support.PropertyMap">
             <at name="horizontalAlignment">4</at>
-            <at name="text">ACTUACIONES </at>
+            <at name="text">ALTA ACTUACIÓN</at>
             <at name="height">49</at>
             <at name="font">
              <object classname="com.jeta.forms.store.properties.FontProperty">
@@ -1689,8 +1689,8 @@
               <at name="size">16</at>
              </object>
             </at>
-            <at name="name"/>
             <at name="width">259</at>
+            <at name="name"></at>
             <at name="fill">
              <object classname="com.jeta.forms.store.properties.effects.PaintProperty">
               <at name="name">fill</at>
