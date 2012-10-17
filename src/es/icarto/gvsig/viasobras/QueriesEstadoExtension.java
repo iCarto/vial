@@ -13,7 +13,7 @@ public class QueriesEstadoExtension extends Extension {
     }
 
     public void execute(String actionCommand) {
-	QueriesEstadoPanel p = new QueriesEstadoPanel(false);
+	QueriesEstadoPanel p = new QueriesEstadoPanel();
 	p.open();
     }
 
