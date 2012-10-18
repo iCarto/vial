@@ -16,28 +16,40 @@ public class WhereFactory {
 	numericQueries.add("C40");
 	List<String> textQueries = new ArrayList<String>();
 	textQueries.add("C20");
+	List<String> specialQueries = new ArrayList<String>();
+	specialQueries.add("C02");
 
 	String whereSQL;
 	whereSQL = checkIfHasWhere(hasWhere);
 	whereSQL = getWhereCarretera(whereSQL);
 	whereSQL = getWhereMunicipio(whereSQL);
 	if (numericQueries.contains(queryCode)) {
-	    whereSQL = getWhereCompare(whereSQL, mayorValue, menorValue);
+	    whereSQL = getWhereCaracteristicaCompare(whereSQL, mayorValue, menorValue);
 	} else if (textQueries.contains(queryCode)) {
-	    whereSQL = getWhereEquals(whereSQL, textValue);
+	    whereSQL = getWhereCaracteristicaEquals(whereSQL, textValue);
+	} else if (specialQueries.contains(queryCode)) {
+	    whereSQL = getWhereCategoriaCarretera(whereSQL, textValue);
 	}
 	whereSQL = checkIfIsVoid(whereSQL);
 	return whereSQL;
     }
 
-    private static String getWhereEquals(String whereSQL, String textValue) {
+    private static String getWhereCategoriaCarretera(String whereSQL,
+	    String textValue) {
+	if (!textValue.equals("")) {
+	    whereSQL = whereSQL + " AND c.categoria = '" + textValue + "'";
+	}
+	return whereSQL;
+    }
+
+    private static String getWhereCaracteristicaEquals(String whereSQL, String textValue) {
 	if (!textValue.equals("")) {
 	    whereSQL = whereSQL + " AND p.valor = '" + textValue + "'";
 	}
 	return whereSQL;
     }
 
-    private static String getWhereCompare(String where, String mayorValue,
+    private static String getWhereCaracteristicaCompare(String where, String mayorValue,
 	    String menorValue) {
 	if (!mayorValue.equalsIgnoreCase("")) {
 	    where = where + " AND p.valor >= '" + mayorValue + "'";

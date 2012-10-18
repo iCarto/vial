@@ -68,4 +68,15 @@ INSERT INTO consultas.consultas
        FROM public.consultas_sql
        WHERE id=7;
 
+
+INSERT INTO consultas.consultas
+       SELECT 'C02',
+              'Carreteras por categoría',
+              sql_string,
+              'NO',
+              'Carreteras por categoría',
+              ''
+       FROM public.consultas_sql
+       WHERE id=8;
+
 DROP TABLE IF EXISTS public.consultas_sql;
