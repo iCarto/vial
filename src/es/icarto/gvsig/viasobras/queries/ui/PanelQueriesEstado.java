@@ -21,6 +21,7 @@ import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.LayoutFocusTraversalPolicy;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
@@ -110,11 +111,20 @@ public class PanelQueriesEstado extends gvWindow {
 	valor = (JTextField) formBody.getComponentByName("valor");
 	queriesTable = (JTable) formBody.getComponentByName("queriesTable");
 	runQueriesB = (JButton) formBody.getComponentByName("runQueriesButton");
+	runQueriesB.setEnabled(false);
 
 	fillCarreteras();
 	fillConcellos();
 	fillQueriesTable();
 	initListeners();
+	initFocus();
+    }
+
+    private void initFocus() {
+	this.setFocusCycleRoot(true);
+	this.setFocusTraversalPolicy(new LayoutFocusTraversalPolicy());
+	carreteras.requestFocusInWindow();
+	queriesTable.setFocusable(false);
     }
 
     private void initListeners() {
@@ -130,7 +140,9 @@ public class PanelQueriesEstado extends gvWindow {
 		ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 		if (lsm.isSelectionEmpty()) {
 		    queryCode = NO_QUERY;
+		    runQueriesB.setEnabled(false);
 		} else {
+		    runQueriesB.setEnabled(true);
 		    int selectedRow = lsm.getMinSelectionIndex();
 		    queryCode = (String) queriesModel
 			    .getValueAt(selectedRow, 0);
