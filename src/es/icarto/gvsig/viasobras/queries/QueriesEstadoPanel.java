@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -21,6 +23,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -35,6 +39,7 @@ import es.icarto.gvsig.viasobras.domain.catalog.Carretera;
 import es.icarto.gvsig.viasobras.domain.catalog.Catalog;
 import es.icarto.gvsig.viasobras.domain.catalog.Concello;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.DBFacade;
+import es.udc.cartolab.gvsig.navtable.format.DoubleFormatNT;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
 @SuppressWarnings("serial")
@@ -45,13 +50,18 @@ public class QueriesEstadoPanel extends gvWindow {
     private JComboBox concellos;
     private JTextField mayor;
     private JTextField menor;
+    private JTextField valor;
     private JScrollPane scrollPane;
     private JTable queriesTable;
+    private DefaultTableModel queriesModel;
     private JButton runQueriesB;
 
     private static final Logger logger = Logger.getLogger(QueriesEstadoPanel.class);
 
     private DBSession dbs;
+
+    private static String NO_QUERY = "";
+    private String queryCode = NO_QUERY;
 
     public QueriesEstadoPanel() {
 	super(630, 480, true);
@@ -65,7 +75,6 @@ public class QueriesEstadoPanel extends gvWindow {
 	initDomainMapper(dbs);
 	Catalog.clear();
 	initWidgets();
-	initListeners();
     }
 
     private void initDomainMapper(DBSession dbs) {
@@ -95,18 +104,36 @@ public class QueriesEstadoPanel extends gvWindow {
 	concellos = (JComboBox) formBody.getComponentByName("concello");
 	mayor = (JTextField) formBody.getComponentByName("mayor");
 	menor = (JTextField) formBody.getComponentByName("menor");
+	valor = (JTextField) formBody.getComponentByName("valor");
 	queriesTable = (JTable) formBody.getComponentByName("queriesTable");
 	runQueriesB = (JButton) formBody.getComponentByName("runQueriesButton");
 
 	fillCarreteras();
 	fillConcellos();
 	fillQueriesTable();
+	initListeners();
     }
 
     private void initListeners() {
 	runQueriesB.addActionListener(new RunQueriesListener());
 	carreteras.addItemListener(new CarreteraListener());
 	concellos.addItemListener(new ConcelloListener());
+	ListSelectionModel rowSM = queriesTable.getSelectionModel();
+	rowSM.addListSelectionListener(new ListSelectionListener() {
+	    public void valueChanged(ListSelectionEvent e) {
+		if (e.getValueIsAdjusting()) {
+		    return;
+		}
+		ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+		if (lsm.isSelectionEmpty()) {
+		    queryCode = NO_QUERY;
+		} else {
+		    int selectedRow = lsm.getMinSelectionIndex();
+		    queryCode = (String) queriesModel
+			    .getValueAt(selectedRow, 0);
+		}
+	    }
+	});
     }
 
     private void fillCarreteras() {
@@ -141,16 +168,16 @@ public class QueriesEstadoPanel extends gvWindow {
 
     private void fillQueriesTable() {
 
-	DefaultTableModel model = new QueriesTableModel();
-	queriesTable.setModel(model);
+	queriesModel = new QueriesTableModel();
+	queriesTable.setModel(queriesModel);
 
-	model.setRowCount(0);
+	queriesModel.setRowCount(0);
 	queriesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	queriesTable.setRowSelectionAllowed(true);
 	queriesTable.setColumnSelectionAllowed(false);
 
-	model.addColumn(new TableColumn());
-	model.addColumn(new TableColumn());
+	queriesModel.addColumn(new TableColumn());
+	queriesModel.addColumn(new TableColumn());
 
 	queriesTable.getColumnModel().getColumn(0).setHeaderValue("Código");
 	queriesTable.getColumnModel().getColumn(0).setMaxWidth(75);
@@ -169,8 +196,9 @@ public class QueriesEstadoPanel extends gvWindow {
 		Object[] row = new Object[2];
 		row[0] = tableContent[i][0];
 		row[1] = tableContent[i][1];
-		model.addRow(row);
-		model.fireTableRowsInserted(0, model.getRowCount() - 1);
+		queriesModel.addRow(row);
+		queriesModel.fireTableRowsInserted(0,
+			queriesModel.getRowCount() - 1);
 	    }
 	} catch (SQLException e) {
 	    logger.error(e.getMessage(), e);
@@ -214,7 +242,7 @@ public class QueriesEstadoPanel extends gvWindow {
     }
 
     private void executeQuery() throws SQLException {
-	if (queriesTable.getSelectedRow() != -1) {
+	if (queryCode != NO_QUERY) {
 	    ArrayList<ResultTableModel> resultsMap = new ArrayList<ResultTableModel>();
 
 	    Connection con = null;
@@ -234,7 +262,7 @@ public class QueriesEstadoPanel extends gvWindow {
 		DBSession dbs = DBSession.getCurrentSession();
 		con = dbs.getJavaConnection();
 		st = con.prepareStatement(querySQL);
-		logger.info(querySQL + ": " + queryContents[2]);
+		logger.info(querySQL);
 		st.execute();
 		rs = st.getResultSet();
 		ResultTableModel result = new ResultTableModel(queryCode,
@@ -279,51 +307,39 @@ public class QueriesEstadoPanel extends gvWindow {
     }
 
     private String getWhereClause(boolean hasWhere) throws SQLException {
-	String whereC;
-	if (!hasWhere) {
-	    whereC = "WHERE";
-	} else {
-	    whereC = " AND ";
+	String mayorValue;
+	String menorValue;
+	try {
+	    NumberFormat doubleFormat = DoubleFormatNT.getDisplayingFormat();
+	    mayorValue = doubleFormat.parse(mayor.getText()).toString();
+	    mayor.setText(mayorValue);
+	} catch (ParseException e) {
+	    mayorValue = "";
+	    mayor.setText("");
 	}
-	if (!Catalog.getCarreteraSelected().equalsIgnoreCase(
-		Catalog.CARRETERA_ALL)) {
-	    whereC = whereC + " i.codigo_carretera = '"
-		    + ((Carretera) carreteras.getSelectedItem()).getCode()
-		    + "'";
-	} else {
-	    whereC = whereC + " 1=1 ";
+	try {
+	    NumberFormat doubleFormat = DoubleFormatNT.getDisplayingFormat();
+	    menorValue = doubleFormat.parse(menor.getText()).toString();
+	    menor.setText(menorValue);
+	} catch (ParseException e) {
+	    menorValue = "";
+	    menor.setText("");
 	}
-	if (!Catalog.getConcelloSelected().equalsIgnoreCase(
-		Catalog.CONCELLO_ALL)) {
-	    whereC = whereC + " AND i.codigo_municipio = '"
-		    + ((Concello) concellos.getSelectedItem()).getCode()
-		    + "'";
-	}
-	if (whereC.equalsIgnoreCase("WHERE 1=1 ")) {
-	    whereC = ""; // has no combobox selected
-	}
-	return whereC;
+	return WhereFactory.create(hasWhere, queryCode, mayorValue, menorValue,
+		valor.getText());
     }
 
     private String[] getQueryContents() throws Exception {
-	DefaultTableModel model = (DefaultTableModel) queriesTable.getModel();
-	String queryCode = (String) model.getValueAt(
-		queriesTable.getSelectedRow(), 0);
 	DBSession dbs = DBSession.getCurrentSession();
 	String whereClause = "codigo" + " = '" + queryCode + "'";
 	String[][] tableContent = dbs.getTable("consultas", "consultas",
 		whereClause);
 
-	boolean hasWhere = false;
-	if (tableContent[0][3].compareToIgnoreCase("SI") == 0) {
-	    hasWhere = true;
-	}
-
 	String[] contents = new String[5];
 	contents[0] = tableContent[0][0]; // code
 	contents[1] = tableContent[0][1]; // description
 	contents[2] = tableContent[0][2].replaceAll("\\[\\[WHERE\\]\\]",
-		getWhereClause(hasWhere)); // query
+		getWhereClause(tableContent[0][3].compareTo("SI") == 0)); // query
 	contents[3] = tableContent[0][4]; // title
 	contents[4] = tableContent[0][5]; // subtitle
 	return contents;
