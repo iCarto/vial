@@ -12,42 +12,79 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/preprocesar_consultas.sql
 
-sql_query_path=`pwd`/funcions/consultas/c01-carreteras-general.sql #COPY command needs absolute path
+#COPY command needs absolute path
+
+sql_query_path=`pwd`/funcions/consultas/c01-carreteras-general.sql
 sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname -c "$sql_query"
 
-sql_query_path=`pwd`/funcions/consultas/c10-carreteras-anchofirme.sql #COPY command needs absolute path
+sql_query_path=`pwd`/funcions/consultas/c10-carreteras-anchofirme.sql
 sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname -c "$sql_query"
 
-sql_query_path=`pwd`/funcions/consultas/c20-carreteras-tipofirme.sql #COPY command needs absolute path
+sql_query_path=`pwd`/funcions/consultas/c20-carreteras-tipofirme.sql
 sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname -c "$sql_query"
 
-sql_query_path=`pwd`/funcions/consultas/c21-carreteras-tipofirme-mb.sql #COPY command needs absolute path
+sql_query_path=`pwd`/funcions/consultas/c21-carreteras-tipofirme-mb.sql
 sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname -c "$sql_query"
 
-sql_query_path=`pwd`/funcions/consultas/c22-carreteras-tipofirme-ts.sql #COPY command needs absolute path
+sql_query_path=`pwd`/funcions/consultas/c22-carreteras-tipofirme-ts.sql
 sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname -c "$sql_query"
 
-sql_query_path=`pwd`/funcions/consultas/c30-carreteras-aforos.sql #COPY command needs absolute path
+sql_query_path=`pwd`/funcions/consultas/c30-carreteras-aforos.sql
 sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname -c "$sql_query"
 
-sql_query_path=`pwd`/funcions/consultas/c40-carreteras-cotas.sql #COPY command needs absolute path
+sql_query_path=`pwd`/funcions/consultas/c40-carreteras-cotas.sql
 sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname -c "$sql_query"
 
-sql_query_path=`pwd`/funcions/consultas/c02-carreteras-categoria.sql #COPY command needs absolute path
+sql_query_path=`pwd`/funcions/consultas/c02-carreteras-categoria.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+sql_query_path=`pwd`/funcions/consultas/c31-carreteras-aforos-ancho-menor-5.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+sql_query_path=`pwd`/funcions/consultas/c32-carreteras-aforos-ancho-entre-5-y-7.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+sql_query_path=`pwd`/funcions/consultas/c33-carreteras-aforos-ancho-mayor-7.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+sql_query_path=`pwd`/funcions/consultas/c34-carreteras-aforos-tipopavimento-ts.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+sql_query_path=`pwd`/funcions/consultas/c35-carreteras-aforos-tipopavimento-mb.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+sql_query_path=`pwd`/funcions/consultas/c36-carreteras-aforos-tipopavimento-h.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+sql_query_path=`pwd`/funcions/consultas/c37-carreteras-aforos-tipopavimento-o.sql
 sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname -c "$sql_query"

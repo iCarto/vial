@@ -79,4 +79,74 @@ INSERT INTO consultas.consultas
        FROM public.consultas_sql
        WHERE id=8;
 
+INSERT INTO consultas.consultas
+       SELECT 'C31',
+              'Aforos, donde ancho < 5',
+              sql_string,
+              'SI',
+              'Aforos, donde ancho < 5',
+              ''
+       FROM public.consultas_sql
+       WHERE id=9;
+
+INSERT INTO consultas.consultas
+       SELECT 'C32',
+              'Aforos, donde ancho >= 5 y >7',
+              sql_string,
+              'SI',
+              'Aforos, donde ancho >= 5 y >7',
+              ''
+       FROM public.consultas_sql
+       WHERE id=10;
+
+INSERT INTO consultas.consultas
+       SELECT 'C33',
+              'Aforos, donde ancho > 7',
+              sql_string,
+              'SI',
+              'Aforos, donde ancho > 7',
+              ''
+       FROM public.consultas_sql
+       WHERE id=11;
+
+INSERT INTO consultas.consultas
+       SELECT 'C34',
+              'Aforos, donde tipo pavimento = TS',
+              sql_string,
+              'SI',
+              'Aforos, donde tipo pavimento = TS',
+              ''
+       FROM public.consultas_sql
+       WHERE id=12;
+
+INSERT INTO consultas.consultas
+       SELECT 'C35',
+              'Aforos, donde tipo pavimento = MB',
+              sql_string,
+              'SI',
+              'Aforos, donde tipo pavimento = MB',
+              ''
+       FROM public.consultas_sql
+       WHERE id=13;
+
+INSERT INTO consultas.consultas
+       SELECT 'C36',
+              'Aforos, donde tipo pavimento = H',
+              sql_string,
+              'SI',
+              'Aforos, donde tipo pavimento = H',
+              ''
+       FROM public.consultas_sql
+       WHERE id=14;
+
+INSERT INTO consultas.consultas
+       SELECT 'C37',
+              'Aforos, donde tipo pavimento = O',
+              sql_string,
+              'SI',
+              'Aforos, donde tipo pavimento = O',
+              ''
+       FROM public.consultas_sql
+       WHERE id=15;
+
 DROP TABLE IF EXISTS public.consultas_sql;

@@ -13,6 +13,13 @@ public class WhereFactory {
 	List<String> numericQueries = new ArrayList<String>();
 	numericQueries.add("C10");
 	numericQueries.add("C30");
+	numericQueries.add("C31");
+	numericQueries.add("C32");
+	numericQueries.add("C33");
+	numericQueries.add("C34");
+	numericQueries.add("C35");
+	numericQueries.add("C36");
+	numericQueries.add("C37");
 	numericQueries.add("C40");
 	List<String> textQueries = new ArrayList<String>();
 	textQueries.add("C20");

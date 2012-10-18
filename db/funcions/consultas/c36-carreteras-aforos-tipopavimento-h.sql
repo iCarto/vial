@@ -3,10 +3,10 @@ SELECT m.nombre AS "Municipio", \
        i.orden_tramo AS "Tramo", \
        c.denominacion AS "Denominación", \
        p.valor AS "Aforo", \
-       p.pk "PK", \
-       ap.valor "Ancho (m)", \
-       tp.valor "Tipo pavimento", \
-       p.fecha "Fecha" \
+       p.pk AS "PK", \
+       ap.valor AS "Ancho (m)", \
+       tp.valor AS "Tipo pavimento", \
+       p.fecha AS "Fecha" \
  FROM inventario.carretera_municipio AS i, \
       inventario.carreteras AS c, \
       inventario.municipio_codigo AS m, \
@@ -28,5 +28,6 @@ SELECT m.nombre AS "Municipio", \
        AND i.orden_tramo = ap.tramo \
        AND ap.pk_inicial <= p.pk \
        AND ap.pk_final >= p.pk \
+       AND tp.valor = 'H' \
        [[WHERE]] \
  ORDER BY m.nombre, i.codigo_carretera, i.orden_tramo, p.pk, p.fecha;
