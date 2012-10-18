@@ -19,36 +19,6 @@ INSERT INTO consultas.consultas
        WHERE id=2;
 
 INSERT INTO consultas.consultas
-       SELECT 'C11',
-              'Ancho de firme < 5',
-              sql_string,
-              'SI',
-              'Ancho de firme < 5',
-              ''
-       FROM public.consultas_sql
-       WHERE id=3;
-
-INSERT INTO consultas.consultas
-       SELECT 'C12',
-              'Ancho de firme >5 y <7',
-              sql_string,
-              'SI',
-              'Ancho de firme >5 y <7',
-              ''
-       FROM public.consultas_sql
-       WHERE id=4;
-
-INSERT INTO consultas.consultas
-       SELECT 'C13',
-              'Ancho de firme > 7',
-              sql_string,
-              'SI',
-              'Ancho de firme > 7',
-              ''
-       FROM public.consultas_sql
-       WHERE id=5;
-
-INSERT INTO consultas.consultas
        SELECT 'C20',
               'Tipo de firme',
               sql_string,
@@ -56,7 +26,7 @@ INSERT INTO consultas.consultas
               'Tipo de firme',
               ''
        FROM public.consultas_sql
-       WHERE id=6;
+       WHERE id=3;
 
 INSERT INTO consultas.consultas
        SELECT 'C21',
@@ -66,7 +36,7 @@ INSERT INTO consultas.consultas
               'Tipo de firme = MB',
               ''
        FROM public.consultas_sql
-       WHERE id=7;
+       WHERE id=4;
 
 INSERT INTO consultas.consultas
        SELECT 'C22',
@@ -76,7 +46,7 @@ INSERT INTO consultas.consultas
               'Tipo de firme = TS',
               ''
        FROM public.consultas_sql
-       WHERE id=8;
+       WHERE id=5;
 
 INSERT INTO consultas.consultas
        SELECT 'C30',
@@ -86,37 +56,7 @@ INSERT INTO consultas.consultas
               'Aforos',
               ''
        FROM public.consultas_sql
-       WHERE id=9;
-
-INSERT INTO consultas.consultas
-       SELECT 'C31',
-              'Aforos > 250',
-              sql_string,
-              'SI',
-              'Aforos > 250',
-              ''
-       FROM public.consultas_sql
-       WHERE id=10;
-
-INSERT INTO consultas.consultas
-       SELECT 'C32',
-              'Aforos > 500',
-              sql_string,
-              'SI',
-              'Aforos > 500',
-              ''
-       FROM public.consultas_sql
-       WHERE id=11;
-
-INSERT INTO consultas.consultas
-       SELECT 'C33',
-              'Aforos > 1000',
-              sql_string,
-              'SI',
-              'Aforos > 1000',
-              ''
-       FROM public.consultas_sql
-       WHERE id=12;
+       WHERE id=6;
 
 INSERT INTO consultas.consultas
        SELECT 'C40',
@@ -126,6 +66,6 @@ INSERT INTO consultas.consultas
               'Cotas',
               ''
        FROM public.consultas_sql
-       WHERE id=13;
+       WHERE id=7;
 
 DROP TABLE IF EXISTS public.consultas_sql;

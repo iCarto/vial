@@ -36,19 +36,19 @@ SELECT m.nombre as "Municipio", \
                 ' TRONCO ('||trv.longitud_tronco||'),'|| \
                 ' RAMPAS ('||trv.longitud_rampas||'),'|| \
                 ' TRAMOS VIEJOS ('||trv.longitud_variantes||');'|| \
-                ' INTERMUNICIPAL: '|| trv_m_array.longitud_por_municipio \
+                ' INTERMUNICIPAL '|| trv_m_array.longitud_por_municipio \
        WHEN c.intermunicipal \
             AND trv.longitud_rampas <> 0 THEN \
                 COALESCE(c.observaciones, '')|| \
                 ' TRONCO ('||trv.longitud_tronco||'),'|| \
                 ' RAMPAS ('||trv.longitud_rampas||');'|| \
-                ' INTERMUNICIPAL: '|| trv_m_array.longitud_por_municipio \
+                ' INTERMUNICIPAL '|| trv_m_array.longitud_por_municipio \
        WHEN c.intermunicipal \
             AND trv.longitud_variantes <> 0 THEN \
                 COALESCE(c.observaciones, '')|| \
                 ' TRONCO ('||trv.longitud_tronco||'),'|| \
                 ' TRAMOS VIEJOS ('||trv.longitud_variantes||');'|| \
-                ' INTERMUNICIPAL: '|| trv_m_array.longitud_por_municipio \
+                ' INTERMUNICIPAL '|| trv_m_array.longitud_por_municipio \
        WHEN trv.longitud_rampas <> 0 THEN \
                 COALESCE(c.observaciones, '')|| \
                 ' TRONCO ('||trv.longitud_tronco||'),'|| \
@@ -59,7 +59,7 @@ SELECT m.nombre as "Municipio", \
                 ' TRAMOS VIEJOS ('||trv.longitud_variantes||')' \
        WHEN c.intermunicipal THEN \
                 COALESCE(c.observaciones, '')|| \
-                ' INTERMUNICIPAL: '||trv_m_array.longitud_por_municipio \
+                ' INTERMUNICIPAL '||trv_m_array.longitud_por_municipio \
        ELSE COALESCE(c.observaciones, '') \
        END AS "Observaciones" \
 FROM inventario.carreteras AS c, \
