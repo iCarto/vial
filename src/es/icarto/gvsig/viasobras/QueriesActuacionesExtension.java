@@ -2,7 +2,7 @@ package es.icarto.gvsig.viasobras;
 
 import com.iver.andami.plugins.Extension;
 
-import es.icarto.gvsig.viasobras.queries.QueriesActuacionesPanel;
+import es.icarto.gvsig.viasobras.queries.ui.PanelQueriesActuaciones;
 
 public class QueriesActuacionesExtension extends Extension {
 
@@ -10,7 +10,7 @@ public class QueriesActuacionesExtension extends Extension {
     }
 
     public void execute(String actionCommand) {
-	QueriesActuacionesPanel p = new QueriesActuacionesPanel(false);
+	PanelQueriesActuaciones p = new PanelQueriesActuaciones(false);
 	p.open();
     }
 

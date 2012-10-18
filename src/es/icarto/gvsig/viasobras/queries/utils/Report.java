@@ -1,4 +1,4 @@
-package es.icarto.gvsig.viasobras.queries;
+package es.icarto.gvsig.viasobras.queries.utils;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -47,7 +47,7 @@ public class Report {
     private boolean startNewReport;
 
     public Report(int reportType, String fileName,
-	    ArrayList<ResultTableModel> resultMap, String[] filters) {
+	    ArrayList<TableModelResults> resultMap, String[] filters) {
 	if (reportType == RTF) {
 	    writeRtfReport(fileName, resultMap, filters);
 	}
@@ -159,13 +159,13 @@ public class Report {
     }
 
     private void writeRtfReportContent(Document document,
-	    ArrayList<ResultTableModel> resultMap, String[] filters) {
+	    ArrayList<TableModelResults> resultMap, String[] filters) {
 	try {
 	    // Header
 	    // Image image = getHeaderImage();
 	    // document.add(image);
 
-	    for (ResultTableModel result : resultMap) {
+	    for (TableModelResults result : resultMap) {
 
 		// Write title,subtitle and date report
 		String title = result.getTitle();
@@ -221,11 +221,11 @@ public class Report {
     }
 
     private void writePdfReportContent(PdfWriter writer, Document document,
-	    ArrayList<ResultTableModel> resultMap, String[] filters) {
+	    ArrayList<TableModelResults> resultMap, String[] filters) {
 	try {
 	    boolean isFirstPage = true;
 
-	    for (ResultTableModel result : resultMap) {
+	    for (TableModelResults result : resultMap) {
 		document.setPageCount(0);
 		startNewReport = true;
 		if (!isFirstPage) {
@@ -347,7 +347,7 @@ public class Report {
     }
 
     public void writeRtfReport(String fileName,
-	    ArrayList<ResultTableModel> resultMap, String[] filters) {
+	    ArrayList<TableModelResults> resultMap, String[] filters) {
 	Document document = new Document(PageSize.A4.rotate());
 	RtfWriter2 writer;
 	try {
@@ -370,7 +370,7 @@ public class Report {
     }
 
     public void writePdfReport(String fileName,
-	    ArrayList<ResultTableModel> resultMap, String[] filters) {
+	    ArrayList<TableModelResults> resultMap, String[] filters) {
 	Document document = new Document(PageSize.A4.rotate());
 	try {
 	    PdfWriter writer = PdfWriter.getInstance(document,
@@ -393,10 +393,10 @@ public class Report {
     public class MyPageEvent extends PdfPageEventHelper {
 	private PdfWriter pdfWriter;
 	private Document document;
-	private ArrayList<ResultTableModel> resultMap;
+	private ArrayList<TableModelResults> resultMap;
 
 	public MyPageEvent(PdfWriter pdfWriter, Document document,
-		ArrayList<ResultTableModel> resultMap) {
+		ArrayList<TableModelResults> resultMap) {
 	    this.pdfWriter = pdfWriter;
 	    this.document = document;
 	    this.resultMap = resultMap;
@@ -412,7 +412,7 @@ public class Report {
 				- document.leftMargin()
 				- document.rightMargin());
 			table.setLockedWidth(true);
-			for (ResultTableModel result : resultMap) {
+			for (TableModelResults result : resultMap) {
 			    if (!result.getTitle().equalsIgnoreCase(
 				    "listado de pagos")) {
 				table.setWidths(getColumnsWidth(table,

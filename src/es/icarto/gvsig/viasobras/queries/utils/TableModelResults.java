@@ -1,4 +1,4 @@
-package es.icarto.gvsig.viasobras.queries;
+package es.icarto.gvsig.viasobras.queries.utils;
 
 /*
  * Copyright (c) 2010. Cartolab (Universidade da Coruña)
@@ -27,7 +27,7 @@ import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 
-public class ResultTableModel extends DefaultTableModel {
+public class TableModelResults extends DefaultTableModel {
 
     HashSet<String> editableColumns = null;
     HashSet<String> invisibleColumns = null;
@@ -43,7 +43,7 @@ public class ResultTableModel extends DefaultTableModel {
     private boolean error = false;
     private List<String> tables;
 
-    public ResultTableModel(String code, String description, String title,
+    public TableModelResults(String code, String description, String title,
 	    String subtitle, String[] filters) {
 	super();
 	this.code = code;
@@ -191,12 +191,12 @@ public class ResultTableModel extends DefaultTableModel {
     }
 
     public static void writeResultTableToPdfReport(String filename,
-	    ArrayList<ResultTableModel> resultMap, String[] filters) {
+	    ArrayList<TableModelResults> resultMap, String[] filters) {
 	new Report(Report.PDF, filename, resultMap, filters);
     }
 
     public static void writeResultTableToRtfReport(String filename,
-	    ArrayList<ResultTableModel> resultMap, String[] filters) {
+	    ArrayList<TableModelResults> resultMap, String[] filters) {
 	new Report(Report.RTF, filename, resultMap, filters);
     }
 }

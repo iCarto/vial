@@ -1,4 +1,4 @@
-package es.icarto.gvsig.viasobras.queries;
+package es.icarto.gvsig.viasobras.queries.ui;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -39,11 +39,14 @@ import es.icarto.gvsig.viasobras.domain.catalog.Carretera;
 import es.icarto.gvsig.viasobras.domain.catalog.Catalog;
 import es.icarto.gvsig.viasobras.domain.catalog.Concello;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.DBFacade;
+import es.icarto.gvsig.viasobras.queries.utils.TableModelQueries;
+import es.icarto.gvsig.viasobras.queries.utils.TableModelResults;
+import es.icarto.gvsig.viasobras.queries.utils.WhereFactory;
 import es.udc.cartolab.gvsig.navtable.format.DoubleFormatNT;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
 @SuppressWarnings("serial")
-public class QueriesEstadoPanel extends gvWindow {
+public class PanelQueriesEstado extends gvWindow {
 
     private FormPanel formBody;
     private JComboBox carreteras;
@@ -56,14 +59,14 @@ public class QueriesEstadoPanel extends gvWindow {
     private DefaultTableModel queriesModel;
     private JButton runQueriesB;
 
-    private static final Logger logger = Logger.getLogger(QueriesEstadoPanel.class);
+    private static final Logger logger = Logger.getLogger(PanelQueriesEstado.class);
 
     private DBSession dbs;
 
     private static String NO_QUERY = "";
     private String queryCode = NO_QUERY;
 
-    public QueriesEstadoPanel() {
+    public PanelQueriesEstado() {
 	super(630, 480, true);
 	this.setTitle("Consultas");
 	formBody = new FormPanel("consultas-estado-ui.xml");
@@ -168,7 +171,7 @@ public class QueriesEstadoPanel extends gvWindow {
 
     private void fillQueriesTable() {
 
-	queriesModel = new QueriesTableModel();
+	queriesModel = new TableModelQueries();
 	queriesTable.setModel(queriesModel);
 
 	queriesModel.setRowCount(0);
@@ -243,7 +246,7 @@ public class QueriesEstadoPanel extends gvWindow {
 
     private void executeQuery() throws SQLException {
 	if (queryCode != NO_QUERY) {
-	    ArrayList<ResultTableModel> resultsMap = new ArrayList<ResultTableModel>();
+	    ArrayList<TableModelResults> resultsMap = new ArrayList<TableModelResults>();
 
 	    Connection con = null;
 	    PreparedStatement st = null;
@@ -265,7 +268,7 @@ public class QueriesEstadoPanel extends gvWindow {
 		logger.info(querySQL);
 		st.execute();
 		rs = st.getResultSet();
-		ResultTableModel result = new ResultTableModel(queryCode,
+		TableModelResults result = new TableModelResults(queryCode,
 			queryDescription, queryTitle, querySubtitle,
 			getFilters());
 
@@ -275,7 +278,7 @@ public class QueriesEstadoPanel extends gvWindow {
 		String html = showResultsAsHTML(resultsMap);
 
 
-		QueriesResultPanel resultPanel = new QueriesResultPanel();
+		PanelQueriesResult resultPanel = new PanelQueriesResult();
 		resultPanel.open();
 		resultPanel.setResult(html);
 		resultPanel.setResultMap(resultsMap);
@@ -345,10 +348,10 @@ public class QueriesEstadoPanel extends gvWindow {
 	return contents;
     }
 
-    private String showResultsAsHTML(ArrayList<ResultTableModel> resultMap) {
+    private String showResultsAsHTML(ArrayList<TableModelResults> resultMap) {
 	StringBuffer sf = new StringBuffer();
 
-	for (ResultTableModel result : resultMap) {
+	for (TableModelResults result : resultMap) {
 	    sf.append("<h3 style=\"color: blue\">" + result.getCode()
 		    + "  -  " + result.getDescription() + "</h3>");
 
@@ -361,7 +364,7 @@ public class QueriesEstadoPanel extends gvWindow {
 	return sf.toString();
     }
 
-    private void resultSetToTable(ResultTableModel result, ResultSet rs)
+    private void resultSetToTable(TableModelResults result, ResultSet rs)
 	    throws SQLException {
 	// TODO: don't create empty ResultTableModel
 	ResultSetMetaData metaData = rs.getMetaData();

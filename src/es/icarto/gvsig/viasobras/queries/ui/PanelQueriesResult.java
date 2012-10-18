@@ -15,7 +15,7 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-package es.icarto.gvsig.viasobras.queries;
+package es.icarto.gvsig.viasobras.queries.ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,20 +33,23 @@ import net.miginfocom.swing.MigLayout;
 
 import com.iver.andami.messages.NotificationManager;
 
-public class QueriesResultPanel extends gvWindow {
+import es.icarto.gvsig.viasobras.queries.utils.TableModelResults;
+import es.icarto.gvsig.viasobras.queries.utils.ResultsWriter;
+
+public class PanelQueriesResult extends gvWindow {
 
     private JEditorPane resultTA;
     private JButton exportB;
     private JComboBox fileTypeCB;
     String[] fileFormats = { "CSV", "HTML", "PDF", "RTF" };
-    private ArrayList<ResultTableModel> resultsMap;
+    private ArrayList<TableModelResults> resultsMap;
     private String[] filters;
 
-    public QueriesResultPanel() {
+    public PanelQueriesResult() {
 	this(null);
     }
 
-    public QueriesResultPanel(String council) {
+    public PanelQueriesResult(String council) {
 
 	super(800, 500, false);
 	if (council != null && !council.equals("")) {
@@ -80,7 +83,7 @@ public class QueriesResultPanel extends gvWindow {
 	resultTA.setText(result);
     }
 
-    public void setResultMap(ArrayList<ResultTableModel> resultMap) {
+    public void setResultMap(ArrayList<TableModelResults> resultMap) {
 	this.resultsMap = resultMap;
     }
 
@@ -91,7 +94,7 @@ public class QueriesResultPanel extends gvWindow {
     private final class ExportToListener implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 	    if (fileTypeCB.getSelectedItem().equals("HTML")) {
-		SaveFileDialog sfd = new SaveFileDialog("HTML files", "html",
+		DialogSaveFile sfd = new DialogSaveFile("HTML files", "html",
 			"htm");
 		File f = sfd.showDialog();
 		if (f != null) {
@@ -101,24 +104,24 @@ public class QueriesResultPanel extends gvWindow {
 		    }
 		}
 	    } else if (fileTypeCB.getSelectedItem().equals("RTF")) {
-		SaveFileDialog sfd = new SaveFileDialog("RTF files", "rtf");
+		DialogSaveFile sfd = new DialogSaveFile("RTF files", "rtf");
 		File f = sfd.showDialog();
 		if (f != null) {
 		    String fileName = f.getAbsolutePath();
-		    ResultTableModel.writeResultTableToRtfReport(fileName,
+		    TableModelResults.writeResultTableToRtfReport(fileName,
 			    resultsMap, filters);
 		}
 	    } else if (fileTypeCB.getSelectedItem().equals("PDF")) {
-		SaveFileDialog sfd = new SaveFileDialog("PDF files", "pdf");
+		DialogSaveFile sfd = new DialogSaveFile("PDF files", "pdf");
 		File f = sfd.showDialog();
 		if (f != null) {
 		    String fileName = f.getAbsolutePath();
-		    ResultTableModel.writeResultTableToPdfReport(fileName,
+		    TableModelResults.writeResultTableToPdfReport(fileName,
 			    resultsMap, filters);
 		}
 	    } else if (fileTypeCB.getSelectedItem().equals("CSV")) {
-		for (ResultTableModel model : resultsMap) {
-		    SaveFileDialog sfd = new SaveFileDialog("CSV files", "csv");
+		for (TableModelResults model : resultsMap) {
+		    DialogSaveFile sfd = new DialogSaveFile("CSV files", "csv");
 		    File f = sfd.showDialog();
 		    if (f != null) {
 			try {

@@ -1,4 +1,4 @@
-package es.icarto.gvsig.viasobras.queries;
+package es.icarto.gvsig.viasobras.queries.utils;
 
 import java.io.File;
 import java.io.FileNotFoundException;

@@ -15,7 +15,7 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-package es.icarto.gvsig.viasobras.queries;
+package es.icarto.gvsig.viasobras.queries.ui;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;

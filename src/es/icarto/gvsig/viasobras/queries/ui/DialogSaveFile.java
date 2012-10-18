@@ -15,7 +15,7 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-package es.icarto.gvsig.viasobras.queries;
+package es.icarto.gvsig.viasobras.queries.ui;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -58,7 +58,7 @@ import com.iver.andami.PluginServices;
  * 
  */
 @SuppressWarnings("serial")
-public class SaveFileDialog extends JFileChooser {
+public class DialogSaveFile extends JFileChooser {
 
 	private FileFilter filter = null;
 	private String defaultExtension = null;
@@ -74,13 +74,13 @@ public class SaveFileDialog extends JFileChooser {
 	 *            uppercase validity is handled automaticaly. extensions[0] will
 	 *            be the default extension.
 	 */
-	public SaveFileDialog(String description, String... extensions) {
+	public DialogSaveFile(String description, String... extensions) {
 		super();
 		this.filter = new FileNameExtensionFilter(description, extensions);
 		this.defaultExtension = extensions[0];
 	}
 
-	public SaveFileDialog() {
+	public DialogSaveFile() {
 		super();
 	}
 

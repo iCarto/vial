@@ -1,4 +1,4 @@
-package es.icarto.gvsig.viasobras.queries;
+package es.icarto.gvsig.viasobras.queries.utils;
 
 import java.util.ArrayList;
 import java.util.List;
