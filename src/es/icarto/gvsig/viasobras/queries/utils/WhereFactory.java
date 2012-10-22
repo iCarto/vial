@@ -28,11 +28,13 @@ public class WhereFactory {
 
 	String whereSQL;
 	whereSQL = checkIfHasWhere(hasWhere);
-	whereSQL = getWhereCarretera(whereSQL);
-	whereSQL = getWhereMunicipio(whereSQL);
 	if (numericQueries.contains(queryCode)) {
+	    whereSQL = getWhereCarretera(whereSQL);
+	    whereSQL = getWhereMunicipio(whereSQL);
 	    whereSQL = getWhereCaracteristicaCompare(whereSQL, mayorValue, menorValue);
 	} else if (textQueries.contains(queryCode)) {
+	    whereSQL = getWhereCarretera(whereSQL);
+	    whereSQL = getWhereMunicipio(whereSQL);
 	    whereSQL = getWhereCaracteristicaEquals(whereSQL, textValue);
 	} else if (specialQueries.contains(queryCode)) {
 	    whereSQL = getWhereCategoriaCarretera(whereSQL, textValue);
@@ -43,6 +45,26 @@ public class WhereFactory {
 
     private static String getWhereCategoriaCarretera(String whereSQL,
 	    String textValue) {
+	// carretera
+	if (!Catalog.getCarreteraSelected().equalsIgnoreCase(
+		Catalog.CARRETERA_ALL)) {
+	    String carreteraValue = Catalog.getCarreteraSelected();
+	    whereSQL = whereSQL + " c.numero = '" + carreteraValue
+		    + "'";
+	} else {
+	    whereSQL = whereSQL + " 1=1 ";
+	}
+	// municipio
+	if (!Catalog.getConcelloSelected().equalsIgnoreCase(
+		Catalog.CONCELLO_ALL)) {
+	    String municipioValue = Catalog.getConcelloSelected();
+	    whereSQL = whereSQL
+		    + " AND c.numero ~ "
+		    + " (SELECT '('||array_to_string(array_agg(codigo_carretera),'|')||')' "
+		    + "  FROM inventario.carretera_municipio "
+		    + "  WHERE codigo_municipio = '" + municipioValue + "') ";
+	}
+	// categoria
 	if (!textValue.equals("")) {
 	    whereSQL = whereSQL + " AND c.categoria = '" + textValue + "'";
 	}
