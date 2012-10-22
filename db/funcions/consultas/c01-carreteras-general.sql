@@ -97,7 +97,7 @@ GROUP BY "Municipio", \
          "Denominación", \
          "Origen vía", \
          "Final vía", \
-         "Longitud en municipio", \
+         "Longitud tramo", \
          "Longitud total", \
          "Observaciones" \
 ORDER BY m.nombre, trv.codigo_carretera, trv.orden_tramo;
