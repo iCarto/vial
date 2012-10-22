@@ -1,4 +1,4 @@
-WITH trv AS ( \
+WITH i AS ( \
      SELECT cmt.codigo_carretera, \
             cmt.codigo_municipio, \
             cmt.orden_tramo, \
@@ -21,42 +21,42 @@ WITH trv AS ( \
               cmt.codigo_municipio, \
               cmt.orden_tramo) \
 SELECT m.nombre as "Municipio", \
-       trv.codigo_carretera AS "Código (LU-P)", \
-       trv.orden_tramo AS "Tramo", \
+       i.codigo_carretera AS "Código (LU-P)", \
+       i.orden_tramo AS "Tramo", \
        c.denominacion AS "Denominación", \
        c.origen_via AS "Origen vía", \
        c.final_via AS "Final vía", \
-       trv.longitud_tronco + trv.longitud_rampas + trv.longitud_variantes AS "Longitud tramo", \
+       i.longitud_tronco + i.longitud_rampas + i.longitud_variantes AS "Longitud tramo", \
        trv_c.longitud_tronco + trv_c.longitud_rampas + trv_c.longitud_variantes AS "Longitud total", \
        CASE \
        WHEN c.intermunicipal \
-            AND trv.longitud_rampas <> 0 \
-            AND trv.longitud_variantes <> 0 THEN \
+            AND i.longitud_rampas <> 0 \
+            AND i.longitud_variantes <> 0 THEN \
                 COALESCE(c.observaciones, '')|| \
-                ' TRONCO ('||trv.longitud_tronco||'),'|| \
-                ' RAMPAS ('||trv.longitud_rampas||'),'|| \
-                ' TRAMOS VIEJOS ('||trv.longitud_variantes||');'|| \
+                ' TRONCO ('||i.longitud_tronco||'),'|| \
+                ' RAMPAS ('||i.longitud_rampas||'),'|| \
+                ' TRAMOS VIEJOS ('||i.longitud_variantes||');'|| \
                 ' INTERMUNICIPAL '|| trv_m_array.longitud_por_municipio \
        WHEN c.intermunicipal \
-            AND trv.longitud_rampas <> 0 THEN \
+            AND i.longitud_rampas <> 0 THEN \
                 COALESCE(c.observaciones, '')|| \
-                ' TRONCO ('||trv.longitud_tronco||'),'|| \
-                ' RAMPAS ('||trv.longitud_rampas||');'|| \
+                ' TRONCO ('||i.longitud_tronco||'),'|| \
+                ' RAMPAS ('||i.longitud_rampas||');'|| \
                 ' INTERMUNICIPAL '|| trv_m_array.longitud_por_municipio \
        WHEN c.intermunicipal \
-            AND trv.longitud_variantes <> 0 THEN \
+            AND i.longitud_variantes <> 0 THEN \
                 COALESCE(c.observaciones, '')|| \
-                ' TRONCO ('||trv.longitud_tronco||'),'|| \
-                ' TRAMOS VIEJOS ('||trv.longitud_variantes||');'|| \
+                ' TRONCO ('||i.longitud_tronco||'),'|| \
+                ' TRAMOS VIEJOS ('||i.longitud_variantes||');'|| \
                 ' INTERMUNICIPAL '|| trv_m_array.longitud_por_municipio \
-       WHEN trv.longitud_rampas <> 0 THEN \
+       WHEN i.longitud_rampas <> 0 THEN \
                 COALESCE(c.observaciones, '')|| \
-                ' TRONCO ('||trv.longitud_tronco||'),'|| \
-                ' RAMPAS ('||trv.longitud_rampas||')' \
-       WHEN trv.longitud_variantes <> 0 THEN \
+                ' TRONCO ('||i.longitud_tronco||'),'|| \
+                ' RAMPAS ('||i.longitud_rampas||')' \
+       WHEN i.longitud_variantes <> 0 THEN \
                 COALESCE(c.observaciones, '')|| \
-                ' TRONCO('||trv.longitud_tronco||'),'|| \
-                ' TRAMOS VIEJOS ('||trv.longitud_variantes||')' \
+                ' TRONCO('||i.longitud_tronco||'),'|| \
+                ' TRAMOS VIEJOS ('||i.longitud_variantes||')' \
        WHEN c.intermunicipal THEN \
                 COALESCE(c.observaciones, '')|| \
                 ' INTERMUNICIPAL '||trv_m_array.longitud_por_municipio \
@@ -64,32 +64,32 @@ SELECT m.nombre as "Municipio", \
        END AS "Observaciones" \
 FROM inventario.carreteras AS c, \
      inventario.municipio_codigo AS m, \
-     trv, \
+     i, \
      (SELECT codigo_carretera, \
              SUM(longitud_tronco) AS longitud_tronco, \
              SUM(longitud_rampas) AS longitud_rampas, \
              SUM(longitud_variantes) AS longitud_variantes \
-      FROM trv \
+      FROM i \
       GROUP BY codigo_carretera \
       ORDER BY codigo_carretera) AS trv_c, \
      (SELECT codigo_carretera, \
              array_to_string(array_agg(municipio_nombre||' ('||municipio_longitud||')'), \
                                        ', ') AS longitud_por_municipio \
       FROM (SELECT m.nombre AS municipio_nombre, \
-                   trv.codigo_carretera, \
-                   COALESCE(SUM(trv.longitud_tronco),0) \
-                   + COALESCE(SUM(trv.longitud_rampas),0) \
-                   + COALESCE(SUM(trv.longitud_variantes),0) AS municipio_longitud \
+                   i.codigo_carretera, \
+                   COALESCE(SUM(i.longitud_tronco),0) \
+                   + COALESCE(SUM(i.longitud_rampas),0) \
+                   + COALESCE(SUM(i.longitud_variantes),0) AS municipio_longitud \
             FROM inventario.municipio_codigo AS m, \
-                 trv \
-            WHERE trv.codigo_municipio = m.codigo \
-            GROUP BY m.nombre, trv.codigo_carretera \
-            ORDER BY m.nombre, trv.codigo_carretera) AS trv_m \
+                 i \
+            WHERE i.codigo_municipio = m.codigo \
+            GROUP BY m.nombre, i.codigo_carretera \
+            ORDER BY m.nombre, i.codigo_carretera) AS trv_m \
       GROUP BY codigo_carretera) AS trv_m_array \
-WHERE trv.codigo_carretera = c.numero \
-      AND trv.codigo_municipio = m.codigo \
-      AND trv.codigo_carretera = trv_c.codigo_carretera \
-      AND trv.codigo_carretera = trv_m_array.codigo_carretera \
+WHERE i.codigo_carretera = c.numero \
+      AND i.codigo_municipio = m.codigo \
+      AND i.codigo_carretera = trv_c.codigo_carretera \
+      AND i.codigo_carretera = trv_m_array.codigo_carretera \
       [[WHERE]] \
 GROUP BY "Municipio", \
          "Código (LU-P)", \
@@ -100,4 +100,4 @@ GROUP BY "Municipio", \
          "Longitud tramo", \
          "Longitud total", \
          "Observaciones" \
-ORDER BY m.nombre, trv.codigo_carretera, trv.orden_tramo;
+ORDER BY m.nombre, i.codigo_carretera, i.orden_tramo;
