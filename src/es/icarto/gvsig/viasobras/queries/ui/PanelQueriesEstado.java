@@ -340,7 +340,9 @@ public class PanelQueriesEstado extends gvWindow {
 	    menorValue = "";
 	    menor.setText("");
 	}
-	return WhereFactory.create(hasWhere, queryCode, mayorValue, menorValue,
+	String[] filters = getFilters();
+	return WhereFactory.create(hasWhere, queryCode, filters[0], filters[1],
+		mayorValue, menorValue,
 		valor.getText());
     }
 

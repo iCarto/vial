@@ -24,7 +24,7 @@ import es.icarto.gvsig.viasobras.domain.catalog.mappers.DBFacade;
 
 public class CatalogSearchTests {
 
-    static Connection c;
+    private static Connection c;
 
     @BeforeClass
     public static void connectToDatabase() throws SQLException,
@@ -44,6 +44,11 @@ public class CatalogSearchTests {
 		p.getProperty(DBFacade.USERNAME),
 		p.getProperty(DBFacade.PASSWORD));
 	DBFacade.setConnection(c, p);
+    }
+
+    @AfterClass
+    public static void closeConnection() throws SQLException {
+	c.close();
     }
 
     @Test
@@ -675,11 +680,6 @@ public class CatalogSearchTests {
 	int numRows = rs2.getInt("num_rows");
 
 	assertEquals(numRows, numConcellos);
-    }
-
-    @AfterClass
-    public static void closeConnection() throws SQLException {
-	c.close();
     }
 
 }

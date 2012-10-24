@@ -68,7 +68,6 @@ INSERT INTO consultas.consultas
        FROM public.consultas_sql
        WHERE id=7;
 
-
 INSERT INTO consultas.consultas
        SELECT 'C02',
               'Carreteras por categoría',
@@ -148,5 +147,15 @@ INSERT INTO consultas.consultas
               ''
        FROM public.consultas_sql
        WHERE id=15;
+
+INSERT INTO consultas.consultas
+       SELECT 'C41',
+              'Cotas mínimas / máximas por carretera',
+              sql_string,
+              'SI',
+              'Cotas mínimas / máximas por carretera',
+              ''
+       FROM public.consultas_sql
+       WHERE id=16;
 
 DROP TABLE IF EXISTS public.consultas_sql;
