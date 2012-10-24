@@ -11,3 +11,9 @@ CREATE TABLE consultas.consultas(
        subtitulo varchar,
        CONSTRAINT pk_consultas PRIMARY KEY (codigo)
 );
+
+DROP TABLE IF EXISTS consultas.aforos;
+CREATE TABLE consultas.aforos(
+       valor_minimo INTEGER,
+       valor_maximo INTEGER
+);

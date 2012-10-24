@@ -94,5 +94,10 @@ sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH D
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname -c "$sql_query"
 
+sql_query_path=`pwd`/funcions/consultas/c38-aforos-agregados.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/postprocesar_consultas.sql

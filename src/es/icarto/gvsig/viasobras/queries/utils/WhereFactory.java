@@ -12,7 +12,11 @@ public class WhereFactory {
 	    String mayorValue, String menorValue, String textValue) {
 
 	List<String> numericQueries = new ArrayList<String>();
+	// ancho
 	numericQueries.add("C10");
+	// cotas
+	numericQueries.add("C40");
+	// aforos
 	numericQueries.add("C30");
 	numericQueries.add("C31");
 	numericQueries.add("C32");
@@ -21,11 +25,13 @@ public class WhereFactory {
 	numericQueries.add("C35");
 	numericQueries.add("C36");
 	numericQueries.add("C37");
-	numericQueries.add("C40");
 	List<String> textQueries = new ArrayList<String>();
+	// tipo firme
 	textQueries.add("C20");
 	List<String> specialQueries = new ArrayList<String>();
+	// categoria
 	specialQueries.add("C02");
+	// cotas min/max
 	specialQueries.add("C41");
 
 	String whereSQL;

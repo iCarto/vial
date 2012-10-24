@@ -158,4 +158,26 @@ INSERT INTO consultas.consultas
        FROM public.consultas_sql
        WHERE id=16;
 
+INSERT INTO consultas.consultas
+       SELECT 'C38',
+              'Aforos agregados',
+              sql_string,
+              'SI',
+              'Aforos agregados',
+              ''
+       FROM public.consultas_sql
+       WHERE id=17;
+
 DROP TABLE IF EXISTS public.consultas_sql;
+
+INSERT INTO consultas.aforos VALUES(0, 49);
+INSERT INTO consultas.aforos VALUES(50, 99);
+INSERT INTO consultas.aforos VALUES(100, 249);
+INSERT INTO consultas.aforos VALUES(250, 499);
+INSERT INTO consultas.aforos VALUES(500, 999);
+INSERT INTO consultas.aforos VALUES(1000,1999);
+INSERT INTO consultas.aforos VALUES(2000,4999);
+INSERT INTO consultas.aforos VALUES(5000, 9999);
+INSERT INTO consultas.aforos VALUES(10000,14999);
+INSERT INTO consultas.aforos VALUES(15000, 24999);
+INSERT INTO consultas.aforos VALUES(25000, 100000);
