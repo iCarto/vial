@@ -148,8 +148,8 @@ public class QueriesTests {
 		executeQuery(consulta, where);
 	    } catch (SQLException e) {
 		System.out
-			.println("Test with carretera and municipio - Failed query: "
-				+ codigo);
+		.println("Test with carretera and municipio - Failed query: "
+			+ codigo);
 		assertTrue(false);
 	    }
 	}
@@ -190,20 +190,50 @@ public class QueriesTests {
 	    String values[] = getValues(codigo);
 	    boolean hasWhere = values[0].equals("SI");
 	    String consulta = values[1];
-
+	    String where = "";
 	    try {
 		String carreteraCode = Catalog.CARRETERA_ALL;
 		String municipioCode = Catalog.CONCELLO_ALL;
 		String mayorValue = "";
 		String menorValue = "";
-		String textValue = "foo";
-		String where = WhereFactory.create(hasWhere, codigo,
+		String textValue = "2011";
+		where = WhereFactory.create(hasWhere, codigo,
 			carreteraCode, municipioCode, mayorValue, menorValue,
 			textValue);
 		executeQuery(consulta, where);
 	    } catch (SQLException e) {
 		System.out.println("Test with text filter - Failed query: "
 			+ codigo);
+		System.out.println(consulta);
+		System.out.println("\n[[WHERE]]: " + where);
+		assertTrue(false);
+	    }
+	}
+	assertTrue(true);
+    }
+
+    @Test
+    public void testWithNumericAndTextFilter() throws SQLException {
+	List<String> codigos = getCodigos();
+	for (String codigo : codigos) {
+	    String values[] = getValues(codigo);
+	    boolean hasWhere = values[0].equals("SI");
+	    String consulta = values[1];
+	    String where = "";
+	    try {
+		String carreteraCode = Catalog.CARRETERA_ALL;
+		String municipioCode = Catalog.CONCELLO_ALL;
+		String mayorValue = "1";
+		String menorValue = "3";
+		String textValue = "2011";
+		where = WhereFactory.create(hasWhere, codigo, carreteraCode,
+			municipioCode, mayorValue, menorValue, textValue);
+		executeQuery(consulta, where);
+	    } catch (SQLException e) {
+		System.out.println("Test with text filter - Failed query: "
+			+ codigo);
+		System.out.println("Consulta: " + consulta);
+		System.out.println("Where: " + where);
 		assertTrue(false);
 	    }
 	}

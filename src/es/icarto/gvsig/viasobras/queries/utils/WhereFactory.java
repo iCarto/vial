@@ -7,32 +7,43 @@ import es.icarto.gvsig.viasobras.domain.catalog.Catalog;
 
 public class WhereFactory {
 
+    /**
+     * Params should be proper values, ie: mayorValue & menorValue are doubles,
+     * textValue is year if the query is from aforos family, etc
+     * 
+     * @param hasWhere
+     * @param queryCode
+     * @param carreteraCode
+     * @param municipioCode
+     * @param mayorValue
+     * @param menorValue
+     * @param textValue
+     * @return
+     */
     public static String create(boolean hasWhere, String queryCode,
 	    String carreteraCode, String municipioCode,
 	    String mayorValue, String menorValue, String textValue) {
 
 	List<String> numericQueries = new ArrayList<String>();
-	// ancho
-	numericQueries.add("C10");
-	// cotas
-	numericQueries.add("C40");
-	// aforos
-	numericQueries.add("C30");
-	numericQueries.add("C31");
-	numericQueries.add("C32");
-	numericQueries.add("C33");
-	numericQueries.add("C34");
-	numericQueries.add("C35");
-	numericQueries.add("C36");
-	numericQueries.add("C37");
 	List<String> textQueries = new ArrayList<String>();
-	// tipo firme
-	textQueries.add("C20");
 	List<String> specialQueries = new ArrayList<String>();
-	// categoria
-	specialQueries.add("C02");
-	// cotas min/max
-	specialQueries.add("C41");
+
+	numericQueries.add("C10"); // ancho
+	numericQueries.add("C40"); // cotas
+
+	textQueries.add("C20"); // tipo firme
+
+	specialQueries.add("C02"); // categoria
+	specialQueries.add("C41"); // cotas min/max
+	specialQueries.add("C30"); // aforos
+	specialQueries.add("C31");
+	specialQueries.add("C32");
+	specialQueries.add("C33");
+	specialQueries.add("C34");
+	specialQueries.add("C35");
+	specialQueries.add("C36");
+	specialQueries.add("C37");
+	specialQueries.add("C38");
 
 	String whereSQL;
 	whereSQL = checkIfHasWhere(hasWhere);
@@ -53,12 +64,26 @@ public class WhereFactory {
 			municipioCode,
 			mayorValue,
 			menorValue);
+	    } else { // any related to aforos
+		whereSQL = getWhereCarretera(whereSQL, carreteraCode);
+		whereSQL = getWhereMunicipio(whereSQL, municipioCode);
+		whereSQL = getWhereCaracteristicaCompare(whereSQL, mayorValue,
+			menorValue);
+		whereSQL = getWhereAnho(whereSQL, textValue);
 	    }
 	} else {
 	    whereSQL = getWhereCarretera(whereSQL, carreteraCode);
 	    whereSQL = getWhereMunicipio(whereSQL, municipioCode);
 	}
 	whereSQL = checkIfIsVoid(whereSQL);
+	return whereSQL;
+    }
+
+    private static String getWhereAnho(String whereSQL, String textValue) {
+	if (!textValue.equals("")) {
+	    whereSQL = whereSQL + " AND extract(year from p.fecha) = "
+		    + textValue;
+	}
 	return whereSQL;
     }
 

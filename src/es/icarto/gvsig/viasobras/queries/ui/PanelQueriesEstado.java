@@ -324,6 +324,7 @@ public class PanelQueriesEstado extends gvWindow {
     private String getWhereClause(boolean hasWhere) throws SQLException {
 	String mayorValue;
 	String menorValue;
+	String textValue;
 	try {
 	    NumberFormat doubleFormat = DoubleFormatNT.getDisplayingFormat();
 	    mayorValue = doubleFormat.parse(mayor.getText()).toString();
@@ -340,10 +341,21 @@ public class PanelQueriesEstado extends gvWindow {
 	    menorValue = "";
 	    menor.setText("");
 	}
+	textValue = valor.getText();
+	if (queryCode.startsWith("C3")) {
+	    // query if one of aforos
+	    try {
+		Integer.parseInt(valor.getText());
+		// if textValue is not integer will launch exception and
+		// won't add new clause
+	    } catch (NumberFormatException e) {
+		textValue = "";
+		valor.setText("");
+	    }
+	}
 	String[] filters = getFilters();
 	return WhereFactory.create(hasWhere, queryCode, filters[0], filters[1],
-		mayorValue, menorValue,
-		valor.getText());
+		mayorValue, menorValue, textValue);
     }
 
     private String[] getQueryContents() throws Exception {
