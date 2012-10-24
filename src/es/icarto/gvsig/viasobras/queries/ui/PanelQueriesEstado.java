@@ -68,7 +68,7 @@ public class PanelQueriesEstado extends gvWindow {
     private String queryCode = NO_QUERY;
 
     public PanelQueriesEstado() {
-	super(630, 480, true);
+	super(630, 510, true);
 	this.setTitle("Consultas");
 	formBody = new FormPanel("consultas-estado-ui.xml");
 	formBody.setVisible(true);
