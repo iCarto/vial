@@ -24,7 +24,7 @@ public class EventosMapperAforos extends EventosMapperAbstract {
     @Override
     public CachedRowSet load() throws SQLException {
 	try {
-	    eventos = super.getCachedRowSet(tableName);
+	    eventos = super.getCachedRowSet();
 	    return eventos;
 	} catch (SQLException e) {
 	    e.printStackTrace();
@@ -43,4 +43,26 @@ public class EventosMapperAforos extends EventosMapperAbstract {
 	return rs.getInt("value");
     }
 
+    @Override
+    public String getSQLQuery() {
+	String sqlQuery = "WITH p AS ("
+		+ "SELECT codigo_carretera, codigo_municipio, tramo, MAX(fecha) AS fecha_ultimo_aforo "
+		+ " FROM "
+		+ tableName
+		+ " GROUP BY codigo_carretera, codigo_municipio, tramo "
+		+ " ORDER BY codigo_carretera, codigo_municipio, tramo) "
+		+ "SELECT i.gid, i.codigo_carretera, i.codigo_municipio, i.tramo, i.pk, i.valor, i.fecha "
+		+ "FROM "
+		+ tableName
+		+ " AS i, p "
+		+ " WHERE i.codigo_carretera = p.codigo_carretera AND i.codigo_municipio = p.codigo_municipio "
+		+ " 	  AND i.tramo = p.tramo AND i.fecha = p.fecha_ultimo_aforo "
+		+ " ORDER BY i.codigo_carretera, i.codigo_municipio, i.tramo, i.pk";
+	return sqlQuery;
+    }
+
+    @Override
+    public String getTableName() {
+	return tableName;
+    }
 }

@@ -7,6 +7,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Properties;
 
 import org.junit.BeforeClass;
@@ -193,7 +196,7 @@ public class CatalogEditTests {
     public void testDeleteAforo() throws SQLException {
 	String carretera = carreteraAforo;
 	String concello = concelloAforo;
-	String lastID = getLastId("inventario.aforos", carretera, concello);
+	String lastID = getLastIdAforos(carretera, concello);
 	String gid = deleteAforo(carretera, concello, lastID);
 
 	// check if the later made effect
@@ -315,17 +318,23 @@ public class CatalogEditTests {
     public void testUpdateAforo() throws SQLException {
 	String carretera = carreteraAforo;
 	String concello = concelloAforo;
-	int value = 666;
-	updateAforo(carretera, concello, value);
+	int value = 123456789;
+	updateAforos(carretera, concello, value);
 
 	// check if the later made effect
 	Statement stmt = c.createStatement();
-	ResultSet rs = stmt
-		.executeQuery("SELECT valor FROM inventario.aforos WHERE codigo_carretera = '"
-			+ carretera
-			+ "' AND codigo_municipio = '"
-			+ concello
-			+ "'");
+	String sqlQuery = "WITH p AS ("
+		+ "SELECT codigo_carretera, codigo_municipio, tramo, MAX(fecha) AS fecha_ultimo_aforo "
+		+ " FROM inventario.aforos "
+		+ " GROUP BY codigo_carretera, codigo_municipio, tramo "
+		+ "ORDER BY codigo_carretera, codigo_municipio, tramo) "
+		+ "SELECT i.valor "
+		+ " FROM inventario.aforos AS i, p "
+		+ " WHERE i.codigo_carretera = p.codigo_carretera AND i.codigo_municipio = p.codigo_municipio "
+		+ "	  AND i.tramo = p.tramo AND i.fecha = p.fecha_ultimo_aforo "
+		+ "	  AND i.codigo_carretera = '" + carretera + "'"
+		+ "	  AND i.codigo_municipio = '" + concello + "'";
+	ResultSet rs = stmt.executeQuery(sqlQuery);
 	boolean updated = true;
 	while (rs.next()) {
 	    if (rs.getDouble("valor") != value) {
@@ -414,21 +423,28 @@ public class CatalogEditTests {
     }
 
     @Test
-    public void testInsertAforo() throws SQLException {
+    public void testInsertAforo() throws SQLException, ParseException {
 	String carretera = carreteraAforo;
 	String concello = concelloAforo;
-	int tramosNumber = insertAforo(carretera, concello);
+	int myValue = insertAforo(carretera, concello);
 
 	// check if the later made effect
+	String sqlQuery = "WITH p AS ("
+		+ "SELECT codigo_carretera, codigo_municipio, tramo, MAX(fecha) AS fecha_ultimo_aforo "
+		+ " FROM inventario.aforos "
+		+ " GROUP BY codigo_carretera, codigo_municipio, tramo "
+		+ "ORDER BY codigo_carretera, codigo_municipio, tramo) "
+		+ "SELECT i.valor "
+		+ " FROM inventario.aforos AS i, p "
+		+ " WHERE i.codigo_carretera = p.codigo_carretera AND i.codigo_municipio = p.codigo_municipio "
+		+ "	  AND i.tramo = p.tramo AND i.fecha = p.fecha_ultimo_aforo "
+		+ "	  AND i.codigo_carretera = '" + carretera + "'"
+		+ "	  AND i.codigo_municipio = '" + concello + "'"
+		+ " ORDER BY gid DESC LIMIT 1";
 	Statement stmt = c.createStatement();
-	ResultSet rs = stmt
-		.executeQuery("SELECT COUNT(*) AS rowNumber FROM inventario.aforos WHERE codigo_carretera = '"
-			+ carretera
-			+ "' AND codigo_municipio = '"
-			+ concello
-			+ "'");
+	ResultSet rs = stmt.executeQuery(sqlQuery);
 	rs.next();
-	assertEquals(tramosNumber, rs.getInt("rowNumber"));
+	assertEquals(myValue, rs.getInt("valor"));
     }
 
     @Test
@@ -535,7 +551,8 @@ public class CatalogEditTests {
     }
 
     @Test
-    public void testSinchronizedAfterCRUDOperationsAforo() throws SQLException {
+    public void testSinchronizedAfterCRUDOperationsAforo() throws SQLException,
+    ParseException {
 	String carretera = carreteraAforo;
 	String concello = concelloAforo;
 	insertAforo(carretera, concello);
@@ -687,7 +704,7 @@ public class CatalogEditTests {
 	eventos.save();
     }
 
-    private void updateAforo(String carretera, String concello,
+    private void updateAforos(String carretera, String concello,
 	    double value) throws SQLException {
 
 	// modify and save tramos
@@ -778,11 +795,13 @@ public class CatalogEditTests {
     }
 
     private int insertAforo(String carretera, String concello)
-	    throws SQLException {
+	    throws SQLException, ParseException {
 	String ordenTramo = "A";
 	double pk = 10.2;
-	int myValue = 666;
-
+	int myValue = 987654321;
+	DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+	java.sql.Date myDate = new java.sql.Date(formatter.parse("30/12/2013")
+		.getTime());
 	// add new tramo
 	Catalog.clear();
 	Catalog.setCarretera(carretera);
@@ -794,10 +813,10 @@ public class CatalogEditTests {
 	evento.setConcello(concello);
 	evento.setPk(pk);
 	evento.setValue(myValue);
+	evento.setUpdatingDate(myDate);
 	eventos.addEvento(evento);
 	eventos.save();
-	int eventosNumber = eventos.size();
-	return eventosNumber;
+	return myValue;
     }
 
     private int insertAccidente(String carretera, String concello)
@@ -823,14 +842,32 @@ public class CatalogEditTests {
 	return eventosNumber;
     }
 
+    private String getLastIdAforos(String carretera, String concello)
+	    throws SQLException {
+	Statement stmt = c.createStatement();
+	String sqlQuery = "WITH p AS ("
+		+ "SELECT codigo_carretera, codigo_municipio, tramo, MAX(fecha) AS fecha_ultimo_aforo "
+		+ " FROM inventario.aforos "
+		+ " GROUP BY codigo_carretera, codigo_municipio, tramo "
+		+ "ORDER BY codigo_carretera, codigo_municipio, tramo) "
+		+ "SELECT i.gid "
+		+ " FROM inventario.aforos AS i, p "
+		+ " WHERE i.codigo_carretera = p.codigo_carretera AND i.codigo_municipio = p.codigo_municipio "
+		+ "	  AND i.tramo = p.tramo AND i.fecha = p.fecha_ultimo_aforo "
+		+ "	  AND i.codigo_carretera = '" + carretera + "'"
+		+ "	  AND i.codigo_municipio = '" + concello + "'"
+		+ " ORDER BY gid DESC LIMIT 1";
+	ResultSet rs = stmt.executeQuery(sqlQuery);
+	rs.next();
+	return Integer.toString(rs.getInt("gid"));
+    }
+
     private String getLastId(String tableName, String carretera, String concello)
 	    throws SQLException {
 	Statement stmt = c.createStatement();
 	ResultSet rs = stmt.executeQuery("SELECT gid FROM " + tableName
-		+ " WHERE codigo_carretera = '"
-		+ carretera
-		+ "' AND codigo_municipio = '"
-		+ concello
+		+ " WHERE codigo_carretera = '" + carretera
+		+ "' AND codigo_municipio = '" + concello
 		+ "' ORDER BY gid DESC LIMIT 1");
 	rs.next();
 	return Integer.toString(rs.getInt("gid"));

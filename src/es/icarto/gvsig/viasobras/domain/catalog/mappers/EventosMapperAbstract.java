@@ -27,6 +27,10 @@ public abstract class EventosMapperAbstract implements EventosMapper {
 
     public abstract int getLastAvailableID() throws SQLException;
 
+    public abstract String getSQLQuery();
+
+    public abstract String getTableName();
+
     public Eventos findAll() throws SQLException {
 	CachedRowSet eventos = getEventos();
 	return new Eventos(this, EventosRecordsetAdapter.findAll(eventos));
@@ -60,19 +64,9 @@ public abstract class EventosMapperAbstract implements EventosMapper {
 			carretera, concello));
     }
 
-    public CachedRowSet getCachedRowSet(String tableName)
+    public CachedRowSet getCachedRowSet()
 	    throws SQLException {
-	/*
-	 * "WHERE gid = gid" is needed to avoid errors, as it seems -in JDBC- an
-	 * ORDER clause cannot be used without WHERE
-	 * 
-	 * I couldn't order by several fields (ORDER BY codigo_carretera,
-	 * codigo_concello, ...) as it give problems when saving, so the
-	 * ordering is done in Eventos() builder.
-	 */
-	String sqlQuery = "SELECT gid, codigo_carretera, codigo_municipio, tramo, pk, valor, fecha "
-		+ " FROM " + tableName;
-	//+ " WHERE gid = gid ORDER BY pk_inicial";
+	String sqlQuery = getSQLQuery();
 	int[] primaryKeys = { 1 }; // primary key index = gid column index
 	CachedRowSet eventos = new CachedRowSetImpl();
 	eventos.setUrl(DBFacade.getURL());
@@ -80,6 +74,7 @@ public abstract class EventosMapperAbstract implements EventosMapper {
 	eventos.setPassword(DBFacade.getPwd());
 	eventos.setCommand(sqlQuery);
 	eventos.setKeyColumns(primaryKeys);// set primary key
+	eventos.setTableName(getTableName());
 	eventos.execute(DBFacade.getConnection());
 	return eventos;
     }

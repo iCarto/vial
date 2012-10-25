@@ -142,8 +142,16 @@ public class CatalogSearchTests {
     @Test
     public void testFindAforosAll() throws SQLException {
 	Statement stmt = c.createStatement();
-	ResultSet rs = stmt
-		.executeQuery("SELECT COUNT(*) AS num_rows FROM inventario.aforos");
+	String sqlQuery = "WITH p AS ("
+		+ "SELECT codigo_carretera, codigo_municipio, tramo, MAX(fecha) AS fecha_ultimo_aforo "
+		+ " FROM inventario.aforos "
+		+ " GROUP BY codigo_carretera, codigo_municipio, tramo "
+		+ "ORDER BY codigo_carretera, codigo_municipio, tramo) "
+		+ "SELECT COUNT(*) AS num_rows "
+		+ " FROM inventario.aforos AS i, p "
+		+ " WHERE i.codigo_carretera = p.codigo_carretera AND i.codigo_municipio = p.codigo_municipio "
+		+ "	  AND i.tramo = p.tramo AND i.fecha = p.fecha_ultimo_aforo ";
+	ResultSet rs = stmt.executeQuery(sqlQuery);
 	rs.next();
 	int numRows = rs.getInt("num_rows");
 
@@ -215,8 +223,18 @@ public class CatalogSearchTests {
     @Test
     public void testFindAforosDependingOnCarretera() throws SQLException {
 	Statement stmt = c.createStatement();
-	ResultSet rs = stmt
-		.executeQuery("SELECT Count(*) As num_rows FROM inventario.aforos WHERE codigo_carretera = '4606'");
+	String sqlQuery = "WITH p AS ("
+		+ "SELECT codigo_carretera, codigo_municipio, tramo, MAX(fecha) AS fecha_ultimo_aforo "
+		+ " FROM inventario.aforos "
+		+ " GROUP BY codigo_carretera, codigo_municipio, tramo "
+		+ "ORDER BY codigo_carretera, codigo_municipio, tramo) "
+		+ "SELECT COUNT(*) AS num_rows "
+		+ " FROM inventario.aforos AS i, p "
+		+ " WHERE i.codigo_carretera = p.codigo_carretera AND i.codigo_municipio = p.codigo_municipio "
+		+ "	  AND i.tramo = p.tramo AND i.fecha = p.fecha_ultimo_aforo "
+		+ "	  AND i.codigo_carretera = '4606'";
+
+	ResultSet rs = stmt.executeQuery(sqlQuery);
 	rs.next();
 	int numRows = rs.getInt("num_rows");
 
@@ -296,8 +314,17 @@ public class CatalogSearchTests {
     @Test
     public void testFindAforosDependingOnPK() throws SQLException {
 	Statement stmt = c.createStatement();
-	ResultSet rs = stmt
-		.executeQuery("SELECT Count(*) As num_rows FROM inventario.aforos WHERE codigo_carretera = '4606' AND pk >= 0 AND pk <= 10");
+	String sqlQuery = "WITH p AS ("
+		+ "SELECT codigo_carretera, codigo_municipio, tramo, MAX(fecha) AS fecha_ultimo_aforo "
+		+ " FROM inventario.aforos "
+		+ " GROUP BY codigo_carretera, codigo_municipio, tramo "
+		+ "ORDER BY codigo_carretera, codigo_municipio, tramo) "
+		+ "SELECT COUNT(*) AS num_rows "
+		+ " FROM inventario.aforos AS i, p "
+		+ " WHERE i.codigo_carretera = p.codigo_carretera AND i.codigo_municipio = p.codigo_municipio "
+		+ "	  AND i.tramo = p.tramo AND i.fecha = p.fecha_ultimo_aforo "
+		+ "	  AND i.codigo_carretera = '4606' AND i.pk >= 0 AND i.pk <= 10";
+	ResultSet rs = stmt.executeQuery(sqlQuery);
 	rs.next();
 	int numRows = rs.getInt("num_rows");
 
@@ -378,8 +405,17 @@ public class CatalogSearchTests {
     @Test
     public void testFindAforosDependingOnPKStart() throws SQLException {
 	Statement stmt = c.createStatement();
-	ResultSet rs = stmt
-		.executeQuery("SELECT Count(*) As num_rows FROM inventario.aforos WHERE codigo_carretera = '4606' AND pk >= 2.0");
+	String sqlQuery = "WITH p AS ("
+		+ "SELECT codigo_carretera, codigo_municipio, tramo, MAX(fecha) AS fecha_ultimo_aforo "
+		+ " FROM inventario.aforos "
+		+ " GROUP BY codigo_carretera, codigo_municipio, tramo "
+		+ "ORDER BY codigo_carretera, codigo_municipio, tramo) "
+		+ "SELECT COUNT(*) AS num_rows "
+		+ " FROM inventario.aforos AS i, p "
+		+ " WHERE i.codigo_carretera = p.codigo_carretera AND i.codigo_municipio = p.codigo_municipio "
+		+ "	  AND i.tramo = p.tramo AND i.fecha = p.fecha_ultimo_aforo "
+		+ "	  AND i.codigo_carretera = '4606' AND i.pk >= 2.0";
+	ResultSet rs = stmt.executeQuery(sqlQuery);
 	rs.next();
 	int numRows = rs.getInt("num_rows");
 
@@ -458,8 +494,17 @@ public class CatalogSearchTests {
     @Test
     public void testFindAforosDependingOnPKEnd() throws SQLException {
 	Statement stmt = c.createStatement();
-	ResultSet rs = stmt
-		.executeQuery("SELECT Count(*) As num_rows FROM inventario.aforos WHERE codigo_carretera = '4606' AND pk <= 8.0");
+	String sqlQuery = "WITH p AS ("
+		+ "SELECT codigo_carretera, codigo_municipio, tramo, MAX(fecha) AS fecha_ultimo_aforo "
+		+ " FROM inventario.aforos "
+		+ " GROUP BY codigo_carretera, codigo_municipio, tramo "
+		+ "ORDER BY codigo_carretera, codigo_municipio, tramo) "
+		+ "SELECT COUNT(*) AS num_rows "
+		+ " FROM inventario.aforos AS i, p "
+		+ " WHERE i.codigo_carretera = p.codigo_carretera AND i.codigo_municipio = p.codigo_municipio "
+		+ "	  AND i.tramo = p.tramo AND i.fecha = p.fecha_ultimo_aforo "
+		+ "	  AND i.codigo_carretera = '4606' AND i.pk <= 8.0";
+	ResultSet rs = stmt.executeQuery(sqlQuery);
 	rs.next();
 	int numRows = rs.getInt("num_rows");
 
