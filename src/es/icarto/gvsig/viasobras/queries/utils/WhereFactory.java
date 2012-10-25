@@ -81,7 +81,7 @@ public class WhereFactory {
 
     private static String getWhereAnho(String whereSQL, String textValue) {
 	if (!textValue.equals("")) {
-	    whereSQL = whereSQL + " AND extract(year from p.fecha) = "
+	    whereSQL = whereSQL + " AND extract(year from p.fecha) <= "
 		    + textValue;
 	}
 	return whereSQL;
