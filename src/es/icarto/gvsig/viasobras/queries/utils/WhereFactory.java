@@ -64,10 +64,14 @@ public class WhereFactory {
 			municipioCode,
 			mayorValue,
 			menorValue);
-	    } else { // any related to aforos
+	    } else if (queryCode.equals("C38")) {
 		whereSQL = getWhereCarretera(whereSQL, carreteraCode);
 		whereSQL = getWhereMunicipio(whereSQL, municipioCode);
-		whereSQL = getWhereCaracteristicaCompare(whereSQL, mayorValue,
+		whereSQL = getWhereAnho(whereSQL, textValue);
+	    } else { // any related to aforos apart from C38
+		whereSQL = getWhereCarretera(whereSQL, carreteraCode);
+		whereSQL = getWhereMunicipio(whereSQL, municipioCode);
+		whereSQL = getWhereAforo(whereSQL, mayorValue,
 			menorValue);
 		whereSQL = getWhereAnho(whereSQL, textValue);
 	    }
@@ -79,9 +83,20 @@ public class WhereFactory {
 	return whereSQL;
     }
 
+    private static String getWhereAforo(String whereSQL, String mayorValue,
+	    String menorValue) {
+	if (!mayorValue.equalsIgnoreCase("")) {
+	    whereSQL = whereSQL + " AND i.valor >= '" + mayorValue + "'";
+	}
+	if (!menorValue.equals("")) {
+	    whereSQL = whereSQL + " AND i.valor <= '" + menorValue + "'";
+	}
+	return whereSQL;
+    }
+
     private static String getWhereAnho(String whereSQL, String textValue) {
 	if (!textValue.equals("")) {
-	    whereSQL = whereSQL + " AND extract(year from p.fecha) <= "
+	    whereSQL = whereSQL + " AND extract(year from i.fecha) <= "
 		    + textValue;
 	}
 	return whereSQL;
