@@ -10,6 +10,11 @@ else
     . $db_config
 fi
 
+# geometry types for layers with M-coordinate
+echo -e "\n"
+pg_prove -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    -d $viasobras_dbname ./tests/check-geometry-types.sql
+
 # triggers
 echo -e "\n"
 pg_prove -h $viasobras_server -p $viasobras_port -U $viasobras_user \
@@ -58,4 +63,3 @@ pg_prove -h $viasobras_server -p $viasobras_port -U $viasobras_user \
 echo -e "\n"
 pg_prove -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     -d $viasobras_dbname ./tests/check-pks-accidentes.sql
-
