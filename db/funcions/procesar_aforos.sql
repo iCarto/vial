@@ -29,7 +29,7 @@ INSERT INTO inventario.aforos (
 );
 
 -- linear referencing
-SELECT AddGeometryColumn('inventario', 'aforos', 'the_geom', 25829, 'POINT', 2);
+SELECT AddGeometryColumn('inventario', 'aforos', 'the_geom', 25829, 'POINTM', 3);
 ALTER TABLE inventario.aforos DROP CONSTRAINT enforce_geotype_the_geom;
 ALTER TABLE inventario.aforos DROP CONSTRAINT enforce_dims_the_geom;
 SELECT inventario.update_geom_point_all('inventario', 'aforos');
@@ -44,4 +44,3 @@ CREATE TRIGGER update_geom_aforos
 DROP TABLE IF EXISTS inventario.aforos_tmp;
 
 COMMIT;
-

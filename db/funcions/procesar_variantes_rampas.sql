@@ -1,2 +1,1 @@
-
-DROP TABLE IF EXISTS inventario.variantes_rampas_tmp;
+SELECT DropGeometryTable('inventario', 'variantes_rampas_tmp');
