@@ -43,7 +43,7 @@ public class WhereFactory {
 	specialQueries.add("C35");
 	specialQueries.add("C36");
 	specialQueries.add("C37");
-	specialQueries.add("C38");
+	specialQueries.add("C38"); // informe IMD
 
 	String whereSQL;
 	whereSQL = checkIfHasWhere(hasWhere);
@@ -65,15 +65,13 @@ public class WhereFactory {
 			mayorValue,
 			menorValue);
 	    } else if (queryCode.equals("C38")) {
-		whereSQL = getWhereCarretera(whereSQL, carreteraCode);
-		whereSQL = getWhereMunicipio(whereSQL, municipioCode);
 		whereSQL = getWhereAnho(whereSQL, textValue);
 	    } else { // any related to aforos apart from C38
 		whereSQL = getWhereCarretera(whereSQL, carreteraCode);
 		whereSQL = getWhereMunicipio(whereSQL, municipioCode);
 		whereSQL = getWhereAforo(whereSQL, mayorValue,
 			menorValue);
-		whereSQL = getWhereAnho(whereSQL, textValue);
+		whereSQL = getWhereAnhoAforos(whereSQL, textValue);
 	    }
 	} else {
 	    whereSQL = getWhereCarretera(whereSQL, carreteraCode);
@@ -96,7 +94,17 @@ public class WhereFactory {
 
     private static String getWhereAnho(String whereSQL, String textValue) {
 	if (!textValue.equals("")) {
-	    whereSQL = whereSQL + " AND extract(year from i.fecha) <= "
+	    whereSQL = whereSQL + " EXTRACT(YEAR FROM a.fecha) <= "
+		    + textValue;
+	} else {
+	    whereSQL = whereSQL + " 1=1 ";
+	}
+	return whereSQL;
+    }
+
+    private static String getWhereAnhoAforos(String whereSQL, String textValue) {
+	if (!textValue.equals("")) {
+	    whereSQL = whereSQL + " AND EXTRACT(YEAR FROM i.fecha) <= "
 		    + textValue;
 	}
 	return whereSQL;

@@ -55,7 +55,6 @@ public class QueriesTests {
 	    String values[] = getValues(codigo);
 	    boolean hasWhere = values[0].equals("SI");
 	    String consulta = values[1];
-
 	    try {
 		String carreteraCode = Catalog.CARRETERA_ALL;
 		String municipioCode = Catalog.CONCELLO_ALL;
@@ -65,9 +64,13 @@ public class QueriesTests {
 		String where = WhereFactory.create(hasWhere, codigo,
 			carreteraCode, municipioCode, mayorValue, menorValue,
 			textValue);
-		executeQuery(consulta, where);
+		consulta = consulta.replaceAll("\\[\\[WHERE\\]\\]", where);
+		executeQuery(consulta);
 	    } catch (SQLException e) {
+		System.out.println("");
+		System.out.println("");
 		System.out.println("Test Bare - Failed query: " + codigo);
+		System.out.println(consulta);
 		assertTrue(false);
 	    }
 	}
@@ -91,10 +94,14 @@ public class QueriesTests {
 		String where = WhereFactory.create(hasWhere, codigo,
 			carreteraCode, municipioCode, mayorValue, menorValue,
 			textValue);
-		executeQuery(consulta, where);
+		consulta = consulta.replaceAll("\\[\\[WHERE\\]\\]", where);
+		executeQuery(consulta);
 	    } catch (SQLException e) {
+		System.out.println("");
+		System.out.println("");
 		System.out.println("Test with carretera - Failed query: "
 			+ codigo);
+		System.out.println(consulta);
 		assertTrue(false);
 	    }
 	}
@@ -108,7 +115,6 @@ public class QueriesTests {
 	    String values[] = getValues(codigo);
 	    boolean hasWhere = values[0].equals("SI");
 	    String consulta = values[1];
-
 	    try {
 		String carreteraCode = Catalog.CARRETERA_ALL;
 		String municipioCode = "1";
@@ -118,10 +124,14 @@ public class QueriesTests {
 		String where = WhereFactory.create(hasWhere, codigo,
 			carreteraCode, municipioCode, mayorValue, menorValue,
 			textValue);
-		executeQuery(consulta, where);
+		consulta = consulta.replaceAll("\\[\\[WHERE\\]\\]", where);
+		executeQuery(consulta);
 	    } catch (SQLException e) {
+		System.out.println("");
+		System.out.println("");
 		System.out.println("Test with municipio - Failed query: "
 			+ codigo);
+		System.out.println(consulta);
 		assertTrue(false);
 	    }
 	}
@@ -135,7 +145,6 @@ public class QueriesTests {
 	    String values[] = getValues(codigo);
 	    boolean hasWhere = values[0].equals("SI");
 	    String consulta = values[1];
-
 	    try {
 		String carreteraCode = "27001";
 		String municipioCode = "1";
@@ -145,11 +154,15 @@ public class QueriesTests {
 		String where = WhereFactory.create(hasWhere, codigo,
 			carreteraCode, municipioCode, mayorValue, menorValue,
 			textValue);
-		executeQuery(consulta, where);
+		consulta = consulta.replaceAll("\\[\\[WHERE\\]\\]", where);
+		executeQuery(consulta);
 	    } catch (SQLException e) {
+		System.out.println("");
+		System.out.println("");
 		System.out
 		.println("Test with carretera and municipio - Failed query: "
 			+ codigo);
+		System.out.println(consulta);
 		assertTrue(false);
 	    }
 	}
@@ -163,7 +176,6 @@ public class QueriesTests {
 	    String values[] = getValues(codigo);
 	    boolean hasWhere = values[0].equals("SI");
 	    String consulta = values[1];
-
 	    try {
 		String carreteraCode = Catalog.CARRETERA_ALL;
 		String municipioCode = Catalog.CONCELLO_ALL;
@@ -173,10 +185,14 @@ public class QueriesTests {
 		String where = WhereFactory.create(hasWhere, codigo,
 			carreteraCode, municipioCode, mayorValue, menorValue,
 			textValue);
-		executeQuery(consulta, where);
+		consulta = consulta.replaceAll("\\[\\[WHERE\\]\\]", where);
+		executeQuery(consulta);
 	    } catch (SQLException e) {
+		System.out.println("");
+		System.out.println("");
 		System.out.println("Test with numeric filter - Failed query: "
 			+ codigo);
+		System.out.println(consulta);
 		assertTrue(false);
 	    }
 	}
@@ -190,22 +206,24 @@ public class QueriesTests {
 	    String values[] = getValues(codigo);
 	    boolean hasWhere = values[0].equals("SI");
 	    String consulta = values[1];
-	    String where = "";
+
 	    try {
 		String carreteraCode = Catalog.CARRETERA_ALL;
 		String municipioCode = Catalog.CONCELLO_ALL;
 		String mayorValue = "";
 		String menorValue = "";
 		String textValue = "2011";
-		where = WhereFactory.create(hasWhere, codigo,
+		String where = WhereFactory.create(hasWhere, codigo,
 			carreteraCode, municipioCode, mayorValue, menorValue,
 			textValue);
-		executeQuery(consulta, where);
+		consulta = consulta.replaceAll("\\[\\[WHERE\\]\\]", where);
+		executeQuery(consulta);
 	    } catch (SQLException e) {
+		System.out.println("");
+		System.out.println("");
 		System.out.println("Test with text filter - Failed query: "
 			+ codigo);
 		System.out.println(consulta);
-		System.out.println("\n[[WHERE]]: " + where);
 		assertTrue(false);
 	    }
 	}
@@ -219,30 +237,31 @@ public class QueriesTests {
 	    String values[] = getValues(codigo);
 	    boolean hasWhere = values[0].equals("SI");
 	    String consulta = values[1];
-	    String where = "";
 	    try {
 		String carreteraCode = Catalog.CARRETERA_ALL;
 		String municipioCode = Catalog.CONCELLO_ALL;
 		String mayorValue = "1";
 		String menorValue = "3";
 		String textValue = "2011";
-		where = WhereFactory.create(hasWhere, codigo, carreteraCode,
+		String where = WhereFactory.create(hasWhere, codigo,
+			carreteraCode,
 			municipioCode, mayorValue, menorValue, textValue);
-		executeQuery(consulta, where);
+		consulta = consulta.replaceAll("\\[\\[WHERE\\]\\]", where);
+		executeQuery(consulta);
 	    } catch (SQLException e) {
+		System.out.println("");
+		System.out.println("");
 		System.out.println("Test with text filter - Failed query: "
 			+ codigo);
 		System.out.println("Consulta: " + consulta);
-		System.out.println("Where: " + where);
 		assertTrue(false);
 	    }
 	}
 	assertTrue(true);
     }
 
-    private void executeQuery(String consulta, String where)
+    private void executeQuery(String consulta)
 	    throws SQLException {
-	consulta = consulta.replaceAll("\\[\\[WHERE\\]\\]", where);
 	Statement stmt2 = c.createStatement();
 	ResultSet rs2 = stmt2.executeQuery(consulta);
 	rs2.next();
