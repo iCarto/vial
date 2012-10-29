@@ -188,6 +188,36 @@ INSERT INTO consultas.consultas
        FROM public.consultas_sql
        WHERE id=19;
 
+INSERT INTO consultas.consultas
+       SELECT 'C50',
+              'Listado de accidentes',
+              sql_string,
+              'SI',
+              'Listado de accidentes',
+              ''
+       FROM public.consultas_sql
+       WHERE id=20;
+
+INSERT INTO consultas.consultas
+       SELECT 'C51',
+              'Número de accidentes por tipo',
+              sql_string,
+              'SI',
+              'Número de accidentes por tipo',
+              ''
+       FROM public.consultas_sql
+       WHERE id=21;
+
+INSERT INTO consultas.consultas
+       SELECT 'C52',
+              'Número de accidentes',
+              sql_string,
+              'SI',
+              'Número de accidentes',
+              ''
+       FROM public.consultas_sql
+       WHERE id=22;
+
 DROP TABLE IF EXISTS public.consultas_sql;
 
 INSERT INTO consultas.aforos VALUES(0, 49);

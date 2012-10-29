@@ -30,6 +30,8 @@ public class WhereFactory {
 
 	numericQueries.add("C10"); // ancho
 	numericQueries.add("C40"); // cotas
+	numericQueries.add("C51"); // accidentes
+	numericQueries.add("C52"); // accidentes
 
 	textQueries.add("C20"); // tipo firme
 

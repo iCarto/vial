@@ -26,7 +26,7 @@
    </super>
    <at name="id">/home/amaneiro/workspaces/viasobras/extViasObras/forms/consultas-estado-ui.xml</at>
    <at name="path">consultas-estado-ui.xml</at>
-   <at name="rowspecs">CENTER:1.0MM:NONE,CENTER:1.0MM:NONE,CENTER:9.0MM:NONE,CENTER:5.0MM:NONE,CENTER:1.0MM:NONE,CENTER:1.0MM:NONE,CENTER:6.0MM:NONE,CENTER:2DLU:NONE,CENTER:DEFAULT:NONE,CENTER:1.0MM:NONE,CENTER:3.0MM:NONE,CENTER:1.0MM:NONE,CENTER:6.0MM:NONE,CENTER:6.0MM:NONE,CENTER:6.0MM:NONE,CENTER:6.0MM:NONE,CENTER:6.0MM:NONE,CENTER:6.0MM:NONE,CENTER:6.0MM:NONE,CENTER:6.0MM:NONE,CENTER:6.0MM:NONE,CENTER:6.0MM:NONE,CENTER:6.0MM:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:6.0MM:NONE,CENTER:1.0MM:NONE,CENTER:DEFAULT:NONE,CENTER:1.0MM:NONE,CENTER:6.0MM:NONE</at>
+   <at name="rowspecs">CENTER:1.0MM:NONE,CENTER:1.0MM:NONE,CENTER:9.0MM:NONE,CENTER:5.0MM:NONE,CENTER:1.0MM:NONE,CENTER:1.0MM:NONE,CENTER:6.0MM:NONE,CENTER:2DLU:NONE,CENTER:DEFAULT:NONE,CENTER:1.0MM:NONE,CENTER:3.0MM:NONE,CENTER:1.0MM:NONE,CENTER:6.0MM:NONE,CENTER:6.0MM:NONE,CENTER:6.0MM:NONE,CENTER:6.0MM:NONE,CENTER:6.0MM:NONE,CENTER:6.0MM:NONE,CENTER:6.0MM:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:6.0MM:NONE,CENTER:6.0MM:NONE,CENTER:6.0MM:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:6.0MM:NONE,CENTER:1.0MM:NONE,CENTER:DEFAULT:NONE,CENTER:1.0MM:NONE,CENTER:6.0MM:NONE</at>
    <at name="colspecs">FILL:2.0MM:NONE,FILL:2.0MM:NONE,FILL:2.0MM:NONE,FILL:2.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:2.0MM:NONE,FILL:2.0MM:NONE</at>
    <at name="components">
     <object classname="java.util.LinkedList">
@@ -39,7 +39,7 @@
            <at name="column">3</at>
            <at name="row">13</at>
            <at name="colspan">32</at>
-           <at name="rowspan">14</at>
+           <at name="rowspan">23</at>
            <at name="halign">default</at>
            <at name="valign">default</at>
            <at name="insets" object="insets">0,0,0,0</at>
@@ -429,7 +429,7 @@
          <at name="cellconstraints">
           <object classname="com.jeta.forms.store.memento.CellConstraintsMemento">
            <at name="column">27</at>
-           <at name="row">28</at>
+           <at name="row">37</at>
            <at name="colspan">8</at>
            <at name="rowspan">1</at>
            <at name="halign">default</at>
@@ -1125,7 +1125,7 @@
    <at name="cellpainters">
     <object classname="com.jeta.forms.store.support.Matrix">
      <at name="rows">
-      <object classname="[Ljava.lang.Object;" size="30">
+      <object classname="[Ljava.lang.Object;" size="39">
        <at name="item" index="0">
         <object classname="[Ljava.lang.Object;" size="36"/>
        </at>
@@ -1214,6 +1214,33 @@
         <object classname="[Ljava.lang.Object;" size="36"/>
        </at>
        <at name="item" index="29">
+        <object classname="[Ljava.lang.Object;" size="36"/>
+       </at>
+       <at name="item" index="30">
+        <object classname="[Ljava.lang.Object;" size="36"/>
+       </at>
+       <at name="item" index="31">
+        <object classname="[Ljava.lang.Object;" size="36"/>
+       </at>
+       <at name="item" index="32">
+        <object classname="[Ljava.lang.Object;" size="36"/>
+       </at>
+       <at name="item" index="33">
+        <object classname="[Ljava.lang.Object;" size="36"/>
+       </at>
+       <at name="item" index="34">
+        <object classname="[Ljava.lang.Object;" size="36"/>
+       </at>
+       <at name="item" index="35">
+        <object classname="[Ljava.lang.Object;" size="36"/>
+       </at>
+       <at name="item" index="36">
+        <object classname="[Ljava.lang.Object;" size="36"/>
+       </at>
+       <at name="item" index="37">
+        <object classname="[Ljava.lang.Object;" size="36"/>
+       </at>
+       <at name="item" index="38">
         <object classname="[Ljava.lang.Object;" size="36"/>
        </at>
       </object>
