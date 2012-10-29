@@ -168,6 +168,26 @@ INSERT INTO consultas.consultas
        FROM public.consultas_sql
        WHERE id=17;
 
+INSERT INTO consultas.consultas
+       SELECT 'C03',
+              'Inventario de rampas',
+              sql_string,
+              'SI',
+              'Inventario de rampas',
+              ''
+       FROM public.consultas_sql
+       WHERE id=18;
+
+INSERT INTO consultas.consultas
+       SELECT 'C04',
+              'Inventario de tramos antiguos',
+              sql_string,
+              'SI',
+              'Inventario de tramos antiguos',
+              ''
+       FROM public.consultas_sql
+       WHERE id=19;
+
 DROP TABLE IF EXISTS public.consultas_sql;
 
 INSERT INTO consultas.aforos VALUES(0, 49);
