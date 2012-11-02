@@ -1,4 +1,4 @@
-package es.icarto.gvsig.viasobras.queries.tests;
+package es.icarto.gvsig.viasobras.tests.queries;
 
 import static org.junit.Assert.assertTrue;
 
@@ -19,7 +19,7 @@ import es.icarto.gvsig.viasobras.domain.catalog.Catalog;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.DBFacade;
 import es.icarto.gvsig.viasobras.queries.utils.WhereFactory;
 
-public class QueriesTests {
+public class TestsQueries {
 
     private static Connection c;
 

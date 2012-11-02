@@ -1,4 +1,4 @@
-package es.icarto.gvsig.viasobras.forms.tests;
+package es.icarto.gvsig.viasobras.tests.forms;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -26,7 +26,7 @@ import es.icarto.gvsig.navtableforms.ormlite.domainvalidator.ValidatorDomain;
 import es.icarto.gvsig.navtableforms.ormlite.domainvalues.DomainValues;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
-public abstract class AbstractFormTests {
+public abstract class TestsFormAbstract {
 
     protected static ORMLiteAppDomain ado;
     protected static HashMap<String, JComponent> widgets;

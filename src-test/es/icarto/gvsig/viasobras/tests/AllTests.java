@@ -4,12 +4,12 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import es.icarto.gvsig.viasobras.domain.tests.AllCatalogTests;
-import es.icarto.gvsig.viasobras.forms.tests.AllFormTests;
-import es.icarto.gvsig.viasobras.queries.tests.QueriesTests;
+import es.icarto.gvsig.viasobras.tests.catalog.AllTestsCatalog;
+import es.icarto.gvsig.viasobras.tests.forms.AllTestsForm;
+import es.icarto.gvsig.viasobras.tests.queries.TestsQueries;
 
 @RunWith(Suite.class)
-@SuiteClasses({ AllCatalogTests.class, AllFormTests.class, QueriesTests.class })
+@SuiteClasses({ AllTestsCatalog.class, AllTestsForm.class, TestsQueries.class })
 public class AllTests {
 
 }

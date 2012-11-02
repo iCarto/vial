@@ -1,6 +1,8 @@
-package es.icarto.gvsig.viasobras.forms.tests;
+package es.icarto.gvsig.viasobras.tests.forms;
 
 import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import com.jeta.forms.components.panel.FormPanel;
 
@@ -10,7 +12,7 @@ import es.udc.cartolab.gvsig.users.utils.DBSession;
 
 
 
-public class RampasFormTests extends AbstractFormTests {
+public class TestsFormActuaciones extends TestsFormAbstract {
 
     /**
      * new FormPanel(abeilleFile) needs abeilleFile to be in classpath
@@ -24,16 +26,22 @@ public class RampasFormTests extends AbstractFormTests {
      */
     @BeforeClass
     public static void doSetup() throws Exception {
-	String uiFile = "rampas-ui.xml";
-	metadataFile = "forms/rampas-metadata.xml";
+	metadataFile = "forms/actuaciones-metadata.xml";
 	schemaName = "inventario";
-	tableName = "rampas";
+	tableName = "actuaciones";
 
 	initgvSIGDrivers();
 	DBSession.createConnection("localhost", 5432, "vias_obras",
 		"inventario", "viasobras", "viasobras");
 	ado = new ORMLite(metadataFile).getAppDomain();
-	widgets = AbeilleParser.getWidgetsFromContainer(new FormPanel(uiFile));
+	widgets = AbeilleParser.getWidgetsFromContainer(new FormPanel(
+		"actuaciones-ui.xml"));
     }
 
+    @Ignore
+    @Test
+    @Override
+    public void testDomainValuesMatchWidgetNames() {
+	//
+    }
 }

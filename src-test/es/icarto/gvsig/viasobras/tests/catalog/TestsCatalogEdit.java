@@ -1,4 +1,4 @@
-package es.icarto.gvsig.viasobras.domain.tests;
+package es.icarto.gvsig.viasobras.tests.catalog;
 
 import static org.junit.Assert.assertEquals;
 
@@ -22,7 +22,7 @@ import es.icarto.gvsig.viasobras.domain.catalog.Tramo;
 import es.icarto.gvsig.viasobras.domain.catalog.Tramos;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.DBFacade;
 
-public class CatalogEditTests {
+public class TestsCatalogEdit {
 
     private static Connection c;
     private static String carreteraPlataforma;

@@ -1,4 +1,4 @@
-package es.icarto.gvsig.viasobras.forms.tests;
+package es.icarto.gvsig.viasobras.tests.forms;
 
 import org.junit.BeforeClass;
 
@@ -10,7 +10,7 @@ import es.udc.cartolab.gvsig.users.utils.DBSession;
 
 
 
-public class VariantesFormTests extends AbstractFormTests {
+public class TestsFormRampas extends TestsFormAbstract {
 
     /**
      * new FormPanel(abeilleFile) needs abeilleFile to be in classpath
@@ -24,10 +24,10 @@ public class VariantesFormTests extends AbstractFormTests {
      */
     @BeforeClass
     public static void doSetup() throws Exception {
-	String uiFile = "variantes-ui.xml";
-	metadataFile = "forms/variantes-metadata.xml";
+	String uiFile = "rampas-ui.xml";
+	metadataFile = "forms/rampas-metadata.xml";
 	schemaName = "inventario";
-	tableName = "variantes";
+	tableName = "rampas";
 
 	initgvSIGDrivers();
 	DBSession.createConnection("localhost", 5432, "vias_obras",
