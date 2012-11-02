@@ -424,7 +424,7 @@
              </object>
             </at>
             <at name="width">124</at>
-            <at name="name">denuncia_fecha_autorizacion</at>
+            <at name="name">denuncia_fecha_resolucion</at>
             <at name="border">
              <object classname="com.jeta.forms.store.properties.CompoundBorderProperty">
               <super classname="com.jeta.forms.store.properties.BorderProperty">
@@ -486,7 +486,7 @@
              </object>
             </at>
             <at name="width">124</at>
-            <at name="name">denuncia_fecha_solicitud</at>
+            <at name="name">denuncia_fecha_denuncia</at>
             <at name="border">
              <object classname="com.jeta.forms.store.properties.CompoundBorderProperty">
               <super classname="com.jeta.forms.store.properties.BorderProperty">
@@ -615,7 +615,7 @@
              </object>
             </at>
             <at name="width">396</at>
-            <at name="name">denuncia_peticionario</at>
+            <at name="name">denuncia_denunciante</at>
             <at name="border">
              <object classname="com.jeta.forms.store.properties.CompoundBorderProperty">
               <super classname="com.jeta.forms.store.properties.BorderProperty">
@@ -1045,7 +1045,7 @@
              </object>
             </at>
             <at name="width">124</at>
-            <at name="name">denuncia_importe_tasas</at>
+            <at name="name">denuncia_importe_sancion</at>
             <at name="border">
              <object classname="com.jeta.forms.store.properties.CompoundBorderProperty">
               <super classname="com.jeta.forms.store.properties.BorderProperty">

@@ -86,7 +86,7 @@ CREATE TABLE inventario.actuaciones(
        incidencia_deteccion_fecha date,
        incidencia_resolucion_motivo text,
        incidencia_resolucion_codigo text,
-       indicencia_resolucion_fecha date,
+       incidencia_resolucion_fecha date,
        incidencia_observaciones text,
        inventario_tipo text,
        inventario_margen text,

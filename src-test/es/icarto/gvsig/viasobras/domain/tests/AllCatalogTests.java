@@ -7,5 +7,5 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ CatalogEditTests.class, CatalogSearchTests.class })
-public class AllTests {
+public class AllCatalogTests {
 }
