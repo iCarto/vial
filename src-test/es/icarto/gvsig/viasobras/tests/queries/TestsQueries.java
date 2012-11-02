@@ -71,7 +71,7 @@ public class TestsQueries {
 		System.out.println("");
 		System.out.println("Test Bare - Failed query: " + codigo);
 		System.out.println(consulta);
-		assertTrue(false);
+		assertTrue(codigo, false);
 	    }
 	}
 	assertTrue(true);
@@ -102,7 +102,7 @@ public class TestsQueries {
 		System.out.println("Test with carretera - Failed query: "
 			+ codigo);
 		System.out.println(consulta);
-		assertTrue(false);
+		assertTrue(codigo, false);
 	    }
 	}
 	assertTrue(true);
@@ -132,7 +132,7 @@ public class TestsQueries {
 		System.out.println("Test with municipio - Failed query: "
 			+ codigo);
 		System.out.println(consulta);
-		assertTrue(false);
+		assertTrue(codigo, false);
 	    }
 	}
 	assertTrue(true);
@@ -163,7 +163,7 @@ public class TestsQueries {
 		.println("Test with carretera and municipio - Failed query: "
 			+ codigo);
 		System.out.println(consulta);
-		assertTrue(false);
+		assertTrue(codigo, false);
 	    }
 	}
 	assertTrue(true);
@@ -193,7 +193,7 @@ public class TestsQueries {
 		System.out.println("Test with numeric filter - Failed query: "
 			+ codigo);
 		System.out.println(consulta);
-		assertTrue(false);
+		assertTrue(codigo, false);
 	    }
 	}
 	assertTrue(true);
@@ -224,7 +224,7 @@ public class TestsQueries {
 		System.out.println("Test with text filter - Failed query: "
 			+ codigo);
 		System.out.println(consulta);
-		assertTrue(false);
+		assertTrue(codigo, false);
 	    }
 	}
 	assertTrue(true);
@@ -254,7 +254,7 @@ public class TestsQueries {
 		System.out.println("Test with text filter - Failed query: "
 			+ codigo);
 		System.out.println("Consulta: " + consulta);
-		assertTrue(false);
+		assertTrue(codigo, false);
 	    }
 	}
 	assertTrue(true);
