@@ -1,6 +1,6 @@
 <project name="extViasObras" default="build" basedir=".">
 	<description>
-    	Extensión para la gestión y mantemento de inventario de carreteras.
+    	Extensión para la gestión y mantenimiento de inventario de carreteras.
     </description>
 	
 	<import file="../binaries/ant/utilities.xml"/>
@@ -18,7 +18,7 @@
 
 	<target name="build"
   		description="generate the distribution without the source file"
-		depends="init, copy-data-files, compile, instrument, create-jar, copy-to-andami" >
+		depends="init, copy-data-files, compile, create-jar, copy-to-andami" >
 	</target>
 
 	<target name="init">
@@ -28,13 +28,6 @@
 		<mkdir dir="${build}"/>
 		<mkdir dir="${dist}"/>
 	</target>
-
-	<path id="instrument_classpath">
-		<pathelement location="${build}"/>
-		<path location="${lib-build}/activejdbc-instrumentation-1.2-SNAPSHOT.jar"/>
-		<path location="${lib-build}/javassist-3.8.0.GA.jar"/>
-		<path location="${lib}/activejdbc-1.2-SNAPSHOT.jar"/>
-	</path>
 
 	<target name="copy-data-files">
 		<copy file="config/config.xml" todir="${dist}" overwrite="yes"/>
@@ -58,13 +51,6 @@
 		<loadEclipseClasspath project="${basedir}"/>
 		<gvSIG-javac
 			classpath="${eclipseClasspath}"/>
-	</target>
-
-	<target name="instrument">
-		<java classname="org.javalite.instrumentation.Main">
-			<sysproperty key="outputDirectory" value="${build}"/>
-			<classpath refid="instrument_classpath"/>
-		</java>
 	</target>
 
 	<target name="create-jar">
