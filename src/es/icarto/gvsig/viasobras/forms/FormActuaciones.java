@@ -2,10 +2,15 @@ package es.icarto.gvsig.viasobras.forms;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
@@ -16,6 +21,7 @@ import com.jeta.forms.components.panel.FormPanel;
 
 import es.icarto.gvsig.navtableforms.AbstractForm;
 import es.icarto.gvsig.navtableforms.gui.buttons.fileslink.FilesLinkButton;
+import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
 
 public class FormActuaciones extends AbstractForm {
 
@@ -69,6 +75,7 @@ public class FormActuaciones extends AbstractForm {
 
     @Override
     protected void fillSpecificValues() {
+	refreshSubForms();
     }
 
     @Override
@@ -99,13 +106,38 @@ public class FormActuaciones extends AbstractForm {
 
     private final class ChangeFormTab implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
-	    if (subForms != null) {
-		if (subForms.getSelectedIndex() != -1) {
-		    subForms.setEnabledAt(subForms.getSelectedIndex(), false);
-		}
-		subForms.setEnabledAt(tipoActuacion.getSelectedIndex(), true);
-		subForms.setSelectedIndex(tipoActuacion.getSelectedIndex());
+	    if ((subForms != null) && !isFillingValues()) {
+		refreshSubForms();
 	    }
+	}
+    }
+
+    private void refreshSubForms() {
+	if (subForms.getSelectedIndex() != tipoActuacion.getSelectedIndex()) {
+	    if (subForms.getSelectedIndex() != -1) {
+		subForms.setEnabledAt(subForms.getSelectedIndex(), false);
+		HashMap<String, JComponent> widgets = AbeilleParser
+			.getWidgetsFromContainer(subForms);
+		for (JComponent c : widgets.values()) {
+		    if (c instanceof JTextField
+			    || c instanceof JFormattedTextField) {
+			c.requestFocus();
+			((JTextField) c).setText("");
+			c.dispatchEvent(new KeyEvent(c, KeyEvent.KEY_RELEASED,
+				0, 0, KeyEvent.VK_SHIFT, ' '));
+		    } else if (c instanceof JTextArea) {
+			c.requestFocus();
+			((JTextArea) c).setText("");
+			c.dispatchEvent(new KeyEvent(c, KeyEvent.KEY_RELEASED,
+				0, 0, KeyEvent.VK_SHIFT, ' '));
+		    } else if (c instanceof JComboBox) {
+			((JComboBox) super.getWidgetComponents().get(
+				c.getName())).setSelectedIndex(0);
+		    }
+		}
+	    }
+	    subForms.setEnabledAt(tipoActuacion.getSelectedIndex(), true);
+	    subForms.setSelectedIndex(tipoActuacion.getSelectedIndex());
 	}
     }
 
