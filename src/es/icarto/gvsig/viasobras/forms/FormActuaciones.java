@@ -3,12 +3,17 @@ package es.icarto.gvsig.viasobras.forms;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -22,6 +27,7 @@ import com.jeta.forms.components.panel.FormPanel;
 import es.icarto.gvsig.navtableforms.AbstractForm;
 import es.icarto.gvsig.navtableforms.gui.buttons.fileslink.FilesLinkButton;
 import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
+import es.udc.cartolab.gvsig.users.utils.DBSession;
 
 public class FormActuaciones extends AbstractForm {
 
@@ -139,6 +145,57 @@ public class FormActuaciones extends AbstractForm {
 	    subForms.setEnabledAt(tipoActuacion.getSelectedIndex(), true);
 	    subForms.setSelectedIndex(tipoActuacion.getSelectedIndex());
 	}
+    }
+
+    private boolean isCodigoActuacionAlreadyInDB() {
+	DBSession dbs = DBSession.getCurrentSession();
+	Connection c = dbs.getJavaConnection();
+	try {
+	    c.setAutoCommit(false);
+	    String sqlSelect = "SELECT codigo_actuacion "
+		    + " FROM inventario.actuaciones "
+		    + " WHERE codigo_actuacion = ?;";
+	    PreparedStatement stSelect = c.prepareStatement(sqlSelect);
+	    stSelect.setString(1, codigoActuacion.getText());
+	    stSelect.execute();
+	    c.commit();
+	    ResultSet rs = stSelect.executeQuery();
+	    rs.last();
+	    int numberOfRows = rs.getRow();
+	    c.close();
+	    if (numberOfRows > 0) {
+		return true;
+	    }
+	    return false;
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	    return true;
+	}
+    }
+
+    @Override
+    protected boolean isSaveable() {
+	if (isNewValue() && isCodigoActuacionAlreadyInDB()) {
+	    showWarningPanel("Aviso: campos únicos",
+		    "El código de actuación introducido ya existe.");
+	    return false;
+	} else {
+	    return super.isSaveable();
+	}
+    }
+
+    private boolean isNewValue() {
+	if (getFormController().getValueInLayer("codigo_actuacion").equals(
+		codigoActuacion.getText())) {
+	    return false;
+	}
+	return true;
+    }
+
+    private void showWarningPanel(String title, String message) {
+	JOptionPane.showMessageDialog(this, message,
+		PluginServices.getText(this, title),
+		JOptionPane.WARNING_MESSAGE);
     }
 
 }
