@@ -60,7 +60,6 @@ CREATE INDEX rampas_codigo_municipio
        ON inventario.rampas USING BTREE(codigo_municipio);
 CREATE INDEX rampas_codigo_carretera_concello
        ON inventario.rampas USING BTREE(codigo_carretera, codigo_municipio);
-VACUUM ANALYZE inventario.rampas;
 
 -- triggers
 DROP TRIGGER IF EXISTS update_longitud ON inventario.rampas;

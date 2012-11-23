@@ -50,7 +50,6 @@ CREATE INDEX ancho_plataforma_codigo_municipio
        ON inventario.ancho_plataforma USING BTREE(codigo_municipio);
 CREATE INDEX ancho_plataforma_codigo_carretera_concello
        ON inventario.ancho_plataforma USING BTREE(codigo_carretera, codigo_municipio);
-VACUUM ANALYZE inventario.ancho_plataforma;
 
 -- triggers
 DROP TRIGGER IF EXISTS update_geom_ancho_plataforma ON inventario.ancho_plataforma;

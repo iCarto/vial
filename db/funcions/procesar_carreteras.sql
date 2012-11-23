@@ -62,6 +62,5 @@ CREATE INDEX carreteras_the_geom
        ON inventario.carreteras USING GIST(the_geom);
 CREATE INDEX carreteras_codigo
        ON inventario.carreteras USING BTREE(codigo);
-VACUUM ANALYZE inventario.carreteras;
 
 COMMIT;

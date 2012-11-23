@@ -43,7 +43,6 @@ CREATE INDEX aforos_codigo_municipio
        ON inventario.aforos USING BTREE(codigo_municipio);
 CREATE INDEX aforos_codigo_carretera_concello
        ON inventario.aforos USING BTREE(codigo_carretera, codigo_municipio);
-VACUUM ANALYZE inventario.aforos;
 
 -- triggers
 DROP TRIGGER IF EXISTS update_geom_aforos ON inventario.aforos;

@@ -54,7 +54,6 @@ CREATE INDEX cotas_codigo_municipio
        ON inventario.cotas USING BTREE(codigo_municipio);
 CREATE INDEX cotas_codigo_carretera_concello
        ON inventario.cotas USING BTREE(codigo_carretera, codigo_municipio);
-VACUUM ANALYZE inventario.cotas;
 
 -- triggers
 DROP TRIGGER IF EXISTS update_geom_cotas ON inventario.cotas;

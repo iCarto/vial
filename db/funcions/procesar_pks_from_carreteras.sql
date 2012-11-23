@@ -23,4 +23,3 @@ CREATE INDEX pks_1000_codigo_municipio
        ON inventario.pks_1000 USING BTREE(codigo_municipio);
 CREATE INDEX pks_1000_codigo_carretera_concello
        ON inventario.pks_1000 USING BTREE(codigo_carretera, codigo_municipio);
-VACUUM ANALYZE inventario.pks_1000;

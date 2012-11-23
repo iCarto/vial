@@ -50,7 +50,6 @@ CREATE INDEX tipo_pavimento_codigo_municipio
        ON inventario.tipo_pavimento USING BTREE(codigo_municipio);
 CREATE INDEX tipo_pavimento_codigo_carretera_concello
        ON inventario.tipo_pavimento USING BTREE(codigo_carretera, codigo_municipio);
-VACUUM ANALYZE inventario.tipo_pavimento;
 
 -- triggers
 DROP TRIGGER IF EXISTS update_geom_tipo_pavimento ON inventario.tipo_pavimento;

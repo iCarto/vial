@@ -23,4 +23,3 @@ CREATE INDEX carretera_municipio_orden_tramo
        ON inventario.carretera_municipio USING BTREE(orden_tramo);
 CREATE INDEX carretera_municipio_codigo_carretera_concello
        ON inventario.carretera_municipio USING BTREE(codigo_carretera, codigo_municipio);
-VACUUM ANALYZE inventario.carretera_municipio;

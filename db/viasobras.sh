@@ -63,6 +63,7 @@ then
     ./viasobras-create-schema-elle.sh $config_file
     ./viasobras-create-schema-infobase.sh $config_file
     ./viasobras-create-schema-inventario.sh $config_file
+    ./viasobras-postprocessing.sh $config_file
 
 elif [ $schema == "consultas" ]
 then

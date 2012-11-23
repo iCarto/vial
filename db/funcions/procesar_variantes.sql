@@ -62,7 +62,6 @@ CREATE INDEX variantes_codigo_municipio
        ON inventario.variantes USING BTREE(codigo_municipio);
 CREATE INDEX variantes_codigo_carretera_concello
        ON inventario.variantes USING BTREE(codigo_carretera, codigo_municipio);
-VACUUM ANALYZE inventario.variantes;
 
 -- triggers
 

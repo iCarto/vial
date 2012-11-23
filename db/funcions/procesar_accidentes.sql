@@ -89,7 +89,6 @@ CREATE INDEX accidentes_codigo_municipio
        ON inventario.accidentes USING BTREE(codigo_municipio);
 CREATE INDEX accidentes_codigo_carretera_concello
        ON inventario.accidentes USING BTREE(codigo_carretera, codigo_municipio);
-VACUUM ANALYZE inventario.accidentes;
 
 -- triggers
 DROP TRIGGER IF EXISTS update_geom_accidentes ON inventario.accidentes;
