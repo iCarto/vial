@@ -41,6 +41,17 @@ SELECT AddGeometryColumn('inventario', 'tipo_pavimento', 'the_geom', '25829', 'M
 ALTER TABLE inventario.tipo_pavimento DROP CONSTRAINT enforce_geotype_the_geom;
 SELECT inventario.update_geom_line_all('inventario', 'tipo_pavimento');
 
+-- indexes
+CREATE INDEX tipo_pavimento_the_geom
+       ON inventario.tipo_pavimento USING GIST(the_geom);
+CREATE INDEX tipo_pavimento_codigo_carretera
+       ON inventario.tipo_pavimento USING BTREE(codigo_carretera);
+CREATE INDEX tipo_pavimento_codigo_municipio
+       ON inventario.tipo_pavimento USING BTREE(codigo_municipio);
+CREATE INDEX tipo_pavimento_codigo_carretera_concello
+       ON inventario.tipo_pavimento USING BTREE(codigo_carretera, codigo_municipio);
+VACUUM ANALYZE inventario.tipo_pavimento;
+
 -- triggers
 DROP TRIGGER IF EXISTS update_geom_tipo_pavimento ON inventario.tipo_pavimento;
 CREATE TRIGGER update_geom_tipo_pavimento

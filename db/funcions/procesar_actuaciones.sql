@@ -132,6 +132,13 @@ ALTER TABLE inventario.actuaciones DROP CONSTRAINT enforce_geotype_the_geom;
 ALTER TABLE inventario.actuaciones DROP CONSTRAINT enforce_dims_the_geom;
 SELECT inventario.update_geom_line_all('inventario', 'actuaciones');
 
+-- indexes
+CREATE INDEX actuaciones_the_geom
+       ON inventario.actuaciones USING GIST(the_geom);
+CREATE INDEX actuaciones_codigo_carretera
+       ON inventario.actuaciones USING BTREE(codigo_carretera);
+VACUUM ANALYZE inventario.actuaciones;
+
 -- triggers
 DROP TRIGGER IF EXISTS update_geom_actuaciones ON inventario.actuaciones;
 CREATE TRIGGER update_geom_actuaciones

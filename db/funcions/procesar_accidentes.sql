@@ -80,6 +80,17 @@ ALTER TABLE inventario.accidentes DROP CONSTRAINT enforce_geotype_the_geom;
 ALTER TABLE inventario.accidentes DROP CONSTRAINT enforce_dims_the_geom;
 SELECT inventario.update_geom_point_all('inventario', 'accidentes');
 
+-- indexes
+CREATE INDEX accidentes_the_geom
+       ON inventario.accidentes USING GIST(the_geom);
+CREATE INDEX accidentes_codigo_carretera
+       ON inventario.accidentes USING BTREE(codigo_carretera);
+CREATE INDEX accidentes_codigo_municipio
+       ON inventario.accidentes USING BTREE(codigo_municipio);
+CREATE INDEX accidentes_codigo_carretera_concello
+       ON inventario.accidentes USING BTREE(codigo_carretera, codigo_municipio);
+VACUUM ANALYZE inventario.accidentes;
+
 -- triggers
 DROP TRIGGER IF EXISTS update_geom_accidentes ON inventario.accidentes;
 CREATE TRIGGER update_geom_accidentes

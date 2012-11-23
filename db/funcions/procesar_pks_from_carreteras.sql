@@ -13,3 +13,14 @@ SELECT AddGeometryColumn('inventario', 'pks_1000', 'the_geom', '25829', 'POINT',
 ALTER TABLE inventario.pks_1000 DROP CONSTRAINT enforce_geotype_the_geom;
 ALTER TABLE inventario.pks_1000 DROP CONSTRAINT enforce_dims_the_geom;
 SELECT inventario.update_geom_point_all('inventario', 'pks_1000');
+
+-- indexes
+CREATE INDEX pks_1000_the_geom
+       ON inventario.pks_1000 USING GIST(the_geom);
+CREATE INDEX pks_1000_codigo_carretera
+       ON inventario.pks_1000 USING BTREE(codigo_carretera);
+CREATE INDEX pks_1000_codigo_municipio
+       ON inventario.pks_1000 USING BTREE(codigo_municipio);
+CREATE INDEX pks_1000_codigo_carretera_concello
+       ON inventario.pks_1000 USING BTREE(codigo_carretera, codigo_municipio);
+VACUUM ANALYZE inventario.pks_1000;

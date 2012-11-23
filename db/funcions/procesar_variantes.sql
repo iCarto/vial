@@ -53,6 +53,17 @@ UPDATE inventario.variantes
        SET estado = 'DESUSO'
        WHERE estado = 'ABANDONO';
 
+-- indexes
+CREATE INDEX variantes_the_geom
+       ON inventario.variantes USING GIST(the_geom);
+CREATE INDEX variantes_codigo_carretera
+       ON inventario.variantes USING BTREE(codigo_carretera);
+CREATE INDEX variantes_codigo_municipio
+       ON inventario.variantes USING BTREE(codigo_municipio);
+CREATE INDEX variantes_codigo_carretera_concello
+       ON inventario.variantes USING BTREE(codigo_carretera, codigo_municipio);
+VACUUM ANALYZE inventario.variantes;
+
 -- triggers
 
 DROP TRIGGER IF EXISTS update_longitud ON inventario.variantes;

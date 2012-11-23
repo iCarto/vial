@@ -13,3 +13,14 @@ CREATE TABLE inventario.carretera_municipio(
                ON DELETE CASCADE
                ON UPDATE CASCADE
 );
+
+-- indexes
+CREATE INDEX carretera_municipio_codigo_carretera
+       ON inventario.carretera_municipio USING BTREE(codigo_carretera);
+CREATE INDEX carretera_municipio_codigo_municipio
+       ON inventario.carretera_municipio USING BTREE(codigo_municipio);
+CREATE INDEX carretera_municipio_orden_tramo
+       ON inventario.carretera_municipio USING BTREE(orden_tramo);
+CREATE INDEX carretera_municipio_codigo_carretera_concello
+       ON inventario.carretera_municipio USING BTREE(codigo_carretera, codigo_municipio);
+VACUUM ANALYZE inventario.carretera_municipio;

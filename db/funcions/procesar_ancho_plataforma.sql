@@ -41,6 +41,17 @@ SELECT AddGeometryColumn('inventario', 'ancho_plataforma', 'the_geom', '25829', 
 ALTER TABLE inventario.ancho_plataforma DROP CONSTRAINT enforce_geotype_the_geom;
 SELECT inventario.update_geom_line_all('inventario', 'ancho_plataforma');
 
+-- indexes
+CREATE INDEX ancho_plataforma_the_geom
+       ON inventario.ancho_plataforma USING GIST(the_geom);
+CREATE INDEX ancho_plataforma_codigo_carretera
+       ON inventario.ancho_plataforma USING BTREE(codigo_carretera);
+CREATE INDEX ancho_plataforma_codigo_municipio
+       ON inventario.ancho_plataforma USING BTREE(codigo_municipio);
+CREATE INDEX ancho_plataforma_codigo_carretera_concello
+       ON inventario.ancho_plataforma USING BTREE(codigo_carretera, codigo_municipio);
+VACUUM ANALYZE inventario.ancho_plataforma;
+
 -- triggers
 DROP TRIGGER IF EXISTS update_geom_ancho_plataforma ON inventario.ancho_plataforma;
 CREATE TRIGGER update_geom_ancho_plataforma

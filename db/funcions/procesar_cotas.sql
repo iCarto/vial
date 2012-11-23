@@ -45,6 +45,17 @@ SELECT AddGeometryColumn('inventario', 'cotas', 'the_geom', '25829', 'MULTILINES
 ALTER TABLE inventario.cotas DROP CONSTRAINT enforce_geotype_the_geom;
 SELECT inventario.update_geom_line_all('inventario', 'cotas');
 
+-- indexes
+CREATE INDEX cotas_the_geom
+       ON inventario.cotas USING GIST(the_geom);
+CREATE INDEX cotas_codigo_carretera
+       ON inventario.cotas USING BTREE(codigo_carretera);
+CREATE INDEX cotas_codigo_municipio
+       ON inventario.cotas USING BTREE(codigo_municipio);
+CREATE INDEX cotas_codigo_carretera_concello
+       ON inventario.cotas USING BTREE(codigo_carretera, codigo_municipio);
+VACUUM ANALYZE inventario.cotas;
+
 -- triggers
 DROP TRIGGER IF EXISTS update_geom_cotas ON inventario.cotas;
 CREATE TRIGGER update_geom_cotas

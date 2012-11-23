@@ -34,6 +34,17 @@ ALTER TABLE inventario.aforos DROP CONSTRAINT enforce_geotype_the_geom;
 ALTER TABLE inventario.aforos DROP CONSTRAINT enforce_dims_the_geom;
 SELECT inventario.update_geom_point_all('inventario', 'aforos');
 
+-- indexes
+CREATE INDEX aforos_the_geom
+       ON inventario.aforos USING GIST(the_geom);
+CREATE INDEX aforos_codigo_carretera
+       ON inventario.aforos USING BTREE(codigo_carretera);
+CREATE INDEX aforos_codigo_municipio
+       ON inventario.aforos USING BTREE(codigo_municipio);
+CREATE INDEX aforos_codigo_carretera_concello
+       ON inventario.aforos USING BTREE(codigo_carretera, codigo_municipio);
+VACUUM ANALYZE inventario.aforos;
+
 -- triggers
 DROP TRIGGER IF EXISTS update_geom_aforos ON inventario.aforos;
 CREATE TRIGGER update_geom_aforos

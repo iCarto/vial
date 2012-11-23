@@ -45,6 +45,13 @@ INSERT INTO inventario.carreteras_lugo(
        FROM inventario.carreteras_tmp
 );
 
+-- indexes
+CREATE INDEX carreteras_lugo_the_geom
+       ON inventario.carreteras_lugo USING GIST(the_geom);
+CREATE INDEX carreteras_lugo_codigo
+       ON inventario.carreteras_lugo USING BTREE(codigo);
+VACUUM ANALYZE inventario.carreteras_lugo;
+
 -- triggers
 DROP TRIGGER IF EXISTS update_longitud ON inventario.carreteras_lugo;
 CREATE TRIGGER update_longitud
