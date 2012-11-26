@@ -15,7 +15,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import com.iver.andami.PluginServices;
@@ -36,7 +35,6 @@ public class RecalculatorForm extends JPanel implements IWindow {
 
     private WindowInfo windowInfo;
     private JButton executeButton;
-    private JScrollPane scrollPane;
     private FormPanel form;
     private JComboBox codigoCarretera;
     private JCheckBox reajustar;
@@ -50,8 +48,7 @@ public class RecalculatorForm extends JPanel implements IWindow {
 
     private void initPanel() {
 	form = new FormPanel("recalcular-caracteristicas-ui.xml");
-	scrollPane = new JScrollPane(form);
-	this.add(scrollPane);
+	this.add(form);
 	initWidgets();
 	this.setFocusCycleRoot(true);
     }
@@ -235,7 +232,7 @@ public class RecalculatorForm extends JPanel implements IWindow {
 	    windowInfo = new WindowInfo(WindowInfo.MODALDIALOG
 		    | WindowInfo.RESIZABLE | WindowInfo.PALETTE);
 	    windowInfo.setTitle("Vías y Obras: recalcular características");
-	    windowInfo.setHeight(230);
+	    windowInfo.setHeight(200);
 	    windowInfo.setWidth(300);
 	}
 	return windowInfo;

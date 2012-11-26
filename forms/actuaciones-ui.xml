@@ -24,10 +24,10 @@
     </at>
     <at name="componentclass">com.jeta.forms.gui.form.FormComponent</at>
    </super>
-   <at name="id">/home/amaneiro/workspaces/viasobras/extViasObras/forms/actuaciones-ui.xml</at>
+   <at name="id">C:\APLICACIONES\gvSIG_VO\bin\gvSIG\extensiones\es.icarto.gvsig.viasobras\actuaciones-ui.xml</at>
    <at name="path">actuaciones-ui.xml</at>
-   <at name="rowspecs">CENTER:1.0MM:NONE,CENTER:1.0MM:NONE,CENTER:9.0MM:NONE,CENTER:5.0MM:NONE,CENTER:1.0MM:NONE,CENTER:1.0MM:NONE,CENTER:DEFAULT:NONE,CENTER:1.0MM:NONE,CENTER:6.0MM:NONE,CENTER:1.0MM:NONE,CENTER:6.0MM:NONE,CENTER:1.0MM:NONE,CENTER:1.0MM:NONE,CENTER:1.0MM:NONE,CENTER:3.0MM:NONE,CENTER:1.0MM:NONE,CENTER:6.0MM:NONE,CENTER:1.0MM:NONE,CENTER:6.0MM:NONE,CENTER:1.0MM:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:DEFAULT:NONE,CENTER:1.0MM:NONE,CENTER:1.0MM:NONE,CENTER:1.0MM:NONE,CENTER:1.0MM:NONE</at>
-   <at name="colspecs">FILL:2.0MM:NONE,FILL:2.0MM:NONE,FILL:2.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:15.0MM:NONE,FILL:2.0MM:NONE,FILL:2.0MM:NONE,FILL:2.0MM:NONE</at>
+   <at name="rowspecs">CENTER:1.0MM:NONE,CENTER:1.0MM:NONE,CENTER:9.0MM:NONE,CENTER:5.0MM:NONE,CENTER:1.0MM:NONE,CENTER:1.0MM:NONE,CENTER:DEFAULT:NONE,CENTER:1.0MM:NONE,CENTER:6.0MM:NONE,CENTER:1.0MM:NONE,CENTER:6.0MM:NONE,CENTER:1.0MM:NONE,CENTER:1.0MM:NONE,CENTER:1.0MM:NONE,CENTER:3.0MM:NONE,CENTER:1.0MM:NONE,CENTER:6.0MM:NONE,CENTER:1.0MM:NONE,CENTER:6.0MM:NONE,CENTER:1.0MM:NONE,CENTER:3.0MM:NONE,CENTER:1.0MM:NONE,CENTER:DEFAULT:NONE,CENTER:1.0MM:NONE,CENTER:1.0MM:NONE,CENTER:1.0MM:NONE,CENTER:1.0MM:NONE</at>
+   <at name="colspecs">FILL:2.0MM:NONE,FILL:2.0MM:NONE,FILL:2.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:5.0MM:NONE,FILL:2.0MM:NONE,FILL:2.0MM:NONE,FILL:2.0MM:NONE</at>
    <at name="components">
     <object classname="java.util.LinkedList">
      <item >
@@ -103,7 +103,7 @@
         <super classname="com.jeta.forms.store.memento.ComponentMemento">
          <at name="cellconstraints">
           <object classname="com.jeta.forms.store.memento.CellConstraintsMemento">
-           <at name="column">29</at>
+           <at name="column">31</at>
            <at name="row">7</at>
            <at name="colspan">1</at>
            <at name="rowspan">7</at>
@@ -212,10 +212,10 @@
         <super classname="com.jeta.forms.store.memento.ComponentMemento">
          <at name="cellconstraints">
           <object classname="com.jeta.forms.store.memento.CellConstraintsMemento">
-           <at name="column">29</at>
+           <at name="column">31</at>
            <at name="row">17</at>
            <at name="colspan">1</at>
-           <at name="rowspan">52</at>
+           <at name="rowspan">9</at>
            <at name="halign">default</at>
            <at name="valign">default</at>
            <at name="insets" object="insets">3,0,0,0</at>
@@ -231,7 +231,7 @@
           <at name="properties">
            <object classname="com.jeta.forms.store.support.PropertyMap">
             <at name="orientation">1</at>
-            <at name="height">791</at>
+            <at name="height">648</at>
             <at name="name"/>
             <at name="width">4</at>
             <at name="border">
@@ -336,7 +336,7 @@
           <object classname="com.jeta.forms.store.memento.CellConstraintsMemento">
            <at name="column">3</at>
            <at name="row">17</at>
-           <at name="colspan">26</at>
+           <at name="colspan">28</at>
            <at name="rowspan">1</at>
            <at name="halign">default</at>
            <at name="valign">default</at>
@@ -399,7 +399,7 @@
           <object classname="com.jeta.forms.store.memento.CellConstraintsMemento">
            <at name="column">3</at>
            <at name="row">13</at>
-           <at name="colspan">26</at>
+           <at name="colspan">28</at>
            <at name="rowspan">1</at>
            <at name="halign">default</at>
            <at name="valign">default</at>
@@ -451,8 +451,8 @@
          <at name="cellconstraints">
           <object classname="com.jeta.forms.store.memento.CellConstraintsMemento">
            <at name="column">3</at>
-           <at name="row">68</at>
-           <at name="colspan">26</at>
+           <at name="row">25</at>
+           <at name="colspan">28</at>
            <at name="rowspan">1</at>
            <at name="halign">default</at>
            <at name="valign">default</at>
@@ -567,7 +567,7 @@
           <object classname="com.jeta.forms.store.memento.CellConstraintsMemento">
            <at name="column">27</at>
            <at name="row">11</at>
-           <at name="colspan">1</at>
+           <at name="colspan">3</at>
            <at name="rowspan">1</at>
            <at name="halign">default</at>
            <at name="valign">default</at>
@@ -698,7 +698,7 @@
           <object classname="com.jeta.forms.store.memento.CellConstraintsMemento">
            <at name="column">27</at>
            <at name="row">9</at>
-           <at name="colspan">1</at>
+           <at name="colspan">3</at>
            <at name="rowspan">1</at>
            <at name="halign">default</at>
            <at name="valign">default</at>
@@ -786,8 +786,8 @@
               <at name="size">11</at>
              </object>
             </at>
-            <at name="name"/>
             <at name="width">110</at>
+            <at name="name"></at>
             <at name="fill">
              <object classname="com.jeta.forms.store.properties.effects.PaintProperty">
               <at name="name">fill</at>
@@ -962,7 +962,7 @@
           <object classname="com.jeta.forms.store.memento.CellConstraintsMemento">
            <at name="column">24</at>
            <at name="row">19</at>
-           <at name="colspan">4</at>
+           <at name="colspan">6</at>
            <at name="rowspan">1</at>
            <at name="halign">default</at>
            <at name="valign">default</at>
@@ -978,7 +978,7 @@
           <at name="classname">javax.swing.JComboBox</at>
           <at name="properties">
            <object classname="com.jeta.forms.store.support.PropertyMap">
-            <at name="height">18</at>
+            <at name="height">16</at>
             <at name="selectedItem">
              <object classname="com.jeta.forms.store.properties.ListItemProperty">
               <at name="name">listitem</at>
@@ -1256,8 +1256,8 @@
               <at name="size">11</at>
              </object>
             </at>
+            <at name="name"/>
             <at name="width">91</at>
-            <at name="name"></at>
             <at name="fill">
              <object classname="com.jeta.forms.store.properties.effects.PaintProperty">
               <at name="name">fill</at>
@@ -1376,7 +1376,7 @@
           <at name="classname">javax.swing.JComboBox</at>
           <at name="properties">
            <object classname="com.jeta.forms.store.support.PropertyMap">
-            <at name="height">19</at>
+            <at name="height">18</at>
             <at name="items">
              <object classname="com.jeta.forms.store.properties.ItemsProperty">
               <at name="name">items</at>
@@ -1481,7 +1481,7 @@
            <at name="column">2</at>
            <at name="row">17</at>
            <at name="colspan">1</at>
-           <at name="rowspan">52</at>
+           <at name="rowspan">9</at>
            <at name="halign">default</at>
            <at name="valign">default</at>
            <at name="insets" object="insets">3,0,0,0</at>
@@ -1496,7 +1496,7 @@
           <at name="classname">com.jeta.forms.components.border.TitledBorderSide</at>
           <at name="properties">
            <object classname="com.jeta.forms.store.support.PropertyMap">
-            <at name="height">791</at>
+            <at name="height">648</at>
             <at name="name"/>
             <at name="width">4</at>
             <at name="border">
@@ -1534,7 +1534,7 @@
           <object classname="com.jeta.forms.store.memento.CellConstraintsMemento">
            <at name="column">3</at>
            <at name="row">7</at>
-           <at name="colspan">26</at>
+           <at name="colspan">28</at>
            <at name="rowspan">1</at>
            <at name="halign">default</at>
            <at name="valign">default</at>
@@ -1793,7 +1793,7 @@
           <object classname="com.jeta.forms.store.memento.CellConstraintsMemento">
            <at name="column">17</at>
            <at name="row">3</at>
-           <at name="colspan">13</at>
+           <at name="colspan">15</at>
            <at name="rowspan">2</at>
            <at name="halign">default</at>
            <at name="valign">default</at>
@@ -1849,10 +1849,10 @@
         <super classname="com.jeta.forms.store.memento.ComponentMemento">
          <at name="cellconstraints">
           <object classname="com.jeta.forms.store.memento.CellConstraintsMemento">
-           <at name="column">4</at>
-           <at name="row">22</at>
-           <at name="colspan">24</at>
-           <at name="rowspan">44</at>
+           <at name="column">3</at>
+           <at name="row">23</at>
+           <at name="colspan">28</at>
+           <at name="rowspan">1</at>
            <at name="halign">default</at>
            <at name="valign">default</at>
            <at name="insets" object="insets">0,0,0,0</at>
@@ -1868,7 +1868,7 @@
           <at name="properties">
            <object classname="com.jeta.forms.store.support.PropertyMap">
             <at name="tabPlacement">2</at>
-            <at name="height">700</at>
+            <at name="height">574</at>
             <at name="tabLayoutPolicy">1</at>
             <at name="font">
              <object classname="com.jeta.forms.store.properties.FontProperty">
@@ -1878,7 +1878,7 @@
              </object>
             </at>
             <at name="componentCount">16</at>
-            <at name="width">490</at>
+            <at name="width">506</at>
             <at name="name">tipos</at>
             <at name="border">
              <object classname="com.jeta.forms.store.properties.CompoundBorderProperty">
@@ -1933,7 +1933,7 @@
                       </at>
                       <at name="componentclass">com.jeta.forms.gui.form.FormComponent</at>
                      </super>
-                     <at name="id">embedded.29729595</at>
+                     <at name="id">embedded.9863810</at>
                      <at name="rowspecs">CENTER:DEFAULT:NONE</at>
                      <at name="colspecs">FILL:DEFAULT:NONE</at>
                      <at name="components">
@@ -1955,7 +1955,7 @@
                            </at>
                            <at name="componentclass">com.jeta.forms.gui.form.FormComponent</at>
                           </super>
-                          <at name="id">/home/amaneiro/workspaces/viasobras/extViasObras/forms/actuaciones-subform-accidente-ui.xml</at>
+                          <at name="id">C:\APLICACIONES\gvSIG_VO\bin\gvSIG\extensiones\es.icarto.gvsig.viasobras\actuaciones-subform-accidente-ui.xml</at>
                           <at name="path">actuaciones-subform-accidente-ui.xml</at>
                           <at name="components">
                            <object classname="java.util.LinkedList"/>
@@ -1970,7 +1970,7 @@
                        <at name="classname">com.jeta.forms.gui.form.GridView</at>
                        <at name="properties">
                         <object classname="com.jeta.forms.store.support.PropertyMap">
-                         <at name="name"/>
+                         <at name="name"></at>
                          <at name="fill">
                           <object classname="com.jeta.forms.store.properties.effects.PaintProperty">
                            <at name="name">fill</at>
@@ -2075,7 +2075,7 @@
                       </at>
                       <at name="componentclass">com.jeta.forms.gui.form.FormComponent</at>
                      </super>
-                     <at name="id">embedded.26693756</at>
+                     <at name="id">embedded.18635910</at>
                      <at name="rowspecs">CENTER:DEFAULT:NONE</at>
                      <at name="colspecs">FILL:DEFAULT:NONE</at>
                      <at name="components">
@@ -2097,7 +2097,7 @@
                            </at>
                            <at name="componentclass">com.jeta.forms.gui.form.FormComponent</at>
                           </super>
-                          <at name="id">/home/amaneiro/workspaces/viasobras/extViasObras/forms/actuaciones-subform-autorizacion-ui.xml</at>
+                          <at name="id">C:\APLICACIONES\gvSIG_VO\bin\gvSIG\extensiones\es.icarto.gvsig.viasobras\actuaciones-subform-autorizacion-ui.xml</at>
                           <at name="path">actuaciones-subform-autorizacion-ui.xml</at>
                           <at name="components">
                            <object classname="java.util.LinkedList"/>
@@ -2217,7 +2217,7 @@
                       </at>
                       <at name="componentclass">com.jeta.forms.gui.form.FormComponent</at>
                      </super>
-                     <at name="id">embedded.15748500</at>
+                     <at name="id">embedded.28571310</at>
                      <at name="rowspecs">CENTER:DEFAULT:NONE</at>
                      <at name="colspecs">FILL:DEFAULT:NONE</at>
                      <at name="components">
@@ -2239,7 +2239,7 @@
                            </at>
                            <at name="componentclass">com.jeta.forms.gui.form.FormComponent</at>
                           </super>
-                          <at name="id">/home/amaneiro/workspaces/viasobras/extViasObras/forms/actuaciones-subform-conservacion-ui.xml</at>
+                          <at name="id">C:\APLICACIONES\gvSIG_VO\bin\gvSIG\extensiones\es.icarto.gvsig.viasobras\actuaciones-subform-conservacion-ui.xml</at>
                           <at name="path">actuaciones-subform-conservacion-ui.xml</at>
                           <at name="components">
                            <object classname="java.util.LinkedList"/>
@@ -2335,7 +2335,7 @@
                  <at name="value">
                   <object classname="com.jeta.forms.store.properties.TabProperty">
                    <at name="name">tab</at>
-                   <at name="title">Cons. (propuesta)</at>
+                   <at name="title">Conservación P.</at>
                    <at name="icon">
                     <object classname="com.jeta.forms.store.properties.IconProperty">
                      <at name="embedded">false</at>
@@ -2359,7 +2359,7 @@
                       </at>
                       <at name="componentclass">com.jeta.forms.gui.form.FormComponent</at>
                      </super>
-                     <at name="id">embedded.25547724</at>
+                     <at name="id">embedded.4146005</at>
                      <at name="rowspecs">CENTER:DEFAULT:NONE</at>
                      <at name="colspecs">FILL:DEFAULT:NONE</at>
                      <at name="components">
@@ -2381,7 +2381,7 @@
                            </at>
                            <at name="componentclass">com.jeta.forms.gui.form.FormComponent</at>
                           </super>
-                          <at name="id">/home/amaneiro/workspaces/viasobras/extViasObras/forms/actuaciones-subform-conservacion-propuesta-ui.xml</at>
+                          <at name="id">C:\APLICACIONES\gvSIG_VO\bin\gvSIG\extensiones\es.icarto.gvsig.viasobras\actuaciones-subform-conservacion-propuesta-ui.xml</at>
                           <at name="path">actuaciones-subform-conservacion-propuesta-ui.xml</at>
                           <at name="components">
                            <object classname="java.util.LinkedList"/>
@@ -2501,7 +2501,7 @@
                       </at>
                       <at name="componentclass">com.jeta.forms.gui.form.FormComponent</at>
                      </super>
-                     <at name="id">embedded.17390721</at>
+                     <at name="id">embedded.19480609</at>
                      <at name="rowspecs">CENTER:DEFAULT:NONE</at>
                      <at name="colspecs">FILL:DEFAULT:NONE</at>
                      <at name="components">
@@ -2523,7 +2523,7 @@
                            </at>
                            <at name="componentclass">com.jeta.forms.gui.form.FormComponent</at>
                           </super>
-                          <at name="id">/home/amaneiro/workspaces/viasobras/extViasObras/forms/actuaciones-subform-construccion-ui.xml</at>
+                          <at name="id">C:\APLICACIONES\gvSIG_VO\bin\gvSIG\extensiones\es.icarto.gvsig.viasobras\actuaciones-subform-construccion-ui.xml</at>
                           <at name="path">actuaciones-subform-construccion-ui.xml</at>
                           <at name="components">
                            <object classname="java.util.LinkedList"/>
@@ -2643,7 +2643,7 @@
                       </at>
                       <at name="componentclass">com.jeta.forms.gui.form.FormComponent</at>
                      </super>
-                     <at name="id">embedded.16406600</at>
+                     <at name="id">embedded.30961135</at>
                      <at name="rowspecs">CENTER:DEFAULT:NONE</at>
                      <at name="colspecs">FILL:DEFAULT:NONE</at>
                      <at name="components">
@@ -2665,7 +2665,7 @@
                            </at>
                            <at name="componentclass">com.jeta.forms.gui.form.FormComponent</at>
                           </super>
-                          <at name="id">/home/amaneiro/workspaces/viasobras/extViasObras/forms/actuaciones-subform-denuncia-ui.xml</at>
+                          <at name="id">C:\APLICACIONES\gvSIG_VO\bin\gvSIG\extensiones\es.icarto.gvsig.viasobras\actuaciones-subform-denuncia-ui.xml</at>
                           <at name="path">actuaciones-subform-denuncia-ui.xml</at>
                           <at name="components">
                            <object classname="java.util.LinkedList"/>
@@ -2785,7 +2785,7 @@
                       </at>
                       <at name="componentclass">com.jeta.forms.gui.form.FormComponent</at>
                      </super>
-                     <at name="id">embedded.20118623</at>
+                     <at name="id">embedded.25719324</at>
                      <at name="rowspecs">CENTER:DEFAULT:NONE</at>
                      <at name="colspecs">FILL:DEFAULT:NONE</at>
                      <at name="components">
@@ -2807,7 +2807,7 @@
                            </at>
                            <at name="componentclass">com.jeta.forms.gui.form.FormComponent</at>
                           </super>
-                          <at name="id">/home/amaneiro/workspaces/viasobras/extViasObras/forms/actuaciones-subform-expropiacion-ui.xml</at>
+                          <at name="id">C:\APLICACIONES\gvSIG_VO\bin\gvSIG\extensiones\es.icarto.gvsig.viasobras\actuaciones-subform-expropiacion-ui.xml</at>
                           <at name="path">actuaciones-subform-expropiacion-ui.xml</at>
                           <at name="components">
                            <object classname="java.util.LinkedList"/>
@@ -2927,7 +2927,7 @@
                       </at>
                       <at name="componentclass">com.jeta.forms.gui.form.FormComponent</at>
                      </super>
-                     <at name="id">embedded.5611135</at>
+                     <at name="id">embedded.8509557</at>
                      <at name="rowspecs">CENTER:DEFAULT:NONE</at>
                      <at name="colspecs">FILL:DEFAULT:NONE</at>
                      <at name="components">
@@ -2949,7 +2949,7 @@
                            </at>
                            <at name="componentclass">com.jeta.forms.gui.form.FormComponent</at>
                           </super>
-                          <at name="id">/home/amaneiro/workspaces/viasobras/extViasObras/forms/actuaciones-subform-incidencia-ui.xml</at>
+                          <at name="id">C:\APLICACIONES\gvSIG_VO\bin\gvSIG\extensiones\es.icarto.gvsig.viasobras\actuaciones-subform-incidencia-ui.xml</at>
                           <at name="path">actuaciones-subform-incidencia-ui.xml</at>
                           <at name="components">
                            <object classname="java.util.LinkedList"/>
@@ -3069,7 +3069,7 @@
                       </at>
                       <at name="componentclass">com.jeta.forms.gui.form.FormComponent</at>
                      </super>
-                     <at name="id">embedded.19213635</at>
+                     <at name="id">embedded.7321460</at>
                      <at name="rowspecs">CENTER:DEFAULT:NONE</at>
                      <at name="colspecs">FILL:DEFAULT:NONE</at>
                      <at name="components">
@@ -3091,7 +3091,7 @@
                            </at>
                            <at name="componentclass">com.jeta.forms.gui.form.FormComponent</at>
                           </super>
-                          <at name="id">/home/amaneiro/workspaces/viasobras/extViasObras/forms/actuaciones-subform-inventario-ui.xml</at>
+                          <at name="id">C:\APLICACIONES\gvSIG_VO\bin\gvSIG\extensiones\es.icarto.gvsig.viasobras\actuaciones-subform-inventario-ui.xml</at>
                           <at name="path">actuaciones-subform-inventario-ui.xml</at>
                           <at name="components">
                            <object classname="java.util.LinkedList"/>
@@ -3211,7 +3211,7 @@
                       </at>
                       <at name="componentclass">com.jeta.forms.gui.form.FormComponent</at>
                      </super>
-                     <at name="id">embedded.9157440</at>
+                     <at name="id">embedded.25927596</at>
                      <at name="rowspecs">CENTER:DEFAULT:NONE</at>
                      <at name="colspecs">FILL:DEFAULT:NONE</at>
                      <at name="components">
@@ -3233,7 +3233,7 @@
                            </at>
                            <at name="componentclass">com.jeta.forms.gui.form.FormComponent</at>
                           </super>
-                          <at name="id">/home/amaneiro/workspaces/viasobras/extViasObras/forms/actuaciones-subform-transferencia-ui.xml</at>
+                          <at name="id">C:\APLICACIONES\gvSIG_VO\bin\gvSIG\extensiones\es.icarto.gvsig.viasobras\actuaciones-subform-transferencia-ui.xml</at>
                           <at name="path">actuaciones-subform-transferencia-ui.xml</at>
                           <at name="components">
                            <object classname="java.util.LinkedList"/>
@@ -3353,7 +3353,7 @@
                       </at>
                       <at name="componentclass">com.jeta.forms.gui.form.FormComponent</at>
                      </super>
-                     <at name="id">embedded.20428335</at>
+                     <at name="id">embedded.10284589</at>
                      <at name="rowspecs">CENTER:DEFAULT:NONE</at>
                      <at name="colspecs">FILL:DEFAULT:NONE</at>
                      <at name="components">
@@ -3375,7 +3375,7 @@
                            </at>
                            <at name="componentclass">com.jeta.forms.gui.form.FormComponent</at>
                           </super>
-                          <at name="id">/home/amaneiro/workspaces/viasobras/extViasObras/forms/actuaciones-subform-travesia-ui.xml</at>
+                          <at name="id">C:\APLICACIONES\gvSIG_VO\bin\gvSIG\extensiones\es.icarto.gvsig.viasobras\actuaciones-subform-travesia-ui.xml</at>
                           <at name="path">actuaciones-subform-travesia-ui.xml</at>
                           <at name="components">
                            <object classname="java.util.LinkedList"/>
@@ -3495,7 +3495,7 @@
                       </at>
                       <at name="componentclass">com.jeta.forms.gui.form.FormComponent</at>
                      </super>
-                     <at name="id">embedded.10975639</at>
+                     <at name="id">embedded.10690430</at>
                      <at name="rowspecs">CENTER:DEFAULT:NONE</at>
                      <at name="colspecs">FILL:DEFAULT:NONE</at>
                      <at name="components">
@@ -3517,7 +3517,7 @@
                            </at>
                            <at name="componentclass">com.jeta.forms.gui.form.FormComponent</at>
                           </super>
-                          <at name="id">/home/amaneiro/workspaces/viasobras/extViasObras/forms/actuaciones-subform-vialidad-ui.xml</at>
+                          <at name="id">C:\APLICACIONES\gvSIG_VO\bin\gvSIG\extensiones\es.icarto.gvsig.viasobras\actuaciones-subform-vialidad-ui.xml</at>
                           <at name="path">actuaciones-subform-vialidad-ui.xml</at>
                           <at name="components">
                            <object classname="java.util.LinkedList"/>
@@ -3637,7 +3637,7 @@
                       </at>
                       <at name="componentclass">com.jeta.forms.gui.form.FormComponent</at>
                      </super>
-                     <at name="id">embedded.26102983</at>
+                     <at name="id">embedded.3331361</at>
                      <at name="rowspecs">CENTER:DEFAULT:NONE</at>
                      <at name="colspecs">FILL:DEFAULT:NONE</at>
                      <at name="components">
@@ -3659,7 +3659,7 @@
                            </at>
                            <at name="componentclass">com.jeta.forms.gui.form.FormComponent</at>
                           </super>
-                          <at name="id">/home/amaneiro/workspaces/viasobras/extViasObras/forms/actuaciones-subform-otros-ui.xml</at>
+                          <at name="id">C:\APLICACIONES\gvSIG_VO\bin\gvSIG\extensiones\es.icarto.gvsig.viasobras\actuaciones-subform-otros-ui.xml</at>
                           <at name="path">actuaciones-subform-otros-ui.xml</at>
                           <at name="components">
                            <object classname="java.util.LinkedList"/>
@@ -3820,216 +3820,87 @@
    <at name="cellpainters">
     <object classname="com.jeta.forms.store.support.Matrix">
      <at name="rows">
-      <object classname="[Ljava.lang.Object;" size="70">
+      <object classname="[Ljava.lang.Object;" size="27">
        <at name="item" index="0">
-        <object classname="[Ljava.lang.Object;" size="30"/>
+        <object classname="[Ljava.lang.Object;" size="32"/>
        </at>
        <at name="item" index="1">
-        <object classname="[Ljava.lang.Object;" size="30"/>
+        <object classname="[Ljava.lang.Object;" size="32"/>
        </at>
        <at name="item" index="2">
-        <object classname="[Ljava.lang.Object;" size="30"/>
+        <object classname="[Ljava.lang.Object;" size="32"/>
        </at>
        <at name="item" index="3">
-        <object classname="[Ljava.lang.Object;" size="30"/>
+        <object classname="[Ljava.lang.Object;" size="32"/>
        </at>
        <at name="item" index="4">
-        <object classname="[Ljava.lang.Object;" size="30"/>
+        <object classname="[Ljava.lang.Object;" size="32"/>
        </at>
        <at name="item" index="5">
-        <object classname="[Ljava.lang.Object;" size="30"/>
+        <object classname="[Ljava.lang.Object;" size="32"/>
        </at>
        <at name="item" index="6">
-        <object classname="[Ljava.lang.Object;" size="30"/>
+        <object classname="[Ljava.lang.Object;" size="32"/>
        </at>
        <at name="item" index="7">
-        <object classname="[Ljava.lang.Object;" size="30"/>
+        <object classname="[Ljava.lang.Object;" size="32"/>
        </at>
        <at name="item" index="8">
-        <object classname="[Ljava.lang.Object;" size="30"/>
+        <object classname="[Ljava.lang.Object;" size="32"/>
        </at>
        <at name="item" index="9">
-        <object classname="[Ljava.lang.Object;" size="30"/>
+        <object classname="[Ljava.lang.Object;" size="32"/>
        </at>
        <at name="item" index="10">
-        <object classname="[Ljava.lang.Object;" size="30"/>
+        <object classname="[Ljava.lang.Object;" size="32"/>
        </at>
        <at name="item" index="11">
-        <object classname="[Ljava.lang.Object;" size="30"/>
+        <object classname="[Ljava.lang.Object;" size="32"/>
        </at>
        <at name="item" index="12">
-        <object classname="[Ljava.lang.Object;" size="30"/>
+        <object classname="[Ljava.lang.Object;" size="32"/>
        </at>
        <at name="item" index="13">
-        <object classname="[Ljava.lang.Object;" size="30"/>
+        <object classname="[Ljava.lang.Object;" size="32"/>
        </at>
        <at name="item" index="14">
-        <object classname="[Ljava.lang.Object;" size="30"/>
+        <object classname="[Ljava.lang.Object;" size="32"/>
        </at>
        <at name="item" index="15">
-        <object classname="[Ljava.lang.Object;" size="30"/>
+        <object classname="[Ljava.lang.Object;" size="32"/>
        </at>
        <at name="item" index="16">
-        <object classname="[Ljava.lang.Object;" size="30"/>
+        <object classname="[Ljava.lang.Object;" size="32"/>
        </at>
        <at name="item" index="17">
-        <object classname="[Ljava.lang.Object;" size="30"/>
+        <object classname="[Ljava.lang.Object;" size="32"/>
        </at>
        <at name="item" index="18">
-        <object classname="[Ljava.lang.Object;" size="30"/>
+        <object classname="[Ljava.lang.Object;" size="32"/>
        </at>
        <at name="item" index="19">
-        <object classname="[Ljava.lang.Object;" size="30"/>
+        <object classname="[Ljava.lang.Object;" size="32"/>
        </at>
        <at name="item" index="20">
-        <object classname="[Ljava.lang.Object;" size="30"/>
+        <object classname="[Ljava.lang.Object;" size="32"/>
        </at>
        <at name="item" index="21">
-        <object classname="[Ljava.lang.Object;" size="30"/>
+        <object classname="[Ljava.lang.Object;" size="32"/>
        </at>
        <at name="item" index="22">
-        <object classname="[Ljava.lang.Object;" size="30"/>
+        <object classname="[Ljava.lang.Object;" size="32"/>
        </at>
        <at name="item" index="23">
-        <object classname="[Ljava.lang.Object;" size="30"/>
+        <object classname="[Ljava.lang.Object;" size="32"/>
        </at>
        <at name="item" index="24">
-        <object classname="[Ljava.lang.Object;" size="30"/>
+        <object classname="[Ljava.lang.Object;" size="32"/>
        </at>
        <at name="item" index="25">
-        <object classname="[Ljava.lang.Object;" size="30"/>
+        <object classname="[Ljava.lang.Object;" size="32"/>
        </at>
        <at name="item" index="26">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="27">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="28">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="29">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="30">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="31">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="32">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="33">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="34">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="35">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="36">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="37">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="38">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="39">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="40">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="41">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="42">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="43">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="44">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="45">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="46">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="47">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="48">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="49">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="50">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="51">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="52">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="53">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="54">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="55">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="56">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="57">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="58">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="59">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="60">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="61">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="62">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="63">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="64">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="65">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="66">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="67">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="68">
-        <object classname="[Ljava.lang.Object;" size="30"/>
-       </at>
-       <at name="item" index="69">
-        <object classname="[Ljava.lang.Object;" size="30"/>
+        <object classname="[Ljava.lang.Object;" size="32"/>
        </at>
       </object>
      </at>

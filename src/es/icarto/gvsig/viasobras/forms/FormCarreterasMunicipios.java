@@ -15,7 +15,6 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -42,7 +41,7 @@ public class FormCarreterasMunicipios extends JPanel implements IForm, IWindow,
 IWindowListener {
 
     private WindowInfo viewInfo;
-    private JScrollPane form;
+    private FormPanel form;
     private TableModelAlphanumeric model;
 
     private JTextField carretera;
@@ -65,8 +64,7 @@ IWindowListener {
     public FormCarreterasMunicipios(AbstractForm parentForm) {
 	super();
 	this.parentForm = parentForm;
-	FormPanel formBody = new FormPanel("carretera-municipio-ui.xml");
-	form = new JScrollPane(formBody);
+	form = new FormPanel("carretera-municipio-ui.xml");
 	initWidgets();
 	action = new CreateAction();
 	save.addActionListener(action);
@@ -217,7 +215,7 @@ IWindowListener {
 	    viewInfo = new WindowInfo(WindowInfo.MODALDIALOG
 		    | WindowInfo.RESIZABLE | WindowInfo.PALETTE);
 	    viewInfo.setTitle("Vías y Obras: carretera / municipio");
-	    viewInfo.setHeight(350);
+	    viewInfo.setHeight(340);
 	    viewInfo.setWidth(350);
 	}
 	return viewInfo;

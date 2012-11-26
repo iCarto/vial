@@ -13,7 +13,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import com.iver.andami.PluginServices;
@@ -51,8 +50,7 @@ public class FormActuacionesAlta extends JPanel implements IWindow {
 
     private void initPanel() {
 	form = new FormPanel("actuaciones-alta-ui.xml");
-	JScrollPane scrollPane = new JScrollPane(form);
-	this.add(scrollPane);
+	this.add(form);
 	JPanel panel = new JPanel();
 	save = new JButton("Guardar");
 	save.addActionListener(new SaveAction());

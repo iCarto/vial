@@ -13,7 +13,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import com.iver.andami.messages.NotificationManager;
 import com.iver.andami.ui.mdiManager.IWindow;
@@ -28,7 +27,6 @@ public class FormActuacionesMunicipios extends JPanel implements IWindow {
     private WindowInfo viewInfo = null;
 
     private FormPanel form;
-    private JScrollPane scrollPane;
     private JButton save;
 
     private String actuacion;
@@ -44,8 +42,7 @@ public class FormActuacionesMunicipios extends JPanel implements IWindow {
 
     private void initPanel() {
 	form = new FormPanel("actuacion-municipio-ui.xml");
-	scrollPane = new JScrollPane(form);
-	this.add(scrollPane);
+	this.add(form);
 	JPanel panel = new JPanel();
 	save = new JButton("Guardar");
 	save.addActionListener(new SaveAction());
@@ -82,7 +79,7 @@ public class FormActuacionesMunicipios extends JPanel implements IWindow {
 	    viewInfo = new WindowInfo(WindowInfo.MODALDIALOG
 		    | WindowInfo.PALETTE);
 	    viewInfo.setTitle("Vías y Obras: actuación / municipio");
-	    viewInfo.setHeight(300);
+	    viewInfo.setHeight(310);
 	    viewInfo.setWidth(800);
 	}
 	return viewInfo;
