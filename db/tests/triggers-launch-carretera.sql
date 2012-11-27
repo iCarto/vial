@@ -1,6 +1,6 @@
 BEGIN;
 
-SELECT plan(20);
+SELECT plan(23);
 
 SELECT trigger_is('inventario',
                   'carreteras_lugo',
@@ -25,6 +25,12 @@ SELECT trigger_is('inventario',
                   'update_pks_1000',
                   'inventario',
                   'update_pks_1000');
+
+SELECT trigger_is('inventario',
+                  'pks_1000',
+                  'update_geom_pks_1000',
+                  'inventario',
+                  'update_geom_point_on_pk_change');
 
 SELECT trigger_is('inventario',
                   'carretera_municipio',
@@ -73,7 +79,11 @@ INSERT INTO inventario.carretera_municipio
 SELECT is(longitud_tramo, '6650', 'carretera_municipio - longitud calculated on INSERT')
        FROM inventario.carretera_municipio
        WHERE codigo_carretera = '9999' AND codigo_municipio = '27001' AND orden_tramo = 'A';
+--last PK has no geom, so we should 7 records but only 6 valid geoms
 SELECT is(COUNT(*), '7', 'PKS on tramo')
+       FROM inventario.pks_1000
+       WHERE codigo_carretera = '9999' AND codigo_municipio = '27001';
+SELECT is(COUNT(the_geom), '6', 'PKs 1000 - geom autocalculated on INSERT')
        FROM inventario.pks_1000
        WHERE codigo_carretera = '9999' AND codigo_municipio = '27001';
 SELECT is(pk_inicial, '3', 'PK inicial autocalculated on INSERT')
@@ -87,13 +97,17 @@ UPDATE inventario.carretera_municipio
        SET pk_inicial_tramo = 6
        WHERE codigo_carretera = '9999'
              AND codigo_municipio = '27001';
+--last PK has no geom, so we should get 4 records but only 3 valid geoms
 SELECT is(COUNT(*), '4', 'PKS on tramo')
        FROM inventario.pks_1000
        WHERE codigo_carretera = '9999' AND codigo_municipio = '27001';
-SELECT is(pk_inicial, '6', 'PK inicial autocalculated on INSERT')
+SELECT is(COUNT(the_geom), '3', 'PKS 1000 - geom autocalculated on UPDATE')
+       FROM inventario.pks_1000
+       WHERE codigo_carretera = '9999' AND codigo_municipio = '27001';
+SELECT is(pk_inicial, '6', 'PK inicial autocalculated on UPDATE')
        FROM inventario.carreteras_lugo
        WHERE numero = '9999';
-SELECT is(pk_final, '9.65', 'PK final autocalculated on INSERT')
+SELECT is(pk_final, '9.65', 'PK final autocalculated on UPDATE')
        FROM inventario.carreteras_lugo
        WHERE numero = '9999';
 

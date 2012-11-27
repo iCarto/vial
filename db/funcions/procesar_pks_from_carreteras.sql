@@ -23,3 +23,10 @@ CREATE INDEX pks_1000_codigo_municipio
        ON inventario.pks_1000 USING BTREE(codigo_municipio);
 CREATE INDEX pks_1000_codigo_carretera_concello
        ON inventario.pks_1000 USING BTREE(codigo_carretera, codigo_municipio);
+
+-- triggers
+DROP TRIGGER IF EXISTS update_geom_pks_1000 ON inventario.pks_1000;
+CREATE TRIGGER update_geom_pks_1000
+       BEFORE UPDATE OR INSERT
+       ON inventario.pks_1000 FOR EACH ROW
+       EXECUTE PROCEDURE inventario.update_geom_point_on_pk_change();
