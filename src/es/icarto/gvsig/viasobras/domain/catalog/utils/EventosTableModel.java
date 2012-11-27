@@ -42,6 +42,10 @@ public class EventosTableModel extends AbstractTableModel {
 	}
     }
 
+    public Evento getMetadata() {
+	return this.metadata;
+    }
+
     public String getColumnName(int column) {
 	return metadata.getPropertyName(column);
     }

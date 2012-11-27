@@ -42,6 +42,10 @@ public class TramosTableModel extends AbstractTableModel {
 	}
     }
 
+    public Tramo getMetadata() {
+	return this.metadata;
+    }
+
     public String getColumnName(int column) {
 	return metadata.getPropertyName(column);
     }

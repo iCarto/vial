@@ -28,7 +28,6 @@ import javax.swing.JTextField;
 import javax.swing.LayoutFocusTraversalPolicy;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableModel;
 
 import com.iver.andami.messages.NotificationManager;
 import com.iver.andami.ui.mdiManager.IWindow;
@@ -67,27 +66,27 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
     private JComboBox mapLoad;
 
     private JTable tipoPavimento;
-    private TableModel tipoPavimentoModel;
+    private TramosTableModel tipoPavimentoModel;
     private JButton insertTramoPavimento;
     private JButton deleteTramoPavimento;
 
     private JTable anchoPlataforma;
-    private TableModel anchoPlataformaModel;
+    private TramosTableModel anchoPlataformaModel;
     private JButton insertTramoPlataforma;
     private JButton deleteTramoPlataforma;
 
     private JTable cotas;
-    private TableModel cotasModel;
+    private TramosTableModel cotasModel;
     private JButton insertCota;
     private JButton deleteCota;
 
     private JTable aforos;
-    private TableModel aforosModel;
+    private EventosTableModel aforosModel;
     private JButton insertAforo;
     private JButton deleteAforo;
 
     private JTable accidentes;
-    private TableModel accidentesModel;
+    private EventosTableModel accidentesModel;
     private JButton insertAccidente;
     private JButton deleteAccidente;
 
@@ -264,8 +263,21 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	    DefaultCellEditor dateCellEditor = new DefaultCellEditor(
 		    new JTextField());
 
-	    tipoPavimentoModel = Catalog.getTramosTipoPavimento()
-		    .getTableModel();
+	    /*
+	     * Although the class of field caracteristica is set when retrieving
+	     * the data -see TramosRecorsetAdapter.toList() or
+	     * EventosRecordsetAdapter.toList()- when a road have no tramos (ie:
+	     * roads recently created) the type is not set, so we need tell the
+	     * model which specific class is the field, hence the
+	     * "tipoPavimentoModel.getMetadata().setValueClass(String.class);"
+	     * command.
+	     * 
+	     * TODO: try to do this in such a way there is only 1 point to
+	     * retrieve the class of the field.
+	     */
+	    tipoPavimentoModel = (TramosTableModel) Catalog
+		    .getTramosTipoPavimento().getTableModel();
+	    tipoPavimentoModel.getMetadata().setValueClass(String.class);
 	    tipoPavimento.setModel(tipoPavimentoModel);
 	    tipoPavimento.getColumnModel()
 	    .getColumn(Tramo.PROPERTY_UPDATING_DATE)
@@ -274,8 +286,10 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	    .getColumn(Tramo.PROPERTY_UPDATING_DATE)
 	    .setCellEditor(dateCellEditor);
 
-	    anchoPlataformaModel = Catalog.getTramosAnchoPlataforma()
+	    anchoPlataformaModel = (TramosTableModel) Catalog
+		    .getTramosAnchoPlataforma()
 		    .getTableModel();
+	    anchoPlataformaModel.getMetadata().setValueClass(Double.class);
 	    anchoPlataforma.setModel(anchoPlataformaModel);
 	    anchoPlataforma.getColumnModel()
 	    .getColumn(Tramo.PROPERTY_UPDATING_DATE)
@@ -284,21 +298,27 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	    .getColumn(Tramo.PROPERTY_UPDATING_DATE)
 	    .setCellEditor(dateCellEditor);
 
-	    cotasModel = Catalog.getTramosCotas().getTableModel();
+	    cotasModel = (TramosTableModel) Catalog.getTramosCotas()
+		    .getTableModel();
+	    cotasModel.getMetadata().setValueClass(Double.class);
 	    cotas.setModel(cotasModel);
 	    cotas.getColumnModel().getColumn(Tramo.PROPERTY_UPDATING_DATE)
 	    .setCellRenderer(dateCellRenderer);
 	    cotas.getColumnModel().getColumn(Tramo.PROPERTY_UPDATING_DATE)
 	    .setCellEditor(dateCellEditor);
 
-	    aforosModel = Catalog.getEventosAforos().getTableModel();
+	    aforosModel = (EventosTableModel) Catalog.getEventosAforos()
+		    .getTableModel();
+	    aforosModel.getMetadata().setValueClass(Integer.class);
 	    aforos.setModel(aforosModel);
 	    aforos.getColumnModel().getColumn(Evento.PROPERTY_DATE)
 	    .setCellRenderer(dateCellRenderer);
 	    aforos.getColumnModel().getColumn(Evento.PROPERTY_DATE)
 	    .setCellEditor(dateCellEditor);
 
-	    accidentesModel = Catalog.getEventosAccidentes().getTableModel();
+	    accidentesModel = (EventosTableModel) Catalog
+		    .getEventosAccidentes().getTableModel();
+	    accidentesModel.getMetadata().setValueClass(String.class);
 	    accidentes.setModel(accidentesModel);
 	    accidentes.getColumnModel().getColumn(Evento.PROPERTY_DATE)
 	    .setCellRenderer(dateCellRenderer);
