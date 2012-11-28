@@ -24,7 +24,9 @@ import com.iver.andami.messages.NotificationManager;
 import com.iver.andami.ui.mdiManager.IWindow;
 import com.iver.andami.ui.mdiManager.IWindowListener;
 import com.iver.andami.ui.mdiManager.WindowInfo;
+import com.iver.cit.gvsig.exceptions.layers.ReloadLayerException;
 import com.iver.cit.gvsig.fmap.edition.IEditableSource;
+import com.iver.cit.gvsig.fmap.layers.FLyrVect;
 import com.jeta.forms.components.panel.FormPanel;
 
 import es.icarto.gvsig.navtableforms.AbstractForm;
@@ -34,6 +36,7 @@ import es.icarto.gvsig.navtableforms.ormlite.ORMLite;
 import es.icarto.gvsig.navtableforms.ormlite.domainvalues.DomainValues;
 import es.icarto.gvsig.navtableforms.ormlite.domainvalues.KeyValue;
 import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
+import es.icarto.gvsig.navtableforms.utils.TOCLayerManager;
 import es.udc.cartolab.gvsig.navtable.format.DoubleFormatNT;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
@@ -262,6 +265,7 @@ IWindowListener {
 		model.create(values);
 		fillWidgetsForCreatingRecord();
 		refreshParentForm();
+		reloadPKLayer();
 	    } catch (Exception e) {
 		NotificationManager.addError(e);
 	    }
@@ -306,6 +310,7 @@ IWindowListener {
 	    try {
 		model.update((int) position);
 		refreshParentForm();
+		reloadPKLayer();
 	    } catch (Exception e) {
 		NotificationManager.addError(e);
 	    }
@@ -317,6 +322,14 @@ IWindowListener {
 		return true;
 	    }
 	    return false;
+	}
+    }
+
+    private void reloadPKLayer() throws ReloadLayerException {
+	TOCLayerManager toc = new TOCLayerManager();
+	FLyrVect pkLayer = toc.getLayerByName("PKs");
+	if (pkLayer != null) {
+	    pkLayer.reload();
 	}
     }
 

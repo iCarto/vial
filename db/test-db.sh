@@ -10,6 +10,11 @@ else
     . $db_config
 fi
 
+# check PKs layername
+echo -e "\n"
+pg_prove -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    -d $viasobras_dbname ./tests/check-layername-pks.sql
+
 # geometry types for layers with M-coordinate
 echo -e "\n"
 pg_prove -h $viasobras_server -p $viasobras_port -U $viasobras_user \
