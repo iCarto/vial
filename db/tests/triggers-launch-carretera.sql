@@ -82,10 +82,10 @@ SELECT is(longitud_tramo, '6650', 'carretera_municipio - longitud calculated on 
 --last PK has no geom, so we should 7 records but only 6 valid geoms
 SELECT is(COUNT(*), '7', 'PKS on tramo')
        FROM inventario.pks_1000
-       WHERE codigo_carretera = '9999' AND codigo_municipio = '27001';
+       WHERE codigo_carretera = '9999';
 SELECT is(COUNT(the_geom), '6', 'PKs 1000 - geom autocalculated on INSERT')
        FROM inventario.pks_1000
-       WHERE codigo_carretera = '9999' AND codigo_municipio = '27001';
+       WHERE codigo_carretera = '9999';
 SELECT is(pk_inicial, '3', 'PK inicial autocalculated on INSERT')
        FROM inventario.carreteras_lugo
        WHERE numero = '9999';
@@ -100,10 +100,10 @@ UPDATE inventario.carretera_municipio
 --last PK has no geom, so we should get 4 records but only 3 valid geoms
 SELECT is(COUNT(*), '4', 'PKS on tramo')
        FROM inventario.pks_1000
-       WHERE codigo_carretera = '9999' AND codigo_municipio = '27001';
+       WHERE codigo_carretera = '9999';
 SELECT is(COUNT(the_geom), '3', 'PKS 1000 - geom autocalculated on UPDATE')
        FROM inventario.pks_1000
-       WHERE codigo_carretera = '9999' AND codigo_municipio = '27001';
+       WHERE codigo_carretera = '9999';
 SELECT is(pk_inicial, '6', 'PK inicial autocalculated on UPDATE')
        FROM inventario.carreteras_lugo
        WHERE numero = '9999';
