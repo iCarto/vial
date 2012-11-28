@@ -7,12 +7,11 @@ BEGIN
         INSERT INTO inventario.pks_1000(
                SELECT nextval('inventario.pks_1000_gid_seq'),
                       codigo_carretera,
-                      codigo_municipio,
                       generate_series(CAST(round(min(pk_inicial_tramo)) AS int) + 1,
                                       CAST(round(max(pk_final_tramo)) AS int),
                                       1) AS pk
                FROM inventario.carretera_municipio
-               GROUP BY codigo_carretera, codigo_municipio
+               GROUP BY codigo_carretera
                ORDER BY codigo_carretera
         );
 

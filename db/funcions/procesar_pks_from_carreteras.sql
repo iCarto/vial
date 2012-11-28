@@ -2,7 +2,6 @@ DROP TABLE IF EXISTS inventario.pks_1000;
 CREATE TABLE inventario.pks_1000(
         gid serial,
         codigo_carretera text,
-        codigo_municipio text,
         pk int NOT NULL,
         PRIMARY KEY(gid),
         FOREIGN KEY(codigo_carretera) REFERENCES inventario.carreteras(numero) ON DELETE CASCADE
@@ -19,10 +18,6 @@ CREATE INDEX pks_1000_the_geom
        ON inventario.pks_1000 USING GIST(the_geom);
 CREATE INDEX pks_1000_codigo_carretera
        ON inventario.pks_1000 USING BTREE(codigo_carretera);
-CREATE INDEX pks_1000_codigo_municipio
-       ON inventario.pks_1000 USING BTREE(codigo_municipio);
-CREATE INDEX pks_1000_codigo_carretera_concello
-       ON inventario.pks_1000 USING BTREE(codigo_carretera, codigo_municipio);
 
 -- triggers
 DROP TRIGGER IF EXISTS update_geom_pks_1000 ON inventario.pks_1000;

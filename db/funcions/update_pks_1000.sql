@@ -7,21 +7,18 @@ BEGIN
         IF(TG_OP = 'INSERT') THEN
 
                  EXECUTE 'DELETE FROM inventario.pks_1000
-                          WHERE codigo_carretera = '''||NEW.codigo_carretera||'''
-                                AND codigo_municipio = '''||NEW.codigo_municipio||''';';
+                          WHERE codigo_carretera = '''||NEW.codigo_carretera||''';';
 
                  EXECUTE 'INSERT INTO inventario.pks_1000(
                           SELECT nextval(''inventario.pks_1000_gid_seq''),
                                  '''||NEW.codigo_carretera||''',
-                                 '''||NEW.codigo_municipio||''',
                                  generate_series(
                                         CAST(round(min(pk_inicial_tramo)) AS int) + 1,
                                         CAST(round(max(pk_final_tramo)) AS int),
                                         1) AS pk
                           FROM inventario.carretera_municipio
                           WHERE codigo_carretera='''||NEW.codigo_carretera||'''
-                                AND codigo_municipio = '''||NEW.codigo_municipio||'''
-                          GROUP BY codigo_carretera, codigo_municipio
+                          GROUP BY codigo_carretera
                           ORDER BY codigo_carretera
                  );';
 
@@ -32,21 +29,18 @@ BEGIN
                    OR (NEW.pk_final_tramo <> OLD.pk_final_tramo))) THEN
 
                  EXECUTE 'DELETE FROM inventario.pks_1000
-                          WHERE codigo_carretera = '''||NEW.codigo_carretera||'''
-                                AND codigo_municipio = '''||NEW.codigo_municipio||''';';
+                          WHERE codigo_carretera = '''||NEW.codigo_carretera||''';';
 
                  EXECUTE 'INSERT INTO inventario.pks_1000(
                           SELECT nextval(''inventario.pks_1000_gid_seq''),
                                  '''||NEW.codigo_carretera||''',
-                                 '''||NEW.codigo_municipio||''',
                                  generate_series(
                                         CAST(round(min(pk_inicial_tramo)) AS int) + 1,
                                         CAST(round(max(pk_final_tramo)) AS int),
                                         1) AS pk
                           FROM inventario.carretera_municipio
                           WHERE codigo_carretera='''||NEW.codigo_carretera||'''
-                                AND codigo_municipio = '''||NEW.codigo_municipio||'''
-                          GROUP BY codigo_carretera, codigo_municipio
+                          GROUP BY codigo_carretera
                           ORDER BY codigo_carretera
                  );';
 
