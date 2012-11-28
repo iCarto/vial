@@ -22,7 +22,7 @@ SELECT trigger_is('inventario',
 
 SELECT trigger_is('inventario',
                   'carretera_municipio',
-                  'update_pks_1000',
+                  'update_pks_m_1000',
                   'inventario',
                   'update_pks_1000');
 
