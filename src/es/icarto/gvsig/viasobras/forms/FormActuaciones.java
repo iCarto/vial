@@ -81,7 +81,11 @@ public class FormActuaciones extends AbstractForm {
 
     @Override
     protected void fillSpecificValues() {
-	refreshSubForms();
+	for (int i = 0; i < subForms.getTabCount(); i++) {
+	    subForms.setEnabledAt(i, false);
+	}
+	subForms.setEnabledAt(tipoActuacion.getSelectedIndex(), true);
+	subForms.setSelectedIndex(tipoActuacion.getSelectedIndex());
     }
 
     @Override
