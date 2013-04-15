@@ -12,6 +12,7 @@ BEGIN
                  EXECUTE 'INSERT INTO inventario.pks_1000(
                           SELECT nextval(''inventario.pks_1000_gid_seq''),
                                  '''||NEW.codigo_carretera||''',
+                                 '''',
                                  generate_series(
                                         CAST(round(min(pk_inicial_tramo)) AS int) + 1,
                                         CAST(round(max(pk_final_tramo)) AS int),
@@ -21,6 +22,13 @@ BEGIN
                           GROUP BY codigo_carretera
                           ORDER BY codigo_carretera
                  );';
+
+                 EXECUTE 'UPDATE inventario.pks_1000 AS b
+                          SET codigo_municipio = a.codigo_municipio
+                          FROM inventario.carretera_municipio a
+                          WHERE b.codigo_carretera = '''||NEW.codigo_carretera||'''
+                                AND b.pk > a.pk_inicial_tramo
+                                AND b.pk < a.pk_final_tramo;';
 
                  RETURN NEW;
 
@@ -34,6 +42,7 @@ BEGIN
                  EXECUTE 'INSERT INTO inventario.pks_1000(
                           SELECT nextval(''inventario.pks_1000_gid_seq''),
                                  '''||NEW.codigo_carretera||''',
+                                 '''',
                                  generate_series(
                                         CAST(round(min(pk_inicial_tramo)) AS int) + 1,
                                         CAST(round(max(pk_final_tramo)) AS int),
@@ -43,6 +52,13 @@ BEGIN
                           GROUP BY codigo_carretera
                           ORDER BY codigo_carretera
                  );';
+
+                 EXECUTE 'UPDATE inventario.pks_1000 AS b
+                          SET codigo_municipio = a.codigo_municipio
+                          FROM inventario.carretera_municipio a
+                          WHERE b.codigo_carretera = '''||NEW.codigo_carretera||'''
+                                AND b.pk > a.pk_inicial_tramo
+                                AND b.pk < a.pk_final_tramo;';
 
              RETURN NEW;
 
