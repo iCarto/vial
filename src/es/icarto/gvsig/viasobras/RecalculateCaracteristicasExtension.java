@@ -3,13 +3,13 @@ package es.icarto.gvsig.viasobras;
 import com.iver.andami.PluginServices;
 import com.iver.andami.plugins.Extension;
 
-import es.icarto.gvsig.viasobras.domain.catalog.utils.RecalculatorForm;
+import es.icarto.gvsig.viasobras.forms.FormRecalculateCaracteristicas;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
 public class RecalculateCaracteristicasExtension extends Extension {
 
     public void execute(String actionCommand) {
-	RecalculatorForm form = new RecalculatorForm();
+	FormRecalculateCaracteristicas form = new FormRecalculateCaracteristicas();
 	PluginServices.getMDIManager().addCentredWindow(form);
     }
 

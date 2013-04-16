@@ -1,4 +1,4 @@
-package es.icarto.gvsig.viasobras.domain.catalog.utils;
+package es.icarto.gvsig.viasobras.forms;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,7 +31,7 @@ import es.icarto.gvsig.viasobras.domain.catalog.mappers.DBFacade;
 import es.udc.cartolab.gvsig.navtable.format.DoubleFormatNT;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
-public class RecalculatorForm extends JPanel implements IWindow {
+public class FormRecalculateCaracteristicas extends JPanel implements IWindow {
 
     private WindowInfo windowInfo;
     private JButton executeButton;
@@ -42,7 +42,7 @@ public class RecalculatorForm extends JPanel implements IWindow {
     private JTextField pkFinal;
     private JTextField offset;
 
-    public RecalculatorForm() {
+    public FormRecalculateCaracteristicas() {
 	initPanel();
     }
 
