@@ -4,7 +4,22 @@
 CREATE OR REPLACE FUNCTION inventario.update_pks_carreteras() RETURNS trigger AS $BODY$
 BEGIN
 
-        IF(TG_OP = 'INSERT') THEN
+        IF(TG_OP = 'DELETE') THEN
+
+                 EXECUTE 'UPDATE inventario.carreteras_lugo
+                          SET pk_inicial = (SELECT min(pk_inicial_tramo)
+                                            FROM inventario.carretera_municipio
+                                            WHERE codigo_carretera = numero
+                                                  AND codigo_carretera = '''||OLD.codigo_carretera||'''),
+                              pk_final = (SELECT max(pk_final_tramo)
+                                          FROM inventario.carretera_municipio
+                                          WHERE codigo_carretera = numero
+                                                AND codigo_carretera = '''||OLD.codigo_carretera||''')
+                          WHERE numero='''||OLD.codigo_carretera||''';';
+
+                 RETURN OLD;
+
+        ELSE IF(TG_OP = 'INSERT') THEN
 
                  EXECUTE 'UPDATE inventario.carreteras_lugo
                           SET pk_inicial = (SELECT min(pk_inicial_tramo)
@@ -36,6 +51,7 @@ BEGIN
 
              RETURN NEW;
 
+        END IF;
         END IF;
         END IF;
 

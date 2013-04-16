@@ -106,6 +106,8 @@ IWindowListener {
     public void actionDeleteRecord(long position) {
 	try {
 	    model.delete((int) position);
+	    refreshParentForm();
+	    reloadPKLayer();
 	} catch (Exception e) {
 	    NotificationManager.addError(e);
 	}
