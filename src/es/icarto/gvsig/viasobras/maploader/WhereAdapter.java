@@ -121,42 +121,30 @@ public class WhereAdapter {
 	if ((concello != Catalog.CONCELLO_ALL)
 		&& (carretera != Catalog.CARRETERA_ALL)) {
 	    // both carretera & concello selected
-	    return "WHERE " + EventosMapperAbstract.CONCELLO_FIELDNAME + " = '"
-	    + concello + "' AND "
-	    + EventosMapperAbstract.CARRETERA_FIELDNAME + " = '"
-	    + carretera + "'";
+	    return " WHERE " + EventosMapperAbstract.CONCELLO_FIELDNAME + " = '" + concello + "' "
+		    +" AND " + EventosMapperAbstract.CARRETERA_FIELDNAME + " = '" + carretera + "'";
 	} else if (concello != Catalog.CONCELLO_ALL) {
 	    // only concello selected
-	    return "WHERE " + EventosMapperAbstract.CONCELLO_FIELDNAME + " = '"
-	    + concello + "'";
+	    return "WHERE " + EventosMapperAbstract.CONCELLO_FIELDNAME + " = '" + concello + "'";
 	} else if (carretera != Catalog.CARRETERA_ALL) {
 	    // only carretera selected
 	    if ((pkStart == Catalog.PK_NONE) && (pkEnd == Catalog.PK_NONE)) {
-		return "WHERE " + EventosMapperAbstract.CARRETERA_FIELDNAME
-			+ " = '"
-			+ carretera + "'";
+		return "WHERE " + EventosMapperAbstract.CARRETERA_FIELDNAME + " = '" + carretera + "'";
 	    } else if ((pkStart != Catalog.PK_NONE)
 		    && (pkEnd == Catalog.PK_NONE)) {
 		// carretera & pkStart
-		return "WHERE " + EventosMapperAbstract.CARRETERA_FIELDNAME
-			+ " = '" + carretera + "' AND "
-			+ EventosMapperAbstract.PK_FIELDNAME + " >= '"
-			+ Double.toString(pkStart) + "'";
+		return " WHERE " + EventosMapperAbstract.CARRETERA_FIELDNAME + " = '" + carretera + "' "
+			+" AND " + EventosMapperAbstract.PK_FIELDNAME + " >= '" + Double.toString(pkStart) + "'";
 	    } else if ((pkStart == Catalog.PK_NONE)
 		    && (pkEnd != Catalog.PK_NONE)) {
 		// carretera & pkEnd
-		return "WHERE " + EventosMapperAbstract.CARRETERA_FIELDNAME
-			+ " = '" + carretera + "' AND "
-			+ EventosMapperAbstract.PK_FIELDNAME + " <= '"
-			+ Double.toString(pkEnd) + "'";
+		return " WHERE " + EventosMapperAbstract.CARRETERA_FIELDNAME + " = '" + carretera + "' "
+			+" AND " + EventosMapperAbstract.PK_FIELDNAME + " <= '" + Double.toString(pkEnd) + "'";
 	    } else {
 		// carretera & pkStart & pkEnd
-		return "WHERE " + EventosMapperAbstract.CARRETERA_FIELDNAME
-			+ " = '" + carretera + "' AND "
-			+ EventosMapperAbstract.PK_FIELDNAME + " >= '"
-			+ Double.toString(pkStart) + "' AND "
-			+ EventosMapperAbstract.PK_FIELDNAME + " <= '"
-			+ Double.toString(pkEnd) + "'";
+		return " WHERE " + EventosMapperAbstract.CARRETERA_FIELDNAME + " = '" + carretera + "' "
+			+" AND " + EventosMapperAbstract.PK_FIELDNAME + " >= '" + Double.toString(pkStart) + "' "
+			+" AND " + EventosMapperAbstract.PK_FIELDNAME + " <= '" + Double.toString(pkEnd) + "'";
 	    }
 	} else{ // none selected
 	    return NONE_WHERE;
@@ -171,41 +159,30 @@ public class WhereAdapter {
 	if ((concello != Catalog.CONCELLO_ALL)
 		&& (carretera != Catalog.CARRETERA_ALL)) {
 	    // both concello & carretera selected
-	    return "WHERE " + TramosMapperAbstract.CONCELLO_FIELDNAME + " = '"
-	    + concello + "' AND "
-	    + TramosMapperAbstract.CARRETERA_FIELDNAME + " = '"
-	    + carretera + "'";
+	    return " WHERE " + TramosMapperAbstract.CONCELLO_FIELDNAME + " = '" + concello + "' "
+		    +" AND " + TramosMapperAbstract.CARRETERA_FIELDNAME + " = '" + carretera + "'";
 	} else if (concello != Catalog.CONCELLO_ALL) {
 	    // concello selected
-	    return "WHERE " + TramosMapperAbstract.CONCELLO_FIELDNAME + " = '"
-	    + concello + "'";
+	    return "WHERE " + TramosMapperAbstract.CONCELLO_FIELDNAME + " = '" + concello + "'";
 	} else if ((carretera != Catalog.CARRETERA_ALL)) {
 	    // only carretera selected
 	    if ((pkStart == Catalog.PK_NONE) && (pkEnd == Catalog.PK_NONE)) {
-		return "WHERE " + TramosMapperAbstract.CARRETERA_FIELDNAME
-			+ " = '" + carretera + "'";
+		return "WHERE " + TramosMapperAbstract.CARRETERA_FIELDNAME + " = '" + carretera + "'";
 	    } else if ((pkStart != Catalog.PK_NONE)
 		    && (pkEnd == Catalog.PK_NONE)) {
 		// carretera & pkStart
-		return "WHERE " + TramosMapperAbstract.CARRETERA_FIELDNAME
-			+ " = '" + carretera + "' AND "
-			+ TramosMapperAbstract.PK_START_FIELDNAME + " >= '"
-			+ Double.toString(pkStart) + "'";
+		return " WHERE " + TramosMapperAbstract.CARRETERA_FIELDNAME + " = '" + carretera + "' "
+			+" AND " + TramosMapperAbstract.PK_START_FIELDNAME + " >= '" + Double.toString(pkStart) + "'";
 	    } else if ((pkStart == Catalog.PK_NONE)
 		    && (pkEnd != Catalog.PK_NONE)) {
 		// carretera & pkEnd
-		return "WHERE " + TramosMapperAbstract.CARRETERA_FIELDNAME
-			+ " = '" + carretera + "' AND "
-			+ TramosMapperAbstract.PK_END_FIELDNAME + " <= '"
-			+ Double.toString(pkEnd) + "'";
+		return " WHERE " + TramosMapperAbstract.CARRETERA_FIELDNAME + " = '" + carretera + "' "
+			+" AND " + TramosMapperAbstract.PK_END_FIELDNAME + " <= '" + Double.toString(pkEnd) + "'";
 	    } else {
 		// carretera & pkStart & pkEnd
-		return "WHERE " + EventosMapperAbstract.CARRETERA_FIELDNAME
-			+ " = '" + carretera + "' AND "
-			+ TramosMapperAbstract.PK_START_FIELDNAME + " >= '"
-			+ Double.toString(pkStart) + "' AND "
-			+ TramosMapperAbstract.PK_END_FIELDNAME + " <= '"
-			+ Double.toString(pkEnd) + "'";
+		return " WHERE " + EventosMapperAbstract.CARRETERA_FIELDNAME + " = '" + carretera + "' "
+			+" AND " + TramosMapperAbstract.PK_START_FIELDNAME + " >= '" + Double.toString(pkStart) + "' "
+			+" AND " + TramosMapperAbstract.PK_END_FIELDNAME + " <= '" + Double.toString(pkEnd) + "'";
 	    }
 	} else { // none selected
 	    return NONE_WHERE;
@@ -223,7 +200,8 @@ public class WhereAdapter {
 	    // see PostGisDriver.setData, seems not possible to filter rows
 	    // depending on other layers or columns (as it takes into account
 	    // all fields in table - see getTotalFields()):
-	    return ", inventario.carretera_municipio AS link WHERE link.codigo_carretera = " + CODE_CARRETERA_FIELDNAME
+	    return ", inventario.carretera_municipio AS link "
+	    	    + " WHERE link.codigo_carretera = " + CODE_CARRETERA_FIELDNAME
 		    + " AND link.codigo_municipio = '" + concello + "' "
 		    + " AND link.codigo_carretera = '" + carretera + "'";
 	} else if (concello != Catalog.CONCELLO_ALL) {
@@ -234,8 +212,9 @@ public class WhereAdapter {
 	    // See PostGisDriver.setData: seems not possible to filter rows
 	    // depending on other layers or columns (as it takes into account
 	    // all fields in table - see getTotalFields()):
-	    return ", inventario.carretera_municipio AS link WHERE link.codigo_carretera = " + CODE_CARRETERA_FIELDNAME
-		    + " AND link.codigo_municipio = '" + concello + "'";
+	    return ", inventario.carretera_municipio AS link "
+	    	   + " WHERE link.codigo_carretera = " + CODE_CARRETERA_FIELDNAME
+	           + " AND link.codigo_municipio = '" + concello + "'";
 	} else if (carretera != Catalog.CARRETERA_ALL) {
 	    // only carretera selected
 	    return "WHERE numero = '" + carretera + "'";
@@ -257,11 +236,9 @@ public class WhereAdapter {
 	    // See PostGisDriver.setData: seems not possible to filter rows
 	    // depending on other layers or columns (as it takes into account
 	    // all fields in table - see getTotalFields()):
-	    return ", inventario.carretera_municipio AS link WHERE link.codigo_municipio = "
-	    + CODE_MUNICIPIO_FIELDNAME
-	    + " AND link.codigo_carretera = '"
-	    + carretera
-	    + "' "
+	    return ", inventario.carretera_municipio AS link "
+	    + " WHERE link.codigo_municipio = " + CODE_MUNICIPIO_FIELDNAME 
+	    + " AND link.codigo_carretera = '" + carretera + "' "
 	    + " AND link.codigo_municipio = '" + concello + "'";
 	} else if (carretera != Catalog.CARRETERA_ALL) {
 	    // only carretera selected
@@ -271,13 +248,12 @@ public class WhereAdapter {
 	    // See PostGisDriver.setData: seems not possible to filter rows
 	    // depending on other layers or columns (as it takes into account
 	    // all fields in table - see getTotalFields()):
-	    return ", inventario.carretera_municipio AS link WHERE link.codigo_municipio = "
-	    + CODE_MUNICIPIO_FIELDNAME
+	    return ", inventario.carretera_municipio AS link "
+	    + " WHERE link.codigo_municipio = " + CODE_MUNICIPIO_FIELDNAME
 	    + " AND link.codigo_carretera = '" + carretera + "'";
 	} else if (concello != Catalog.CONCELLO_ALL) {
 	    // only concello selected
-	    return "WHERE " + CODE_MUNICIPIO_FIELDNAME + " = '" + concello
-		    + "'";
+	    return "WHERE " + CODE_MUNICIPIO_FIELDNAME + " = '" + concello + "'";
 	} else {
 	    // none selected
 	    return NONE_WHERE;
