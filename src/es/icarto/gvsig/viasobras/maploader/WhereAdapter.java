@@ -9,8 +9,9 @@ public class WhereAdapter {
     public static final int CARRETERAS = 0;
     public static final int MUNICIPIOS = 1;
     public static final int TRAMOS = 2;
-    public static final int EVENTOS = 3;
-    public static final int PKS = 4;
+    public static final int ACCIDENTES = 3;
+    public static final int AFOROS = 4;
+    public static final int PKS = 5;
 
     private static String CODE_CARRETERA_FIELDNAME = "numero";
     private static String CODE_MUNICIPIO_FIELDNAME = "cod_mun_lu";
@@ -24,11 +25,91 @@ public class WhereAdapter {
 	    return getWhereConcellos();
 	case TRAMOS:
 	    return getWhereTramos();
-	case EVENTOS:
+	case ACCIDENTES:
 	case PKS:
 	    return getWhereEventos();
+	case AFOROS:
+	    return getWhereAforos();
 	default:
 	    return NONE_WHERE;
+	}
+    }
+
+    private static String getWhereAforos() {
+	String carretera = Catalog.getCarreteraSelected();
+	String concello = Catalog.getConcelloSelected();
+	Double pkStart = Catalog.getPKStart();
+	Double pkEnd = Catalog.getPKEnd();
+	String subQuery = "(SELECT c.codigo_carretera AS c_carretera, c.codigo_municipio AS c_municipio, c.tramo AS c_tramo, MAX(c.fecha) AS c_fecha_max "
+		+ " FROM inventario.aforos c"
+		+ " GROUP BY c_carretera, c_municipio, c_tramo "
+		+ " ORDER BY c_carretera, c_municipio, c_tramo"
+		+ ") AS b";
+	if ((concello != Catalog.CONCELLO_ALL)
+		&& (carretera != Catalog.CARRETERA_ALL)) {
+	    // both carretera & concello selected
+	    return " AS a, " + subQuery + " WHERE "
+	    + " a.codigo_carretera = b.c_carretera "
+	    + " AND a.codigo_municipio = b.c_municipio "
+	    + " AND a.tramo = b.c_tramo "
+	    + " AND a.fecha = b.c_fecha_max"
+	    + " AND a." + EventosMapperAbstract.CONCELLO_FIELDNAME + " = '" + concello + "'"
+	    + " AND a." + EventosMapperAbstract.CARRETERA_FIELDNAME + " = '" + carretera + "'";
+	} else if (concello != Catalog.CONCELLO_ALL) {
+	    // only concello selected
+	    return " AS a, " + subQuery + " WHERE "
+	    + " a.codigo_carretera = b.c_carretera "
+	    + " AND a.codigo_municipio = b.c_municipio "
+	    + " AND a.tramo = b.c_tramo "
+	    + " AND a.fecha = b.c_fecha_max"
+	    + " AND a." + EventosMapperAbstract.CONCELLO_FIELDNAME + " = '" + concello + "'";
+	} else if (carretera != Catalog.CARRETERA_ALL) {
+	    // only carretera selected
+	    if ((pkStart == Catalog.PK_NONE) && (pkEnd == Catalog.PK_NONE)) {
+		return " AS a, " + subQuery + " WHERE "
+			+ " a.codigo_carretera = b.c_carretera "
+			+ " AND a.codigo_municipio = b.c_municipio "
+			+ " AND a.tramo = b.c_tramo "
+			+ " AND a.fecha = b.c_fecha_max"
+			+ " AND a." + EventosMapperAbstract.CARRETERA_FIELDNAME
+			+ " = '" + carretera + "'";
+	    } else if ((pkStart != Catalog.PK_NONE)
+		    && (pkEnd == Catalog.PK_NONE)) {
+		// carretera & pkStart
+		return " AS a, " + subQuery + " WHERE "
+		+ " a.codigo_carretera = b.c_carretera "
+		+ " AND a.codigo_municipio = b.c_municipio "
+		+ " AND a.tramo = b.c_tramo "
+		+ " AND a.fecha = b.c_fecha_max" 
+		+ " AND a." + EventosMapperAbstract.CARRETERA_FIELDNAME + " = '" + carretera + "' "
+		+ " AND a." + EventosMapperAbstract.PK_FIELDNAME + " >= '"+ Double.toString(pkStart) + "'";
+	    } else if ((pkStart == Catalog.PK_NONE)
+		    && (pkEnd != Catalog.PK_NONE)) {
+		// carretera & pkEnd
+		return " AS a, " + subQuery + " WHERE "
+		+ " a.codigo_carretera = b.c_carretera "
+		+ " AND a.codigo_municipio = b.c_municipio "
+		+ " AND a.tramo = b.c_tramo "
+		+ " AND a.fecha = b.c_fecha_max" 
+		+ " AND a." + EventosMapperAbstract.CARRETERA_FIELDNAME + " = '" + carretera + "' "
+		+ " AND a." + EventosMapperAbstract.PK_FIELDNAME + " <= '" + Double.toString(pkEnd) + "'";
+	    } else {
+		// carretera & pkStart & pkEnd
+		return " AS a, " + subQuery + " WHERE "
+		+ " a.codigo_carretera = b.c_carretera "
+		+ " AND a.codigo_municipio = b.c_municipio "
+		+ " AND a.tramo = b.c_tramo "
+		+ " AND a.fecha = b.c_fecha_max" 
+		+ " AND a." + EventosMapperAbstract.CARRETERA_FIELDNAME + " = '" + carretera + "' "
+		+ " AND a." + EventosMapperAbstract.PK_FIELDNAME + " >= '" + Double.toString(pkStart) + "' "
+		+ " AND a." + EventosMapperAbstract.PK_FIELDNAME + " <= '" + Double.toString(pkEnd) + "'";
+	    }
+	} else { // none selected
+	    return " AS a, " + subQuery + " WHERE "
+	    + " a.codigo_carretera = b.c_carretera "
+	    + " AND a.codigo_municipio = b.c_municipio "
+	    + " AND a.tramo = b.c_tramo "
+	    + " AND a.fecha = b.c_fecha_max";
 	}
     }
 

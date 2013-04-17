@@ -73,12 +73,14 @@ public class MapLoader {
 	    map.getLayer(RAMPAS).setWhere(whereTramos);
 	}
 	// filters for eventos
-	String whereEventos = WhereAdapter.getClause(WhereAdapter.EVENTOS);
+	String whereAforos = WhereAdapter.getClause(WhereAdapter.AFOROS);
 	if (map.layerInMap(AFOROS)) {
-	    map.getLayer(AFOROS).setWhere(whereEventos);
+	    map.getLayer(AFOROS).setWhere(whereAforos);
 	}
+	String whereAccidentes = WhereAdapter
+		.getClause(WhereAdapter.ACCIDENTES);
 	if (map.layerInMap(ACCIDENTES)) {
-	    map.getLayer(ACCIDENTES).setWhere(whereEventos);
+	    map.getLayer(ACCIDENTES).setWhere(whereAccidentes);
 	}
 
 	map.load(view.getProjection());
