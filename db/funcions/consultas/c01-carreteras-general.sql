@@ -2,7 +2,7 @@ WITH i AS ( \
      SELECT cmt.codigo_carretera, \
             cmt.codigo_municipio, \
             cmt.orden_tramo, \
-            COALESCE(SUM(cmt.longitud_tramo),0) AS longitud_tronco, \
+            COALESCE(cmt.longitud_tramo,0) AS longitud_tronco, \
             COALESCE(SUM(r.longitud),0) AS longitud_rampas, \
             COALESCE(SUM(v.longitud),0) AS longitud_variantes \
      FROM inventario.carretera_municipio cmt \
@@ -16,10 +16,12 @@ WITH i AS ( \
                AND cmt.orden_tramo = v.tramo \
      GROUP BY cmt.codigo_municipio, \
               cmt.codigo_carretera, \
-              cmt.orden_tramo \
+              cmt.orden_tramo, \
+              cmt.longitud_tramo \
      ORDER BY cmt.codigo_carretera, \
               cmt.codigo_municipio, \
-              cmt.orden_tramo) \
+              cmt.orden_tramo, \
+              cmt.longitud_tramo) \
 SELECT m.nombre as "Municipio", \
        i.codigo_carretera AS "Código (LU-P)", \
        i.orden_tramo AS "Tramo", \
