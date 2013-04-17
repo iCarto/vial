@@ -3,7 +3,7 @@ CREATE TABLE inventario.pks_1000(
         gid serial,
         codigo_carretera text,
         codigo_municipio text,
-        pk int NOT NULL,
+        pk float NOT NULL,
         PRIMARY KEY(gid),
         FOREIGN KEY(codigo_carretera) REFERENCES inventario.carreteras(numero) ON DELETE CASCADE
 );
