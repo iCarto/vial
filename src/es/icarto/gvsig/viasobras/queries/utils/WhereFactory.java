@@ -52,7 +52,13 @@ public class WhereFactory {
 	if (numericQueries.contains(queryCode)) {
 	    whereSQL = getWhereCarretera(whereSQL, carreteraCode);
 	    whereSQL = getWhereMunicipio(whereSQL, municipioCode);
-	    whereSQL = getWhereCaracteristicaCompare(whereSQL, mayorValue, menorValue);
+	    if (queryCode.equals("C10")) {
+		whereSQL = getWhereCaracteristicaCompareC10(whereSQL,
+			mayorValue, menorValue);
+	    } else {
+		whereSQL = getWhereCaracteristicaCompare(whereSQL, mayorValue,
+			menorValue);
+	    }
 	} else if (textQueries.contains(queryCode)) {
 	    whereSQL = getWhereCarretera(whereSQL, carreteraCode);
 	    whereSQL = getWhereMunicipio(whereSQL, municipioCode);
@@ -175,6 +181,17 @@ public class WhereFactory {
 	}
 	if (!menorValue.equals("")) {
 	    where = where + " AND p.valor <= '" + menorValue + "'";
+	}
+	return where;
+    }
+
+    private static String getWhereCaracteristicaCompareC10(String where,
+	    String mayorValue, String menorValue) {
+	if (!mayorValue.equalsIgnoreCase("")) {
+	    where = where + " AND i.ancho >= '" + mayorValue + "'";
+	}
+	if (!menorValue.equals("")) {
+	    where = where + " AND i.ancho <= '" + menorValue + "'";
 	}
 	return where;
     }
