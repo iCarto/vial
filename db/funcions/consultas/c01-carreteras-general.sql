@@ -3,8 +3,18 @@ WITH i AS ( \
             cmt.codigo_municipio, \
             cmt.orden_tramo, \
             COALESCE(cmt.longitud_tramo,0) AS longitud_tronco, \
-            COALESCE(SUM(r.longitud),0) AS longitud_rampas, \
-            COALESCE(SUM(v.longitud),0) AS longitud_variantes \
+            COALESCE(SUM(CASE \
+                         WHEN r.estado = 'USO' THEN \
+                              r.longitud \
+                         ELSE 0 \
+                         END), \
+                     0) AS longitud_rampas, \
+            COALESCE(SUM(CASE \
+                         WHEN v.estado = 'USO' THEN \
+                              v.longitud \
+                         ELSE 0 \
+                         END), \
+                     0) AS longitud_variantes \
      FROM inventario.carretera_municipio cmt \
           LEFT OUTER JOIN inventario.rampas r ON \
                cmt.codigo_municipio = r.codigo_municipio \
