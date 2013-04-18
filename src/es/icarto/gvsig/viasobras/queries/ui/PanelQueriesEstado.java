@@ -354,8 +354,13 @@ public class PanelQueriesEstado extends gvWindow {
 	    }
 	}
 	String[] filters = getFilters();
-	return WhereFactory.create(hasWhere, queryCode, filters[0], filters[1],
-		mayorValue, menorValue, textValue);
+	return WhereFactory.create(hasWhere,
+		Integer.parseInt(queryCode.substring(1)),
+		filters[0],
+		filters[1],
+		mayorValue,
+		menorValue,
+		textValue);
     }
 
     private String[] getQueryContents() throws Exception {

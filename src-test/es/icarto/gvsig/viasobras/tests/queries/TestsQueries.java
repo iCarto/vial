@@ -61,8 +61,12 @@ public class TestsQueries {
 		String mayorValue = "";
 		String menorValue = "";
 		String textValue = "";
-		String where = WhereFactory.create(hasWhere, codigo,
-			carreteraCode, municipioCode, mayorValue, menorValue,
+		String where = WhereFactory.create(hasWhere,
+			Integer.parseInt(codigo.substring(1)),
+			carreteraCode,
+			municipioCode,
+			mayorValue,
+			menorValue,
 			textValue);
 		consulta = consulta.replaceAll("\\[\\[WHERE\\]\\]", where);
 		executeQuery(consulta);
@@ -91,8 +95,12 @@ public class TestsQueries {
 		String mayorValue = "";
 		String menorValue = "";
 		String textValue = "";
-		String where = WhereFactory.create(hasWhere, codigo,
-			carreteraCode, municipioCode, mayorValue, menorValue,
+		String where = WhereFactory.create(hasWhere,
+			Integer.parseInt(codigo.substring(1)),
+			carreteraCode,
+			municipioCode,
+			mayorValue,
+			menorValue,
 			textValue);
 		consulta = consulta.replaceAll("\\[\\[WHERE\\]\\]", where);
 		executeQuery(consulta);
@@ -121,8 +129,12 @@ public class TestsQueries {
 		String mayorValue = "";
 		String menorValue = "";
 		String textValue = "";
-		String where = WhereFactory.create(hasWhere, codigo,
-			carreteraCode, municipioCode, mayorValue, menorValue,
+		String where = WhereFactory.create(hasWhere,
+			Integer.parseInt(codigo.substring(1)),
+			carreteraCode,
+			municipioCode,
+			mayorValue,
+			menorValue,
 			textValue);
 		consulta = consulta.replaceAll("\\[\\[WHERE\\]\\]", where);
 		executeQuery(consulta);
@@ -151,8 +163,12 @@ public class TestsQueries {
 		String mayorValue = "";
 		String menorValue = "";
 		String textValue = "";
-		String where = WhereFactory.create(hasWhere, codigo,
-			carreteraCode, municipioCode, mayorValue, menorValue,
+		String where = WhereFactory.create(hasWhere,
+			Integer.parseInt(codigo.substring(1)),
+			carreteraCode,
+			municipioCode,
+			mayorValue,
+			menorValue,
 			textValue);
 		consulta = consulta.replaceAll("\\[\\[WHERE\\]\\]", where);
 		executeQuery(consulta);
@@ -182,8 +198,12 @@ public class TestsQueries {
 		String mayorValue = "3";
 		String menorValue = "1";
 		String textValue = "";
-		String where = WhereFactory.create(hasWhere, codigo,
-			carreteraCode, municipioCode, mayorValue, menorValue,
+		String where = WhereFactory.create(hasWhere,
+			Integer.parseInt(codigo.substring(1)),
+			carreteraCode,
+			municipioCode,
+			mayorValue,
+			menorValue,
 			textValue);
 		consulta = consulta.replaceAll("\\[\\[WHERE\\]\\]", where);
 		executeQuery(consulta);
@@ -213,8 +233,12 @@ public class TestsQueries {
 		String mayorValue = "";
 		String menorValue = "";
 		String textValue = "2011";
-		String where = WhereFactory.create(hasWhere, codigo,
-			carreteraCode, municipioCode, mayorValue, menorValue,
+		String where = WhereFactory.create(hasWhere,
+			Integer.parseInt(codigo.substring(1)),
+			carreteraCode,
+			municipioCode,
+			mayorValue,
+			menorValue,
 			textValue);
 		consulta = consulta.replaceAll("\\[\\[WHERE\\]\\]", where);
 		executeQuery(consulta);
@@ -243,9 +267,13 @@ public class TestsQueries {
 		String mayorValue = "1";
 		String menorValue = "3";
 		String textValue = "2011";
-		String where = WhereFactory.create(hasWhere, codigo,
+		String where = WhereFactory.create(hasWhere,
+			Integer.parseInt(codigo.substring(1)),
 			carreteraCode,
-			municipioCode, mayorValue, menorValue, textValue);
+			municipioCode,
+			mayorValue,
+			menorValue,
+			textValue);
 		consulta = consulta.replaceAll("\\[\\[WHERE\\]\\]", where);
 		executeQuery(consulta);
 	    } catch (SQLException e) {

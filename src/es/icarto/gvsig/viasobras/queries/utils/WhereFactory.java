@@ -1,8 +1,5 @@
 package es.icarto.gvsig.viasobras.queries.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import es.icarto.gvsig.viasobras.domain.catalog.Catalog;
 
 public class WhereFactory {
@@ -20,73 +17,86 @@ public class WhereFactory {
      * @param textValue
      * @return
      */
-    public static String create(boolean hasWhere, String queryCode,
-	    String carreteraCode, String municipioCode,
-	    String mayorValue, String menorValue, String textValue) {
+    public static String create(boolean hasWhere,
+	    int queryCode,
+	    String carreteraCode,
+	    String municipioCode,
+	    String mayorValue,
+	    String menorValue,
+	    String textValue) {
 
-	List<String> numericQueries = new ArrayList<String>();
-	List<String> textQueries = new ArrayList<String>();
-	List<String> specialQueries = new ArrayList<String>();
+	String whereSQL = checkIfHasWhere(hasWhere);
 
-	numericQueries.add("C10"); // ancho
-	numericQueries.add("C40"); // cotas
-	numericQueries.add("C51"); // accidentes
-	numericQueries.add("C52"); // accidentes
-
-	textQueries.add("C20"); // tipo firme
-
-	specialQueries.add("C02"); // categoria
-	specialQueries.add("C41"); // cotas min/max
-	specialQueries.add("C30"); // aforos
-	specialQueries.add("C31");
-	specialQueries.add("C32");
-	specialQueries.add("C33");
-	specialQueries.add("C34");
-	specialQueries.add("C35");
-	specialQueries.add("C36");
-	specialQueries.add("C37");
-	specialQueries.add("C38"); // informe IMD
-
-	String whereSQL;
-	whereSQL = checkIfHasWhere(hasWhere);
-	if (numericQueries.contains(queryCode)) {
+	switch (queryCode) {
+	case 02:
+	    whereSQL = getWhereCategoriaCarretera(whereSQL,
+		    				  carreteraCode,
+		    				  municipioCode, 
+		    				  textValue);
+	    break;
+	case 10:
 	    whereSQL = getWhereCarretera(whereSQL, carreteraCode);
 	    whereSQL = getWhereMunicipio(whereSQL, municipioCode);
-	    if (queryCode.equals("C10")) {
-		whereSQL = getWhereCaracteristicaCompareC10(whereSQL,
-			mayorValue, menorValue);
-	    } else {
-		whereSQL = getWhereCaracteristicaCompare(whereSQL, mayorValue,
-			menorValue);
-	    }
-	} else if (textQueries.contains(queryCode)) {
+	    whereSQL = getWhereCaracteristicaCompareC10(whereSQL,
+		    					mayorValue,
+		    					menorValue);
+	    break;
+	case 20:
 	    whereSQL = getWhereCarretera(whereSQL, carreteraCode);
 	    whereSQL = getWhereMunicipio(whereSQL, municipioCode);
 	    whereSQL = getWhereCaracteristicaEquals(whereSQL, textValue);
-	} else if (specialQueries.contains(queryCode)) {
-	    if (queryCode.equals("C02")) {
-		whereSQL = getWhereCategoriaCarretera(whereSQL, carreteraCode,
-			municipioCode, textValue);
-	    } else if (queryCode.equals("C41")) {
-		whereSQL = getWhereCotasMinimasMaximas(whereSQL, carreteraCode,
-			municipioCode,
-			mayorValue,
-			menorValue);
-	    } else if (queryCode.equals("C38")) {
-		whereSQL = getWhereAnho(whereSQL, textValue);
-	    } else { // any related to aforos apart from C38
-		whereSQL = getWhereCarretera(whereSQL, carreteraCode);
-		whereSQL = getWhereMunicipio(whereSQL, municipioCode);
-		whereSQL = getWhereAforo(whereSQL, mayorValue,
-			menorValue);
-		whereSQL = getWhereAnhoAforos(whereSQL, textValue);
-	    }
-	} else {
+	    break;
+	case 30:
+	case 31:
+	case 32:
+	case 33:
+	case 34:
+	case 35:
+	case 36:
+	case 37:
 	    whereSQL = getWhereCarretera(whereSQL, carreteraCode);
 	    whereSQL = getWhereMunicipio(whereSQL, municipioCode);
+	    whereSQL = getWhereAforo(whereSQL, mayorValue, menorValue);
+	    whereSQL = getWhereAnhoAforos(whereSQL, textValue);
+	    break;
+	case 38:
+	    whereSQL = getWhereAnhoC38(whereSQL, textValue);
+	    break;
+	case 40:
+	    whereSQL = getWhereCarretera(whereSQL, carreteraCode);
+	    whereSQL = getWhereMunicipio(whereSQL, municipioCode);
+	    whereSQL = getWhereCaracteristicaCompare(whereSQL,
+		    				     mayorValue,
+		    				     menorValue);
+	    break;
+	case 41:
+	    whereSQL = getWhereCotasMinimasMaximas(whereSQL,
+		    			 	   carreteraCode,
+		    			 	   municipioCode, 
+		    			 	   mayorValue, 
+		    			 	   menorValue);
+	    break;
+	case 50:
+	    whereSQL = getWhereCarretera(whereSQL, carreteraCode);
+	    whereSQL = getWhereMunicipio(whereSQL, municipioCode);
+	    whereSQL = getWhereAnhoC50(whereSQL, textValue);
+	    break;
+	case 51:
+	case 52:
+	    whereSQL = getWhereCarretera(whereSQL, carreteraCode);
+	    whereSQL = getWhereMunicipio(whereSQL, municipioCode);
+	    whereSQL = getWhereAnhoC51C52(whereSQL, textValue);
+	    break;
+	default:
+	    // any other query
+	    whereSQL = getWhereCarretera(whereSQL, carreteraCode);
+	    whereSQL = getWhereMunicipio(whereSQL, municipioCode);
+	    break;
 	}
+
 	whereSQL = checkIfIsVoid(whereSQL);
 	return whereSQL;
+
     }
 
     private static String getWhereAforo(String whereSQL, String mayorValue,
@@ -100,12 +110,29 @@ public class WhereFactory {
 	return whereSQL;
     }
 
-    private static String getWhereAnho(String whereSQL, String textValue) {
+    private static String getWhereAnhoC38(String whereSQL, String textValue) {
 	if (!textValue.equals("")) {
 	    whereSQL = whereSQL + " EXTRACT(YEAR FROM a.fecha) <= "
 		    + textValue;
 	} else {
 	    whereSQL = whereSQL + " 1=1 ";
+	}
+	return whereSQL;
+    }
+
+    private static String getWhereAnhoC50(String whereSQL,
+	    String textValue) {
+	if (!textValue.equals("")) {
+	    whereSQL = whereSQL + " AND EXTRACT(YEAR FROM i.fecha) = "
+		    + textValue;
+	}
+	return whereSQL;
+    }
+
+    private static String getWhereAnhoC51C52(String whereSQL, String textValue) {
+	if (!textValue.equals("")) {
+	    whereSQL = whereSQL + " AND EXTRACT(YEAR FROM p.fecha) = "
+		    + textValue;
 	}
 	return whereSQL;
     }
