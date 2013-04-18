@@ -167,9 +167,10 @@ public class WhereFactory {
 	return whereSQL;
     }
 
-    private static String getWhereCaracteristicaEquals(String whereSQL, String textValue) {
+    private static String getWhereCaracteristicaEquals(String whereSQL,
+	    String textValue) {
 	if (!textValue.equals("")) {
-	    whereSQL = whereSQL + " AND p.valor = '" + textValue + "'";
+	    whereSQL = whereSQL + " AND i.valor = '" + textValue + "'";
 	}
 	return whereSQL;
     }
