@@ -169,25 +169,25 @@ public class TableModelResults extends DefaultTableModel {
 
 	int columnCount = getColumnCount();
 
-	String html = "<table border=\"1\"><tr>";
+	StringBuffer html = new StringBuffer();
+	html.append("<table border=\"1\"><tr>");
 
 	for (int i = 0; i < columnCount; i++) {
-	    html = html + "<td>" + "<h4>" + getColumnName(i) + "</h4>"
-		    + "</td>";
+	    html.append("<td>" + "<h4>" + getColumnName(i) + "</h4>" + "</td>");
 	}
-	html = html + "</tr>";
+	html.append("</tr>");
 
 	for (int row = 0; row < getRowCount(); row++) {
-	    html = html + "<tr>";
+	    html.append("<tr>");
 	    for (int column = 0; column < columnCount; column++) {
-		html = html + "<td>" + getValueAt(row, column) + "</td>";
+		html.append("<td>" + getValueAt(row, column) + "</td>");
 	    }
-	    html = html + "</tr>";
+	    html.append("</tr>");
 	}
 
-	html = html + "</table>";
+	html.append("</table>");
 
-	return html;
+	return html.toString();
     }
 
     public static void writeResultTableToPdfReport(String filename,
