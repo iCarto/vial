@@ -59,15 +59,15 @@
 	<FIELD>
 		<FIELDNAME>conservacion_fecha_inicio</FIELDNAME>
 		<VALIDATIONRULE>DATE</VALIDATIONRULE>
-	</FIELD>	
+	</FIELD>
 	<FIELD>
 		<FIELDNAME>conservacion_fecha_fin</FIELDNAME>
 		<VALIDATIONRULE>DATE</VALIDATIONRULE>
-	</FIELD>	
+	</FIELD>
 	<FIELD>
 		<FIELDNAME>conservacion_fecha_consignacion_solicitud</FIELDNAME>
 		<VALIDATIONRULE>DATE</VALIDATIONRULE>
-	</FIELD>	
+	</FIELD>
 	<FIELD>
 		<FIELDNAME>conservacion_fecha_consignacion_aprobacion</FIELDNAME>
 		<VALIDATIONRULE>DATE</VALIDATIONRULE>
@@ -97,11 +97,13 @@
 		<VALIDATIONRULE>DOUBLE_POSITIVE</VALIDATIONRULE>
 	</FIELD>
 	<FIELD>
-		<FIELDNAME>conservacion_propuesta_fecha_consignacion_solicitud</FIELDNAME>
+		<FIELDNAME>conservacion_propuesta_fecha_consignacion_solicitud
+		</FIELDNAME>
 		<VALIDATIONRULE>DATE</VALIDATIONRULE>
-	</FIELD>	
+	</FIELD>
 	<FIELD>
-		<FIELDNAME>conservacion_propuesta_fecha_consignacion_aprobacion</FIELDNAME>
+		<FIELDNAME>conservacion_propuesta_fecha_consignacion_aprobacion
+		</FIELDNAME>
 		<VALIDATIONRULE>DATE</VALIDATIONRULE>
 	</FIELD>
 	<FIELD>
@@ -121,7 +123,8 @@
 		<VALIDATIONRULE>DATE</VALIDATIONRULE>
 	</FIELD>
 	<FIELD>
-		<FIELDNAME>conservacion_propuesta_fecha_informe_devolucion_garantia</FIELDNAME>
+		<FIELDNAME>conservacion_propuesta_fecha_informe_devolucion_garantia
+		</FIELDNAME>
 		<VALIDATIONRULE>DATE</VALIDATIONRULE>
 	</FIELD>
 	<FIELD>
@@ -135,7 +138,7 @@
 	<FIELD>
 		<FIELDNAME>construccion_fecha_consignacion_solicitud</FIELDNAME>
 		<VALIDATIONRULE>DATE</VALIDATIONRULE>
-	</FIELD>	
+	</FIELD>
 	<FIELD>
 		<FIELDNAME>construccion_fecha_consignacion_aprobacion</FIELDNAME>
 		<VALIDATIONRULE>DATE</VALIDATIONRULE>
@@ -221,11 +224,43 @@
 		<VALIDATIONRULE>DOUBLE_POSITIVE</VALIDATIONRULE>
 	</FIELD>
 	<FIELD>
+		<FIELDNAME>travesia_ancho_arcen_izquierda_pki</FIELDNAME>
+		<VALIDATIONRULE>DOUBLE_POSITIVE</VALIDATIONRULE>
+	</FIELD>
+	<FIELD>
+		<FIELDNAME>travesia_ancho_arcen_izquierda_pkf</FIELDNAME>
+		<VALIDATIONRULE>DOUBLE_POSITIVE</VALIDATIONRULE>
+	</FIELD>
+	<FIELD>
+		<FIELDNAME>travesia_ancho_arcen_derecha_pki</FIELDNAME>
+		<VALIDATIONRULE>DOUBLE_POSITIVE</VALIDATIONRULE>
+	</FIELD>
+	<FIELD>
+		<FIELDNAME>travesia_ancho_arcen_derecha_pkf</FIELDNAME>
+		<VALIDATIONRULE>DOUBLE_POSITIVE</VALIDATIONRULE>
+	</FIELD>
+	<FIELD>
 		<FIELDNAME>travesia_ancho_acera_izquierda</FIELDNAME>
 		<VALIDATIONRULE>DOUBLE_POSITIVE</VALIDATIONRULE>
 	</FIELD>
 	<FIELD>
 		<FIELDNAME>travesia_ancho_acera_derecha</FIELDNAME>
+		<VALIDATIONRULE>DOUBLE_POSITIVE</VALIDATIONRULE>
+	</FIELD>
+	<FIELD>
+		<FIELDNAME>travesia_ancho_acera_izquierda_pki</FIELDNAME>
+		<VALIDATIONRULE>DOUBLE_POSITIVE</VALIDATIONRULE>
+	</FIELD>
+	<FIELD>
+		<FIELDNAME>travesia_ancho_acera_izquierda_pkf</FIELDNAME>
+		<VALIDATIONRULE>DOUBLE_POSITIVE</VALIDATIONRULE>
+	</FIELD>
+	<FIELD>
+		<FIELDNAME>travesia_ancho_acera_derecha_pki</FIELDNAME>
+		<VALIDATIONRULE>DOUBLE_POSITIVE</VALIDATIONRULE>
+	</FIELD>
+	<FIELD>
+		<FIELDNAME>travesia_ancho_acera_derecha_pkf</FIELDNAME>
 		<VALIDATIONRULE>DOUBLE_POSITIVE</VALIDATIONRULE>
 	</FIELD>
 	<FIELD>
