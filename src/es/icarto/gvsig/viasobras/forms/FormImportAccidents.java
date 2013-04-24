@@ -15,11 +15,13 @@ import java.text.SimpleDateFormat;
 import java.util.Properties;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import au.com.bytecode.opencsv.CSVReader;
 
+import com.iver.andami.PluginServices;
 import com.iver.andami.messages.NotificationManager;
 import com.iver.andami.ui.mdiManager.IWindow;
 import com.iver.andami.ui.mdiManager.WindowInfo;
@@ -32,9 +34,11 @@ import es.udc.cartolab.gvsig.users.utils.DBSession;
 public class FormImportAccidents extends JPanel implements IWindow {
 
     private WindowInfo windowInfo;
-    private JButton executeButton;
     private FormPanel form;
-    private JComboBox codigoCarretera;
+    private JButton importToDBButton;
+    private JButton loadFileButton;
+    private JLabel message;
+    private String accidentesFile;
 
     public FormImportAccidents() {
 	initPanel();
@@ -49,16 +53,39 @@ public class FormImportAccidents extends JPanel implements IWindow {
     }
 
     private void initWidgets() {
-	executeButton = (JButton) AbeilleParser.getButtonsFromContainer(form)
-		.get("ejecutar");
-	executeButton.addActionListener(new ActionListener() {
+	importToDBButton = (JButton) AbeilleParser
+		.getButtonsFromContainer(form).get("import_file");
+	loadFileButton = (JButton) AbeilleParser.getButtonsFromContainer(form)
+		.get("load_file");
+	message = form.getLabel("messages_panel");
+	importToDBButton.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent arg0) {
-		execute();
+		message.setText(PluginServices.getText(this,
+			"accidentes_processing"));
+		importToDatabase();
+		message.setText(PluginServices.getText(this, "accidentes_done"));
+		importToDBButton.setEnabled(false);
+	    }
+	});
+	loadFileButton.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent arg0) {
+		loadFile();
+		message.setText(PluginServices.getText(this,
+			"accidentes_file_loaded") + " " + accidentesFile);
 	    }
 	});
     }
 
-    public void execute() {
+    private void loadFile() {
+	JFileChooser fileChooser = new JFileChooser();
+	int action = fileChooser.showOpenDialog(message);
+	if (action == JFileChooser.APPROVE_OPTION) {
+	    importToDBButton.setEnabled(true);
+	    accidentesFile = fileChooser.getSelectedFile().getAbsolutePath();
+	}
+    }
+
+    public void importToDatabase() {
 	String sql = "INSERT INTO inventario.accidentes(" +
 		"codigo_carretera, " +
 		"codigo_municipio, " +
@@ -98,14 +125,13 @@ public class FormImportAccidents extends JPanel implements IWindow {
 
 	Connection connection;
 	PreparedStatement ps;
-	String csvFilename = "/tmp/accidentes.csv";
 	CSVReader csvReader;
 	String[] row = null;
 
 	try {
 	    connection = DBFacade.getConnection();
 	    ps = connection.prepareStatement(sql);
-	    csvReader = new CSVReader(new FileReader(csvFilename));
+	    csvReader = new CSVReader(new FileReader(accidentesFile));
 	    csvReader.readNext(); // header
 	    while((row = csvReader.readNext()) != null) {
 		ps.setString(1, row[0]);// codigo_carretera
@@ -171,10 +197,16 @@ public class FormImportAccidents extends JPanel implements IWindow {
 	    connection.close();
 	    csvReader.close();
 	} catch (FileNotFoundException e) {
+	    message.setText(PluginServices.getText(this,
+		    "accidentes_fail_file_not_found"));
 	    e.printStackTrace();
 	} catch (IOException e) {
+	    message.setText(PluginServices.getText(this,
+		    "accidentes_fail_file_not_read"));
 	    e.printStackTrace();
 	} catch (SQLException e) {
+	    message.setText(PluginServices.getText(this,
+		    "accidentes_fail_file_not_imported"));
 	    e.printStackTrace();
 	    e.getNextException().printStackTrace();
 	}
@@ -207,9 +239,9 @@ public class FormImportAccidents extends JPanel implements IWindow {
 	if (windowInfo == null) {
 	    windowInfo = new WindowInfo(WindowInfo.MODALDIALOG
 		    | WindowInfo.RESIZABLE | WindowInfo.PALETTE);
-	    windowInfo.setTitle("Vías y Obras: recalcular PKs");
+	    windowInfo.setTitle("Vías y Obras: importar accidentes");
 	    windowInfo.setHeight(90);
-	    windowInfo.setWidth(300);
+	    windowInfo.setWidth(420);
 	}
 	return windowInfo;
     }
