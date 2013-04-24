@@ -2,9 +2,10 @@ package es.icarto.gvsig.viasobras.forms;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -94,7 +95,7 @@ public class FormImportAccidents extends JPanel implements IWindow {
 		"fecha," +
 		"valor," +
 		"poblacion," +
-		"se," +
+		"sentido," +
 		"luminosidad," +
 		"superficie," +
 		"visibilidad_restringida_por," +
@@ -108,7 +109,7 @@ public class FormImportAccidents extends JPanel implements IWindow {
 		"circulacion," +
 		"circulacion_medidas_especiales," +
 		"interseccion_con," +
-		"tipo_otros," +
+		"tipo_interseccion," +
 		"acondicionamiento_interseccion," +
 		"fuera_interseccion," +
 		"tipo_accidente," +
@@ -123,78 +124,139 @@ public class FormImportAccidents extends JPanel implements IWindow {
 		"?, ?, ?, ?, ?, " +
 		"?, ?, ?, ?)";
 
-	Connection connection;
-	PreparedStatement ps;
+	Connection c;
+	PreparedStatement st_insert;
 	CSVReader csvReader;
 	String[] row = null;
 
 	try {
-	    connection = DBFacade.getConnection();
-	    ps = connection.prepareStatement(sql);
-	    csvReader = new CSVReader(new FileReader(accidentesFile));
+	    c = DBFacade.getConnection();
+	    c.setAutoCommit(false);
+	    st_insert = c.prepareStatement(sql);
+	    csvReader = new CSVReader(new InputStreamReader(
+		    new FileInputStream(accidentesFile), "UTF8"));
 	    csvReader.readNext(); // header
 	    while((row = csvReader.readNext()) != null) {
-		ps.setString(1, row[0]);// codigo_carretera
-		ps.setString(2, row[1]);
-		ps.setString(3, row[2]);
-		ps.setDouble(4, Double.parseDouble(row[3].replaceAll(",", ".")));
+		/*
+		 *  0 ID accidente
+		 *  1 fecha hora
+		 *  2 provincia
+		 *  3 carretera
+		 *  4 denominacion
+		 *  5 km
+		 *  6 hm
+		 *  7 se
+		 *  8 titularidad via
+		 *  9 luminosidad
+		 * 10 superficie
+		 * 11 visibilidad restringida
+		 * 12 factores atmosfericos
+		 * 13 mediana
+		 * 14 barrera seguridad
+		 * 15 paneles direccionales
+		 * 16 hitos arista
+		 * 17 capta faros
+		 * 18 prioridad regulada
+		 * 19 circulacion
+		 * 20 circulacion medidas especiales
+		 * 21 interseccion con
+		 * 22 tipo interseccion
+		 * 23 acondicionamiento interseccion
+		 * 24 fuera interseccion
+		 * 25 tipo accidente
+		 * 26 m (muertos)
+		 * 27 hg (heridos graves)
+		 * 28 hl (heridos leves)
+		 * 29 t_vehi (vehiculos implicados)
+		 * 30 municipio
+		 * 31 poblacion
+		 */
+		st_insert.setString(1, row[3].substring(row[3].length() - 4));// codigo_carretera
+		st_insert.setString(2, ""); // UPDATE: got from
+					    // carretera_municipio
+		st_insert.setString(3, ""); // UPDATE: got from
+					    // carretera_municipio
+		st_insert.setDouble(4,
+			Double.parseDouble(row[5] + "." + row[6]));
 		try {
-		    DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		    DateFormat formatter = new SimpleDateFormat(
+			    "dd/MM/yyyy HH:mm");
 		    java.sql.Date fecha = new java.sql.Date(formatter.parse(
-			    row[4]).getTime());
-		    ps.setDate(5, fecha);
+			    row[1]).getTime());
+		    st_insert.setDate(5, fecha);
 		} catch (ParseException e) {
-		    ps.setNull(5, java.sql.Types.DATE);
+		    st_insert.setNull(5, java.sql.Types.DATE);
 		}
-		ps.setString(6, row[5]); // valor
-		ps.setString(7, row[6]);
-		ps.setString(8, row[7]);
-		ps.setString(9, row[8]);
-		ps.setString(10, row[9]);
-		ps.setString(11, row[10]);// visibilidad_restringida_por
-		ps.setString(12, row[11]);
-		ps.setString(13, row[12]);
-		ps.setString(14, row[13]);
-		ps.setString(15, row[14]);
-		ps.setString(16, row[15]);// hitos_arista
-		ps.setString(17, row[16]);
-		ps.setString(18, row[17]);
-		ps.setString(19, row[18]);
-		ps.setString(20, row[19]);
-		ps.setString(21, row[20]);// interseccion_con
-		ps.setString(22, row[21]);
-		ps.setString(23, row[22]);
-		ps.setString(24, row[23]);
-		ps.setString(25, row[24]);
+		st_insert.setString(6, row[0]); // valor
+		st_insert.setString(7, row[31]);
+		st_insert.setString(8, row[7]);
+		st_insert.setString(9, row[9]);
+		st_insert.setString(10, row[10]);
+		st_insert.setString(11, row[11]);// visibilidad_restringida_por
+		st_insert.setString(12, row[12]);
+		st_insert.setString(13, row[13]);
+		st_insert.setString(14, row[14]);
+		st_insert.setString(15, row[15]);
+		st_insert.setString(16, row[16]);// hitos_arista
+		st_insert.setString(17, row[17]);
+		st_insert.setString(18, row[18]);
+		st_insert.setString(19, row[19]);
+		st_insert.setString(20, row[20]);
+		st_insert.setString(21, row[21]);// interseccion_con
+		st_insert.setString(22, row[22]);
+		st_insert.setString(23, row[23]);
+		st_insert.setString(24, row[24]);
+		st_insert.setString(25, row[25]);
 		try{
-		    int muertos = Integer.parseInt(row[25]);
-		    ps.setInt(26, muertos);// muertos
+		    int muertos = Integer.parseInt(row[26]);
+		    st_insert.setInt(26, muertos);// muertos
 		} catch (NumberFormatException e) {
-		    ps.setNull(26, java.sql.Types.INTEGER);
+		    st_insert.setNull(26, java.sql.Types.INTEGER);
 		}
 		try {
-		    int heridos_graves = Integer.parseInt(row[26]);
-		    ps.setInt(27, heridos_graves);
+		    int heridos_graves = Integer.parseInt(row[27]);
+		    st_insert.setInt(27, heridos_graves);
 		} catch (NumberFormatException e) {
-		    ps.setNull(27, java.sql.Types.INTEGER);
+		    st_insert.setNull(27, java.sql.Types.INTEGER);
 		}
 		try {
-		    int heridos_leves = Integer.parseInt(row[27]);
-		    ps.setInt(28, heridos_leves);
+		    int heridos_leves = Integer.parseInt(row[28]);
+		    st_insert.setInt(28, heridos_leves);
 		} catch (NumberFormatException e) {
-		    ps.setNull(28, java.sql.Types.INTEGER);
+		    st_insert.setNull(28, java.sql.Types.INTEGER);
 		}
 		try {
-		    int vehiculos_implicados = Integer.parseInt(row[28]);
-		    ps.setInt(29, vehiculos_implicados);
+		    int vehiculos_implicados = Integer.parseInt(row[29]);
+		    st_insert.setInt(29, vehiculos_implicados);
 		} catch (NumberFormatException e) {
-		    ps.setNull(29, java.sql.Types.INTEGER);
+		    st_insert.setNull(29, java.sql.Types.INTEGER);
 		}
-		ps.addBatch();
+		st_insert.addBatch();
 	    }
-	    ps.executeBatch();
-	    ps.close();
-	    connection.close();
+	    st_insert.executeBatch();
+	    st_insert.close();
+	    String update_municipio = "UPDATE inventario.accidentes a "
+		    + " SET codigo_municipio = "
+		    + " (SELECT codigo_municipio "
+		    + " FROM inventario.carretera_municipio b "
+		    + " WHERE b.codigo_carretera = a.codigo_carretera "
+		    + " AND b.pk_inicial_tramo <= a.pk "
+		    + " AND b.pk_final_tramo >= a.pk)";
+	    String update_tramo = "UPDATE inventario.accidentes a "
+		    + " SET tramo = "
+		    + " (SELECT orden_tramo " +
+		    " FROM inventario.carretera_municipio b " +
+		    " WHERE b.codigo_carretera = a.codigo_carretera " +
+		    " AND b.pk_inicial_tramo <= a.pk " +
+		    " AND b.pk_final_tramo >= a.pk)";
+	    PreparedStatement st_update_municipio = c
+		    .prepareStatement(update_municipio);
+	    PreparedStatement st_update_tramo = c
+		    .prepareStatement(update_tramo);
+	    st_update_municipio.execute();
+	    st_update_tramo.execute();
+	    c.commit();
+	    c.close();
 	    csvReader.close();
 	} catch (FileNotFoundException e) {
 	    message.setText(PluginServices.getText(this,
