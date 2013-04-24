@@ -88,5 +88,12 @@
 			</tool-bar>
 		</extension>		
 
+		<extension class-name="es.icarto.gvsig.viasobras.ImportAccidentesExtension" description="FORMS_PANEL" active="true">
+			<menu action-command="separator" text="Vías y Obras" position="30899" is_separator="true"/>
+			<menu text="Vías y Obras/Importar accidentes"
+				icon="viasobras-accidentes"
+				position="30900"/>
+		</extension>		
+
 	</extensions>
 </plugin-config>
