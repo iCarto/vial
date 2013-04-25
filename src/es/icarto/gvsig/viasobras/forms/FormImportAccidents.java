@@ -43,7 +43,6 @@ public class FormImportAccidents extends JPanel implements IWindow {
 
     public FormImportAccidents() {
 	initPanel();
-	initDomainMapper();
     }
 
     private void initPanel() {
@@ -116,13 +115,14 @@ public class FormImportAccidents extends JPanel implements IWindow {
 		"muertos," +
 		"heridos_graves," +
 		"heridos_leves," +
-		"vehiculos_implicados) " +
+		"vehiculos_implicados," +
+		"id_accidente) " +
 		"VALUES (?, ?, ?, ?, ?, " +
 		"?, ?, ?, ?, ?, " +
 		"?, ?, ?, ?, ?, " +
 		"?, ?, ?, ?, ?, " +
 		"?, ?, ?, ?, ?, " +
-		"?, ?, ?, ?)";
+		"?, ?, ?, ?, ?)";
 
 	Connection c;
 	PreparedStatement st_insert;
@@ -130,6 +130,7 @@ public class FormImportAccidents extends JPanel implements IWindow {
 	String[] row = null;
 
 	try {
+	    initDomainMapper();
 	    c = DBFacade.getConnection();
 	    c.setAutoCommit(false);
 	    st_insert = c.prepareStatement(sql);
@@ -173,9 +174,9 @@ public class FormImportAccidents extends JPanel implements IWindow {
 		 */
 		st_insert.setString(1, row[3].substring(row[3].length() - 4));// codigo_carretera
 		st_insert.setString(2, ""); // UPDATE: got from
-					    // carretera_municipio
+		// carretera_municipio
 		st_insert.setString(3, ""); // UPDATE: got from
-					    // carretera_municipio
+		// carretera_municipio
 		st_insert.setDouble(4,
 			Double.parseDouble(row[5] + "." + row[6]));
 		try {
@@ -187,7 +188,7 @@ public class FormImportAccidents extends JPanel implements IWindow {
 		} catch (ParseException e) {
 		    st_insert.setNull(5, java.sql.Types.DATE);
 		}
-		st_insert.setString(6, row[0]); // valor
+		st_insert.setString(6, row[25]); // valor
 		st_insert.setString(7, row[31]);
 		st_insert.setString(8, row[7]);
 		st_insert.setString(9, row[9]);
@@ -231,6 +232,7 @@ public class FormImportAccidents extends JPanel implements IWindow {
 		} catch (NumberFormatException e) {
 		    st_insert.setNull(29, java.sql.Types.INTEGER);
 		}
+		st_insert.setString(30, row[0]);
 		st_insert.addBatch();
 	    }
 	    st_insert.executeBatch();

@@ -33,6 +33,7 @@ CREATE TABLE inventario.accidentes (
        heridos_graves integer,
        heridos_leves integer,
        vehiculos_implicados integer,
+       id_accidente text,
        PRIMARY KEY(gid),
        FOREIGN KEY (codigo_carretera) REFERENCES inventario.carreteras (numero)
                ON DELETE CASCADE
@@ -47,7 +48,7 @@ INSERT INTO inventario.accidentes (
               "tramo" AS tramo,
               "pk" AS pk,
               "fecha" AS fecha,
-              "id_acciden" AS valor,
+              "tipo_accid" AS valor,
               "poblacion" AS poblacion,
               "se" AS sentido,
               "luminosida" AS luminosidad,
@@ -70,7 +71,8 @@ INSERT INTO inventario.accidentes (
               "m" AS muertos,
               "hg" AS heridos_graves,
               "hl" AS heridos_leves,
-              "t_vehi" AS vehiculos_implicados
+              "t_vehi" AS vehiculos_implicados,
+              "id_acciden" AS id_accidente
        FROM inventario.accidentes_tmp
 );
 
