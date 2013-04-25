@@ -179,15 +179,7 @@ public class FormImportAccidents extends JPanel implements IWindow {
 		// carretera_municipio
 		st_insert.setDouble(4,
 			Double.parseDouble(row[5] + "." + row[6]));
-		try {
-		    DateFormat formatter = new SimpleDateFormat(
-			    "dd/MM/yyyy HH:mm");
-		    java.sql.Date fecha = new java.sql.Date(formatter.parse(
-			    row[1]).getTime());
-		    st_insert.setDate(5, fecha);
-		} catch (ParseException e) {
-		    st_insert.setNull(5, java.sql.Types.DATE);
-		}
+		setDateNoException(st_insert, row);
 		st_insert.setString(6, row[25]); // valor
 		st_insert.setString(7, row[31]);
 		st_insert.setString(8, row[7]);
@@ -208,30 +200,10 @@ public class FormImportAccidents extends JPanel implements IWindow {
 		st_insert.setString(23, row[23]);
 		st_insert.setString(24, row[24]);
 		st_insert.setString(25, row[25]);
-		try{
-		    int muertos = Integer.parseInt(row[26]);
-		    st_insert.setInt(26, muertos);// muertos
-		} catch (NumberFormatException e) {
-		    st_insert.setNull(26, java.sql.Types.INTEGER);
-		}
-		try {
-		    int heridos_graves = Integer.parseInt(row[27]);
-		    st_insert.setInt(27, heridos_graves);
-		} catch (NumberFormatException e) {
-		    st_insert.setNull(27, java.sql.Types.INTEGER);
-		}
-		try {
-		    int heridos_leves = Integer.parseInt(row[28]);
-		    st_insert.setInt(28, heridos_leves);
-		} catch (NumberFormatException e) {
-		    st_insert.setNull(28, java.sql.Types.INTEGER);
-		}
-		try {
-		    int vehiculos_implicados = Integer.parseInt(row[29]);
-		    st_insert.setInt(29, vehiculos_implicados);
-		} catch (NumberFormatException e) {
-		    st_insert.setNull(29, java.sql.Types.INTEGER);
-		}
+		setMuertosNoException(st_insert, row);
+		setHeridosGravesNoException(st_insert, row);
+		setHeridosLevesNoException(st_insert, row);
+		setVehiculosImplicadosNoException(st_insert, row);
 		st_insert.setString(30, row[0]);
 		st_insert.addBatch();
 	    }
@@ -273,6 +245,60 @@ public class FormImportAccidents extends JPanel implements IWindow {
 		    "accidentes_fail_file_not_imported"));
 	    e.printStackTrace();
 	    e.getNextException().printStackTrace();
+	}
+    }
+
+    private void setVehiculosImplicadosNoException(PreparedStatement st_insert,
+	    String[] row) throws SQLException {
+	try {
+	    int vehiculos_implicados = Integer.parseInt(row[29]);
+	    st_insert.setInt(29, vehiculos_implicados);
+	} catch (NumberFormatException e) {
+	    st_insert.setNull(29, java.sql.Types.INTEGER);
+	}
+    }
+
+    private void setHeridosLevesNoException(PreparedStatement st_insert,
+	    String[] row) throws SQLException {
+	try {
+	    int heridos_leves = Integer.parseInt(row[28]);
+	    st_insert.setInt(28, heridos_leves);
+	} catch (NumberFormatException e) {
+	    st_insert.setNull(28, java.sql.Types.INTEGER);
+	}
+    }
+
+    private void setHeridosGravesNoException(PreparedStatement st_insert, String[] row)
+	    throws SQLException {
+	try {
+	    int heridos_graves = Integer.parseInt(row[27]);
+	    st_insert.setInt(27, heridos_graves);
+	} catch (NumberFormatException e) {
+	    st_insert.setNull(27, java.sql.Types.INTEGER);
+	}
+    }
+
+    private void setMuertosNoException(PreparedStatement st_insert, String[] row)
+	    throws SQLException {
+	try{
+	    int muertos = Integer.parseInt(row[26]);
+	    st_insert.setInt(26, muertos);// muertos
+	} catch (NumberFormatException e) {
+	    st_insert.setNull(26, java.sql.Types.INTEGER);
+	}
+    }
+
+    private void setDateNoException(PreparedStatement st_insert, String[] row)
+	    throws SQLException {
+	try {
+	    DateFormat formatter = new SimpleDateFormat(
+		    "dd/MM/yyyy HH:mm");
+	    java.sql.Date fecha = new java.sql.Date(formatter.parse(
+		    row[1]).getTime());
+	    st_insert.setDate(5, fecha);
+	} catch (ParseException e) {
+	    // set date to 1970-01-01
+	    st_insert.setDate(5, new java.sql.Date(0));
 	}
     }
 
