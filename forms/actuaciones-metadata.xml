@@ -97,13 +97,11 @@
 		<VALIDATIONRULE>DOUBLE_POSITIVE</VALIDATIONRULE>
 	</FIELD>
 	<FIELD>
-		<FIELDNAME>conservacion_propuesta_fecha_consignacion_solicitud
-		</FIELDNAME>
+		<FIELDNAME>conservacion_propuesta_fecha_consignacion_solicitud</FIELDNAME>
 		<VALIDATIONRULE>DATE</VALIDATIONRULE>
 	</FIELD>
 	<FIELD>
-		<FIELDNAME>conservacion_propuesta_fecha_consignacion_aprobacion
-		</FIELDNAME>
+		<FIELDNAME>conservacion_propuesta_fecha_consignacion_aprobacion</FIELDNAME>
 		<VALIDATIONRULE>DATE</VALIDATIONRULE>
 	</FIELD>
 	<FIELD>
@@ -123,8 +121,7 @@
 		<VALIDATIONRULE>DATE</VALIDATIONRULE>
 	</FIELD>
 	<FIELD>
-		<FIELDNAME>conservacion_propuesta_fecha_informe_devolucion_garantia
-		</FIELDNAME>
+		<FIELDNAME>conservacion_propuesta_fecha_informe_devolucion_garantia</FIELDNAME>
 		<VALIDATIONRULE>DATE</VALIDATIONRULE>
 	</FIELD>
 	<FIELD>
