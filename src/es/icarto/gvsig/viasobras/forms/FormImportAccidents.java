@@ -17,8 +17,8 @@ import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 import au.com.bytecode.opencsv.CSVReader;
 
@@ -39,7 +39,7 @@ public class FormImportAccidents extends JPanel implements IWindow {
     private FormPanel form;
     private JButton importToDBButton;
     private JButton loadFileButton;
-    private JLabel message;
+    private JTextArea areaMessages;
     private String accidentesFile;
 
     public FormImportAccidents() {
@@ -58,28 +58,34 @@ public class FormImportAccidents extends JPanel implements IWindow {
 		.getButtonsFromContainer(form).get("import_file");
 	loadFileButton = (JButton) AbeilleParser.getButtonsFromContainer(form)
 		.get("load_file");
-	message = form.getLabel("messages_panel");
+	areaMessages = (JTextArea) form.getTextComponent("area_messages");
+	areaMessages.append("Seleccione el archivo CSV a importar. \n");
+	areaMessages.setEditable(false);
 	importToDBButton.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent arg0) {
-		message.setText(PluginServices.getText(this,
-			"accidentes_processing"));
+		areaMessages.append(PluginServices.getText(this,
+			"accidentes_processing") + "\n");
 		importToDatabase();
-		message.setText(PluginServices.getText(this, "accidentes_done"));
+		areaMessages.append("\n"
+			+ PluginServices.getText(this,
+				"accidentes_done") + "\n");
 		importToDBButton.setEnabled(false);
 	    }
 	});
 	loadFileButton.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent arg0) {
 		loadFile();
-		message.setText(PluginServices.getText(this,
-			"accidentes_file_loaded") + " " + accidentesFile);
+		areaMessages.append(PluginServices.getText(this,
+			"accidentes_file_loaded")
+			+ " "
+			+ accidentesFile + "\n");
 	    }
 	});
     }
 
     private void loadFile() {
 	JFileChooser fileChooser = new JFileChooser();
-	int action = fileChooser.showOpenDialog(message);
+	int action = fileChooser.showOpenDialog(areaMessages);
 	if (action == JFileChooser.APPROVE_OPTION) {
 	    importToDBButton.setEnabled(true);
 	    accidentesFile = fileChooser.getSelectedFile().getAbsolutePath();
@@ -172,6 +178,7 @@ public class FormImportAccidents extends JPanel implements IWindow {
 	     * 30 municipio
 	     * 31 poblacion
 	     */
+	    areaMessages.append("Procesando accidentes..." + "\n \n");
 	    while((row = csvReader.readNext()) != null) {
 		String codigoCarretera = row[3].substring(row[3].length() - 4);
 		Double pk;
@@ -214,6 +221,12 @@ public class FormImportAccidents extends JPanel implements IWindow {
 		    setVehiculosImplicadosNoException(st_insert, row);
 		    st_insert.setString(30, row[0]);
 		    st_insert.addBatch();
+		} else {
+		    areaMessages.append(row[0]
+			    + " "
+			    + PluginServices.getText(this,
+				    "error_carretera_not_found")
+				    + "\n");
 		}
 	    }
 	    st_insert.executeBatch();
@@ -242,16 +255,19 @@ public class FormImportAccidents extends JPanel implements IWindow {
 	    c.close();
 	    csvReader.close();
 	} catch (FileNotFoundException e) {
-	    message.setText(PluginServices.getText(this,
-		    "accidentes_fail_file_not_found"));
+	    areaMessages.setText("\n"
+		    + PluginServices.getText(this,
+			    "accidentes_fail_file_not_found") + "\n");
 	    e.printStackTrace();
 	} catch (IOException e) {
-	    message.setText(PluginServices.getText(this,
-		    "accidentes_fail_file_not_read"));
+	    areaMessages.setText("\n"
+		    + PluginServices.getText(this,
+			    "accidentes_fail_file_not_read") + "\n");
 	    e.printStackTrace();
 	} catch (SQLException e) {
-	    message.setText(PluginServices.getText(this,
-		    "accidentes_fail_file_not_imported"));
+	    areaMessages.setText("\n"
+		    + PluginServices.getText(this,
+			    "accidentes_fail_file_not_imported") + "\n");
 	    e.printStackTrace();
 	    e.getNextException().printStackTrace();
 	}
@@ -339,8 +355,8 @@ public class FormImportAccidents extends JPanel implements IWindow {
 	    windowInfo = new WindowInfo(WindowInfo.MODALDIALOG
 		    | WindowInfo.RESIZABLE | WindowInfo.PALETTE);
 	    windowInfo.setTitle("Vías y Obras: importar accidentes");
-	    windowInfo.setHeight(90);
-	    windowInfo.setWidth(420);
+	    windowInfo.setHeight(275);
+	    windowInfo.setWidth(450);
 	}
 	return windowInfo;
     }
