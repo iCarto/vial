@@ -28,4 +28,11 @@ public class Carreteras implements Iterable<Carretera> {
 	return carreteras.get(cIndex);
     }
 
+    public boolean contains(String codeCarretera) {
+	if (indexes.get(codeCarretera) == null) {
+	    return false;
+	}
+	return true;
+    }
+
 }

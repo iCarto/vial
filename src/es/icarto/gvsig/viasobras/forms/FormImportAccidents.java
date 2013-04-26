@@ -29,6 +29,7 @@ import com.iver.andami.ui.mdiManager.WindowInfo;
 import com.jeta.forms.components.panel.FormPanel;
 
 import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
+import es.icarto.gvsig.viasobras.domain.catalog.Catalog;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.DBFacade;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
@@ -137,75 +138,83 @@ public class FormImportAccidents extends JPanel implements IWindow {
 	    csvReader = new CSVReader(new InputStreamReader(
 		    new FileInputStream(accidentesFile), "UTF8"));
 	    csvReader.readNext(); // header
+	    /*
+	     *  0 ID accidente
+	     *  1 fecha hora
+	     *  2 provincia
+	     *  3 carretera
+	     *  4 denominacion
+	     *  5 km
+	     *  6 hm
+	     *  7 se
+	     *  8 titularidad via
+	     *  9 luminosidad
+	     * 10 superficie
+	     * 11 visibilidad restringida
+	     * 12 factores atmosfericos
+	     * 13 mediana
+	     * 14 barrera seguridad
+	     * 15 paneles direccionales
+	     * 16 hitos arista
+	     * 17 capta faros
+	     * 18 prioridad regulada
+	     * 19 circulacion
+	     * 20 circulacion medidas especiales
+	     * 21 interseccion con
+	     * 22 tipo interseccion
+	     * 23 acondicionamiento interseccion
+	     * 24 fuera interseccion
+	     * 25 tipo accidente
+	     * 26 m (muertos)
+	     * 27 hg (heridos graves)
+	     * 28 hl (heridos leves)
+	     * 29 t_vehi (vehiculos implicados)
+	     * 30 municipio
+	     * 31 poblacion
+	     */
 	    while((row = csvReader.readNext()) != null) {
-		/*
-		 *  0 ID accidente
-		 *  1 fecha hora
-		 *  2 provincia
-		 *  3 carretera
-		 *  4 denominacion
-		 *  5 km
-		 *  6 hm
-		 *  7 se
-		 *  8 titularidad via
-		 *  9 luminosidad
-		 * 10 superficie
-		 * 11 visibilidad restringida
-		 * 12 factores atmosfericos
-		 * 13 mediana
-		 * 14 barrera seguridad
-		 * 15 paneles direccionales
-		 * 16 hitos arista
-		 * 17 capta faros
-		 * 18 prioridad regulada
-		 * 19 circulacion
-		 * 20 circulacion medidas especiales
-		 * 21 interseccion con
-		 * 22 tipo interseccion
-		 * 23 acondicionamiento interseccion
-		 * 24 fuera interseccion
-		 * 25 tipo accidente
-		 * 26 m (muertos)
-		 * 27 hg (heridos graves)
-		 * 28 hl (heridos leves)
-		 * 29 t_vehi (vehiculos implicados)
-		 * 30 municipio
-		 * 31 poblacion
-		 */
-		st_insert.setString(1, row[3].substring(row[3].length() - 4));// codigo_carretera
-		st_insert.setString(2, ""); // UPDATE: got from
-		// carretera_municipio
-		st_insert.setString(3, ""); // UPDATE: got from
-		// carretera_municipio
-		st_insert.setDouble(4,
-			Double.parseDouble(row[5] + "." + row[6]));
-		setDateNoException(st_insert, row);
-		st_insert.setString(6, row[25]); // valor
-		st_insert.setString(7, row[31]);
-		st_insert.setString(8, row[7]);
-		st_insert.setString(9, row[9]);
-		st_insert.setString(10, row[10]);
-		st_insert.setString(11, row[11]);// visibilidad_restringida_por
-		st_insert.setString(12, row[12]);
-		st_insert.setString(13, row[13]);
-		st_insert.setString(14, row[14]);
-		st_insert.setString(15, row[15]);
-		st_insert.setString(16, row[16]);// hitos_arista
-		st_insert.setString(17, row[17]);
-		st_insert.setString(18, row[18]);
-		st_insert.setString(19, row[19]);
-		st_insert.setString(20, row[20]);
-		st_insert.setString(21, row[21]);// interseccion_con
-		st_insert.setString(22, row[22]);
-		st_insert.setString(23, row[23]);
-		st_insert.setString(24, row[24]);
-		st_insert.setString(25, row[25]);
-		setMuertosNoException(st_insert, row);
-		setHeridosGravesNoException(st_insert, row);
-		setHeridosLevesNoException(st_insert, row);
-		setVehiculosImplicadosNoException(st_insert, row);
-		st_insert.setString(30, row[0]);
-		st_insert.addBatch();
+		String codigoCarretera = row[3].substring(row[3].length() - 4);
+		Double pk;
+		try {
+		    pk = Double.parseDouble(row[5] + "." + row[6]);
+		} catch (NumberFormatException e) {
+		    pk = null;
+		}
+		if (Catalog.getCarreteras().contains(codigoCarretera)) {
+		    st_insert.setString(1, codigoCarretera);// codigo_carretera
+		    st_insert.setString(2, ""); // UPDATE: got from
+		    // carretera_municipio
+		    st_insert.setString(3, ""); // UPDATE: got from
+		    // carretera_municipio
+		    st_insert.setDouble(4, pk);
+		    setDateNoException(st_insert, row);
+		    st_insert.setString(6, row[25]); // valor
+		    st_insert.setString(7, row[31]);
+		    st_insert.setString(8, row[7]);
+		    st_insert.setString(9, row[9]);
+		    st_insert.setString(10, row[10]);
+		    st_insert.setString(11, row[11]);// visibilidad_restringida_por
+		    st_insert.setString(12, row[12]);
+		    st_insert.setString(13, row[13]);
+		    st_insert.setString(14, row[14]);
+		    st_insert.setString(15, row[15]);
+		    st_insert.setString(16, row[16]);// hitos_arista
+		    st_insert.setString(17, row[17]);
+		    st_insert.setString(18, row[18]);
+		    st_insert.setString(19, row[19]);
+		    st_insert.setString(20, row[20]);
+		    st_insert.setString(21, row[21]);// interseccion_con
+		    st_insert.setString(22, row[22]);
+		    st_insert.setString(23, row[23]);
+		    st_insert.setString(24, row[24]);
+		    st_insert.setString(25, row[25]);
+		    setMuertosNoException(st_insert, row);
+		    setHeridosGravesNoException(st_insert, row);
+		    setHeridosLevesNoException(st_insert, row);
+		    setVehiculosImplicadosNoException(st_insert, row);
+		    st_insert.setString(30, row[0]);
+		    st_insert.addBatch();
+		}
 	    }
 	    st_insert.executeBatch();
 	    st_insert.close();
