@@ -59,7 +59,7 @@ public class FormImportAccidents extends JPanel implements IWindow {
 	loadFileButton = (JButton) AbeilleParser.getButtonsFromContainer(form)
 		.get("load_file");
 	areaMessages = (JTextArea) form.getTextComponent("area_messages");
-	areaMessages.append("Seleccione el archivo CSV a importar. \n");
+	areaMessages.append(PluginServices.getText(this, "select_file") + "\n");
 	areaMessages.setEditable(false);
 	importToDBButton.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent arg0) {
@@ -178,7 +178,8 @@ public class FormImportAccidents extends JPanel implements IWindow {
 	     * 30 municipio
 	     * 31 poblacion
 	     */
-	    areaMessages.append("Procesando accidentes..." + "\n \n");
+	    areaMessages.append(PluginServices.getText(this,
+		    "accidentes_processing_accidentes") + "\n \n");
 	    while((row = csvReader.readNext()) != null) {
 		String codigoCarretera = row[3].substring(row[3].length() - 4);
 		Double pk;
@@ -187,7 +188,8 @@ public class FormImportAccidents extends JPanel implements IWindow {
 		} catch (NumberFormatException e) {
 		    pk = null;
 		}
-		if (Catalog.getCarreteras().contains(codigoCarretera)) {
+		if (validateCarretera(row[0], codigoCarretera)
+			&& validatePK(row[0], pk)) {
 		    st_insert.setString(1, codigoCarretera);// codigo_carretera
 		    st_insert.setString(2, ""); // UPDATE: got from
 		    // carretera_municipio
@@ -221,12 +223,6 @@ public class FormImportAccidents extends JPanel implements IWindow {
 		    setVehiculosImplicadosNoException(st_insert, row);
 		    st_insert.setString(30, row[0]);
 		    st_insert.addBatch();
-		} else {
-		    areaMessages.append(row[0]
-			    + " "
-			    + PluginServices.getText(this,
-				    "error_carretera_not_found")
-				    + "\n");
 		}
 	    }
 	    st_insert.executeBatch();
@@ -271,6 +267,27 @@ public class FormImportAccidents extends JPanel implements IWindow {
 	    e.printStackTrace();
 	    e.getNextException().printStackTrace();
 	}
+    }
+
+    private boolean validatePK(String idAccidente, Double pk) {
+	if (pk != null) {
+	    return true;
+	}
+	areaMessages.append(idAccidente + " "
+		+ PluginServices.getText(this, "error_pk_not_found")
+		+ "\n");
+	return false;
+    }
+
+    private boolean validateCarretera(String idAccidente, String codigoCarretera)
+	    throws SQLException {
+	if (Catalog.getCarreteras().contains(codigoCarretera)) {
+	    return true;
+	}
+	areaMessages.append(idAccidente + " "
+		+ PluginServices.getText(this, "error_carretera_not_found")
+		+ "\n");
+	return false;
     }
 
     private void setVehiculosImplicadosNoException(PreparedStatement st_insert,
