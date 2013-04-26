@@ -3,10 +3,11 @@ SELECT m.nombre AS "Municipio", \
        i.tramo AS "Tramo", \
        c.denominacion AS "Denominación", \
        i.poblacion As "Población", \
-       i.valor As "ID", \
+       i.valor As "Tipo accidente", \
        i.fecha AS "Fecha", \
        i.pk AS "PK", \
-       i.se AS "SE", \
+       i.id_accidente AS "ID accidente", \
+       i.sentido AS "Sentido", \
        i.luminosidad AS "Luminosidad", \
        i.superficie AS "Superficie", \
        i.visibilidad_restringida_por As "Visibilidad restringida por", \
@@ -20,7 +21,7 @@ SELECT m.nombre AS "Municipio", \
        i.circulacion AS "Circulación", \
        i.circulacion_medidas_especiales AS "Circulación medidas especiales", \
        i.interseccion_con AS "Intersección con", \
-       i.tipo_otros AS "Tipo intersección", \
+       i.tipo_interseccion AS "Tipo intersección", \
        i.acondicionamiento_interseccion AS "Acondicionamiento intersección", \
        i.fuera_interseccion AS "Fuera intersección", \
        i.tipo_accidente AS "Tipo accidente", \
