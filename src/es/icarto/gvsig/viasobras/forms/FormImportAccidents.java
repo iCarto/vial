@@ -246,14 +246,33 @@ public class FormImportAccidents extends JPanel implements IWindow {
 		    + " FROM inventario.carretera_municipio b "
 		    + " WHERE b.codigo_carretera = a.codigo_carretera "
 		    + " AND b.pk_inicial_tramo <= a.pk "
-		    + " AND b.pk_final_tramo >= a.pk)" 
+		    + " AND b.pk_final_tramo >= a.pk)"
 		    + " WHERE tramo IS NULL";
+	    String update_pk = "UPDATE inventario.accidentes a "
+		    + " SET pk = ("
+		    + " SELECT max(pk_final_tramo) "
+		    + " FROM inventario.carretera_municipio c "
+		    + " WHERE a.codigo_carretera = c.codigo_carretera"
+		    + ") WHERE codigo_municipio IS NULL OR tramo IS NULL"
+		    + " RETURNING a.id_accidente";
+	    PreparedStatement st_update_pk = c.prepareStatement(update_pk);
 	    PreparedStatement st_update_municipio = c
 		    .prepareStatement(update_municipio);
 	    PreparedStatement st_update_tramo = c
 		    .prepareStatement(update_tramo);
 	    st_update_municipio.execute();
 	    st_update_tramo.execute();
+	    ResultSet rsPK = st_update_pk.executeQuery();
+	    // accidentes with codigo_municipio IS NULL or tramo IS NULL
+	    // will be updated to match last PK of carretera
+	    st_update_municipio.execute();
+	    st_update_tramo.execute();
+	    while (rsPK.next()) {
+		areaMessages.append(rsPK.getString(1)
+			+ " "
+			+ PluginServices.getText(this,
+				"accidentes_adjust_tramo") + "\n");
+	    }
 	    c.commit();
 	    c.close();
 	    csvReader.close();
