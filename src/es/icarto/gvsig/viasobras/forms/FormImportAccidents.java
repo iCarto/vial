@@ -255,11 +255,16 @@ public class FormImportAccidents extends JPanel implements IWindow {
 		    + " WHERE a.codigo_carretera = c.codigo_carretera"
 		    + ") WHERE codigo_municipio IS NULL OR tramo IS NULL"
 		    + " RETURNING a.id_accidente";
+	    String delete_nulls = "DELETE FROM inventario.accidentes "
+		    + " WHERE codigo_municipio IS NULL OR tramo IS NULL"
+		    + " RETURNING id_accidente";
 	    PreparedStatement st_update_pk = c.prepareStatement(update_pk);
 	    PreparedStatement st_update_municipio = c
 		    .prepareStatement(update_municipio);
 	    PreparedStatement st_update_tramo = c
 		    .prepareStatement(update_tramo);
+	    PreparedStatement st_delete_nulls = c
+		    .prepareStatement(delete_nulls);
 	    st_update_municipio.execute();
 	    st_update_tramo.execute();
 	    ResultSet rsPK = st_update_pk.executeQuery();
@@ -272,6 +277,15 @@ public class FormImportAccidents extends JPanel implements IWindow {
 			+ " "
 			+ PluginServices.getText(this,
 				"accidentes_adjust_tramo") + "\n");
+	    }
+	    // those which still are NULL for unknown reasons are deleted
+	    ResultSet rsNulls = st_delete_nulls.executeQuery();
+	    while (rsNulls.next()) {
+		accidentesToImport--;
+		areaMessages.append(rsNulls.getString(1)
+			+ " "
+			+ PluginServices.getText(this,
+				"accidentes_delete_nulls") + "\n");
 	    }
 	    c.commit();
 	    c.close();
