@@ -143,6 +143,7 @@ public class FormImportAccidents extends JPanel implements IWindow {
 	    initDomainMapper();
 	    c = DBFacade.getConnection();
 	    c.setAutoCommit(false);
+	    List<String> accidentes = getIDsAccidente();
 	    st_insert = c.prepareStatement(sql);
 	    csvReader = new CSVReader(new InputStreamReader(
 		    new FileInputStream(accidentesFile), "UTF8"));
@@ -183,7 +184,6 @@ public class FormImportAccidents extends JPanel implements IWindow {
 	     */
 	    areaMessages.append(PluginServices.getText(this,
 		    "accidentes_processing_accidentes") + "\n \n");
-	    List<String> accidentes = getIDsAccidente();
 	    accidentesToImport = 0;
 	    accidentesTotal = 0;
 	    while((row = csvReader.readNext()) != null) {
@@ -199,10 +199,8 @@ public class FormImportAccidents extends JPanel implements IWindow {
 			&& validatePK(row[0], pk)
 			&& validateID(row[0], accidentes)) {
 		    st_insert.setString(1, codigoCarretera);// codigo_carretera
-		    st_insert.setString(2, ""); // UPDATE: got from
-		    // carretera_municipio
-		    st_insert.setString(3, ""); // UPDATE: got from
-		    // carretera_municipio
+		    st_insert.setNull(2, java.sql.Types.VARCHAR);
+		    st_insert.setNull(3, java.sql.Types.VARCHAR);
 		    st_insert.setDouble(4, pk);
 		    setDateNoException(st_insert, row);
 		    st_insert.setString(6, row[25]); // valor
@@ -237,19 +235,19 @@ public class FormImportAccidents extends JPanel implements IWindow {
 	    st_insert.executeBatch();
 	    st_insert.close();
 	    String update_municipio = "UPDATE inventario.accidentes a "
-		    + " SET codigo_municipio = "
-		    + " (SELECT codigo_municipio "
+		    + " SET codigo_municipio = " + " (SELECT codigo_municipio "
 		    + " FROM inventario.carretera_municipio b "
 		    + " WHERE b.codigo_carretera = a.codigo_carretera "
 		    + " AND b.pk_inicial_tramo <= a.pk "
-		    + " AND b.pk_final_tramo >= a.pk)";
+		    + " AND b.pk_final_tramo >= a.pk)"
+		    + " WHERE codigo_municipio IS NULL";
 	    String update_tramo = "UPDATE inventario.accidentes a "
-		    + " SET tramo = "
-		    + " (SELECT orden_tramo " +
-		    " FROM inventario.carretera_municipio b " +
-		    " WHERE b.codigo_carretera = a.codigo_carretera " +
-		    " AND b.pk_inicial_tramo <= a.pk " +
-		    " AND b.pk_final_tramo >= a.pk)";
+		    + " SET tramo = " + " (SELECT orden_tramo "
+		    + " FROM inventario.carretera_municipio b "
+		    + " WHERE b.codigo_carretera = a.codigo_carretera "
+		    + " AND b.pk_inicial_tramo <= a.pk "
+		    + " AND b.pk_final_tramo >= a.pk)" 
+		    + " WHERE tramo IS NULL";
 	    PreparedStatement st_update_municipio = c
 		    .prepareStatement(update_municipio);
 	    PreparedStatement st_update_tramo = c
