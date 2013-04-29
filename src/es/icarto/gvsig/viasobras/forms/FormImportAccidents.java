@@ -9,10 +9,13 @@ import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import javax.swing.JButton;
@@ -41,6 +44,8 @@ public class FormImportAccidents extends JPanel implements IWindow {
     private JButton loadFileButton;
     private JTextArea areaMessages;
     private String accidentesFile;
+    private int accidentesToImport;
+    private int accidentesTotal;
 
     public FormImportAccidents() {
 	initPanel();
@@ -67,18 +72,14 @@ public class FormImportAccidents extends JPanel implements IWindow {
 			"accidentes_processing") + "\n");
 		importToDatabase();
 		areaMessages.append("\n"
-			+ PluginServices.getText(this,
-				"accidentes_done") + "\n");
+			+ PluginServices.getText(this, "accidentes_done") + " "
+			+ accidentesToImport + "/" + accidentesTotal + "\n");
 		importToDBButton.setEnabled(false);
 	    }
 	});
 	loadFileButton.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent arg0) {
 		loadFile();
-		areaMessages.append(PluginServices.getText(this,
-			"accidentes_file_loaded")
-			+ " "
-			+ accidentesFile + "\n");
 	    }
 	});
     }
@@ -89,6 +90,8 @@ public class FormImportAccidents extends JPanel implements IWindow {
 	if (action == JFileChooser.APPROVE_OPTION) {
 	    importToDBButton.setEnabled(true);
 	    accidentesFile = fileChooser.getSelectedFile().getAbsolutePath();
+	    areaMessages.append(PluginServices.getText(this,
+		    "accidentes_file_loaded") + " " + accidentesFile + "\n");
 	}
     }
 
@@ -180,7 +183,11 @@ public class FormImportAccidents extends JPanel implements IWindow {
 	     */
 	    areaMessages.append(PluginServices.getText(this,
 		    "accidentes_processing_accidentes") + "\n \n");
+	    List<String> accidentes = getIDsAccidente();
+	    accidentesToImport = 0;
+	    accidentesTotal = 0;
 	    while((row = csvReader.readNext()) != null) {
+		accidentesTotal++;
 		String codigoCarretera = row[3].substring(row[3].length() - 4);
 		Double pk;
 		try {
@@ -189,7 +196,8 @@ public class FormImportAccidents extends JPanel implements IWindow {
 		    pk = null;
 		}
 		if (validateCarretera(row[0], codigoCarretera)
-			&& validatePK(row[0], pk)) {
+			&& validatePK(row[0], pk)
+			&& validateID(row[0], accidentes)) {
 		    st_insert.setString(1, codigoCarretera);// codigo_carretera
 		    st_insert.setString(2, ""); // UPDATE: got from
 		    // carretera_municipio
@@ -223,6 +231,7 @@ public class FormImportAccidents extends JPanel implements IWindow {
 		    setVehiculosImplicadosNoException(st_insert, row);
 		    st_insert.setString(30, row[0]);
 		    st_insert.addBatch();
+		    accidentesToImport++;
 		}
 	    }
 	    st_insert.executeBatch();
@@ -266,6 +275,37 @@ public class FormImportAccidents extends JPanel implements IWindow {
 			    "accidentes_fail_file_not_imported") + "\n");
 	    e.printStackTrace();
 	    e.getNextException().printStackTrace();
+	}
+    }
+
+    private boolean validateID(String idAccidente, List<String> accidentes) {
+	if ((accidentes != null) && !accidentes.contains(idAccidente)) {
+	    return true;
+	}
+	areaMessages.append(idAccidente + " "
+		+ PluginServices
+		.getText(this, "error_id_already_in_db") + "\n");
+	return false;
+    }
+
+    private List<String> getIDsAccidente() {
+	Connection c;
+	try {
+	    c = DBFacade.getConnection();
+	    c.setAutoCommit(false);
+	    String sql = "SELECT id_accidente FROM inventario.accidentes";
+	    PreparedStatement st_select = c.prepareStatement(sql);
+	    st_select.execute();
+	    c.commit();
+	    ResultSet rs = st_select.executeQuery();
+	    List<String> accidentes = new ArrayList<String>();
+	    while(rs.next()) {
+		accidentes.add(rs.getString(1));
+	    }
+	    return accidentes;
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	    return null;
 	}
     }
 
