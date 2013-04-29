@@ -103,6 +103,8 @@ public class FormImportAccidents extends JPanel implements IWindow {
 		"pk," +
 		"fecha," +
 		"valor," +
+		"km,"+
+		"hm," +
 		"poblacion," +
 		"sentido," +
 		"luminosidad," +
@@ -132,7 +134,8 @@ public class FormImportAccidents extends JPanel implements IWindow {
 		"?, ?, ?, ?, ?, " +
 		"?, ?, ?, ?, ?, " +
 		"?, ?, ?, ?, ?, " +
-		"?, ?, ?, ?, ?)";
+		"?, ?, ?, ?, ?, " +
+		"?, ?)";
 
 	Connection c;
 	PreparedStatement st_insert;
@@ -202,32 +205,34 @@ public class FormImportAccidents extends JPanel implements IWindow {
 		    st_insert.setNull(2, java.sql.Types.VARCHAR);
 		    st_insert.setNull(3, java.sql.Types.VARCHAR);
 		    st_insert.setDouble(4, pk);
-		    setDateNoException(st_insert, row);
+		    setDateNoException(5, row[1], st_insert);
 		    st_insert.setString(6, row[25]); // valor
-		    st_insert.setString(7, row[31]);
-		    st_insert.setString(8, row[7]);
-		    st_insert.setString(9, row[9]);
-		    st_insert.setString(10, row[10]);
-		    st_insert.setString(11, row[11]);// visibilidad_restringida_por
-		    st_insert.setString(12, row[12]);
-		    st_insert.setString(13, row[13]);
-		    st_insert.setString(14, row[14]);
-		    st_insert.setString(15, row[15]);
-		    st_insert.setString(16, row[16]);// hitos_arista
-		    st_insert.setString(17, row[17]);
-		    st_insert.setString(18, row[18]);
-		    st_insert.setString(19, row[19]);
-		    st_insert.setString(20, row[20]);
-		    st_insert.setString(21, row[21]);// interseccion_con
-		    st_insert.setString(22, row[22]);
-		    st_insert.setString(23, row[23]);
-		    st_insert.setString(24, row[24]);
-		    st_insert.setString(25, row[25]);
-		    setMuertosNoException(st_insert, row);
-		    setHeridosGravesNoException(st_insert, row);
-		    setHeridosLevesNoException(st_insert, row);
-		    setVehiculosImplicadosNoException(st_insert, row);
-		    st_insert.setString(30, row[0]);
+		    setKMNoException(7, row[5], st_insert);
+		    setHMNoException(8, row[6], st_insert);
+		    st_insert.setString(9, row[31]);
+		    st_insert.setString(10, row[7]);
+		    st_insert.setString(11, row[9]);
+		    st_insert.setString(12, row[10]);
+		    st_insert.setString(13, row[11]);// visibilidad_restringida_por
+		    st_insert.setString(14, row[12]);
+		    st_insert.setString(15, row[13]);
+		    st_insert.setString(16, row[14]);
+		    st_insert.setString(17, row[15]);
+		    st_insert.setString(18, row[16]);// hitos_arista
+		    st_insert.setString(19, row[17]);
+		    st_insert.setString(20, row[18]);
+		    st_insert.setString(21, row[19]);
+		    st_insert.setString(22, row[20]);
+		    st_insert.setString(23, row[21]);// interseccion_con
+		    st_insert.setString(24, row[22]);
+		    st_insert.setString(25, row[23]);
+		    st_insert.setString(26, row[24]);
+		    st_insert.setString(27, row[25]);
+		    setMuertosNoException(28, row[26], st_insert);
+		    setHeridosGravesNoException(29, row[27], st_insert);
+		    setHeridosLevesNoException(30, row[28], st_insert);
+		    setVehiculosImplicadosNoException(31, row[29], st_insert);
+		    st_insert.setString(32, row[0]);
 		    st_insert.addBatch();
 		    accidentesToImport++;
 		}
@@ -309,6 +314,26 @@ public class FormImportAccidents extends JPanel implements IWindow {
 	}
     }
 
+    private void setHMNoException(int position, String value,
+	    PreparedStatement st_insert) throws SQLException {
+	try {
+	    int hm = Integer.parseInt(value);
+	    st_insert.setInt(position, hm);
+	} catch (NumberFormatException e) {
+	    st_insert.setNull(position, java.sql.Types.INTEGER);
+	}
+    }
+
+    private void setKMNoException(int position, String value,
+	    PreparedStatement st_insert) throws SQLException {
+	try {
+	    int km = Integer.parseInt(value);
+	    st_insert.setInt(position, km);
+	} catch (NumberFormatException e) {
+	    st_insert.setNull(position, java.sql.Types.INTEGER);
+	}
+    }
+
     private boolean validateID(String idAccidente, List<String> accidentes) {
 	if ((accidentes != null) && !accidentes.contains(idAccidente)) {
 	    return true;
@@ -361,57 +386,60 @@ public class FormImportAccidents extends JPanel implements IWindow {
 	return false;
     }
 
-    private void setVehiculosImplicadosNoException(PreparedStatement st_insert,
-	    String[] row) throws SQLException {
+    private void setVehiculosImplicadosNoException(int position, String value,
+	    PreparedStatement st_insert) throws SQLException {
 	try {
-	    int vehiculos_implicados = Integer.parseInt(row[29]);
-	    st_insert.setInt(29, vehiculos_implicados);
+	    int vehiculos_implicados = Integer.parseInt(value);
+	    st_insert.setInt(position, vehiculos_implicados);
 	} catch (NumberFormatException e) {
-	    st_insert.setNull(29, java.sql.Types.INTEGER);
+	    st_insert.setNull(position, java.sql.Types.INTEGER);
 	}
     }
 
-    private void setHeridosLevesNoException(PreparedStatement st_insert,
-	    String[] row) throws SQLException {
+    private void setHeridosLevesNoException(int position, String value,
+	    PreparedStatement st_insert) throws SQLException {
 	try {
-	    int heridos_leves = Integer.parseInt(row[28]);
-	    st_insert.setInt(28, heridos_leves);
+	    int heridos_leves = Integer.parseInt(value);
+	    st_insert.setInt(position, heridos_leves);
 	} catch (NumberFormatException e) {
-	    st_insert.setNull(28, java.sql.Types.INTEGER);
+	    st_insert.setNull(position, java.sql.Types.INTEGER);
 	}
     }
 
-    private void setHeridosGravesNoException(PreparedStatement st_insert, String[] row)
-	    throws SQLException {
+    private void setHeridosGravesNoException(int position, String value,
+	    PreparedStatement st_insert)
+		    throws SQLException {
 	try {
-	    int heridos_graves = Integer.parseInt(row[27]);
-	    st_insert.setInt(27, heridos_graves);
+	    int heridos_graves = Integer.parseInt(value);
+	    st_insert.setInt(position, heridos_graves);
 	} catch (NumberFormatException e) {
-	    st_insert.setNull(27, java.sql.Types.INTEGER);
+	    st_insert.setNull(position, java.sql.Types.INTEGER);
 	}
     }
 
-    private void setMuertosNoException(PreparedStatement st_insert, String[] row)
-	    throws SQLException {
+    private void setMuertosNoException(int position, String value,
+	    PreparedStatement st_insert)
+		    throws SQLException {
 	try{
-	    int muertos = Integer.parseInt(row[26]);
-	    st_insert.setInt(26, muertos);// muertos
+	    int muertos = Integer.parseInt(value);
+	    st_insert.setInt(position, muertos);// muertos
 	} catch (NumberFormatException e) {
-	    st_insert.setNull(26, java.sql.Types.INTEGER);
+	    st_insert.setNull(position, java.sql.Types.INTEGER);
 	}
     }
 
-    private void setDateNoException(PreparedStatement st_insert, String[] row)
-	    throws SQLException {
+    private void setDateNoException(int position, String value,
+	    PreparedStatement st_insert)
+		    throws SQLException {
 	try {
 	    DateFormat formatter = new SimpleDateFormat(
 		    "dd/MM/yyyy HH:mm");
-	    java.sql.Date fecha = new java.sql.Date(formatter.parse(
-		    row[1]).getTime());
-	    st_insert.setDate(5, fecha);
+	    java.sql.Date fecha = new java.sql.Date(formatter.parse(value)
+		    .getTime());
+	    st_insert.setDate(position, fecha);
 	} catch (ParseException e) {
 	    // set date to 1970-01-01
-	    st_insert.setDate(5, new java.sql.Date(0));
+	    st_insert.setDate(position, new java.sql.Date(0));
 	}
     }
 
