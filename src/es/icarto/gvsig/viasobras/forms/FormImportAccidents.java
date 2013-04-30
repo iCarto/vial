@@ -122,7 +122,8 @@ public class FormImportAccidents extends JPanel implements IWindow {
 	if (action == JFileChooser.APPROVE_OPTION) {
 	    importToDBButton.setEnabled(true);
 	    accidentesFile = fileChooser.getSelectedFile().getAbsolutePath();
-	    areaMessages.append(PluginServices.getText(this,
+	    areaMessages.append("\n"
+		    + PluginServices.getText(this,
 		    "accidentes_file_loaded") + " " + accidentesFile + "\n");
 	}
     }
@@ -530,8 +531,8 @@ public class FormImportAccidents extends JPanel implements IWindow {
 	    windowInfo = new WindowInfo(WindowInfo.MODALDIALOG
 		    | WindowInfo.RESIZABLE | WindowInfo.PALETTE);
 	    windowInfo.setTitle("Vías y Obras: importar accidentes");
-	    windowInfo.setHeight(275);
-	    windowInfo.setWidth(450);
+	    windowInfo.setHeight(475);
+	    windowInfo.setWidth(650);
 	}
 	return windowInfo;
     }
