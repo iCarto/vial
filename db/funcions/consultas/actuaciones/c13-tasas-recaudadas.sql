@@ -1,4 +1,4 @@
-﻿SELECT mun_cod.nombre AS "Municipio", \
+SELECT mun_cod.nombre AS "Municipio", \
        autorizacion_importe_tasas AS "Importe tasas", \
        autorizacion_importe_aval AS "Importe aval" \
 FROM inventario.actuaciones actuaciones, \

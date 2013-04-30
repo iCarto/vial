@@ -1,4 +1,4 @@
-﻿SELECT mun_cod.nombre AS "Municipio", \
+SELECT mun_cod.nombre AS "Municipio", \
        actuaciones.codigo_actuacion AS "Código actuación", \
        actuaciones.codigo_carretera AS "Código (LU-P)", \
        carreteras.denominacion as "Denominación", \
