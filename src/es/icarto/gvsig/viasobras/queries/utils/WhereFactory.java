@@ -98,6 +98,21 @@ public class WhereFactory {
 	return whereSQL;
 
     }
+    
+    public static String createActuaciones(boolean hasWhere,
+	    int queryCode,
+	    String carreteraCode,
+	    String municipioCode) {
+	String whereSQL = checkIfHasWhere(hasWhere);
+	
+	switch (queryCode) {
+	case 01:
+	    whereSQL = getWhereCarreteraActuaciones(whereSQL, carreteraCode);
+	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
+	    break;
+	}
+	return whereSQL;
+    }
 
     private static String getWhereAforo(String whereSQL, String mayorValue,
 	    String menorValue) {
@@ -253,6 +268,24 @@ public class WhereFactory {
     private static String getWhereCarretera(String where, String carreteraCode) {
 	if (!carreteraCode.equalsIgnoreCase(Catalog.CARRETERA_ALL)) {
 	    where = where + " i.codigo_carretera = '" + carreteraCode
+		    + "'";
+	} else {
+	    where = where + " 1=1 ";
+	}
+	return where;
+    }
+    
+    private static String getWhereMunicipioActuaciones(String where, String municipioCode) {
+	if (!municipioCode.equalsIgnoreCase(Catalog.CONCELLO_ALL)) {
+	    where = where + " AND act_mun.codigo_municipio = '" + municipioCode
+		    + "'";
+	}
+	return where;
+    }
+
+    private static String getWhereCarreteraActuaciones(String where, String carreteraCode) {
+	if (!carreteraCode.equalsIgnoreCase(Catalog.CARRETERA_ALL)) {
+	    where = where + " actuaciones.codigo_carretera = '" + carreteraCode
 		    + "'";
 	} else {
 	    where = where + " 1=1 ";

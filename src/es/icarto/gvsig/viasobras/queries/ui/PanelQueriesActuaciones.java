@@ -39,6 +39,7 @@ import es.icarto.gvsig.viasobras.domain.catalog.Concello;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.DBFacade;
 import es.icarto.gvsig.viasobras.queries.utils.TableModelQueries;
 import es.icarto.gvsig.viasobras.queries.utils.TableModelResults;
+import es.icarto.gvsig.viasobras.queries.utils.WhereFactory;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
 
@@ -204,17 +205,21 @@ public class PanelQueriesActuaciones extends gvWindow {
 		}
 	    }
 	}
-
-	private String[] getFilters() {
-	    String[] filters = new String[2];
-	    filters[0] = Catalog.getCarreteraSelected();
-	    filters[1] = Catalog.getConcelloSelected();
-	    return filters;
-	}
+    }
+    
+    private String[] getFilters() {
+	String[] filters = new String[2];
+	filters[0] = Catalog.getCarreteraSelected();
+	filters[1] = Catalog.getConcelloSelected();
+	return filters;
     }
 
     private String getWhereClause(boolean hasWhere) throws SQLException {
-	return " ";
+	String[] filters = getFilters();
+	return WhereFactory.createActuaciones(hasWhere, 
+			Integer.parseInt(queryCode.substring(1)), 
+			filters[0], 
+			filters[1]);
     }
 
     private String[] getQueryContents() throws Exception {
