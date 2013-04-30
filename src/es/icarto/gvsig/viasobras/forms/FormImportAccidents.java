@@ -50,6 +50,35 @@ public class FormImportAccidents extends JPanel implements IWindow {
     private int accidentesToImport;
     private int accidentesTotal;
 
+    private String ID_ACCIDENTE = "ID_ACCIDENTE";
+    private String FECHA_HORA = "FECHA_HORA_ACCI";
+    private String CARRETERA = "CARRETERA";
+    private String KM = "KM";
+    private String HM = "HM";
+    private String SENTIDO = "SE";
+    private String LUMINOSIDAD = "LUMINOSIDAD";
+    private String SUPERFICIE = "SUPERFICIE";
+    private String VISIBILIDAD = "VISIBILIDAD_RESTRINGIDA_POR";
+    private String FACTORES_ATMOSFERICOS = "FACTORES_ATMOSFERICOS";
+    private String MEDIANA = "MEDIANA_ENTRE_CALZADAS";
+    private String BARRERA = "BARRERA_SEGURIDAD";
+    private String PANELES = "PANELES_DIRECCIONALES";
+    private String ARISTA = "HITOS_ARISTA";
+    private String CAPTA_FAROS = "CAPTA_FAROS";
+    private String PRIORIDAD = "PRIORIDAD_REGULADA_POR";
+    private String CIRCULACION = "CIRCULACION";
+    private String CIRCULACION_ESPECIAL = "CIRCULACION_MEDIDAS_ESPECIALES";
+    private String INTERSECCION = "INTERSECCION_CON";
+    private String INTERSECCION_TIPO = "TIPO_INTERSECCION";
+    private String INTERSECCION_ACONDICIONAMIENTO = "ACONDICIONAMIENTO_INTERSECCION";
+    private String INTERSECCION_FUERA = "FUERA_INTERSECCION";
+    private String TIPO_ACCIDENTE = "TIPO_ACCIDENTE";
+    private String MUERTOS = "M";
+    private String HERIDOS_GRAVES = "HG";
+    private String HERIDOS_LEVES = "HL";
+    private String VEHICULOS_IMPLICADOS = "T_VEHI";
+    private String POBLACION = "Población";
+
     public FormImportAccidents() {
 	initPanel();
     }
@@ -150,24 +179,24 @@ public class FormImportAccidents extends JPanel implements IWindow {
 	    c = DBFacade.getConnection();
 	    c.setAutoCommit(false);
 	    List<String> accidentes = getIDsAccidente();
-	    Set<String> cols = getColumnsToRead();
+	    Set<String> colsToRead = getColumnsToRead();
 	    st_insert = c.prepareStatement(sql);
 	    csvReader = new CSVReader(new InputStreamReader(
 		    new FileInputStream(accidentesFile), "UTF8"));
 	    String[] header = csvReader.readNext(); // header
-	    HashMap<String, Integer> columns = new HashMap<String, Integer>();
+	    HashMap<String, Integer> cols = new HashMap<String, Integer>();
 	    for (int i = 0; i < header.length; i++) {
-		if (cols.contains(header[i])) {
-		    columns.put(header[i], i);
-		    cols.remove(header[i]);
+		if (colsToRead.contains(header[i])) {
+		    cols.put(header[i], i);
+		    colsToRead.remove(header[i]);
 		}
 	    }
 	    areaMessages.append(PluginServices.getText(this,
 		    "accidentes_processing_accidentes") + "\n \n");
 	    accidentesToImport = 0;
 	    accidentesTotal = 0;
-	    if (cols.size() > 0) {
-		for (String col : cols) {
+	    if (colsToRead.size() > 0) {
+		for (String col : colsToRead) {
 		    areaMessages.append(col
 			    + " - "
 			    + PluginServices.getText(this,
@@ -180,48 +209,56 @@ public class FormImportAccidents extends JPanel implements IWindow {
 	    }
 	    while((row = csvReader.readNext()) != null) {
 		accidentesTotal++;
-		String codigoCarretera = row[3].substring(row[3].length() - 4);
+		String codigoCarretera = row[cols.get(CARRETERA)]
+			.substring(row[cols.get(CARRETERA)].length() - 4);
 		Double pk;
 		try {
-		    pk = Double.parseDouble(row[5] + "." + row[6]);
+		    pk = Double.parseDouble(row[cols.get(KM)] + "."
+			    + row[cols.get(HM)]);
 		} catch (NumberFormatException e) {
 		    pk = null;
 		}
-		if (validateCarretera(row[0], codigoCarretera)
-			&& validatePK(row[0], pk)
-			&& validateID(row[0], accidentes)) {
+		if (validateCarretera(row[cols.get(ID_ACCIDENTE)], codigoCarretera)
+			&& validatePK(row[cols.get(ID_ACCIDENTE)], pk)
+			&& validateID(row[cols.get(ID_ACCIDENTE)], accidentes)) {
 		    st_insert.setString(1, codigoCarretera);// codigo_carretera
 		    st_insert.setNull(2, java.sql.Types.VARCHAR);
 		    st_insert.setNull(3, java.sql.Types.VARCHAR);
 		    st_insert.setDouble(4, pk);
-		    setDateNoException(5, row[1], st_insert);
-		    st_insert.setString(6, row[25]); // valor
-		    setKMNoException(7, row[5], st_insert);
-		    setHMNoException(8, row[6], st_insert);
-		    st_insert.setString(9, row[31]);
-		    st_insert.setString(10, row[7]);
-		    st_insert.setString(11, row[9]);
-		    st_insert.setString(12, row[10]);
-		    st_insert.setString(13, row[11]);// visibilidad_restringida_por
-		    st_insert.setString(14, row[12]);
-		    st_insert.setString(15, row[13]);
-		    st_insert.setString(16, row[14]);
-		    st_insert.setString(17, row[15]);
-		    st_insert.setString(18, row[16]);// hitos_arista
-		    st_insert.setString(19, row[17]);
-		    st_insert.setString(20, row[18]);
-		    st_insert.setString(21, row[19]);
-		    st_insert.setString(22, row[20]);
-		    st_insert.setString(23, row[21]);// interseccion_con
-		    st_insert.setString(24, row[22]);
-		    st_insert.setString(25, row[23]);
-		    st_insert.setString(26, row[24]);
-		    st_insert.setString(27, row[25]);
-		    setMuertosNoException(28, row[26], st_insert);
-		    setHeridosGravesNoException(29, row[27], st_insert);
-		    setHeridosLevesNoException(30, row[28], st_insert);
-		    setVehiculosImplicadosNoException(31, row[29], st_insert);
-		    st_insert.setString(32, row[0]);
+		    setDateNoException(5, row[cols.get(FECHA_HORA)], st_insert); // fecha
+		    st_insert.setString(6, row[cols.get(TIPO_ACCIDENTE)]);
+		    setKMNoException(7, row[cols.get(KM)], st_insert);
+		    setHMNoException(8, row[cols.get(HM)], st_insert);
+		    st_insert.setString(9, row[cols.get(POBLACION)]); // poblacion
+		    st_insert.setString(10, row[cols.get(SENTIDO)]);
+		    st_insert.setString(11, row[cols.get(LUMINOSIDAD)]);
+		    st_insert.setString(12, row[cols.get(SUPERFICIE)]);
+		    st_insert.setString(13, row[cols.get(VISIBILIDAD)]); // visibilidad
+		    st_insert.setString(14,
+			    row[cols.get(FACTORES_ATMOSFERICOS)]);
+		    st_insert.setString(15, row[cols.get(MEDIANA)]);
+		    st_insert.setString(16, row[cols.get(BARRERA)]);
+		    st_insert.setString(17, row[cols.get(PANELES)]); // paneles_direccionales
+		    st_insert.setString(18, row[cols.get(ARISTA)]);
+		    st_insert.setString(19, row[cols.get(CAPTA_FAROS)]);
+		    st_insert.setString(20, row[cols.get(PRIORIDAD)]);
+		    st_insert.setString(21, row[cols.get(CIRCULACION)]); // circulacion
+		    st_insert
+		    .setString(22, row[cols.get(CIRCULACION_ESPECIAL)]);
+		    st_insert.setString(23, row[cols.get(INTERSECCION)]);
+		    st_insert.setString(24, row[cols.get(INTERSECCION_TIPO)]);
+		    st_insert.setString(25,
+			    row[cols.get(INTERSECCION_ACONDICIONAMIENTO)]); // interseccion_acondicionamiento
+		    st_insert.setString(26, row[cols.get(INTERSECCION_FUERA)]);
+		    st_insert.setString(27, row[cols.get(TIPO_ACCIDENTE)]);
+		    setMuertosNoException(28, row[cols.get(MUERTOS)], st_insert);
+		    setHeridosGravesNoException(29,
+			    row[cols.get(HERIDOS_GRAVES)], st_insert); // heridos_graves
+		    setHeridosLevesNoException(30,
+			    row[cols.get(HERIDOS_LEVES)], st_insert);
+		    setVehiculosImplicadosNoException(31,
+			    row[cols.get(VEHICULOS_IMPLICADOS)], st_insert);
+		    st_insert.setString(32, row[cols.get(ID_ACCIDENTE)]);
 		    st_insert.addBatch();
 		    accidentesToImport++;
 		}
@@ -305,61 +342,33 @@ public class FormImportAccidents extends JPanel implements IWindow {
 
     private Set<String> getColumnsToRead() {
 	Set<String> columns = new HashSet<String>();
-	String ID_ACCIDENTE = "ID_ACCIDENTE";
 	columns.add(ID_ACCIDENTE);
-	String FECHA_HORA = "FECHA_HORA_ACCI";
 	columns.add(FECHA_HORA);
-	String CARRETERA = "CARRETERA";
 	columns.add(CARRETERA);
-	String KM = "KM";
 	columns.add(KM);
-	String HM = "HM";
 	columns.add(HM);
-	String SENTIDO = "SE";
 	columns.add(SENTIDO);
-	String LUMINOSIDAD = "LUMINOSIDAD";
 	columns.add(LUMINOSIDAD);
-	String SUPERFICIE = "SUPERFICIE";
 	columns.add(SUPERFICIE);
-	String VISIBILIDAD = "VISIBILIDAD_RESTRINGIDA_POR";
 	columns.add(VISIBILIDAD);
-	String FACTORES_ATMOSFERICOS = "FACTORES_ATMOSFERICOS";
 	columns.add(FACTORES_ATMOSFERICOS);
-	String MEDIANA = "MEDIANA_ENTRE_CALZADAS";
 	columns.add(MEDIANA);
-	String BARRERA = "BARRERA_SEGURIDAD";
 	columns.add(BARRERA);
-	String PANELES = "PANELES_DIRECCIONALES";
 	columns.add(PANELES);
-	String ARISTA = "HITOS_ARISTA";
 	columns.add(ARISTA);
-	String CAPTA_FAROS = "CAPTA_FAROS";
 	columns.add(CAPTA_FAROS);
-	String PRIORIDAD = "PRIORIDAD_REGULADA_POR";
 	columns.add(PRIORIDAD);
-	String CIRCULACION = "CIRCULACION";
 	columns.add(CIRCULACION);
-	String CIRCULACION_ESPECIAL = "CIRCULACION_MEDIDAS_ESPECIALES";
 	columns.add(CIRCULACION_ESPECIAL);
-	String INTERSECCION = "INTERSECCION_CON";
 	columns.add(INTERSECCION);
-	String INTERSECCION_TIPO = "TIPO_INTERSECCION";
 	columns.add(INTERSECCION_TIPO);
-	String INTERSECCION_ACONDICIONAMIENTO = "ACONDICIONAMIENTO_INTERSECCION";
 	columns.add(INTERSECCION_ACONDICIONAMIENTO);
-	String INTERSECCION_FUERA = "FUERA_INTERSECCION";
 	columns.add(INTERSECCION_FUERA);
-	String TIPO_ACCIDENTE = "TIPO_ACCIDENTE";
 	columns.add(TIPO_ACCIDENTE);
-	String MUERTOS = "M";
 	columns.add(MUERTOS);
-	String HERIDOS_GRAVES = "HG";
 	columns.add(HERIDOS_GRAVES);
-	String HERIDOS_LEVES = "HL";
 	columns.add(HERIDOS_LEVES);
-	String VEHICULOS_IMPLICADOS = "T_VEHI";
 	columns.add(VEHICULOS_IMPLICADOS);
-	String POBLACION = "Población";
 	columns.add(POBLACION);
 	return columns;
     }
