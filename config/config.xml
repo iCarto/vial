@@ -86,8 +86,19 @@
 				<action-tool icon="viasobras-consultas" tooltip="Consultas estado actual"
 					action-command="QueriesEstado" position="7"/>
 			</tool-bar>
-		</extension>		
-
+		</extension>
+		
+		<extension class-name="es.icarto.gvsig.viasobras.QueriesActuacionesExtension" description="FORMS_PANEL" active="true">
+			<menu action-command="separator" text="Vías y Obras" position="30800" is_separator="true"/>
+			<menu text="Vías y Obras/Consultas actuaciones"
+				icon="viasobras-consultas"
+				position="30850"/>
+			<tool-bar name="ViasObrasLugo" position="80">
+				<action-tool icon="viasobras-consultas" tooltip="Consultas actuaciones"
+					action-command="QueriesEstado" position="7"/>
+			</tool-bar>
+		</extension>
+			
 		<extension class-name="es.icarto.gvsig.viasobras.ImportAccidentesExtension" description="FORMS_PANEL" active="true">
 			<menu action-command="separator" text="Vías y Obras" position="30899" is_separator="true"/>
 			<menu text="Vías y Obras/Importar accidentes"
