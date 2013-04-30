@@ -44,34 +44,34 @@ SELECT m.nombre as "Municipio", \
        WHEN c.intermunicipal \
             AND i.longitud_rampas <> 0 \
             AND i.longitud_variantes <> 0 THEN \
-                COALESCE(c.observaciones, '')|| \
-                ' TRONCO ('||i.longitud_tronco||'),'|| \
-                ' RAMPAS ('||i.longitud_rampas||'),'|| \
-                ' TRAMOS VIEJOS ('||i.longitud_variantes||');'|| \
-                ' INTERMUNICIPAL '|| trv_m_array.longitud_por_municipio \
+                'TRONCO ('||i.longitud_tronco||'), '|| \
+                'RAMPAS ('||i.longitud_rampas||'), '|| \
+                'TRAMOS VIEJOS ('||i.longitud_variantes||'); '|| \
+                'INTERMUNICIPAL '|| trv_m_array.longitud_por_municipio||'; '|| \
+                COALESCE(c.observaciones, '') \
        WHEN c.intermunicipal \
             AND i.longitud_rampas <> 0 THEN \
-                COALESCE(c.observaciones, '')|| \
-                ' TRONCO ('||i.longitud_tronco||'),'|| \
-                ' RAMPAS ('||i.longitud_rampas||');'|| \
-                ' INTERMUNICIPAL '|| trv_m_array.longitud_por_municipio \
+                'TRONCO ('||i.longitud_tronco||'), '|| \
+                'RAMPAS ('||i.longitud_rampas||'); '|| \
+                'INTERMUNICIPAL '|| trv_m_array.longitud_por_municipio||'; '|| \
+                COALESCE(c.observaciones, '') \
        WHEN c.intermunicipal \
             AND i.longitud_variantes <> 0 THEN \
-                COALESCE(c.observaciones, '')|| \
-                ' TRONCO ('||i.longitud_tronco||'),'|| \
-                ' TRAMOS VIEJOS ('||i.longitud_variantes||');'|| \
-                ' INTERMUNICIPAL '|| trv_m_array.longitud_por_municipio \
+                'TRONCO ('||i.longitud_tronco||'), '|| \
+                'TRAMOS VIEJOS ('||i.longitud_variantes||'); '|| \
+                'INTERMUNICIPAL '|| trv_m_array.longitud_por_municipio||'; '|| \
+                COALESCE(c.observaciones, '') \
        WHEN i.longitud_rampas <> 0 THEN \
-                COALESCE(c.observaciones, '')|| \
-                ' TRONCO ('||i.longitud_tronco||'),'|| \
-                ' RAMPAS ('||i.longitud_rampas||')' \
+                'TRONCO ('||i.longitud_tronco||'), '|| \
+                'RAMPAS ('||i.longitud_rampas||'); '|| \
+                COALESCE(c.observaciones, '') \
        WHEN i.longitud_variantes <> 0 THEN \
-                COALESCE(c.observaciones, '')|| \
-                ' TRONCO('||i.longitud_tronco||'),'|| \
-                ' TRAMOS VIEJOS ('||i.longitud_variantes||')' \
+                'TRONCO('||i.longitud_tronco||'), '|| \
+                'TRAMOS VIEJOS ('||i.longitud_variantes||'); '|| \
+                COALESCE(c.observaciones, '') \
        WHEN c.intermunicipal THEN \
-                COALESCE(c.observaciones, '')|| \
-                ' INTERMUNICIPAL '||trv_m_array.longitud_por_municipio \
+                'INTERMUNICIPAL '||trv_m_array.longitud_por_municipio||'; '|| \
+                COALESCE(c.observaciones, '') \
        ELSE COALESCE(c.observaciones, '') \
        END AS "Observaciones" \
 FROM inventario.carreteras AS c, \
