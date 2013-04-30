@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.LayoutFocusTraversalPolicy;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
@@ -49,6 +50,8 @@ public class PanelQueriesActuaciones extends gvWindow {
     private FormPanel formBody;
     private JComboBox carreteras;
     private JComboBox concellos;
+    private JTextField anho;
+    private JTextField valor;
     private JScrollPane scrollPane;
     private JTable queriesTable;
     private DefaultTableModel queriesModel;
@@ -78,6 +81,8 @@ public class PanelQueriesActuaciones extends gvWindow {
     private void initWidgets() {
 	carreteras = (JComboBox) formBody.getComponentByName("carretera");
 	concellos = (JComboBox) formBody.getComponentByName("concello");
+	anho = (JTextField) formBody.getComponentByName("anho");
+	valor = (JTextField) formBody.getComponentByName("valor");
 	queriesTable = (JTable) formBody.getComponentByName("queriesTable");
 	runQueriesB = (JButton) formBody.getComponentByName("runQueriesButton");
 	runQueriesB.setEnabled(false);
@@ -207,7 +212,7 @@ public class PanelQueriesActuaciones extends gvWindow {
 	}
     }
     
-    private String[] getFilters() {
+    private String[] getFilters() {	
 	String[] filters = new String[2];
 	filters[0] = Catalog.getCarreteraSelected();
 	filters[1] = Catalog.getConcelloSelected();
@@ -215,11 +220,19 @@ public class PanelQueriesActuaciones extends gvWindow {
     }
 
     private String getWhereClause(boolean hasWhere) throws SQLException {
+	String anhoValue;
+	String textValue;
+	
+	anhoValue = anho.getText();
+	textValue = valor.getText();
+	
 	String[] filters = getFilters();
 	return WhereFactory.createActuaciones(hasWhere, 
 			Integer.parseInt(queryCode.substring(1)), 
 			filters[0], 
-			filters[1]);
+			filters[1],
+			anhoValue,
+			textValue);
     }
 
     private String[] getQueryContents() throws Exception {
