@@ -40,7 +40,7 @@ INSERT INTO inventario.carreteras_lugo(
               "topografia" AS topografia,
               "tipo_suelo" AS tipo_suelo,
               "longitud" AS longitud,
-              NULL AS observaciones,
+              'LONG ANTIGUA ('||"long_ant"||')' AS observaciones,
               "the_geom" AS the_geom
        FROM inventario.carreteras_tmp
 );
