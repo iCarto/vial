@@ -64,8 +64,8 @@ public class TestsQueriesActuaciones {
 			Integer.parseInt(codigo.substring(1)),
 			carreteraCode,
 			municipioCode,
-			valor,
-			anho);
+			anho,
+			valor);
 		consulta = consulta.replaceAll("\\[\\[WHERE\\]\\]", where);
 		executeQuery(consulta);
 	    } catch (SQLException e) {
@@ -96,8 +96,8 @@ public class TestsQueriesActuaciones {
 			Integer.parseInt(codigo.substring(1)),
 			carreteraCode,
 			municipioCode,
-			valor,
-			anho);
+			anho,
+			valor);
 		consulta = consulta.replaceAll("\\[\\[WHERE\\]\\]", where);
 		executeQuery(consulta);
 	    } catch (SQLException e) {
@@ -128,8 +128,8 @@ public class TestsQueriesActuaciones {
 			Integer.parseInt(codigo.substring(1)),
 			carreteraCode,
 			municipioCode,
-			valor,
-			anho);
+			anho,
+			valor);
 		consulta = consulta.replaceAll("\\[\\[WHERE\\]\\]", where);
 		executeQuery(consulta);
 	    } catch (SQLException e) {
@@ -160,8 +160,8 @@ public class TestsQueriesActuaciones {
 			Integer.parseInt(codigo.substring(1)),
 			carreteraCode,
 			municipioCode,
-			valor,
-			anho);
+			anho,
+			valor);
 		consulta = consulta.replaceAll("\\[\\[WHERE\\]\\]", where);
 		executeQuery(consulta);
 	    } catch (SQLException e) {
@@ -193,8 +193,8 @@ public class TestsQueriesActuaciones {
 			Integer.parseInt(codigo.substring(1)),
 			carreteraCode,
 			municipioCode,
-			valor,
-			anho);
+			anho,
+			valor);
 		consulta = consulta.replaceAll("\\[\\[WHERE\\]\\]", where);
 		executeQuery(consulta);
 	    } catch (SQLException e) {
@@ -225,8 +225,8 @@ public class TestsQueriesActuaciones {
 			Integer.parseInt(codigo.substring(1)),
 			carreteraCode,
 			municipioCode,
-			valor,
-			anho);
+			anho,
+			valor);
 		consulta = consulta.replaceAll("\\[\\[WHERE\\]\\]", where);
 		executeQuery(consulta);
 	    } catch (SQLException e) {
@@ -257,8 +257,8 @@ public class TestsQueriesActuaciones {
 			Integer.parseInt(codigo.substring(1)),
 			carreteraCode,
 			municipioCode,
-			valor,
-			anho);
+			anho,
+			valor);
 		consulta = consulta.replaceAll("\\[\\[WHERE\\]\\]", where);
 		executeQuery(consulta);
 	    } catch (SQLException e) {
@@ -289,8 +289,8 @@ public class TestsQueriesActuaciones {
 			Integer.parseInt(codigo.substring(1)),
 			carreteraCode,
 			municipioCode,
-			valor,
-			anho);
+			anho,
+			valor);
 		consulta = consulta.replaceAll("\\[\\[WHERE\\]\\]", where);
 		executeQuery(consulta);
 	    } catch (SQLException e) {
