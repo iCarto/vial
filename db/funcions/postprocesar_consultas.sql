@@ -218,6 +218,17 @@ INSERT INTO consultas.consultas
        FROM public.consultas_sql
        WHERE id=22;
 
+-- CONSULTAS ACTUACIONES
+INSERT INTO consultas.consultas_actuaciones
+       SELECT 'C02',
+              'Carreteras donde hubo más de 10 accidentes',
+              sql_string,
+              'SI',
+              'Carreteras donde hubo más de 10 accidentes',
+              ''
+       FROM public.consultas_sql
+       WHERE id=23;
+
 DROP TABLE IF EXISTS public.consultas_sql;
 
 INSERT INTO consultas.aforos VALUES(0, 49);

@@ -124,5 +124,13 @@ sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH D
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname -c "$sql_query"
 
+#CONSULTAS ACTUACIONES
+
+sql_query_path=`pwd`/funcions/consultas/actuaciones/c02-carreteras-mayor10-accidentes.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/postprocesar_consultas.sql

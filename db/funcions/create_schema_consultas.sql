@@ -12,6 +12,17 @@ CREATE TABLE consultas.consultas(
        CONSTRAINT pk_consultas PRIMARY KEY (codigo)
 );
 
+DROP TABLE IF EXISTS consultas.consultas_actuaciones;
+CREATE TABLE consultas.consultas_actuaciones(
+       codigo varchar NOT NULL,
+       descripcion varchar,
+       consulta varchar,
+       haswhere varchar,
+       titulo varchar,
+       subtitulo varchar,
+       CONSTRAINT pk_consultas_actuaciones PRIMARY KEY (codigo)
+);
+
 DROP TABLE IF EXISTS consultas.aforos;
 CREATE TABLE consultas.aforos(
        valor_minimo INTEGER,
