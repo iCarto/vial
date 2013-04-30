@@ -126,7 +126,27 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
 
 #CONSULTAS ACTUACIONES
 
-sql_query_path=`pwd`/funcions/consultas/actuaciones/c02-carreteras-mayor10-accidentes.sql
+sql_query_path=`pwd`/funcions/consultas/actuaciones/c01-listado-accidentes-tipo.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+sql_query_path=`pwd`/funcions/consultas/actuaciones/c10-listado-autorizaciones-tipo.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+sql_query_path=`pwd`/funcions/consultas/actuaciones/c11-listado-autorizaciones-peticionario.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+sql_query_path=`pwd`/funcions/consultas/actuaciones/c12-listado-autorizaciones-beneficiario.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+sql_query_path=`pwd`/funcions/consultas/actuaciones/c13-tasas-recaudadas.sql
 sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname -c "$sql_query"

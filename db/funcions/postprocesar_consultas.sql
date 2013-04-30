@@ -220,14 +220,54 @@ INSERT INTO consultas.consultas
 
 -- CONSULTAS ACTUACIONES
 INSERT INTO consultas.consultas_actuaciones
-       SELECT 'C02',
-              'Carreteras donde hubo más de 10 accidentes',
+       SELECT 'C01',
+              'Listado de accidentes por tipo',
               sql_string,
               'SI',
-              'Carreteras donde hubo más de 10 accidentes',
+              'Listado de accidentes por tipo',
               ''
        FROM public.consultas_sql
        WHERE id=23;
+
+INSERT INTO consultas.consultas_actuaciones
+       SELECT 'C10',
+              'Listado de autorizaciones por tipo',
+              sql_string,
+              'SI',
+              'Listado de autorizaciones por tipo',
+              ''
+       FROM public.consultas_sql
+       WHERE id=24;
+
+INSERT INTO consultas.consultas_actuaciones
+       SELECT 'C11',
+              'Listado de autorizaciones por peticionario',
+              sql_string,
+              'SI',
+              'Listado de autorizaciones por peticionario',
+              ''
+       FROM public.consultas_sql
+       WHERE id=25;
+
+INSERT INTO consultas.consultas_actuaciones
+       SELECT 'C12',
+              'Listado de autorizaciones por beneficiario',
+              sql_string,
+              'SI',
+              'Listado de autorizaciones por beneficiario',
+              ''
+       FROM public.consultas_sql
+       WHERE id=26;
+
+INSERT INTO consultas.consultas_actuaciones
+       SELECT 'C13',
+              'Tasas recaudadas por año y/o tipo',
+              sql_string,
+              'SI',
+              'Tasas recaudadas por año y/o tipo',
+              ''
+       FROM public.consultas_sql
+       WHERE id=27;
 
 DROP TABLE IF EXISTS public.consultas_sql;
 
