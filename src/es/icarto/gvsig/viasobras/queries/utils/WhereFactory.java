@@ -30,16 +30,16 @@ public class WhereFactory {
 	switch (queryCode) {
 	case 02:
 	    whereSQL = getWhereCategoriaCarretera(whereSQL,
-		    				  carreteraCode,
-		    				  municipioCode, 
-		    				  textValue);
+		    carreteraCode,
+		    municipioCode,
+		    textValue);
 	    break;
 	case 10:
 	    whereSQL = getWhereCarretera(whereSQL, carreteraCode);
 	    whereSQL = getWhereMunicipio(whereSQL, municipioCode);
 	    whereSQL = getWhereCaracteristicaCompareC10(whereSQL,
-		    					mayorValue,
-		    					menorValue);
+		    mayorValue,
+		    menorValue);
 	    break;
 	case 20:
 	    whereSQL = getWhereCarretera(whereSQL, carreteraCode);
@@ -66,15 +66,15 @@ public class WhereFactory {
 	    whereSQL = getWhereCarretera(whereSQL, carreteraCode);
 	    whereSQL = getWhereMunicipio(whereSQL, municipioCode);
 	    whereSQL = getWhereCaracteristicaCompare(whereSQL,
-		    				     mayorValue,
-		    				     menorValue);
+		    mayorValue,
+		    menorValue);
 	    break;
 	case 41:
 	    whereSQL = getWhereCotasMinimasMaximas(whereSQL,
-		    			 	   carreteraCode,
-		    			 	   municipioCode, 
-		    			 	   mayorValue, 
-		    			 	   menorValue);
+		    carreteraCode,
+		    municipioCode,
+		    mayorValue,
+		    menorValue);
 	    break;
 	case 50:
 	    whereSQL = getWhereCarretera(whereSQL, carreteraCode);
@@ -98,7 +98,7 @@ public class WhereFactory {
 	return whereSQL;
 
     }
-    
+
     public static String createActuaciones(boolean hasWhere,
 	    int queryCode,
 	    String carreteraCode,
@@ -106,7 +106,7 @@ public class WhereFactory {
 	    String anho,
 	    String valor) {
 	String whereSQL = checkIfHasWhere(hasWhere);
-	
+
 	switch (queryCode) {
 	case 01:
 	    whereSQL = getWhereCarreteraActuaciones(whereSQL, carreteraCode);
@@ -117,24 +117,28 @@ public class WhereFactory {
 	case 10:
 	    whereSQL = getWhereCarreteraActuaciones(whereSQL, carreteraCode);
 	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
-	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.autorizacion_fecha", anho);
+	    whereSQL = getWhereAnhoActuaciones(whereSQL,
+		    "actuaciones.autorizacion_fecha_autorizacion", anho);
 	    whereSQL = getWhereValorActuaciones(whereSQL, "actuaciones.autorizacion_tipo", valor);
 	    break;
 	case 11:
 	    whereSQL = getWhereCarreteraActuaciones(whereSQL, carreteraCode);
 	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
-	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.autorizacion_fecha", anho);
+	    whereSQL = getWhereAnhoActuaciones(whereSQL,
+		    "actuaciones.autorizacion_fecha_autorizacion", anho);
 	    whereSQL = getWhereValorActuaciones(whereSQL, "actuaciones.autorizacion_peticionario", valor);
 	    break;
 	case 12:
 	    whereSQL = getWhereCarreteraActuaciones(whereSQL, carreteraCode);
 	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
-	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.autorizacion_fecha", anho);
+	    whereSQL = getWhereAnhoActuaciones(whereSQL,
+		    "actuaciones.autorizacion_fecha_autorizacion", anho);
 	    whereSQL = getWhereValorActuaciones(whereSQL, "actuaciones.autorizacion_beneficiario", valor);
 	    break;
 	case 13:
 	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
-	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.autorizacion_fecha", anho);
+	    whereSQL = getWhereAnhoActuaciones(whereSQL,
+		    "actuaciones.autorizacion_fecha_autorizacion", anho);
 	    break;
 	}
 	return whereSQL;
@@ -300,7 +304,7 @@ public class WhereFactory {
 	}
 	return where;
     }
-    
+
     private static String getWhereMunicipioActuaciones(String where, String municipioCode) {
 	if (!municipioCode.equalsIgnoreCase(Catalog.CONCELLO_ALL)) {
 	    where = where + " AND act_mun.codigo_municipio = '" + municipioCode
@@ -318,14 +322,14 @@ public class WhereFactory {
 	}
 	return where;
     }
-    
+
     private static String getWhereAnhoActuaciones(String where, String field, String anho) {
 	if (!anho.equals("")) {
-	    where = where + " AND " + field + " BETWEEN '" + anho + "-01-01 AND '" + anho + "-12-31'";
+	    where = where + " AND " + field + " BETWEEN '" + anho + "-01-01' AND '" + anho + "-12-31'";
 	}
 	return where;
     }
-    
+
     private static String getWhereValorActuaciones(String where, String field, String valor) {
 	if (!valor.equals("")) {
 	    where = where + " AND " + field +
