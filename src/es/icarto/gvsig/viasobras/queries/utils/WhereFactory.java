@@ -306,9 +306,20 @@ public class WhereFactory {
     }
 
     private static String getWhereMunicipioActuaciones(String where, String municipioCode) {
-	if (!municipioCode.equalsIgnoreCase(Catalog.CONCELLO_ALL)) {
-	    where = where + " AND act_mun.codigo_municipio = '" + municipioCode
-		    + "'";
+	if (!where.endsWith("AND ")) {
+	    if (!municipioCode.equalsIgnoreCase(Catalog.CONCELLO_ALL)) {
+		where = where + " AND act_mun.codigo_municipio = '" + municipioCode
+			+ "'";
+	    }else {
+		where = where + " AND 1=1 ";
+	    }
+	} else {
+	    if (!municipioCode.equalsIgnoreCase(Catalog.CONCELLO_ALL)) {
+		where = where + " act_mun.codigo_municipio = '" + municipioCode
+			+ "'";
+	    }else {
+		where = where + " 1=1 ";
+	    }
 	}
 	return where;
     }
