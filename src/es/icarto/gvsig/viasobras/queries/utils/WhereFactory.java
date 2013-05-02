@@ -332,8 +332,7 @@ public class WhereFactory {
 
     private static String getWhereValorActuaciones(String where, String field, String valor) {
 	if (!valor.equals("")) {
-	    where = where + " AND " + field +
-		    " = '" + valor + "'";
+	    where = where + " AND " + field + " LIKE '%" + valor + "%'";
 	}
 	return where;
     }
