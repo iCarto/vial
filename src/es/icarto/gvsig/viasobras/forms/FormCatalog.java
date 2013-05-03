@@ -401,8 +401,14 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 		    && (anchoPlataforma.getSelectedRow() != -1)) {
 		((TramosTableModel) anchoPlataformaModel)
 		.deleteTramo(anchoPlataforma.getSelectedRow());
+		refreshTables();
 	    }
 	}
+    }
+
+    private void refreshTables() {
+	// will force embedded tables to repaint
+	this.repaint();
     }
 
     private final class InsertTramoPlataformaListener implements ActionListener {
@@ -419,6 +425,7 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 		    && (tipoPavimento.getSelectedRow() != -1)) {
 		((TramosTableModel) tipoPavimentoModel)
 		.deleteTramo(tipoPavimento.getSelectedRow());
+		refreshTables();
 	    }
 	}
     }
@@ -435,6 +442,7 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	    if ((cotas.getRowCount() > 0) && (cotas.getSelectedRow() != -1)) {
 		((TramosTableModel) cotasModel).deleteTramo(cotas
 			.getSelectedRow());
+		refreshTables();
 	    }
 	}
     }
@@ -451,6 +459,7 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 	    if ((aforos.getRowCount() > 0) && (aforos.getSelectedRow() != -1)) {
 		((EventosTableModel) aforosModel).deleteEvento(aforos
 			.getSelectedRow());
+		refreshTables();
 	    }
 	}
     }
@@ -478,6 +487,7 @@ public class FormCatalog extends JPanel implements IWindow, SingletonWindow {
 		    && (accidentes.getSelectedRow() != -1)) {
 		((EventosTableModel) accidentesModel).deleteEvento(accidentes
 			.getSelectedRow());
+		refreshTables();
 	    }
 	}
     }
