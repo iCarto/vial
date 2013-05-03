@@ -336,7 +336,12 @@ public class WhereFactory {
 
     private static String getWhereAnhoActuaciones(String where, String field, String anho) {
 	if (!anho.equals("")) {
+	    try {
+	    Integer.parseInt(anho);
 	    where = where + " AND " + field + " BETWEEN '" + anho + "-01-01' AND '" + anho + "-12-31'";
+	    }catch (NumberFormatException e) {
+		return where;
+	    }
 	}
 	return where;
     }
