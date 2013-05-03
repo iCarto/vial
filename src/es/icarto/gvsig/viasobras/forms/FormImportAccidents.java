@@ -124,7 +124,7 @@ public class FormImportAccidents extends JPanel implements IWindow {
 	    accidentesFile = fileChooser.getSelectedFile().getAbsolutePath();
 	    areaMessages.append("\n"
 		    + PluginServices.getText(this,
-		    "accidentes_file_loaded") + " " + accidentesFile + "\n");
+			    "accidentes_file_loaded") + " " + accidentesFile + "\n");
 	}
     }
 
@@ -183,7 +183,7 @@ public class FormImportAccidents extends JPanel implements IWindow {
 	    Set<String> colsToRead = getColumnsToRead();
 	    st_insert = c.prepareStatement(sql);
 	    csvReader = new CSVReader(new InputStreamReader(
-		    new FileInputStream(accidentesFile), "UTF8"));
+		    new FileInputStream(accidentesFile), "UTF8"), '\t');
 	    String[] header = csvReader.readNext(); // header
 	    HashMap<String, Integer> cols = new HashMap<String, Integer>();
 	    for (int i = 0; i < header.length; i++) {
