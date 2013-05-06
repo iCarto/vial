@@ -230,6 +230,16 @@ INSERT INTO consultas.consultas_actuaciones
        WHERE id=23;
 
 INSERT INTO consultas.consultas_actuaciones
+       SELECT 'C02',
+              'Carreteras donde hubo más de 10 accidentes',
+              sql_string,
+              'SI',
+              'Carreteras donde hubo más de 10 accidentes',
+              ''
+       FROM public.consultas_sql
+       WHERE id=24;
+
+INSERT INTO consultas.consultas_actuaciones
        SELECT 'C10',
               'Listado de autorizaciones por tipo',
               sql_string,
@@ -247,7 +257,7 @@ INSERT INTO consultas.consultas_actuaciones
               'Listado de autorizaciones por peticionario',
               ''
        FROM public.consultas_sql
-       WHERE id=25;
+       WHERE id=26;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C12',
@@ -257,7 +267,7 @@ INSERT INTO consultas.consultas_actuaciones
               'Listado de autorizaciones por beneficiario',
               ''
        FROM public.consultas_sql
-       WHERE id=26;
+       WHERE id=27;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C13',
@@ -267,7 +277,7 @@ INSERT INTO consultas.consultas_actuaciones
               'Tasas recaudadas por año y/o tipo',
               ''
        FROM public.consultas_sql
-       WHERE id=27;
+       WHERE id=28;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C20',
@@ -277,7 +287,7 @@ INSERT INTO consultas.consultas_actuaciones
               'Listado de conservación por tipo',
               ''
        FROM public.consultas_sql
-       WHERE id=28;
+       WHERE id=29;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C21',
@@ -287,7 +297,7 @@ INSERT INTO consultas.consultas_actuaciones
               'Importe económico total',
               ''
        FROM public.consultas_sql
-       WHERE id=29;
+       WHERE id=30;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C22',
@@ -297,7 +307,7 @@ INSERT INTO consultas.consultas_actuaciones
               'Listado de conservación por fecha de inicio',
               ''
        FROM public.consultas_sql
-       WHERE id=30;
+       WHERE id=31;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C23',
@@ -327,7 +337,7 @@ INSERT INTO consultas.consultas_actuaciones
               'Importe económico total',
               ''
        FROM public.consultas_sql
-       WHERE id=33;
+       WHERE id=34;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C40',
@@ -337,7 +347,7 @@ INSERT INTO consultas.consultas_actuaciones
               'Listado de construcción por tipo',
               ''
        FROM public.consultas_sql
-       WHERE id=34;
+       WHERE id=35;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C41',
@@ -347,7 +357,7 @@ INSERT INTO consultas.consultas_actuaciones
               'Importe económico total',
               ''
        FROM public.consultas_sql
-       WHERE id=35;
+       WHERE id=36;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C50',
@@ -357,7 +367,7 @@ INSERT INTO consultas.consultas_actuaciones
               'Listado de denuncias por fecha de denuncia',
               ''
        FROM public.consultas_sql
-       WHERE id=36;
+       WHERE id=37;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C51',
@@ -367,7 +377,7 @@ INSERT INTO consultas.consultas_actuaciones
               'Listado de denuncias por fecha de resolución',
               ''
        FROM public.consultas_sql
-       WHERE id=37;
+       WHERE id=38;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C52',
@@ -377,7 +387,7 @@ INSERT INTO consultas.consultas_actuaciones
               'Listado de sanción por importe igual a (X)',
               ''
        FROM public.consultas_sql
-       WHERE id=38;
+       WHERE id=39;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C53',
@@ -387,7 +397,7 @@ INSERT INTO consultas.consultas_actuaciones
               'Listado de sanción por importe mayor que (X)',
               ''
        FROM public.consultas_sql
-       WHERE id=39;
+       WHERE id=40;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C54',
@@ -397,7 +407,7 @@ INSERT INTO consultas.consultas_actuaciones
               'Listado de sanción por importe menor que (X)',
               ''
        FROM public.consultas_sql
-       WHERE id=40;
+       WHERE id=41;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C70',
@@ -407,7 +417,7 @@ INSERT INTO consultas.consultas_actuaciones
               'Listado de inventario por tipo',
               ''
        FROM public.consultas_sql
-       WHERE id=41;
+       WHERE id=42;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C80',
@@ -417,7 +427,7 @@ INSERT INTO consultas.consultas_actuaciones
               'Listado de travesías por tipo de suelo',
               ''
        FROM public.consultas_sql
-       WHERE id=42;
+       WHERE id=43;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C81',
@@ -427,7 +437,7 @@ INSERT INTO consultas.consultas_actuaciones
               'Listado de travesías por núcleo',
               ''
        FROM public.consultas_sql
-       WHERE id=43;
+       WHERE id=44;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C90',
@@ -437,7 +447,7 @@ INSERT INTO consultas.consultas_actuaciones
               'Listado de vialidad',
               ''
        FROM public.consultas_sql
-       WHERE id=44;
+       WHERE id=45;
 
 DROP TABLE IF EXISTS public.consultas_sql;
 

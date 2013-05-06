@@ -131,6 +131,11 @@ sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH D
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname -c "$sql_query"
 
+sql_query_path=`pwd`/funcions/consultas/actuaciones/c02-carreteras-mas-10-accidentes.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
 sql_query_path=`pwd`/funcions/consultas/actuaciones/c10-listado-autorizaciones-tipo.sql
 sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \

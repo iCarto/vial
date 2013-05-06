@@ -114,6 +114,11 @@ public class WhereFactory {
 	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.accidente_fecha", anho);
 	    whereSQL = getWhereValorActuaciones(whereSQL, "actuaciones.accidente_tipo", valor);
 	    break;
+	case 02:
+	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
+	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.accidente_fecha", anho);
+	    whereSQL = getWhereValorActuaciones(whereSQL, "actuaciones.accidente_tipo", valor);
+	    break;
 	case 10:
 	    whereSQL = getWhereCarreteraActuaciones(whereSQL, carreteraCode);
 	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
