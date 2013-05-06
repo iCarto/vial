@@ -6,4 +6,5 @@ FROM inventario.actuaciones actuaciones, \
 WHERE actuaciones.codigo_actuacion = act_mun.codigo_actuacion AND \
       act_mun.codigo_municipio = mun_cod.codigo AND \
       actuaciones.tipo = 'Cons. (propuesta)' \
-[[WHERE]];
+[[WHERE]] \
+GROUP BY mun_cod.nombre;
