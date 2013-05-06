@@ -269,6 +269,176 @@ INSERT INTO consultas.consultas_actuaciones
        FROM public.consultas_sql
        WHERE id=27;
 
+INSERT INTO consultas.consultas_actuaciones
+       SELECT 'C20',
+              'Listado de conservación por tipo',
+              sql_string,
+              'SI',
+              'Listado de conservación por tipo',
+              ''
+       FROM public.consultas_sql
+       WHERE id=28;
+
+INSERT INTO consultas.consultas_actuaciones
+       SELECT 'C21',
+              'Importe económico total',
+              sql_string,
+              'SI',
+              'Importe económico total',
+              ''
+       FROM public.consultas_sql
+       WHERE id=29;
+
+INSERT INTO consultas.consultas_actuaciones
+       SELECT 'C22',
+              'Listado de conservación por fecha de inicio',
+              sql_string,
+              'SI',
+              'Listado de conservación por fecha de inicio',
+              ''
+       FROM public.consultas_sql
+       WHERE id=30;
+
+INSERT INTO consultas.consultas_actuaciones
+       SELECT 'C23',
+              'Listado de conservación por fecha de fin',
+              sql_string,
+              'SI',
+              'Listado de conservación por fecha de fin',
+              ''
+       FROM public.consultas_sql
+       WHERE id=31;
+
+INSERT INTO consultas.consultas_actuaciones
+       SELECT 'C30',
+              'Listado de conservación por tipo',
+              sql_string,
+              'SI',
+              'Listado de conservación por tipo',
+              ''
+       FROM public.consultas_sql
+       WHERE id=32;
+
+INSERT INTO consultas.consultas_actuaciones
+       SELECT 'C31',
+              'Importe económico total',
+              sql_string,
+              'SI',
+              'Importe económico total',
+              ''
+       FROM public.consultas_sql
+       WHERE id=33;
+
+INSERT INTO consultas.consultas_actuaciones
+       SELECT 'C40',
+              'Listado de construcción por tipo',
+              sql_string,
+              'SI',
+              'Listado de construcción por tipo',
+              ''
+       FROM public.consultas_sql
+       WHERE id=34;
+
+INSERT INTO consultas.consultas_actuaciones
+       SELECT 'C41',
+              'Importe económico total',
+              sql_string,
+              'SI',
+              'Importe económico total',
+              ''
+       FROM public.consultas_sql
+       WHERE id=35;
+
+INSERT INTO consultas.consultas_actuaciones
+       SELECT 'C50',
+              'Listado de denuncias por fecha de denuncia',
+              sql_string,
+              'SI',
+              'Listado de denuncias por fecha de denuncia',
+              ''
+       FROM public.consultas_sql
+       WHERE id=36;
+
+INSERT INTO consultas.consultas_actuaciones
+       SELECT 'C51',
+              'Listado de denuncias por fecha de resolución',
+              sql_string,
+              'SI',
+              'Listado de denuncias por fecha de resolución',
+              ''
+       FROM public.consultas_sql
+       WHERE id=37;
+
+INSERT INTO consultas.consultas_actuaciones
+       SELECT 'C52',
+              'Listado de sanción por importe igual a (X)',
+              sql_string,
+              'SI',
+              'Listado de sanción por importe igual a (X)',
+              ''
+       FROM public.consultas_sql
+       WHERE id=38;
+
+INSERT INTO consultas.consultas_actuaciones
+       SELECT 'C53',
+              'Listado de sanción por importe mayor que (X)',
+              sql_string,
+              'SI',
+              'Listado de sanción por importe mayor que (X)',
+              ''
+       FROM public.consultas_sql
+       WHERE id=39;
+
+INSERT INTO consultas.consultas_actuaciones
+       SELECT 'C54',
+              'Listado de sanción por importe menor que (X)',
+              sql_string,
+              'SI',
+              'Listado de sanción por importe menor que (X)',
+              ''
+       FROM public.consultas_sql
+       WHERE id=40;
+
+INSERT INTO consultas.consultas_actuaciones
+       SELECT 'C70',
+              'Listado de inventario por tipo',
+              sql_string,
+              'SI',
+              'Listado de inventario por tipo',
+              ''
+       FROM public.consultas_sql
+       WHERE id=41;
+
+INSERT INTO consultas.consultas_actuaciones
+       SELECT 'C80',
+              'Listado de travesías por tipo de suelo',
+              sql_string,
+              'SI',
+              'Listado de travesías por tipo de suelo',
+              ''
+       FROM public.consultas_sql
+       WHERE id=42;
+
+INSERT INTO consultas.consultas_actuaciones
+       SELECT 'C81',
+              'Listado de travesías por núcleo',
+              sql_string,
+              'SI',
+              'Listado de travesías por núcleo',
+              ''
+       FROM public.consultas_sql
+       WHERE id=43;
+
+INSERT INTO consultas.consultas_actuaciones
+       SELECT 'C90',
+              'Listado de vialidad',
+              sql_string,
+              'SI',
+              'Listado de vialidad',
+              ''
+       FROM public.consultas_sql
+       WHERE id=44;
+
 DROP TABLE IF EXISTS public.consultas_sql;
 
 INSERT INTO consultas.aforos VALUES(0, 49);

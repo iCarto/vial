@@ -137,8 +137,103 @@ public class WhereFactory {
 	    break;
 	case 13:
 	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
-	    whereSQL = getWhereAnhoActuaciones(whereSQL,
-		    "actuaciones.autorizacion_fecha_autorizacion", anho);
+	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.autorizacion_fecha_autorizacion", anho);
+	    break;
+	case 20:
+	    whereSQL = getWhereCarreteraActuaciones(whereSQL, carreteraCode);
+	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
+	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.conservacion_fecha_consignacion_aprobacion", anho);
+	    whereSQL = getWhereValorActuaciones(whereSQL, "actuaciones.conservacion_tipo", valor);
+	    break;
+	case 21:
+	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
+	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.conservacion_fecha_aprobacion_junta", anho);
+	    break;
+	case 22:
+	    whereSQL = getWhereCarreteraActuaciones(whereSQL, carreteraCode);
+	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
+	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.conservacion_fecha_inicio", anho);
+	    break;
+	case 23:
+	    whereSQL = getWhereCarreteraActuaciones(whereSQL, carreteraCode);
+	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
+	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.conservacion_fecha_fin", anho);
+	    break;
+	case 30:
+	    whereSQL = getWhereCarreteraActuaciones(whereSQL, carreteraCode);
+	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
+	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.conservacion_propuesta_fecha_consignacion_aprobacion", anho);
+	    whereSQL = getWhereValorActuaciones(whereSQL, "actuaciones.conservacion_propuesta_tipo", valor);
+	    break;
+	case 31:
+	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
+	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.conservacion_propuesta_fecha_aprobacion_junta", anho);
+	    break;
+	case 40:
+	    whereSQL = getWhereCarreteraActuaciones(whereSQL, carreteraCode);
+	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
+	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.construccion_fecha_aprobacion_junta", anho);
+	    whereSQL = getWhereValorActuaciones(whereSQL, "actuaciones.construccion_tipo", valor);
+	    break;
+	case 41:
+	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
+	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.construccion_fecha_aprobacion_junta", anho);
+	    break;
+	case 50:
+	    whereSQL = getWhereCarreteraActuaciones(whereSQL, carreteraCode);
+	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
+	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.denuncia_fecha_denuncia", anho);
+	    whereSQL = getWhereValorActuaciones(whereSQL, "actuaciones.denuncia_tipo", valor);
+	    break;
+	case 51:
+	    whereSQL = getWhereCarreteraActuaciones(whereSQL, carreteraCode);
+	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
+	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.denuncia_fecha_resolucion", anho);
+	    whereSQL = getWhereValorActuaciones(whereSQL, "actuaciones.denuncia_tipo", valor);
+	    break;
+	case 52:
+	    whereSQL = getWhereCarreteraActuaciones(whereSQL, carreteraCode);
+	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
+	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.denuncia_fecha_denuncia", anho);
+	    whereSQL = getWhereValorDoubleEqualActuaciones(whereSQL, "actuaciones.denuncia_importe_sancion", valor);
+	    break;
+	case 53:
+	    whereSQL = getWhereCarreteraActuaciones(whereSQL, carreteraCode);
+	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
+	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.denuncia_fecha_denuncia", anho);
+	    whereSQL = getWhereValorDoubleHigherActuaciones(whereSQL, "actuaciones.denuncia_importe_sancion", valor);
+	    break;
+	case 54:
+	    whereSQL = getWhereCarreteraActuaciones(whereSQL, carreteraCode);
+	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
+	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.denuncia_fecha_denuncia", anho);
+	    whereSQL = getWhereValorDoubleLessActuaciones(whereSQL, "actuaciones.denuncia_importe_sancion", valor);
+	    break;
+	case 60:
+	    whereSQL = getWhereCarreteraActuaciones(whereSQL, carreteraCode);
+	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
+	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.incidencia_resolucion_fecha", anho);
+	    break;
+	case 70:
+	    whereSQL = getWhereCarreteraActuaciones(whereSQL, carreteraCode);
+	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
+	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.inventario_ano", anho);
+	    whereSQL = getWhereValorActuaciones(whereSQL, "actuaciones.inventario_tipo", valor);
+	    break;
+	case 80:
+	    whereSQL = getWhereCarreteraActuaciones(whereSQL, carreteraCode);
+	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
+	    whereSQL = getWhereValorActuaciones(whereSQL, "actuaciones.travesia_tipo_suelo", valor);
+	    break;
+	case 81:
+	    whereSQL = getWhereCarreteraActuaciones(whereSQL, carreteraCode);
+	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
+	    whereSQL = getWhereValorActuaciones(whereSQL, "actuaciones.travesia_nucleo_poblacion", valor);
+	    break;
+	case 90:
+	    whereSQL = getWhereCarreteraActuaciones(whereSQL, carreteraCode);
+	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
+	    whereSQL = getWhereValorActuaciones(whereSQL, "actuaciones.vialidad_codigo", valor);
 	    break;
 	}
 	return whereSQL;
@@ -349,6 +444,42 @@ public class WhereFactory {
     private static String getWhereValorActuaciones(String where, String field, String valor) {
 	if (!valor.equals("")) {
 	    where = where + " AND " + field + " LIKE '%" + valor + "%'";
+	}
+	return where;
+    }
+
+    private static String getWhereValorDoubleEqualActuaciones(String where, String field, String valor) {
+	if (!valor.equals("")) {
+	    try {
+		Double.parseDouble(valor);
+		where = where + " AND " + field + " = " + valor;
+	    }catch (NumberFormatException e) {
+		return where;
+	    }
+	}
+	return where;
+    }
+
+    private static String getWhereValorDoubleLessActuaciones(String where, String field, String valor) {
+	if (!valor.equals("")) {
+	    try {
+		Double.parseDouble(valor);
+		where = where + " AND " + field + " < " + valor;
+	    }catch (NumberFormatException e) {
+		return where;
+	    }
+	}
+	return where;
+    }
+
+    private static String getWhereValorDoubleHigherActuaciones(String where, String field, String valor) {
+	if (!valor.equals("")) {
+	    try {
+		Double.parseDouble(valor);
+		where = where + " AND " + field + " > " + valor;
+	    }catch (NumberFormatException e) {
+		return where;
+	    }
 	}
 	return where;
     }

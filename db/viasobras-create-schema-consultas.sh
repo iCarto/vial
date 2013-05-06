@@ -151,6 +151,90 @@ sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH D
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname -c "$sql_query"
 
+sql_query_path=`pwd`/funcions/consultas/actuaciones/c20-listado-conservacion-tipo.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+sql_query_path=`pwd`/funcions/consultas/actuaciones/c21-importe-economico-total.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+sql_query_path=`pwd`/funcions/consultas/actuaciones/c22-listado-conservacion-fecha-inicio.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+sql_query_path=`pwd`/funcions/consultas/actuaciones/c23-listado-conservacion-fecha-fin.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+sql_query_path=`pwd`/funcions/consultas/actuaciones/c30-listado-propuesta-conservacion-tipo.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+sql_query_path=`pwd`/funcions/consultas/actuaciones/c31-importe-economico-total.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+sql_query_path=`pwd`/funcions/consultas/actuaciones/c40-listado-construccion-tipo.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+sql_query_path=`pwd`/funcions/consultas/actuaciones/c41-importe-economico-total.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+sql_query_path=`pwd`/funcions/consultas/actuaciones/c50-listado-denuncias-fecha-denuncia.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+sql_query_path=`pwd`/funcions/consultas/actuaciones/c51-listado-denuncias-fecha-resolucion.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+sql_query_path=`pwd`/funcions/consultas/actuaciones/c52-listado-denuncias-importe-igual-a.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+sql_query_path=`pwd`/funcions/consultas/actuaciones/c53-listado-denuncias-importe-mayor-que.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+sql_query_path=`pwd`/funcions/consultas/actuaciones/c54-listado-denuncias-importe-menor-que.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+sql_query_path=`pwd`/funcions/consultas/actuaciones/c70-listado-inventario-tipo.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+sql_query_path=`pwd`/funcions/consultas/actuaciones/c80-listado-travesias-tipo-suelo.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+sql_query_path=`pwd`/funcions/consultas/actuaciones/c81-listado-travesias-nucleo-poblacion.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+sql_query_path=`pwd`/funcions/consultas/actuaciones/c90-listado-vialidad.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
 
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/postprocesar_consultas.sql
