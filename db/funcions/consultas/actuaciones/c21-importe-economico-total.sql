@@ -1,5 +1,5 @@
 SELECT mun_cod.nombre AS "Municipio", \
-       conservacion_importe_proyecto AS "Importe proyecto" \
+       sum(conservacion_importe_proyecto) AS "Importe proyecto" \
 FROM inventario.actuaciones actuaciones, \
      inventario.actuacion_municipio act_mun, \
      inventario.municipio_codigo mun_cod \
