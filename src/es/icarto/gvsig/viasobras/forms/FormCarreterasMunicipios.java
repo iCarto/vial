@@ -37,6 +37,7 @@ import es.icarto.gvsig.navtableforms.ormlite.domainvalues.DomainValues;
 import es.icarto.gvsig.navtableforms.ormlite.domainvalues.KeyValue;
 import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
 import es.icarto.gvsig.navtableforms.utils.TOCLayerManager;
+import es.icarto.gvsig.viasobras.forms.utils.CatalogUpdater;
 import es.udc.cartolab.gvsig.navtable.format.DoubleFormatNT;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
@@ -108,6 +109,7 @@ IWindowListener {
 	    model.delete((int) position);
 	    refreshParentForm();
 	    reloadPKLayer();
+	    CatalogUpdater.update();
 	} catch (Exception e) {
 	    NotificationManager.addError(e);
 	}
@@ -268,6 +270,7 @@ IWindowListener {
 		fillWidgetsForCreatingRecord();
 		refreshParentForm();
 		reloadPKLayer();
+		CatalogUpdater.update();
 	    } catch (Exception e) {
 		NotificationManager.addError(e);
 	    }
@@ -313,6 +316,7 @@ IWindowListener {
 		model.update((int) position);
 		refreshParentForm();
 		reloadPKLayer();
+		CatalogUpdater.update();
 	    } catch (Exception e) {
 		NotificationManager.addError(e);
 	    }

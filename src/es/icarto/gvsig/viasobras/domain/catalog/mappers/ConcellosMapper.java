@@ -27,6 +27,10 @@ public class ConcellosMapper extends DBFacade {
      */
     private static CachedRowSet concellos;
 
+    public static void setInvalid() {
+	concellos = null;
+    }
+
     public static Concellos findAll() throws SQLException {
 	if (concellos != null) {
 	    return new Concellos(ConcellosMapper.toList(concellos));

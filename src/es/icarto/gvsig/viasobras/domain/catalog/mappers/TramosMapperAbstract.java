@@ -27,6 +27,8 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 
     public abstract CachedRowSet load() throws SQLException;
 
+    public abstract void setInvalid();
+
     public abstract int getLastAvailableID() throws SQLException;
 
     public Tramos findAll() throws SQLException {

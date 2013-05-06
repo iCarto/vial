@@ -37,6 +37,7 @@ import com.jeta.forms.components.panel.FormPanel;
 import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
 import es.icarto.gvsig.viasobras.domain.catalog.Catalog;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.DBFacade;
+import es.icarto.gvsig.viasobras.forms.utils.CatalogUpdater;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
 public class FormImportAccidents extends JPanel implements IWindow {
@@ -322,6 +323,7 @@ public class FormImportAccidents extends JPanel implements IWindow {
 	    c.commit();
 	    c.close();
 	    csvReader.close();
+	    CatalogUpdater.update();
 	} catch (FileNotFoundException e) {
 	    areaMessages.setText("\n"
 		    + PluginServices.getText(this,

@@ -21,6 +21,10 @@ public class TramosMapperCotas extends TramosMapperAbstract {
 	return tramos;
     }
 
+    public void setInvalid() {
+	tramos = null;
+    }
+
     @Override
     public CachedRowSet load() throws SQLException {
 	try {

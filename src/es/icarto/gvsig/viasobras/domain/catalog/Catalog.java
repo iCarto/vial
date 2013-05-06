@@ -27,6 +27,26 @@ public class Catalog {
     private static EventosMapperAforos aforosMapper;
     private static EventosMapperAccidentes accidentesMapper;
 
+    public static void setInvalid() {
+	ConcellosMapper.setInvalid();
+	CarreterasMapper.setInvalid();
+	if (pavimentoMapper != null) {
+	    pavimentoMapper.setInvalid();
+	}
+	if (plataformaMapper != null) {
+	    plataformaMapper.setInvalid();
+	}
+	if (cotasMapper != null) {
+	    cotasMapper.setInvalid();
+	}
+	if (aforosMapper != null) {
+	    aforosMapper.setInvalid();
+	}
+	if (accidentesMapper != null) {
+	    accidentesMapper.setInvalid();
+	}
+    }
+
     public static Carreteras getCarreteras() throws SQLException {
 	return CarreterasMapper.findAll();
     }

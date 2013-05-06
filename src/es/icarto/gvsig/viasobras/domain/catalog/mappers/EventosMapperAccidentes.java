@@ -21,6 +21,10 @@ public class EventosMapperAccidentes extends EventosMapperAbstract {
 	return eventos;
     }
 
+    public void setInvalid() {
+	eventos = null;
+    }
+
     @Override
     public CachedRowSet load() throws SQLException {
 	try {

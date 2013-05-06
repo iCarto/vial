@@ -21,6 +21,10 @@ public class CarreterasMapper extends DBFacade {
     private static List<Carretera> carreteras = new ArrayList<Carretera>();
     private static Map<String, Integer> indexes = new HashMap<String, Integer>();
 
+    public static void setInvalid() {
+	carreteras.clear();
+    }
+
     public static Carreteras findAll() throws SQLException {
 	if ((carreteras.size() > 0) && (carreteras.size() == indexes.size())) {
 	    return new Carreteras(carreteras, indexes);

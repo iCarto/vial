@@ -23,6 +23,8 @@ public abstract class EventosMapperAbstract implements EventosMapper {
 
     public abstract CachedRowSet getEventos() throws SQLException;
 
+    public abstract void setInvalid();
+
     public abstract CachedRowSet load() throws SQLException;
 
     public abstract int getLastAvailableID() throws SQLException;

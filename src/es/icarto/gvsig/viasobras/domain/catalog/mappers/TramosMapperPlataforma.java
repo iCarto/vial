@@ -20,6 +20,10 @@ public class TramosMapperPlataforma extends TramosMapperAbstract {
 	return tramos;
     }
 
+    public void setInvalid() {
+	tramos = null;
+    }
+
     public CachedRowSet load() throws SQLException {
 	try {
 	    tramos = super.getCachedRowSet(tableName);

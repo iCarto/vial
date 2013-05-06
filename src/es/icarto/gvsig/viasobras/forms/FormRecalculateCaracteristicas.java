@@ -28,6 +28,7 @@ import es.icarto.gvsig.navtableforms.ormlite.domainvalues.DomainValues;
 import es.icarto.gvsig.navtableforms.ormlite.domainvalues.KeyValue;
 import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.DBFacade;
+import es.icarto.gvsig.viasobras.forms.utils.CatalogUpdater;
 import es.udc.cartolab.gvsig.navtable.format.DoubleFormatNT;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
@@ -148,6 +149,7 @@ public class FormRecalculateCaracteristicas extends JPanel implements IWindow {
 	    c.commit();
 	    showWarningPanel("Aviso: recalcular",
 		    "Reajuste realizado con éxito");
+	    CatalogUpdater.update();
 	    return true;
 	} catch (SQLException e) {
 	    e.printStackTrace();
