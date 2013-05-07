@@ -2,6 +2,7 @@ viasobras_server=localhost
 viasobras_port=5432
 viasobras_superuser=postgres
 viasobras_user=viasobras
+viasobras_user_lectura=viasobras_lectura
 
 viasobras_template=template_postgis
 viasobras_dbname=vias_obras
