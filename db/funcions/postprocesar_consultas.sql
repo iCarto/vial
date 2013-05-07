@@ -247,7 +247,7 @@ INSERT INTO consultas.consultas_actuaciones
               'Listado de autorizaciones por tipo',
               ''
        FROM public.consultas_sql
-       WHERE id=24;
+       WHERE id=25;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C11',
