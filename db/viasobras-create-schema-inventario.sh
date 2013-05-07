@@ -146,8 +146,20 @@ psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/procesar_actuaciones.sql
 
+# Fill incidencias from CSV
+csv_path=`pwd`/datos/inventario/incidencias_data.csv
+sql_query="\COPY inventario.actuaciones (codigo_actuacion, codigo_carretera, pk_inicial, pk_final, tipo, incidencia_tipo, incidencia_contratista_nombre, incidencia_contacto, incidencia_comunicante, incidencia_lugar, incidencia_deteccion_motivo, incidencia_deteccion_fecha, incidencia_deteccion_hora, incidencia_aviso_1, incidencia_aviso_2, incidencia_aviso_3, incidencia_observaciones) FROM '$csv_path' WITH DELIMITER ';'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
 # Actuaciones - concellos
 #------------------------
 
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname < funcions/create-table-inventario-actuacionmunicipio.sql
+
+# Fill actuaciones_municipio related to incidencias from CSV
+csv_path=`pwd`/datos/inventario/incidencias_actuacion_municipio.csv #COPY command needs absolute path
+sql_query="\COPY inventario.actuacion_municipio (codigo_actuacion, codigo_municipio) FROM '$csv_path' WITH DELIMITER ';'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
