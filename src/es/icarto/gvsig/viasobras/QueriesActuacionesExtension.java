@@ -4,6 +4,7 @@ import com.iver.andami.PluginServices;
 import com.iver.andami.plugins.Extension;
 
 import es.icarto.gvsig.viasobras.queries.ui.PanelQueriesActuaciones;
+import es.udc.cartolab.gvsig.users.utils.DBSession;
 
 public class QueriesActuacionesExtension extends Extension {
 
@@ -17,7 +18,8 @@ public class QueriesActuacionesExtension extends Extension {
     }
 
     public boolean isEnabled() {
-	return true;
+	DBSession dbs = DBSession.getCurrentSession();
+	return (dbs != null) && (dbs.getJavaConnection() != null);
     }
 
     public boolean isVisible() {
