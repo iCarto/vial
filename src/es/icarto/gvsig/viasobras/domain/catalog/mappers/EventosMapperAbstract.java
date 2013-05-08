@@ -95,9 +95,16 @@ public abstract class EventosMapperAbstract implements EventosMapper {
 		updateDate(eventos, t);
 		eventos.updateRow();
 	    } else if (t.getStatus() == Evento.STATUS_DELETE) {
-		eventos.absolute(t.getPosition());
-		eventos.deleteRow();
-		eventos.beforeFirst();
+		if (t.getPosition() != Evento.NO_POSITION) {
+		    // Tramo.NO_POSITION means that the user is deleting a new
+		    // created tramo, with no assigned position
+		    // That "virtual" tramo (as it is not in the datasource yet)
+		    // will be "deleted" automatically when refreshing the
+		    // CachedRowSet so no need to delete here
+		    eventos.absolute(t.getPosition());
+		    eventos.deleteRow();
+		    eventos.beforeFirst();
+		}
 	    } else if (t.getStatus() == Evento.STATUS_INSERT) {
 		eventos.moveToInsertRow();
 		eventos.updateInt(ID_FIELDNAME, newID);
