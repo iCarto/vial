@@ -243,6 +243,222 @@ public class TestsCatalogEdit {
     }
 
     @Test
+    public void testDeleteLastTwoPavimento() {
+	Catalog.clear();
+	Tramos tramosPavi;
+	boolean thrown = false;
+	try {
+	    tramosPavi = Catalog.getTramosTipoPavimento();
+	    int lastPosition = 2;
+	    String lastID = "", lastCarretera = "", lastConcello = "";
+	    int beforeLastPosition = 1;
+	    String beforeLastID = "", beforeLastCarretera = "", beforeLastConcello = "";
+	    for (Tramo t : tramosPavi) {
+		if (t.getPosition() > lastPosition) {
+		    lastPosition = t.getPosition();
+		    lastID = t.getId();
+		    lastCarretera = t.getCarretera();
+		    lastConcello = t.getConcello();
+		    beforeLastPosition = lastPosition - 1;
+		}
+	    }
+	    for (Tramo t : tramosPavi) {
+		if (t.getPosition() == beforeLastPosition) {
+		    beforeLastID = t.getId();
+		    beforeLastCarretera = t.getCarretera();
+		    beforeLastConcello = t.getConcello();
+		}
+	    }
+	    System.out.println("[beforeLast pavimento] Carretera: " + beforeLastCarretera
+		    + " - Concello: " + beforeLastConcello
+		    + " - ID: " + beforeLastID
+		    + " - Position: "+ beforeLastPosition);
+	    System.out.println("[last pavimento] Carretera: " + lastCarretera
+		    + " - Concello: " + lastConcello
+		    + " - ID: " + lastID
+		    + " - Position: "+ lastPosition);
+	    tramosPavi.removeTramo(beforeLastID);
+	    tramosPavi.removeTramo(lastID);
+	    tramosPavi.save();
+	} catch (SQLException e) {
+	    thrown = true;
+	}
+	assertEquals(false, thrown);
+    }
+
+    @Test
+    public void testDeleteLastTwoAncho() {
+	Catalog.clear();
+	Tramos ancho;
+	boolean thrown = false;
+	try {
+	    ancho = Catalog.getTramosAnchoPlataforma();
+	    int lastPosition = 2;
+	    String lastID = "", lastCarretera = "", lastConcello = "";
+	    int beforeLastPosition = 1;
+	    String beforeLastID = "", beforeLastCarretera = "", beforeLastConcello = "";
+	    for (Tramo t : ancho) {
+		if (t.getPosition() > lastPosition) {
+		    lastPosition = t.getPosition();
+		    lastID = t.getId();
+		    lastCarretera = t.getCarretera();
+		    lastConcello = t.getConcello();
+		    beforeLastPosition = lastPosition - 1;
+		}
+	    }
+	    for (Tramo t : ancho) {
+		if (t.getPosition() == beforeLastPosition) {
+		    beforeLastID = t.getId();
+		    beforeLastCarretera = t.getCarretera();
+		    beforeLastConcello = t.getConcello();
+		}
+	    }
+	    System.out.println("[beforeLast ancho] Carretera: " + beforeLastCarretera
+		    + " - Concello: " + beforeLastConcello + " - ID: "
+		    + beforeLastID + " - Position: " + beforeLastPosition);
+	    System.out.println("[last ancho] Carretera: " + lastCarretera
+		    + " - Concello: " + lastConcello + " - ID: " + lastID
+		    + " - Position: " + lastPosition);
+	    ancho.removeTramo(beforeLastID);
+	    ancho.removeTramo(lastID);
+	    ancho.save();
+	} catch (SQLException e) {
+	    thrown = true;
+	}
+	assertEquals(false, thrown);
+    }
+
+    @Test
+    public void testDeleteLastTwoCotas() {
+	Catalog.clear();
+	Tramos cotas;
+	boolean thrown = false;
+	try {
+	    cotas = Catalog.getTramosCotas();
+	    int lastPosition = 2;
+	    String lastID = "", lastCarretera = "", lastConcello = "";
+	    int beforeLastPosition = 1;
+	    String beforeLastID = "", beforeLastCarretera = "", beforeLastConcello = "";
+	    for (Tramo t : cotas) {
+		if (t.getPosition() > lastPosition) {
+		    lastPosition = t.getPosition();
+		    lastID = t.getId();
+		    lastCarretera = t.getCarretera();
+		    lastConcello = t.getConcello();
+		    beforeLastPosition = lastPosition - 1;
+		}
+	    }
+	    for (Tramo t : cotas) {
+		if (t.getPosition() == beforeLastPosition) {
+		    beforeLastID = t.getId();
+		    beforeLastCarretera = t.getCarretera();
+		    beforeLastConcello = t.getConcello();
+		}
+	    }
+	    System.out.println("[beforeLast cotas] Carretera: " + beforeLastCarretera
+		    + " - Concello: " + beforeLastConcello + " - ID: "
+		    + beforeLastID + " - Position: " + beforeLastPosition);
+	    System.out.println("[last cotas] Carretera: " + lastCarretera
+		    + " - Concello: " + lastConcello + " - ID: " + lastID
+		    + " - Position: " + lastPosition);
+	    cotas.removeTramo(beforeLastID);
+	    cotas.removeTramo(lastID);
+	    cotas.save();
+	} catch (SQLException e) {
+	    thrown = true;
+	}
+	assertEquals(false, thrown);
+    }
+
+    @Test
+    public void testDeleteLastTwoAccidentes() {
+	Catalog.clear();
+	Eventos accidentes;
+	boolean thrown = false;
+	try {
+	    accidentes = Catalog.getEventosAccidentes();
+	    int lastPosition = 2;
+	    String lastID = "", lastCarretera = "", lastConcello = "";
+	    int beforeLastPosition = 1;
+	    String beforeLastID = "", beforeLastCarretera = "", beforeLastConcello = "";
+	    for (Evento e : accidentes) {
+		if (e.getPosition() > lastPosition) {
+		    lastPosition = e.getPosition();
+		    lastID = e.getId();
+		    lastCarretera = e.getCarretera();
+		    lastConcello = e.getConcello();
+		    beforeLastPosition = lastPosition - 1;
+		}
+	    }
+	    for (Evento e : accidentes) {
+		if (e.getPosition() == beforeLastPosition) {
+		    beforeLastID = e.getId();
+		    beforeLastCarretera = e.getCarretera();
+		    beforeLastConcello = e.getConcello();
+		}
+	    }
+	    System.out.println("[beforeLast accidente] Carretera: " + beforeLastCarretera
+		    + " - Concello: " + beforeLastConcello
+		    + " - ID: " + beforeLastID
+		    + " - Position: "+ beforeLastPosition);
+	    System.out.println("[last accidente] Carretera: " + lastCarretera
+		    + " - Concello: " + lastConcello
+		    + " - ID: " + lastID
+		    + " - Position: "+ lastPosition);
+	    accidentes.removeEvento(beforeLastID);
+	    accidentes.removeEvento(lastID);
+	    accidentes.save();
+	} catch (SQLException e) {
+	    thrown = true;
+	}
+	assertEquals(false, thrown);
+    }
+
+    @Test
+    public void testDeleteLastTwoAforos() {
+	Catalog.clear();
+	Eventos aforos;
+	boolean thrown = false;
+	try {
+	    aforos = Catalog.getEventosAforos();
+	    int lastPosition = 2;
+	    String lastID = "", lastCarretera = "", lastConcello = "";
+	    int beforeLastPosition = 1;
+	    String beforeLastID = "", beforeLastCarretera = "", beforeLastConcello = "";
+	    for (Evento e : aforos) {
+		if (e.getPosition() > lastPosition) {
+		    lastPosition = e.getPosition();
+		    lastID = e.getId();
+		    lastCarretera = e.getCarretera();
+		    lastConcello = e.getConcello();
+		    beforeLastPosition = lastPosition - 1;
+		}
+	    }
+	    for (Evento e : aforos) {
+		if (e.getPosition() == beforeLastPosition) {
+		    beforeLastID = e.getId();
+		    beforeLastCarretera = e.getCarretera();
+		    beforeLastConcello = e.getConcello();
+		}
+	    }
+	    System.out.println("[beforeLast aforo] Carretera: " + beforeLastCarretera
+		    + " - Concello: " + beforeLastConcello
+		    + " - ID: " + beforeLastID
+		    + " - Position: "+ beforeLastPosition);
+	    System.out.println("[last aforo] Carretera: " + lastCarretera
+		    + " - Concello: " + lastConcello
+		    + " - ID: " + lastID
+		    + " - Position: "+ lastPosition);
+	    aforos.removeEvento(beforeLastID);
+	    aforos.removeEvento(lastID);
+	    aforos.save();
+	} catch (SQLException e) {
+	    thrown = true;
+	}
+	assertEquals(false, thrown);
+    }
+
+    @Test
     public void testUpdatePavimento() throws SQLException {
 	String carretera = carreteraPavimento;
 	String concello = concelloPavimento;
