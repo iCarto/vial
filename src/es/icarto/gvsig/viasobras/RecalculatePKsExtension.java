@@ -17,7 +17,7 @@ public class RecalculatePKsExtension extends Extension {
 	PluginServices.getIconTheme().registerDefault(
 		"viasobras-recalcular-pks",
 		this.getClass().getClassLoader()
-		.getResource("images/recalcular.png"));
+			.getResource("images/recalcular_pks.png"));
     }
 
     public void initialize() {

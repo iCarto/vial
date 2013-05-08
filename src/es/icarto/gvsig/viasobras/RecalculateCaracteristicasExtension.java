@@ -17,7 +17,7 @@ public class RecalculateCaracteristicasExtension extends Extension {
 	PluginServices.getIconTheme().registerDefault(
 		"viasobras-recalcular-caracteristicas",
 		this.getClass().getClassLoader()
-		.getResource("images/recalcular.png"));
+			.getResource("images/recalcular_caracteristicas.png"));
     }
 
     public void initialize() {
