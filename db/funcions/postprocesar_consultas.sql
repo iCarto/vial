@@ -317,7 +317,7 @@ INSERT INTO consultas.consultas_actuaciones
               'Listado de conservación por fecha de fin',
               ''
        FROM public.consultas_sql
-       WHERE id=31;
+       WHERE id=32;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C30',
@@ -327,7 +327,7 @@ INSERT INTO consultas.consultas_actuaciones
               'Listado de conservación por tipo',
               ''
        FROM public.consultas_sql
-       WHERE id=32;
+       WHERE id=33;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C31',
