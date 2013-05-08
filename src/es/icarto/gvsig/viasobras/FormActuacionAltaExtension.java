@@ -1,5 +1,7 @@
 package es.icarto.gvsig.viasobras;
 
+import java.sql.SQLException;
+
 import com.iver.andami.PluginServices;
 import com.iver.andami.messages.NotificationManager;
 import com.iver.andami.plugins.Extension;
@@ -41,7 +43,17 @@ public class FormActuacionAltaExtension extends Extension {
 	TOCLayerManager toc = new TOCLayerManager();
 	DBSession dbs = DBSession.getCurrentSession();
 	return (dbs != null) && (dbs.getJavaConnection() != null)
-		&& (toc.getLayerByName(actuacionesLayerName) != null);
+		&& (toc.getLayerByName(actuacionesLayerName) != null)
+		&& userCanWrite();
+    }
+
+    private boolean userCanWrite() {
+	DBSession dbs = DBSession.getCurrentSession();
+	try {
+	    return dbs.getDBUser().canWrite("inventario", "tipo_pavimento");
+	} catch (SQLException e) {
+	    return false;
+	}
     }
 
     public boolean isVisible() {

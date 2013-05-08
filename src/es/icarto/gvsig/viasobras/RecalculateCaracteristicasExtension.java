@@ -1,5 +1,7 @@
 package es.icarto.gvsig.viasobras;
 
+import java.sql.SQLException;
+
 import com.iver.andami.PluginServices;
 import com.iver.andami.plugins.Extension;
 
@@ -26,7 +28,18 @@ public class RecalculateCaracteristicasExtension extends Extension {
 
     public boolean isEnabled() {
 	DBSession dbs = DBSession.getCurrentSession();
-	return (dbs != null) && (dbs.getJavaConnection() != null);
+	return (dbs != null) 
+		&& (dbs.getJavaConnection() != null)
+		&& userCanWrite();
+    }
+
+    private boolean userCanWrite() {
+	DBSession dbs = DBSession.getCurrentSession();
+	try {
+	    return dbs.getDBUser().canWrite("inventario", "tipo_pavimento");
+	} catch (SQLException e) {
+	    return false;
+	}
     }
 
     public boolean isVisible() {
