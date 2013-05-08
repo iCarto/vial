@@ -1,13 +1,15 @@
 SELECT mun_cod.nombre AS "Municipio", \
-       actuaciones.codigo_actuacion AS "Código actuación", \
        actuaciones.codigo_carretera AS "Código (LU-P)", \
-       carreteras.denominacion as "Denominación", \
-       actuaciones.pk_inicial AS "PK inicial", \
-       actuaciones.pk_final AS "PK_final", \
-       actuaciones.incidencia_tipo AS "TIPO", \
+       actuaciones.pk_inicial AS "PK  inicial", \
+       actuaciones.pk_final AS "PK  final", \
+       actuaciones.codigo_actuacion AS "Código actuación", \
+       actuaciones.incidencia_tipo AS "Tipo", \
+       actuaciones.incidencia_lugar AS "Lugar", \
+       actuaciones.incidencia_comunicante AS "Comunicante", \
+       actuaciones.incidencia_deteccion_fecha AS "Fecha detección", \
        actuaciones.incidencia_contratista_nombre AS "Contratista", \
-       actuaciones.incidencia_deteccion_motivo AS "Motivo", \
-       actuaciones.incidencia_deteccion_fecha AS "Fecha", \
+       actuaciones.incidencia_contacto AS "Contacto", \
+       actuaciones.incidencia_resolucion_fecha AS "Fecha resolución", \
        actuaciones.incidencia_observaciones AS "Observaciones" \
 FROM inventario.actuaciones actuaciones, \
      inventario.actuacion_municipio act_mun, \

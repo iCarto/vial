@@ -1,11 +1,15 @@
 SELECT mun_cod.nombre AS "Municipio", \
-       actuaciones.codigo_actuacion AS "Código actuación", \
        actuaciones.codigo_carretera AS "Código (LU-P)", \
-       carreteras.denominacion as "Denominación", \
        actuaciones.pk_inicial AS "PK inicial", \
-       actuaciones.pk_final AS "PK_final", \
-       actuaciones.travesia_tipo_suelo AS "Tipo suelo", \
+       actuaciones.pk_final AS "PK final", \
+       actuaciones.codigo_actuacion AS "Código actuación", \
        actuaciones.travesia_nucleo_poblacion AS "Núcleo población", \
+       actuaciones.travesia_tipo_suelo AS "Tipo suelo", \
+       actuaciones.travesia_ancho_calzada AS "Ancho calzada", \
+       actuaciones.travesia_ancho_acera_izquierda AS "Ancho acera izqda", \
+       actuaciones.travesia_ancho_acera_derecha AS "Ancho acera dcha", \
+       actuaciones.travesia_ancho_arcen_izquierda AS "Ancho arcén izqdo", \
+       actuaciones.travesia_ancho_arcen_derecha AS "Ancho arcén dcho", \
        actuaciones.travesia_observaciones AS "Observaciones" \
 FROM inventario.actuaciones actuaciones, \
      inventario.actuacion_municipio act_mun, \

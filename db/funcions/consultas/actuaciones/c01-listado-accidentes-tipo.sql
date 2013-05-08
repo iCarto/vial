@@ -1,10 +1,9 @@
 SELECT mun_cod.nombre AS "Municipio", \
-       actuaciones.codigo_actuacion AS "Código actuación", \
        actuaciones.codigo_carretera AS "Código (LU-P)", \
-       carreteras.denominacion as "Denominación", \
        actuaciones.pk_inicial AS "PK inicial", \
-       actuaciones.pk_final AS "PK_final", \
-       actuaciones.accidente_tipo AS "TIPO", \
+       actuaciones.pk_final AS "PK final", \
+       actuaciones.codigo_actuacion AS "Código actuación", \
+       actuaciones.accidente_tipo AS "Tipo", \
        actuaciones.accidente_descripcion AS "Descripción", \
        actuaciones.accidente_fecha AS "Fecha", \
        actuaciones.accidente_observaciones AS "Observaciones" \
