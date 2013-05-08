@@ -10,6 +10,7 @@ config_file=$1
 
 dropdb -h $viasobras_server -p $viasobras_port -U $viasobras_superuser $viasobras_dbname;
 dropuser -h $viasobras_server -p $viasobras_port -U $viasobras_superuser $viasobras_user
+dropuser -h $viasobras_server -p $viasobras_port -U $viasobras_superuser $viasobras_user_lectura
 createuser -h $viasobras_server -p $viasobras_port -U $viasobras_superuser -SDRPl $viasobras_user
 createuser -h $viasobras_server -p $viasobras_port -U $viasobras_superuser -SDRPl $viasobras_user_lectura
 createdb -h $viasobras_server -p $viasobras_port -U $viasobras_superuser -O $viasobras_user \
