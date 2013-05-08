@@ -1,6 +1,6 @@
 INSERT INTO consultas.consultas
        SELECT 'C01',
-              'Inventario de carreteras',
+              '',
               sql_string,
               'SI',
               'Inventario de carreteras',
@@ -10,7 +10,7 @@ INSERT INTO consultas.consultas
 
 INSERT INTO consultas.consultas
        SELECT 'C10',
-              'Ancho de firme',
+              'Filtros: Mayor que (ancho) / Menor que (ancho)',
               sql_string,
               'SI',
               'Ancho de firme',
@@ -20,7 +20,7 @@ INSERT INTO consultas.consultas
 
 INSERT INTO consultas.consultas
        SELECT 'C20',
-              'Tipo de firme',
+              'Filtros: Valor (tipo firme)',
               sql_string,
               'SI',
               'Tipo de firme',
@@ -30,7 +30,7 @@ INSERT INTO consultas.consultas
 
 INSERT INTO consultas.consultas
        SELECT 'C21',
-              'Tipo de firme = MB',
+              '',
               sql_string,
               'SI',
               'Tipo de firme = MB',
@@ -40,7 +40,7 @@ INSERT INTO consultas.consultas
 
 INSERT INTO consultas.consultas
        SELECT 'C22',
-              'Tipo de firme = TS',
+              '',
               sql_string,
               'SI',
               'Tipo de firme = TS',
@@ -50,7 +50,7 @@ INSERT INTO consultas.consultas
 
 INSERT INTO consultas.consultas
        SELECT 'C30',
-              'Aforos',
+              'Filtros: Mayor que (IMD) / Menor que (IMD) / Valor (año)',
               sql_string,
               'SI',
               'Aforos',
@@ -60,7 +60,7 @@ INSERT INTO consultas.consultas
 
 INSERT INTO consultas.consultas
        SELECT 'C40',
-              'Cotas',
+              'Filtros: Mayor que (cota) / Menor que (cota)',
               sql_string,
               'SI',
               'Cotas',
@@ -70,7 +70,7 @@ INSERT INTO consultas.consultas
 
 INSERT INTO consultas.consultas
        SELECT 'C02',
-              'Carreteras por categoría',
+              'Filtros: Valor (categoría)',
               sql_string,
               'NO',
               'Carreteras por categoría',
@@ -80,7 +80,7 @@ INSERT INTO consultas.consultas
 
 INSERT INTO consultas.consultas
        SELECT 'C31',
-              'Aforos, donde ancho < 5',
+              'Filtros: Mayor que (IMD) / Menor que (IMD) / Valor (año)',
               sql_string,
               'SI',
               'Aforos, donde ancho < 5',
@@ -90,7 +90,7 @@ INSERT INTO consultas.consultas
 
 INSERT INTO consultas.consultas
        SELECT 'C32',
-              'Aforos, donde ancho >= 5 y >7',
+              'Filtros: Mayor que (IMD) / Menor que (IMD) / Valor (año)',
               sql_string,
               'SI',
               'Aforos, donde ancho >= 5 y >7',
@@ -100,7 +100,7 @@ INSERT INTO consultas.consultas
 
 INSERT INTO consultas.consultas
        SELECT 'C33',
-              'Aforos, donde ancho > 7',
+              'Filtros: Mayor que (IMD) / Menor que (IMD) / Valor (año)',
               sql_string,
               'SI',
               'Aforos, donde ancho > 7',
@@ -110,7 +110,7 @@ INSERT INTO consultas.consultas
 
 INSERT INTO consultas.consultas
        SELECT 'C34',
-              'Aforos, donde tipo pavimento = TS',
+              'Filtros: Mayor que (IMD) / Menor que (IMD) / Valor (año)',
               sql_string,
               'SI',
               'Aforos, donde tipo pavimento = TS',
@@ -120,7 +120,7 @@ INSERT INTO consultas.consultas
 
 INSERT INTO consultas.consultas
        SELECT 'C35',
-              'Aforos, donde tipo pavimento = MB',
+              'Filtros: Mayor que (IMD) / Menor que (IMD) / Valor (año)',
               sql_string,
               'SI',
               'Aforos, donde tipo pavimento = MB',
@@ -130,7 +130,7 @@ INSERT INTO consultas.consultas
 
 INSERT INTO consultas.consultas
        SELECT 'C36',
-              'Aforos, donde tipo pavimento = H',
+              'Filtros: Mayor que (IMD) / Menor que (IMD) / Valor (año)',
               sql_string,
               'SI',
               'Aforos, donde tipo pavimento = H',
@@ -140,7 +140,7 @@ INSERT INTO consultas.consultas
 
 INSERT INTO consultas.consultas
        SELECT 'C37',
-              'Aforos, donde tipo pavimento = O',
+              'Filtros: Mayor que (IMD) / Menor que (IMD) / Valor (año)',
               sql_string,
               'SI',
               'Aforos, donde tipo pavimento = O',
@@ -150,7 +150,7 @@ INSERT INTO consultas.consultas
 
 INSERT INTO consultas.consultas
        SELECT 'C41',
-              'Cotas mínimas / máximas por carretera',
+              'Filtros: Mayor que (cota) / Menor que (cota)',
               sql_string,
               'SI',
               'Cotas mínimas / máximas por carretera',
@@ -160,7 +160,7 @@ INSERT INTO consultas.consultas
 
 INSERT INTO consultas.consultas
        SELECT 'C38',
-              'Aforos agregados',
+              'Filtros: Valor (año)',
               sql_string,
               'SI',
               'Aforos agregados',
@@ -170,7 +170,7 @@ INSERT INTO consultas.consultas
 
 INSERT INTO consultas.consultas
        SELECT 'C03',
-              'Inventario de rampas',
+              '',
               sql_string,
               'SI',
               'Inventario de rampas',
@@ -180,7 +180,7 @@ INSERT INTO consultas.consultas
 
 INSERT INTO consultas.consultas
        SELECT 'C04',
-              'Inventario de tramos antiguos',
+              '',
               sql_string,
               'SI',
               'Inventario de tramos antiguos',
@@ -190,7 +190,7 @@ INSERT INTO consultas.consultas
 
 INSERT INTO consultas.consultas
        SELECT 'C50',
-              'Listado de accidentes',
+              'Filtros: Valor (año)',
               sql_string,
               'SI',
               'Listado de accidentes',
@@ -200,7 +200,7 @@ INSERT INTO consultas.consultas
 
 INSERT INTO consultas.consultas
        SELECT 'C51',
-              'Número de accidentes por tipo',
+              'Filtros: Valor (año)',
               sql_string,
               'SI',
               'Número de accidentes por tipo',
@@ -210,7 +210,7 @@ INSERT INTO consultas.consultas
 
 INSERT INTO consultas.consultas
        SELECT 'C52',
-              'Número de accidentes',
+              'Filtros: Valor (año)',
               sql_string,
               'SI',
               'Número de accidentes',
@@ -221,17 +221,17 @@ INSERT INTO consultas.consultas
 -- CONSULTAS ACTUACIONES
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C01',
-              'Listado de accidentes por tipo',
+              'Filtros: Año (fecha) / Valor (tipo)',
               sql_string,
               'SI',
-              'Listado de accidentes por tipo',
+              'Accidentes por tipo',
               ''
        FROM public.consultas_sql
        WHERE id=23;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C02',
-              'Carreteras donde hubo más de 10 accidentes',
+              'Filtros: Año (fecha) / Valor (tipo)',
               sql_string,
               'SI',
               'Carreteras donde hubo más de 10 accidentes',
@@ -241,230 +241,230 @@ INSERT INTO consultas.consultas_actuaciones
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C10',
-              'Listado de autorizaciones por tipo',
+              'Filtros: Año (fecha autorización) / Valor (tipo)',
               sql_string,
               'SI',
-              'Listado de autorizaciones por tipo',
+              'Autorizaciones por tipo',
               ''
        FROM public.consultas_sql
        WHERE id=25;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C11',
-              'Listado de autorizaciones por peticionario',
+              'Filtros: Año (fecha autorización) / Valor (peticionario)',
               sql_string,
               'SI',
-              'Listado de autorizaciones por peticionario',
+              'Autorizaciones por peticionario',
               ''
        FROM public.consultas_sql
        WHERE id=26;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C12',
-              'Listado de autorizaciones por beneficiario',
+              'Filtros: Año (fecha autorización) / Valor (beneficiario)',
               sql_string,
               'SI',
-              'Listado de autorizaciones por beneficiario',
+              'Autorizaciones por beneficiario',
               ''
        FROM public.consultas_sql
        WHERE id=27;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C13',
-              'Tasas recaudadas por año y/o tipo',
+              'Filtros: Año (fecha autorización) / Valor (tipo)',
               sql_string,
               'SI',
-              'Tasas recaudadas por año y/o tipo',
+              'Tasas de autorizaciones recaudadas por año y/o tipo',
               ''
        FROM public.consultas_sql
        WHERE id=28;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C20',
-              'Listado de conservación por tipo',
+              'Filtros: Año (fecha aprobación presupuesto) / Valor (tipo)',
               sql_string,
               'SI',
-              'Listado de conservación por tipo',
+              'Conservaciones por tipo',
               ''
        FROM public.consultas_sql
        WHERE id=29;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C21',
-              'Importe económico total',
+              'Filtros: Año (fecha aprobación presupuesto)',
               sql_string,
               'SI',
-              'Importe económico total',
+              'Importe total de conservaciones',
               ''
        FROM public.consultas_sql
        WHERE id=30;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C22',
-              'Listado de conservación por fecha de inicio',
+              'Filtros: Año (fecha inicio)',
               sql_string,
               'SI',
-              'Listado de conservación por fecha de inicio',
+              'Conservaciones por fecha de inicio',
               ''
        FROM public.consultas_sql
        WHERE id=31;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C23',
-              'Listado de conservación por fecha de fin',
+              'Filtros: Año (fecha fin)',
               sql_string,
               'SI',
-              'Listado de conservación por fecha de fin',
+              'Conservaciones por fecha de fin',
               ''
        FROM public.consultas_sql
        WHERE id=32;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C30',
-              'Listado de conservación por tipo',
+              'Filtros: Año (fecha aprobación presupuesto) / Valor (tipo)',
               sql_string,
               'SI',
-              'Listado de conservación por tipo',
+              'Propuestas de conservación por tipo',
               ''
        FROM public.consultas_sql
        WHERE id=33;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C31',
-              'Importe económico total',
+              'Filtros: Año (fecha aprobación presupuesto)',
               sql_string,
               'SI',
-              'Importe económico total',
+              'Importe total de propuestas de conservación',
               ''
        FROM public.consultas_sql
        WHERE id=34;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C40',
-              'Listado de construcción por tipo',
+              'Filtros: Año (fecha aprobación presupuesto / Valor (tipo)',
               sql_string,
               'SI',
-              'Listado de construcción por tipo',
+              'Construcciones por tipo',
               ''
        FROM public.consultas_sql
        WHERE id=35;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C41',
-              'Importe económico total',
+              'Filtros: Año (fecha aprobación presupuesto)',
               sql_string,
               'SI',
-              'Importe económico total',
+              'Importe total de construcciones',
               ''
        FROM public.consultas_sql
        WHERE id=36;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C50',
-              'Listado de denuncias por fecha de denuncia',
+              'Filtros: Año (fecha denuncia) / Valor (tipo)',
               sql_string,
               'SI',
-              'Listado de denuncias por fecha de denuncia',
+              'Denuncias por fecha de denuncia',
               ''
        FROM public.consultas_sql
        WHERE id=37;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C51',
-              'Listado de denuncias por fecha de resolución',
+              'Filtros: Año (fecha resolución) / Valor (tipo)',
               sql_string,
               'SI',
-              'Listado de denuncias por fecha de resolución',
+              'Denuncias por fecha de resolución',
               ''
        FROM public.consultas_sql
        WHERE id=38;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C52',
-              'Listado de sanción por importe igual a (X)',
+              'Filtros: Año (fecha denuncia) / Valor (importe sanción)',
               sql_string,
               'SI',
-              'Listado de sanción por importe igual a (X)',
+              'Sanciones por denuncia (importe = X)',
               ''
        FROM public.consultas_sql
        WHERE id=39;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C53',
-              'Listado de sanción por importe mayor que (X)',
+              'Filtros: Año (fecha denuncia) / Valor (importe sanción)',
               sql_string,
               'SI',
-              'Listado de sanción por importe mayor que (X)',
+              'Sanciones por denuncia (importe > X)',
               ''
        FROM public.consultas_sql
        WHERE id=40;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C54',
-              'Listado de sanción por importe menor que (X)',
+              'Filtros: Año (fecha denuncia) / Valor (importe sanción)',
               sql_string,
               'SI',
-              'Listado de sanción por importe menor que (X)',
+              'Sanciones por denuncia (importe < X)',
               ''
        FROM public.consultas_sql
        WHERE id=41;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C60',
-              'Listado de incidencias fecha detección',
+              'Filtros: Año (fecha detección) / Valor (tipo)',
               sql_string,
               'SI',
-              'Listado de incidencias fecha detección',
+              'Incidencias por fecha detección',
               ''
        FROM public.consultas_sql
        WHERE id=42;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C61',
-              'Listado de incidencias fecha resolución',
+              'Filtros: Año (fecha resolución) / Valor (tipo)',
               sql_string,
               'SI',
-              'Listado de incidencias fecha resolución',
+              'Incidencias por fecha resolución',
               ''
        FROM public.consultas_sql
        WHERE id=43;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C70',
-              'Listado de inventario por tipo',
+              'Filtros: Valor (tipo)',
               sql_string,
               'SI',
-              'Listado de inventario por tipo',
+              'Inventario por tipo',
               ''
        FROM public.consultas_sql
        WHERE id=44;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C80',
-              'Listado de travesías por tipo de suelo',
+              'Filtros: Valor (tipo suelo)',
               sql_string,
               'SI',
-              'Listado de travesías por tipo de suelo',
+              'Travesías por tipo de suelo',
               ''
        FROM public.consultas_sql
        WHERE id=45;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C81',
-              'Listado de travesías por núcleo',
+              'Filtros: Valor (núcleo)',
               sql_string,
               'SI',
-              'Listado de travesías por núcleo',
+              'Travesías por núcleo',
               ''
        FROM public.consultas_sql
        WHERE id=46;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C90',
-              'Listado de vialidad',
+              'Filtros: Valor (código)',
               sql_string,
               'SI',
-              'Listado de vialidad',
+              'Actuaciones de vialidad',
               ''
        FROM public.consultas_sql
        WHERE id=47;
