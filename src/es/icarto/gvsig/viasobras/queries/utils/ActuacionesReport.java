@@ -8,7 +8,7 @@ public class ActuacionesReport extends Report {
     private final static float MUNICIPIO = 60f;
     private final static float CODIGO_AND_PK_FIELDS = 40f;
     private final static float CODIGO_ACTUACION = 50f;
-    private final static float TIPO = 100f;
+    private final static float TIPO = 80f;
     private final static float OBSERVACIONES = 120f;
 
     public ActuacionesReport(int reportType, String fileName,
