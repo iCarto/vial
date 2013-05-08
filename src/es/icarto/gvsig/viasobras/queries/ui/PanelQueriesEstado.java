@@ -40,8 +40,10 @@ import es.icarto.gvsig.viasobras.domain.catalog.Carretera;
 import es.icarto.gvsig.viasobras.domain.catalog.Catalog;
 import es.icarto.gvsig.viasobras.domain.catalog.Concello;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.DBFacade;
+import es.icarto.gvsig.viasobras.queries.utils.EstadoTooltipRenderer;
 import es.icarto.gvsig.viasobras.queries.utils.TableModelQueries;
 import es.icarto.gvsig.viasobras.queries.utils.TableModelResults;
+import es.icarto.gvsig.viasobras.queries.utils.ActuacionesTooltipRenderer;
 import es.icarto.gvsig.viasobras.queries.utils.WhereFactory;
 import es.udc.cartolab.gvsig.navtable.format.DoubleFormatNT;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
@@ -202,15 +204,18 @@ public class PanelQueriesEstado extends gvWindow {
 	.setCellRenderer(columnCentered);
 
 	queriesTable.getColumnModel().getColumn(1).setHeaderValue("Consulta");
+	
+	EstadoTooltipRenderer tooltipRenderer = new EstadoTooltipRenderer();
+	queriesTable.getColumnModel().getColumn(1).setCellRenderer(tooltipRenderer);
 
 	try {
 	    String[][] tableContent = dbs.getTable("consultas", "consultas",
 		    new String[] { "codigo" }, false);
 	    for (int i = 0; i < tableContent.length; i++) {
-		// Table Schema: 0-codigo 1-descripcion 2-consulta(SQL)
+		// Table Schema: 0-codigo 1-descripcion 2-consulta(SQL) 3-haswhere 4-título 5-subtítulo
 		Object[] row = new Object[2];
-		row[0] = tableContent[i][0];
-		row[1] = tableContent[i][1];
+		row[0] = tableContent[i][0]; //código
+		row[1] = tableContent[i][4]; //título
 		queriesModel.addRow(row);
 		queriesModel.fireTableRowsInserted(0,
 			queriesModel.getRowCount() - 1);
