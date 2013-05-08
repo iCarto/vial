@@ -537,9 +537,9 @@ public class TestCatalogDelete {
 	}
 	tramosPavi.removeTramo(idPositionA);
 	tramosPavi.removeTramo(idPositionB);
-	tramosPavi.save();
+	Tramos tramosPaviNew = tramosPavi.save();
 
-	int tramosSizeEnd = tramosPavi.size();
+	int tramosSizeEnd = tramosPaviNew.size();
 
 	// check if the tramo A was deleted
 	Statement stmtA = c.createStatement();
