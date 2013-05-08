@@ -74,7 +74,7 @@ public class Report {
     // return image;
     // }
 
-    private void writeFilters(Document document, String[] filters) {
+    protected void writeFilters(Document document, String[] filters) {
 	try {
 	    Paragraph tramoP = new Paragraph("Carretera: " + filters[0],
 		    bodyBoldStyle);
@@ -88,11 +88,11 @@ public class Report {
 	}
     }
 
-    private String writeFiltersInHeader(String[] filters) {
+    protected String writeFiltersInHeader(String[] filters) {
 	return "\n" + "Carretera: " + filters[0] + " Concello: " + filters[1];
     }
 
-    private void writeTitleAndSubtitle(Document document, String title,
+    protected void writeTitleAndSubtitle(Document document, String title,
 	    String subtitle) {
 
 	Paragraph titleP = new Paragraph(title,
@@ -114,7 +114,7 @@ public class Report {
 	}
     }
 
-    private String getDateFormated() {
+    protected String getDateFormated() {
 	Calendar calendar = Calendar.getInstance();
 	DateFormat df = DateFormat.getDateInstance(DateFormat.LONG, loc);
 	Date d = calendar.getTime();
@@ -122,7 +122,7 @@ public class Report {
 	return date;
     }
 
-    private void writeDate(Document document) {
+    protected void writeDate(Document document) {
 	Paragraph dateP = new Paragraph(getDateFormated(), bodyBoldStyle);
 	dateP.setAlignment(Paragraph.ALIGN_CENTER);
 	try {
@@ -132,7 +132,7 @@ public class Report {
 	}
     }
 
-    private void writeNumberOfRegisters(Document document, int numRegisters) {
+    protected void writeNumberOfRegisters(Document document, int numRegisters) {
 	Paragraph numRegistersP = new Paragraph("Número de registros: "
 		+ numRegisters, bodyBoldStyle);
 	try {
@@ -142,7 +142,7 @@ public class Report {
 	}
     }
 
-    private float[] getColumnsWidth(PdfPTable table, int columnCount) {
+    protected float[] getColumnsWidth(PdfPTable table, int columnCount) {
 	float[] columnsWidth = new float[columnCount];
 	for (int i = 0; i < columnCount; i++) {
 	    if (i == 3) {
@@ -158,7 +158,7 @@ public class Report {
 	return columnsWidth;
     }
 
-    private void writeRtfReportContent(Document document,
+    protected void writeRtfReportContent(Document document,
 	    ArrayList<TableModelResults> resultMap, String[] filters) {
 	try {
 	    // Header
@@ -220,7 +220,7 @@ public class Report {
 
     }
 
-    private void writePdfReportContent(PdfWriter writer, Document document,
+    protected void writePdfReportContent(PdfWriter writer, Document document,
 	    ArrayList<TableModelResults> resultMap, String[] filters) {
 	try {
 	    boolean isFirstPage = true;

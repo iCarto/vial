@@ -192,6 +192,7 @@ public class PanelQueriesActuaciones extends gvWindow {
 		    resultPanel.setResult(html);
 		    resultPanel.setResultMap(resultsMap);
 		    resultPanel.setFilters(getFilters());
+		    resultPanel.setQueryType(PanelQueriesResult.ACTUACIONES);
 
 		    PluginServices.getMDIManager().restoreCursor();
 

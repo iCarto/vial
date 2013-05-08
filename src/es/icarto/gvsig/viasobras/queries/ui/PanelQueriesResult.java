@@ -37,6 +37,9 @@ import es.icarto.gvsig.viasobras.queries.utils.TableModelResults;
 import es.icarto.gvsig.viasobras.queries.utils.ResultsWriter;
 
 public class PanelQueriesResult extends gvWindow {
+    
+    public final static int ESTADO = 0;
+    public final static int ACTUACIONES = 1;
 
     private JEditorPane resultTA;
     private JButton exportB;
@@ -44,6 +47,8 @@ public class PanelQueriesResult extends gvWindow {
     String[] fileFormats = { "CSV", "HTML", "PDF", "RTF" };
     private ArrayList<TableModelResults> resultsMap;
     private String[] filters;
+    
+    private int queryType;
 
     public PanelQueriesResult() {
 	this(null);
@@ -108,16 +113,26 @@ public class PanelQueriesResult extends gvWindow {
 		File f = sfd.showDialog();
 		if (f != null) {
 		    String fileName = f.getAbsolutePath();
-		    TableModelResults.writeResultTableToRtfReport(fileName,
+		    if (queryType == ACTUACIONES) {
+			TableModelResults.writeResultTableToRtfActuacionesReport(fileName,
 			    resultsMap, filters);
+		    }else {
+			TableModelResults.writeResultTableToRtfReport(fileName,
+				    resultsMap, filters);
+		    }
 		}
 	    } else if (fileTypeCB.getSelectedItem().equals("PDF")) {
 		DialogSaveFile sfd = new DialogSaveFile("PDF files", "pdf");
 		File f = sfd.showDialog();
 		if (f != null) {
 		    String fileName = f.getAbsolutePath();
-		    TableModelResults.writeResultTableToPdfReport(fileName,
-			    resultsMap, filters);
+		    if (queryType == ACTUACIONES) {
+			TableModelResults.writeResultTableToPdfActuacionesReport(fileName,
+				resultsMap, filters);
+		    }else {
+			TableModelResults.writeResultTableToPdfReport(fileName,
+				resultsMap, filters);
+		    }
 		}
 	    } else if (fileTypeCB.getSelectedItem().equals("CSV")) {
 		for (TableModelResults model : resultsMap) {
@@ -137,4 +152,12 @@ public class PanelQueriesResult extends gvWindow {
 	}
     }
 
+    public int getQueryType() {
+        return queryType;
+    }
+
+    public void setQueryType(int queryType) {
+        this.queryType = queryType;
+    }
+    
 }// Class

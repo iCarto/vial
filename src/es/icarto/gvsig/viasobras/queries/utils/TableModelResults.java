@@ -194,9 +194,19 @@ public class TableModelResults extends DefaultTableModel {
 	    ArrayList<TableModelResults> resultMap, String[] filters) {
 	new Report(Report.PDF, filename, resultMap, filters);
     }
+    
+    public static void writeResultTableToPdfActuacionesReport(String filename,
+	    ArrayList<TableModelResults> resultMap, String[] filters) {
+	new ActuacionesReport(Report.PDF, filename, resultMap, filters);
+    }
 
     public static void writeResultTableToRtfReport(String filename,
 	    ArrayList<TableModelResults> resultMap, String[] filters) {
 	new Report(Report.RTF, filename, resultMap, filters);
+    }
+    
+    public static void writeResultTableToRtfActuacionesReport(String filename,
+	    ArrayList<TableModelResults> resultMap, String[] filters) {
+	new ActuacionesReport(Report.RTF, filename, resultMap, filters);
     }
 }
