@@ -240,7 +240,7 @@ public class TestCatalogDelete {
     }
 
     @Test
-    public void testDeleteLastTwoPavimento() {
+    public void testDeleteLastTwoPavimentos() {
 	Catalog.clear();
 	Tramos tramosPavi;
 	boolean thrown = false;
@@ -266,13 +266,13 @@ public class TestCatalogDelete {
 		    beforeLastConcello = t.getConcello();
 		}
 	    }
-	    System.out.println("[beforeLast pavimento] Carretera: "
-		    + beforeLastCarretera + " - Concello: "
-		    + beforeLastConcello + " - ID: " + beforeLastID
-		    + " - Position: " + beforeLastPosition);
-	    System.out.println("[last pavimento] Carretera: " + lastCarretera
-		    + " - Concello: " + lastConcello + " - ID: " + lastID
-		    + " - Position: " + lastPosition);
+	    // System.out.println("[beforeLast pavimento] Carretera: "
+	    // + beforeLastCarretera + " - Concello: "
+	    // + beforeLastConcello + " - ID: " + beforeLastID
+	    // + " - Position: " + beforeLastPosition);
+	    // System.out.println("[last pavimento] Carretera: " + lastCarretera
+	    // + " - Concello: " + lastConcello + " - ID: " + lastID
+	    // + " - Position: " + lastPosition);
 	    tramosPavi.removeTramo(beforeLastID);
 	    tramosPavi.removeTramo(lastID);
 	    tramosPavi.save();
@@ -283,7 +283,7 @@ public class TestCatalogDelete {
     }
 
     @Test
-    public void testDeleteLastTwoAncho() {
+    public void testDeleteLastTwoAnchos() {
 	Catalog.clear();
 	Tramos ancho;
 	boolean thrown = false;
@@ -309,13 +309,13 @@ public class TestCatalogDelete {
 		    beforeLastConcello = t.getConcello();
 		}
 	    }
-	    System.out.println("[beforeLast ancho] Carretera: "
-		    + beforeLastCarretera + " - Concello: "
-		    + beforeLastConcello + " - ID: " + beforeLastID
-		    + " - Position: " + beforeLastPosition);
-	    System.out.println("[last ancho] Carretera: " + lastCarretera
-		    + " - Concello: " + lastConcello + " - ID: " + lastID
-		    + " - Position: " + lastPosition);
+	    //	    System.out.println("[beforeLast ancho] Carretera: "
+	    //		    + beforeLastCarretera + " - Concello: "
+	    //		    + beforeLastConcello + " - ID: " + beforeLastID
+	    //		    + " - Position: " + beforeLastPosition);
+	    //	    System.out.println("[last ancho] Carretera: " + lastCarretera
+	    //		    + " - Concello: " + lastConcello + " - ID: " + lastID
+	    //		    + " - Position: " + lastPosition);
 	    ancho.removeTramo(beforeLastID);
 	    ancho.removeTramo(lastID);
 	    ancho.save();
@@ -352,13 +352,13 @@ public class TestCatalogDelete {
 		    beforeLastConcello = t.getConcello();
 		}
 	    }
-	    System.out.println("[beforeLast cotas] Carretera: "
-		    + beforeLastCarretera + " - Concello: "
-		    + beforeLastConcello + " - ID: " + beforeLastID
-		    + " - Position: " + beforeLastPosition);
-	    System.out.println("[last cotas] Carretera: " + lastCarretera
-		    + " - Concello: " + lastConcello + " - ID: " + lastID
-		    + " - Position: " + lastPosition);
+	    //	    System.out.println("[beforeLast cotas] Carretera: "
+	    //		    + beforeLastCarretera + " - Concello: "
+	    //		    + beforeLastConcello + " - ID: " + beforeLastID
+	    //		    + " - Position: " + beforeLastPosition);
+	    //	    System.out.println("[last cotas] Carretera: " + lastCarretera
+	    //		    + " - Concello: " + lastConcello + " - ID: " + lastID
+	    //		    + " - Position: " + lastPosition);
 	    cotas.removeTramo(beforeLastID);
 	    cotas.removeTramo(lastID);
 	    cotas.save();
@@ -395,13 +395,13 @@ public class TestCatalogDelete {
 		    beforeLastConcello = e.getConcello();
 		}
 	    }
-	    System.out.println("[beforeLast accidente] Carretera: "
-		    + beforeLastCarretera + " - Concello: "
-		    + beforeLastConcello + " - ID: " + beforeLastID
-		    + " - Position: " + beforeLastPosition);
-	    System.out.println("[last accidente] Carretera: " + lastCarretera
-		    + " - Concello: " + lastConcello + " - ID: " + lastID
-		    + " - Position: " + lastPosition);
+	    // System.out.println("[beforeLast accidente] Carretera: "
+	    // + beforeLastCarretera + " - Concello: "
+	    // + beforeLastConcello + " - ID: " + beforeLastID
+	    // + " - Position: " + beforeLastPosition);
+	    // System.out.println("[last accidente] Carretera: " + lastCarretera
+	    // + " - Concello: " + lastConcello + " - ID: " + lastID
+	    // + " - Position: " + lastPosition);
 	    accidentes.removeEvento(beforeLastID);
 	    accidentes.removeEvento(lastID);
 	    accidentes.save();
@@ -438,13 +438,13 @@ public class TestCatalogDelete {
 		    beforeLastConcello = e.getConcello();
 		}
 	    }
-	    System.out.println("[beforeLast aforo] Carretera: "
-		    + beforeLastCarretera + " - Concello: "
-		    + beforeLastConcello + " - ID: " + beforeLastID
-		    + " - Position: " + beforeLastPosition);
-	    System.out.println("[last aforo] Carretera: " + lastCarretera
-		    + " - Concello: " + lastConcello + " - ID: " + lastID
-		    + " - Position: " + lastPosition);
+	    // System.out.println("[beforeLast aforo] Carretera: "
+	    // + beforeLastCarretera + " - Concello: "
+	    // + beforeLastConcello + " - ID: " + beforeLastID
+	    // + " - Position: " + beforeLastPosition);
+	    // System.out.println("[last aforo] Carretera: " + lastCarretera
+	    // + " - Concello: " + lastConcello + " - ID: " + lastID
+	    // + " - Position: " + lastPosition);
 	    aforos.removeEvento(beforeLastID);
 	    aforos.removeEvento(lastID);
 	    aforos.save();
@@ -455,7 +455,8 @@ public class TestCatalogDelete {
     }
 
     @Test
-    public void testDeleteTwoTramosDeletesProperTramos() throws SQLException {
+    public void testDeleteTwoPavimentosDeletesProperPavimentos()
+	    throws SQLException {
 	Catalog.clear();
 	Tramos tramosPavi = Catalog.getTramosTipoPavimento();
 	String idPositionA = "", idPositionB = "";
@@ -513,16 +514,14 @@ public class TestCatalogDelete {
     }
 
     @Test
-    public void testDeleteTwoTramosDeletesActuallyDeletesTwoTramos()
-	    throws SQLException {
+    public void testDeleteTwoAnchosDeletesProperAnchos() throws SQLException {
 	Catalog.clear();
-	Tramos tramosPavi = Catalog.getTramosTipoPavimento();
-	int tramosSizeStart = tramosPavi.size();
+	Tramos anchos = Catalog.getTramosAnchoPlataforma();
 	String idPositionA = "", idPositionB = "";
 	String carreteraPositionA = "", concelloPositionA = "";
 	String carreteraPositionB = "", concelloPositionB = "";
 	boolean first = true;
-	for (Tramo t : tramosPavi) {
+	for (Tramo t : anchos) {
 	    if (first) {
 		idPositionA = t.getId();
 		carreteraPositionA = t.getCarretera();
@@ -535,22 +534,438 @@ public class TestCatalogDelete {
 		break;
 	    }
 	}
-	tramosPavi.removeTramo(idPositionA);
-	tramosPavi.removeTramo(idPositionB);
-	Tramos tramosPaviNew = tramosPavi.save();
-
-	int tramosSizeEnd = tramosPaviNew.size();
+	anchos.removeTramo(idPositionA);
+	anchos.removeTramo(idPositionB);
+	anchos.save();
 
 	// check if the tramo A was deleted
 	Statement stmtA = c.createStatement();
 	ResultSet rsA = stmtA
-		.executeQuery("SELECT COUNT(*) AS n_tramos FROM inventario.tipo_pavimento");
-	int tramosInDB = 0;
+		.executeQuery("SELECT gid FROM inventario.ancho_plataforma WHERE codigo_carretera = '"
+			+ carreteraPositionA
+			+ "' AND codigo_municipio = '"
+			+ concelloPositionA + "'");
+	boolean updatedA = true;
 	while (rsA.next()) {
-	    tramosInDB = rsA.getInt("n_tramos");
+	    if (Integer.toString(rsA.getInt("gid")).equals(idPositionA)) {
+		updatedA = false;
+		break;
+	    }
 	}
-	assertEquals(tramosInDB, tramosSizeStart - 2);
-	assertEquals(tramosInDB, tramosSizeEnd);
+	assertEquals(true, updatedA);
+
+	// check if the tramo B was deleted
+	Statement stmtB = c.createStatement();
+	ResultSet rsB = stmtB
+		.executeQuery("SELECT gid FROM inventario.ancho_plataforma WHERE codigo_carretera = '"
+			+ carreteraPositionB
+			+ "' AND codigo_municipio = '"
+			+ concelloPositionB + "'");
+	boolean updatedB = true;
+	while (rsB.next()) {
+	    if (Integer.toString(rsB.getInt("gid")).equals(idPositionB)) {
+		updatedB = false;
+		break;
+	    }
+	}
+	assertEquals(true, updatedB);
+    }
+
+    @Test
+    public void testDeleteTwoCotasDeletesProperCotas() throws SQLException {
+	Catalog.clear();
+	Tramos cotas = Catalog.getTramosCotas();
+	String idPositionA = "", idPositionB = "";
+	String carreteraPositionA = "", concelloPositionA = "";
+	String carreteraPositionB = "", concelloPositionB = "";
+	boolean first = true;
+	for (Tramo t : cotas) {
+	    if (first) {
+		idPositionA = t.getId();
+		carreteraPositionA = t.getCarretera();
+		concelloPositionA = t.getConcello();
+		first = false;
+	    } else {
+		idPositionB = t.getId();
+		carreteraPositionB = t.getCarretera();
+		concelloPositionB = t.getConcello();
+		break;
+	    }
+	}
+	cotas.removeTramo(idPositionA);
+	cotas.removeTramo(idPositionB);
+	cotas.save();
+
+	// check if the tramo A was deleted
+	Statement stmtA = c.createStatement();
+	ResultSet rsA = stmtA
+		.executeQuery("SELECT gid FROM inventario.cotas WHERE codigo_carretera = '"
+			+ carreteraPositionA
+			+ "' AND codigo_municipio = '"
+			+ concelloPositionA + "'");
+	boolean updatedA = true;
+	while (rsA.next()) {
+	    if (Integer.toString(rsA.getInt("gid")).equals(idPositionA)) {
+		updatedA = false;
+		break;
+	    }
+	}
+	assertEquals(true, updatedA);
+
+	// check if the tramo B was deleted
+	Statement stmtB = c.createStatement();
+	ResultSet rsB = stmtB
+		.executeQuery("SELECT gid FROM inventario.cotas WHERE codigo_carretera = '"
+			+ carreteraPositionB
+			+ "' AND codigo_municipio = '"
+			+ concelloPositionB + "'");
+	boolean updatedB = true;
+	while (rsB.next()) {
+	    if (Integer.toString(rsB.getInt("gid")).equals(idPositionB)) {
+		updatedB = false;
+		break;
+	    }
+	}
+	assertEquals(true, updatedB);
+    }
+
+    @Test
+    public void testDeleteTwoAforosDeletesProperAforos() throws SQLException {
+	Catalog.clear();
+	Eventos aforos = Catalog.getEventosAforos();
+	String idPositionA = "", idPositionB = "";
+	String carreteraPositionA = "", concelloPositionA = "";
+	String carreteraPositionB = "", concelloPositionB = "";
+	boolean first = true;
+	for (Evento e : aforos) {
+	    if (first) {
+		idPositionA = e.getId();
+		carreteraPositionA = e.getCarretera();
+		concelloPositionA = e.getConcello();
+		first = false;
+	    } else {
+		idPositionB = e.getId();
+		carreteraPositionB = e.getCarretera();
+		concelloPositionB = e.getConcello();
+		break;
+	    }
+	}
+	aforos.removeEvento(idPositionA);
+	aforos.removeEvento(idPositionB);
+	aforos.save();
+
+	// check if the tramo A was deleted
+	Statement stmtA = c.createStatement();
+	ResultSet rsA = stmtA
+		.executeQuery("SELECT gid FROM inventario.aforos WHERE codigo_carretera = '"
+			+ carreteraPositionA
+			+ "' AND codigo_municipio = '"
+			+ concelloPositionA + "'");
+	boolean updatedA = true;
+	while (rsA.next()) {
+	    if (Integer.toString(rsA.getInt("gid")).equals(idPositionA)) {
+		updatedA = false;
+		break;
+	    }
+	}
+	assertEquals(true, updatedA);
+
+	// check if the evento B was deleted
+	Statement stmtB = c.createStatement();
+	ResultSet rsB = stmtB
+		.executeQuery("SELECT gid FROM inventario.aforos WHERE codigo_carretera = '"
+			+ carreteraPositionB
+			+ "' AND codigo_municipio = '"
+			+ concelloPositionB + "'");
+	boolean updatedB = true;
+	while (rsB.next()) {
+	    if (Integer.toString(rsB.getInt("gid")).equals(idPositionB)) {
+		updatedB = false;
+		break;
+	    }
+	}
+	assertEquals(true, updatedB);
+    }
+
+    @Test
+    public void testDeleteTwoAccidentesDeletesProperAccidentes()
+	    throws SQLException {
+	Catalog.clear();
+	Eventos accidentes = Catalog.getEventosAccidentes();
+	String idPositionA = "", idPositionB = "";
+	String carreteraPositionA = "", concelloPositionA = "";
+	String carreteraPositionB = "", concelloPositionB = "";
+	boolean first = true;
+	for (Evento e : accidentes) {
+	    if (first) {
+		idPositionA = e.getId();
+		carreteraPositionA = e.getCarretera();
+		concelloPositionA = e.getConcello();
+		first = false;
+	    } else {
+		idPositionB = e.getId();
+		carreteraPositionB = e.getCarretera();
+		concelloPositionB = e.getConcello();
+		break;
+	    }
+	}
+	accidentes.removeEvento(idPositionA);
+	accidentes.removeEvento(idPositionB);
+	accidentes.save();
+
+	// check if the tramo A was deleted
+	Statement stmtA = c.createStatement();
+	ResultSet rsA = stmtA
+		.executeQuery("SELECT gid FROM inventario.accidentes WHERE codigo_carretera = '"
+			+ carreteraPositionA
+			+ "' AND codigo_municipio = '"
+			+ concelloPositionA + "'");
+	boolean updatedA = true;
+	while (rsA.next()) {
+	    if (Integer.toString(rsA.getInt("gid")).equals(idPositionA)) {
+		updatedA = false;
+		break;
+	    }
+	}
+	assertEquals(true, updatedA);
+
+	// check if the evento B was deleted
+	Statement stmtB = c.createStatement();
+	ResultSet rsB = stmtB
+		.executeQuery("SELECT gid FROM inventario.accidentes WHERE codigo_carretera = '"
+			+ carreteraPositionB
+			+ "' AND codigo_municipio = '"
+			+ concelloPositionB + "'");
+	boolean updatedB = true;
+	while (rsB.next()) {
+	    if (Integer.toString(rsB.getInt("gid")).equals(idPositionB)) {
+		updatedB = false;
+		break;
+	    }
+	}
+	assertEquals(true, updatedB);
+    }
+
+    @Test
+    public void testDeleteTwoPavimentosActuallyDeletesTwoPavimentos()
+	    throws SQLException {
+	Catalog.clear();
+	Tramos pavimentos = Catalog.getTramosTipoPavimento();
+
+	int tramosSizeStart = pavimentos.size();
+	Statement stmtA = c.createStatement();
+	ResultSet rsA = stmtA
+		.executeQuery("SELECT COUNT(*) AS n_tramos FROM inventario.tipo_pavimento");
+	int tramosInDBStart = 0;
+	while (rsA.next()) {
+	    tramosInDBStart = rsA.getInt("n_tramos");
+	}
+
+	String idPositionA = "", idPositionB = "";
+	boolean first = true;
+	for (Tramo t : pavimentos) {
+	    if (first) {
+		idPositionA = t.getId();
+		first = false;
+	    } else {
+		idPositionB = t.getId();
+		break;
+	    }
+	}
+	pavimentos.removeTramo(idPositionA);
+	pavimentos.removeTramo(idPositionB);
+	Tramos tramosPaviNew = pavimentos.save();
+
+	int tramosSizeEnd = tramosPaviNew.size();
+	Statement stmtB = c.createStatement();
+	ResultSet rsB = stmtB
+		.executeQuery("SELECT COUNT(*) AS n_tramos FROM inventario.tipo_pavimento");
+	int tramosInDBEnd = 0;
+	while (rsB.next()) {
+	    tramosInDBEnd = rsB.getInt("n_tramos");
+	}
+
+	assertEquals(tramosInDBStart, tramosSizeStart);
+	assertEquals(tramosInDBEnd, tramosSizeEnd);
+	assertEquals(tramosInDBEnd, tramosSizeStart - 2);
+	assertEquals(tramosInDBEnd, tramosSizeEnd);
+
+    }
+
+    @Test
+    public void testDeleteTwoAnchosActuallyDeletesTwoAnchos()
+	    throws SQLException {
+	Catalog.clear();
+	Tramos anchos = Catalog.getTramosAnchoPlataforma();
+
+	int tramosSizeStart = anchos.size();
+	Statement stmtA = c.createStatement();
+	ResultSet rsA = stmtA
+		.executeQuery("SELECT COUNT(*) AS n_tramos FROM inventario.ancho_plataforma");
+	int tramosInDBStart = 0;
+	while (rsA.next()) {
+	    tramosInDBStart = rsA.getInt("n_tramos");
+	}
+
+	String idPositionA = "", idPositionB = "";
+	boolean first = true;
+	for (Tramo t : anchos) {
+	    if (first) {
+		idPositionA = t.getId();
+		first = false;
+	    } else {
+		idPositionB = t.getId();
+		break;
+	    }
+	}
+	anchos.removeTramo(idPositionA);
+	anchos.removeTramo(idPositionB);
+	Tramos tramosPaviNew = anchos.save();
+
+	int tramosSizeEnd = tramosPaviNew.size();
+	Statement stmtB = c.createStatement();
+	ResultSet rsB = stmtB
+		.executeQuery("SELECT COUNT(*) AS n_tramos FROM inventario.ancho_plataforma");
+	int tramosInDBEnd = 0;
+	while (rsB.next()) {
+	    tramosInDBEnd = rsB.getInt("n_tramos");
+	}
+
+	assertEquals(tramosInDBStart, tramosSizeStart);
+	assertEquals(tramosInDBEnd, tramosSizeEnd);
+	assertEquals(tramosInDBEnd, tramosSizeStart - 2);
+	assertEquals(tramosInDBEnd, tramosSizeEnd);
+    }
+
+    @Test
+    public void testDeleteTwoCotasActuallyDeletesTwoCotas()
+	    throws SQLException {
+	Catalog.clear();
+	Tramos cotas = Catalog.getTramosCotas();
+
+	int tramosSizeStart = cotas.size();
+	Statement stmtA = c.createStatement();
+	ResultSet rsA = stmtA
+		.executeQuery("SELECT COUNT(*) AS n_tramos FROM inventario.cotas");
+	int tramosInDBStart = 0;
+	while (rsA.next()) {
+	    tramosInDBStart = rsA.getInt("n_tramos");
+	}
+
+	String idPositionA = "", idPositionB = "";
+	boolean first = true;
+	for (Tramo t : cotas) {
+	    if (first) {
+		idPositionA = t.getId();
+		first = false;
+	    } else {
+		idPositionB = t.getId();
+		break;
+	    }
+	}
+	cotas.removeTramo(idPositionA);
+	cotas.removeTramo(idPositionB);
+	Tramos cotasNew = cotas.save();
+
+	int tramosSizeEnd = cotasNew.size();
+	Statement stmtB = c.createStatement();
+	ResultSet rsB = stmtB
+		.executeQuery("SELECT COUNT(*) AS n_tramos FROM inventario.cotas");
+	int tramosInDBEnd = 0;
+	while (rsB.next()) {
+	    tramosInDBEnd = rsB.getInt("n_tramos");
+	}
+
+	assertEquals(tramosInDBStart, tramosSizeStart);
+	assertEquals(tramosInDBEnd, tramosSizeEnd);
+	assertEquals(tramosInDBEnd, tramosSizeStart - 2);
+	assertEquals(tramosInDBEnd, tramosSizeEnd);
+    }
+
+    @Test
+    public void testDeleteTwoAforosActuallyDeletesTwoAforos()
+	    throws SQLException {
+	Catalog.clear();
+	Eventos aforos = Catalog.getEventosAforos();
+	int eventosSizeStart= aforos.size();
+	Statement stmtA = c.createStatement();
+	ResultSet rsA = stmtA
+		.executeQuery("SELECT COUNT(*) AS n_tramos FROM inventario.aforos");
+	int eventosInDBStart = 0;
+	while (rsA.next()) {
+	    eventosInDBStart = rsA.getInt("n_tramos");
+	}
+	String idPositionA = "", idPositionB = "";
+	boolean first = true;
+	for (Evento e : aforos) {
+	    if (first) {
+		idPositionA = e.getId();
+		first = false;
+	    } else {
+		idPositionB = e.getId();
+		break;
+	    }
+	}
+	aforos.removeEvento(idPositionA);
+	aforos.removeEvento(idPositionB);
+	Eventos aforosNew = aforos.save();
+
+	int eventosSizeEnd = aforosNew.size();
+
+	// check if the tramo B was deleted
+	Statement stmtB = c.createStatement();
+	ResultSet rsB = stmtB
+		.executeQuery("SELECT COUNT(*) AS n_tramos FROM inventario.aforos");
+	int eventosInDBEnd = 0;
+	while (rsB.next()) {
+	    eventosInDBEnd = rsB.getInt("n_tramos");
+	}
+	assertEquals(eventosInDBEnd, eventosInDBStart - 2);
+	assertEquals(eventosSizeEnd, eventosSizeStart - 2);
+    }
+
+    @Test
+    public void testDeleteTwoAccidentesActuallyDeletesTwoAccidentes()
+	    throws SQLException {
+	Catalog.clear();
+	Eventos accidentes = Catalog.getEventosAccidentes();
+	int eventosSizeStart = accidentes.size();
+	Statement stmtA = c.createStatement();
+	ResultSet rsA = stmtA
+		.executeQuery("SELECT COUNT(*) AS n_tramos FROM inventario.accidentes");
+	int eventosInDBStart = 0;
+	while (rsA.next()) {
+	    eventosInDBStart = rsA.getInt("n_tramos");
+	}
+	String idPositionA = "", idPositionB = "";
+	boolean first = true;
+	for (Evento e : accidentes) {
+	    if (first) {
+		idPositionA = e.getId();
+		first = false;
+	    } else {
+		idPositionB = e.getId();
+		break;
+	    }
+	}
+	accidentes.removeEvento(idPositionA);
+	accidentes.removeEvento(idPositionB);
+	Eventos accidentesNew = accidentes.save();
+
+	int eventosSizeEnd = accidentesNew.size();
+
+	// check if the tramo B was deleted
+	Statement stmtB = c.createStatement();
+	ResultSet rsB = stmtB
+		.executeQuery("SELECT COUNT(*) AS n_tramos FROM inventario.accidentes");
+	int eventosInDBEnd = 0;
+	while (rsB.next()) {
+	    eventosInDBEnd = rsB.getInt("n_tramos");
+	}
+	assertEquals(eventosInDBEnd, eventosInDBStart - 2);
+	assertEquals(eventosSizeEnd, eventosSizeStart - 2);
+	assertEquals(eventosInDBEnd, eventosSizeEnd);
+	assertEquals(eventosInDBStart, eventosSizeStart);
     }
 
     private String deletePlataforma(String carretera, String concello,

@@ -1,6 +1,7 @@
 package es.icarto.gvsig.viasobras.domain.catalog.mappers;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.sql.rowset.CachedRowSet;
 
@@ -84,6 +85,7 @@ public abstract class EventosMapperAbstract implements EventosMapper {
     public Eventos save(Eventos ts) throws SQLException {
 	int newID = getLastAvailableID();
 	CachedRowSet eventos = getEventos();
+	ArrayList<Integer> deleteIDs = new ArrayList<Integer>();
 	for (Evento t : ts) {
 	    if (t.getStatus() == Evento.STATUS_UPDATE) {
 		eventos.absolute(t.getPosition());
@@ -94,20 +96,6 @@ public abstract class EventosMapperAbstract implements EventosMapper {
 		eventos.updateObject(CARACTERISTICA_FIELDNAME, t.getValue());
 		updateDate(eventos, t);
 		eventos.updateRow();
-	    } else if (t.getStatus() == Evento.STATUS_DELETE) {
-		if (t.getPosition() != Evento.NO_POSITION) {
-		    // Tramo.NO_POSITION means that the user is deleting a new
-		    // created tramo, with no assigned position
-		    // That "virtual" tramo (as it is not in the datasource yet)
-		    // will be "deleted" automatically when refreshing the
-		    // CachedRowSet so no need to delete here
-		    eventos.absolute(t.getPosition());
-		    if (eventos.getRow() != 0) {
-			// only delete if cursor is proper placed
-			eventos.deleteRow();
-		    }
-		    eventos.beforeFirst();
-		}
 	    } else if (t.getStatus() == Evento.STATUS_INSERT) {
 		eventos.moveToInsertRow();
 		eventos.updateInt(ID_FIELDNAME, newID);
@@ -121,6 +109,32 @@ public abstract class EventosMapperAbstract implements EventosMapper {
 		eventos.insertRow();
 		eventos.moveToCurrentRow();
 		newID++;
+	    } else if (t.getStatus() == Evento.STATUS_DELETE) {
+		// Evento.NO_POSITION means that the user is deleting a
+		// new created tramo, with no assigned position
+		// That "virtual" tramo (as it is not in the datasource
+		// yet) will be "deleted" automatically when refreshing
+		// the CachedRowSet so no need to delete here.
+		// Also take into account that positions start with 1, 0
+		// is invalid.
+		if ((t.getPosition() != Evento.NO_POSITION)
+			&& (t.getPosition() != 0)) {
+		    try {
+			int id = Integer.parseInt(t.getId());
+			deleteIDs.add(id);
+		    } catch (NumberFormatException e) {
+			// do nothing
+		    }
+		}
+	    }
+	}
+	// Delete operation is done from last to first, to avoid problems with
+	// the position of cursor due to holes from deleted rows
+	eventos.afterLast();
+	while (eventos.previous()) {
+	    if (deleteIDs.contains(eventos
+		    .getInt(EventosMapperAbstract.ID_FIELDNAME))) {
+		eventos.deleteRow();
 	    }
 	}
 	eventos.acceptChanges();

@@ -2,6 +2,7 @@ package es.icarto.gvsig.viasobras.domain.catalog.mappers;
 
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
 
 import javax.sql.rowset.CachedRowSet;
 
@@ -88,6 +89,7 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 	int newID = getLastAvailableID();
 	CachedRowSet tramos = getTramos();
 	int valueType = tramos.getMetaData().getColumnType(VALUE_FIELD_POSITION);
+	ArrayList<Integer> deleteIDs = new ArrayList<Integer>();
 	for (Tramo t : ts) {
 	    if (t.getStatus() == Tramo.STATUS_UPDATE) {
 		tramos.absolute(t.getPosition());
@@ -99,20 +101,6 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 		updateValue(tramos, t, valueType);
 		updateDate(tramos, t);
 		tramos.updateRow();
-	    } else if (t.getStatus() == Tramo.STATUS_DELETE) {
-		if (t.getPosition() != Tramo.NO_POSITION) {
-		    // Tramo.NO_POSITION means that the user is deleting a new
-		    // created tramo, with no assigned position
-		    // That "virtual" tramo (as it is not in the datasource yet)
-		    // will be "deleted" automatically when refreshing the
-		    // CachedRowSet so no need to delete here
-		    tramos.absolute(t.getPosition());
-		    if (tramos.getRow() != 0) {
-			// only delete if cursor is proper placed
-			tramos.deleteRow();
-		    }
-		    tramos.beforeFirst();
-		}
 	    } else if (t.getStatus() == Tramo.STATUS_INSERT) {
 		tramos.moveToInsertRow();
 		tramos.updateInt(ID_FIELDNAME, newID);
@@ -127,6 +115,32 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 		tramos.insertRow();
 		tramos.moveToCurrentRow();
 		newID++;
+	    } else if (t.getStatus() == Tramo.STATUS_DELETE) {
+		// Tramo.NO_POSITION means that the user is deleting a
+		// new created tramo, with no assigned position
+		// That "virtual" tramo (as it is not in the datasource
+		// yet) will be "deleted" automatically when refreshing
+		// the CachedRowSet so no need to delete here.
+		// Also take into account that positions start with 1, 0
+		// is invalid.
+		if ((t.getPosition() != Tramo.NO_POSITION)
+			&& (t.getPosition() != 0)) {
+		    try {
+			int id = Integer.parseInt(t.getId());
+			deleteIDs.add(id);
+		    } catch (NumberFormatException e) {
+			// do nothing
+		    }
+		}
+	    }
+	}
+	// Delete operation is done from last to first, to avoid problems with
+	// the position of cursor due to holes from deleted rows
+	tramos.afterLast();
+	while (tramos.previous()) {
+	    if (deleteIDs.contains(tramos
+		    .getInt(TramosMapperAbstract.ID_FIELDNAME))) {
+		tramos.deleteRow();
 	    }
 	}
 	tramos.acceptChanges();
