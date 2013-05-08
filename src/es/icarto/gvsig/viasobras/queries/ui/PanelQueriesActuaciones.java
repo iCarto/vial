@@ -301,6 +301,7 @@ public class PanelQueriesActuaciones extends gvWindow {
 	queriesTable.setFocusable(false);
     }
     
+    
     private void fillQueriesTable() {
 	queriesModel = new TableModelQueries();
 	queriesTable.setModel(queriesModel);
@@ -320,6 +321,62 @@ public class PanelQueriesActuaciones extends gvWindow {
 	queriesTable.getColumnModel().getColumn(0)
 	.setCellRenderer(columnCentered);
 
+	queriesTable.getSelectionModel().addListSelectionListener
+	(new ListSelectionListener() {
+	    public void valueChanged(ListSelectionEvent event)
+	    { 
+		carreteras.setEnabled(true);
+		concellos.setEnabled(true);
+		anho.setEnabled(true);
+		valor.setEnabled(true);
+		int viewRow = queriesTable.getSelectedRow();
+		String queryCode = queriesTable.getValueAt(viewRow, 0).toString();
+		disableComponents(Integer.parseInt(queryCode.substring(1)));
+	    }
+
+	    private void disableComponents(int queryCode) {
+		switch (queryCode) {
+		case 02:
+		    carreteras.setEnabled(false);
+		    break;
+		case 13:
+		    carreteras.setEnabled(false);
+		    break;
+		case 21:
+		    carreteras.setEnabled(false);
+		    valor.setEnabled(false);
+		    break;
+		case 22:
+		    valor.setEnabled(false);
+		    break;
+		case 23:
+		    valor.setEnabled(false);
+		    break;
+		case 31:
+		    carreteras.setEnabled(false);
+		    valor.setEnabled(false);
+		    break;
+		case 41:
+		    carreteras.setEnabled(false);
+		    valor.setEnabled(false);
+		    break;
+		case 60:
+		    valor.setEnabled(false);
+		    break;
+		case 80:
+		    anho.setEnabled(false);
+		    break;
+		case 81:
+		    anho.setEnabled(false);
+		    break;
+		case 90:
+		    anho.setEnabled(false);
+		    break;
+		}
+	    }
+	});
+	       	
+	
 	queriesTable.getColumnModel().getColumn(1).setHeaderValue("Consulta");
 	
 	ActuacionesTooltipRenderer tooltipRenderer = new ActuacionesTooltipRenderer();
