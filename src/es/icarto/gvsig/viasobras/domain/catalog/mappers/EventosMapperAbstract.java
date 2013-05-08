@@ -102,7 +102,10 @@ public abstract class EventosMapperAbstract implements EventosMapper {
 		    // will be "deleted" automatically when refreshing the
 		    // CachedRowSet so no need to delete here
 		    eventos.absolute(t.getPosition());
-		    eventos.deleteRow();
+		    if (eventos.getRow() != 0) {
+			// only delete if cursor is proper placed
+			eventos.deleteRow();
+		    }
 		    eventos.beforeFirst();
 		}
 	    } else if (t.getStatus() == Evento.STATUS_INSERT) {

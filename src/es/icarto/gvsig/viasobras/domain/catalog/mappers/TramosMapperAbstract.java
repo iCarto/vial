@@ -107,7 +107,10 @@ public abstract class TramosMapperAbstract implements TramosMapper {
 		    // will be "deleted" automatically when refreshing the
 		    // CachedRowSet so no need to delete here
 		    tramos.absolute(t.getPosition());
-		    tramos.deleteRow();
+		    if (tramos.getRow() != 0) {
+			// only delete if cursor is proper placed
+			tramos.deleteRow();
+		    }
 		    tramos.beforeFirst();
 		}
 	    } else if (t.getStatus() == Tramo.STATUS_INSERT) {
