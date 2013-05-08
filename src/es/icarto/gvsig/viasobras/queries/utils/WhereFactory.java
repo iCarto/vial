@@ -449,7 +449,7 @@ public class WhereFactory {
 
     private static String getWhereValorActuaciones(String where, String field, String valor) {
 	if (!valor.equals("")) {
-	    where = where + " AND " + field + " LIKE '%" + valor + "%'";
+	    where = where + " AND lower(" + field + ") LIKE lower('%" + valor + "%')";
 	}
 	return where;
     }
