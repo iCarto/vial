@@ -43,7 +43,6 @@ import es.icarto.gvsig.viasobras.domain.catalog.mappers.DBFacade;
 import es.icarto.gvsig.viasobras.queries.utils.EstadoTooltipRenderer;
 import es.icarto.gvsig.viasobras.queries.utils.TableModelQueries;
 import es.icarto.gvsig.viasobras.queries.utils.TableModelResults;
-import es.icarto.gvsig.viasobras.queries.utils.ActuacionesTooltipRenderer;
 import es.icarto.gvsig.viasobras.queries.utils.WhereFactory;
 import es.udc.cartolab.gvsig.navtable.format.DoubleFormatNT;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
@@ -204,14 +203,14 @@ public class PanelQueriesEstado extends gvWindow {
 	.setCellRenderer(columnCentered);
 
 	queriesTable.getColumnModel().getColumn(1).setHeaderValue("Consulta");
-	
+
 	EstadoTooltipRenderer tooltipRenderer = new EstadoTooltipRenderer();
 	queriesTable.getColumnModel().getColumn(1).setCellRenderer(tooltipRenderer);
-	
-	queriesTable.getSelectionModel().addListSelectionListener
-	(new ListSelectionListener() {
+
+	queriesTable.getSelectionModel().addListSelectionListener(
+		new ListSelectionListener() {
 	    public void valueChanged(ListSelectionEvent event)
-	    { 
+	    {
 		carreteras.setEnabled(true);
 		concellos.setEnabled(true);
 		mayor.setEnabled(true);
@@ -224,6 +223,15 @@ public class PanelQueriesEstado extends gvWindow {
 
 	    private void disableComponents(int queryCode) {
 		switch (queryCode) {
+		case 01:
+		case 03:
+		case 04:
+		case 21:
+		case 22:
+		    mayor.setEnabled(false);
+		    menor.setEnabled(false);
+		    valor.setEnabled(false);
+		    break;
 		case 02:
 		    mayor.setEnabled(false);
 		    menor.setEnabled(false);
@@ -242,6 +250,9 @@ public class PanelQueriesEstado extends gvWindow {
 		    menor.setEnabled(false);
 		    break;
 		case 40:
+		    valor.setEnabled(false);
+		    break;
+		case 41:
 		    valor.setEnabled(false);
 		    break;
 		case 50:
