@@ -47,22 +47,23 @@
 		</extension>
 
 		<extension class-name="es.icarto.gvsig.viasobras.RecalculateCaracteristicasExtension" description="FORMS_PANEL" active="true">
+			<menu action-command="separator" text="Vías y Obras" position="30699" is_separator="true"/>
 			<menu text="Vías y Obras/Recalcular características"
 				icon="viasobras-recalcular-caracteristicas"
-				position="30400"/>
+				position="30700"/>
 		</extension>
 
 		<extension class-name="es.icarto.gvsig.viasobras.RecalculatePKsExtension" description="FORMS_PANEL" active="true">
 			<menu text="Vías y Obras/Recalcular PKs"
 				icon="viasobras-recalcular-pks"
-				position="30500"/>
+				position="30800"/>
 		</extension>
 
 		<extension class-name="es.icarto.gvsig.viasobras.FormActuacionAltaExtension" description="FORMS_PANEL" active="true">
-			<menu action-command="separator" text="Vías y Obras" position="30599" is_separator="true"/>
+			<menu action-command="separator" text="Vías y Obras" position="30399" is_separator="true"/>
 			<menu text="Vías y Obras/Alta actuación"
 				icon="viasobras-actuacion-alta"
-				position="30600"/>
+				position="30400"/>
 			<tool-bar name="ViasObrasLugo" position="70">
 				<action-tool icon="viasobras-actuacion-alta" tooltip="Alta actuación" action-command="FormActuacionAlta" position="5"/>
 			</tool-bar>
@@ -71,36 +72,34 @@
 		<extension class-name="es.icarto.gvsig.viasobras.FormActuacionesExtension" description="FORMS_PANEL" active="true">
 			<menu text="Vías y Obras/Actuaciones"
 				icon="viasobras-actuaciones"
-				position="30700"/>
+				position="30500"/>
 			<tool-bar name="ViasObrasLugo" position="70">
 				<action-tool icon="viasobras-actuaciones" tooltip="Actuaciones" action-command="FormActuaciones" position="6"/>
 			</tool-bar>
 		</extension>
 
 		<extension class-name="es.icarto.gvsig.viasobras.QueriesEstadoExtension" description="FORMS_PANEL" active="true">
-			<menu action-command="separator" text="Vías y Obras" position="30799" is_separator="true"/>
-			<menu text="Vías y Obras/Consultas"
+			<menu action-command="separator" text="Vías y Obras" position="30599" is_separator="true"/>
+			<menu text="Vías y Obras/Consultas viario"
 				icon="viasobras-consultas"
-				position="30800"/>
+				position="30600"/>
 			<tool-bar name="ViasObrasLugo" position="70">
-				<action-tool icon="viasobras-consultas" tooltip="Consultas estado actual"
+				<action-tool icon="viasobras-consultas" tooltip="Consultas viario"
 					action-command="QueriesEstado" position="7"/>
 			</tool-bar>
 		</extension>
 		
 		<extension class-name="es.icarto.gvsig.viasobras.QueriesActuacionesExtension" description="FORMS_PANEL" active="true">
-			<menu action-command="separator" text="Vías y Obras" position="30800" is_separator="true"/>
 			<menu text="Vías y Obras/Consultas actuaciones"
 				icon="viasobras-consultas-actuaciones"
-				position="30850"/>
+				position="30650"/>
 			<tool-bar name="ViasObrasLugo" position="80">
 				<action-tool icon="viasobras-consultas-actuaciones" tooltip="Consultas actuaciones"
-					action-command="QueriesEstado" position="7"/>
+					action-command="QueriesEstado" position="8"/>
 			</tool-bar>
 		</extension>
 			
 		<extension class-name="es.icarto.gvsig.viasobras.ImportAccidentesExtension" description="FORMS_PANEL" active="true">
-			<menu action-command="separator" text="Vías y Obras" position="30899" is_separator="true"/>
 			<menu text="Vías y Obras/Importar accidentes"
 				icon="viasobras-accidentes"
 				position="30900"/>
