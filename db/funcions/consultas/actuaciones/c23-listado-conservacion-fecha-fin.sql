@@ -8,7 +8,7 @@ SELECT mun_cod.nombre AS "Municipio", \
        actuaciones.conservacion_importe_proyecto AS "Importe proyecto", \
        actuaciones.conservacion_fecha_inicio AS "Fecha inicio", \
        actuaciones.conservacion_fecha_fin AS "Fecha fin", \
-       actuaciones.conservacion_fecha_consignacion_aprobacion AS "Fecha consignación aprobación", \
+       actuaciones.conservacion_fecha_consignacion_aprobacion AS "Fecha aprobación presupuesto", \
        actuaciones.conservacion_contratista_nombre AS "Contratista", \
        actuaciones.conservacion_observaciones AS "Observaciones" \
 FROM inventario.actuaciones actuaciones, \

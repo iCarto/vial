@@ -10,7 +10,7 @@ SELECT mun_cod.nombre AS "Municipio", \
        actuaciones.construccion_contratista_nombre AS "Contratista", \
        actuaciones.construccion_importe_proyecto AS "Iporte proyecto", \
        actuaciones.construccion_importe_adjudicacion AS "Importe adjudicación", \
-       actuaciones.construccion_fecha_consignacion_aprobacion AS "Fecha aprobación", \
+       actuaciones.construccion_fecha_consignacion_aprobacion AS "Fecha aprobación presupuesto", \
        actuaciones.construccion_observaciones AS "Observaciones" \
 FROM inventario.actuaciones actuaciones, \
      inventario.actuacion_municipio act_mun, \
