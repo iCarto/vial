@@ -459,6 +459,63 @@ public class TestsCatalogEdit {
     }
 
     @Test
+    public void testDeleteTwoTramos() throws SQLException {
+	Catalog.clear();
+	Tramos tramosPavi = Catalog.getTramosTipoPavimento();
+	int positionA = 2;
+	int positionB = 25;
+	String idPositionA = "", idPositionB = "";
+	String carreteraPositionA = "", concelloPositionA = "";
+	String carreteraPositionB = "", concelloPositionB = "";
+	for (Tramo t : tramosPavi) {
+	    if (t.getPosition() == positionA) {
+		idPositionA = t.getId();
+		carreteraPositionA = t.getCarretera();
+		concelloPositionA = t.getConcello();
+	    } else if (t.getPosition() == positionB) {
+		idPositionB = t.getId();
+		carreteraPositionB = t.getCarretera();
+		concelloPositionB = t.getConcello();
+	    }
+	}
+	tramosPavi.removeTramo(idPositionA);
+	tramosPavi.removeTramo(idPositionB);
+	tramosPavi.save();
+
+	// check if the tramo A was deleted
+	Statement stmtA = c.createStatement();
+	ResultSet rsA = stmtA
+		.executeQuery("SELECT gid FROM inventario.tipo_pavimento WHERE codigo_carretera = '"
+			+ carreteraPositionA
+			+ "' AND codigo_municipio = '"
+			+ concelloPositionA + "'");
+	boolean updatedA = true;
+	while (rsA.next()) {
+	    if (Integer.toString(rsA.getInt("gid")).equals(idPositionA)) {
+		updatedA = false;
+		break;
+	    }
+	}
+	assertEquals(true, updatedA);
+
+	// check if the tramo B was deleted
+	Statement stmtB = c.createStatement();
+	ResultSet rsB = stmtB
+		.executeQuery("SELECT gid FROM inventario.tipo_pavimento WHERE codigo_carretera = '"
+			+ carreteraPositionB
+			+ "' AND codigo_municipio = '"
+			+ concelloPositionB + "'");
+	boolean updatedB = true;
+	while (rsB.next()) {
+	    if (Integer.toString(rsB.getInt("gid")).equals(idPositionB)) {
+		updatedB = false;
+		break;
+	    }
+	}
+	assertEquals(true, updatedB);
+    }
+
+    @Test
     public void testUpdatePavimento() throws SQLException {
 	String carretera = carreteraPavimento;
 	String concello = concelloPavimento;
