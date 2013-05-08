@@ -184,7 +184,7 @@ public class FormImportAccidents extends JPanel implements IWindow {
 	    Set<String> colsToRead = getColumnsToRead();
 	    st_insert = c.prepareStatement(sql);
 	    csvReader = new CSVReader(new InputStreamReader(
-		    new FileInputStream(accidentesFile), "UTF8"), '\t');
+		    new FileInputStream(accidentesFile)), '\t');
 	    String[] header = csvReader.readNext(); // header
 	    HashMap<String, Integer> cols = new HashMap<String, Integer>();
 	    for (int i = 0; i < header.length; i++) {
