@@ -143,6 +143,7 @@ public class WhereFactory {
 	case 13:
 	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
 	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.autorizacion_fecha_autorizacion", anho);
+	    whereSQL = getWhereValorActuaciones(whereSQL, "actuaciones.autorizacion_tipo", valor);
 	    break;
 	case 20:
 	    whereSQL = getWhereCarreteraActuaciones(whereSQL, carreteraCode);
@@ -152,7 +153,7 @@ public class WhereFactory {
 	    break;
 	case 21:
 	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
-	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.conservacion_fecha_aprobacion_junta", anho);
+	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.conservacion_fecha_consignacion_aprobacion", anho);
 	    break;
 	case 22:
 	    whereSQL = getWhereCarreteraActuaciones(whereSQL, carreteraCode);
@@ -172,17 +173,17 @@ public class WhereFactory {
 	    break;
 	case 31:
 	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
-	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.conservacion_propuesta_fecha_aprobacion_junta", anho);
+	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.conservacion_propuesta_fecha_consignacion_aprobacion", anho);
 	    break;
 	case 40:
 	    whereSQL = getWhereCarreteraActuaciones(whereSQL, carreteraCode);
 	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
-	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.construccion_fecha_aprobacion_junta", anho);
+	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.construccion_fecha_consignacion_aprobacion", anho);
 	    whereSQL = getWhereValorActuaciones(whereSQL, "actuaciones.construccion_tipo", valor);
 	    break;
 	case 41:
 	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
-	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.construccion_fecha_aprobacion_junta", anho);
+	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.construccion_fecha_consignacion_aprobacion", anho);
 	    break;
 	case 50:
 	    whereSQL = getWhereCarreteraActuaciones(whereSQL, carreteraCode);
