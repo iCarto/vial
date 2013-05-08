@@ -411,13 +411,23 @@ INSERT INTO consultas.consultas_actuaciones
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C60',
-              'Listado de incidencias',
+              'Listado de incidencias fecha detección',
               sql_string,
               'SI',
-              'Listado de incidencias',
+              'Listado de incidencias fecha detección',
               ''
        FROM public.consultas_sql
        WHERE id=42;
+
+INSERT INTO consultas.consultas_actuaciones
+       SELECT 'C61',
+              'Listado de incidencias fecha resolución',
+              sql_string,
+              'SI',
+              'Listado de incidencias fecha resolución',
+              ''
+       FROM public.consultas_sql
+       WHERE id=43;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C70',
@@ -427,7 +437,7 @@ INSERT INTO consultas.consultas_actuaciones
               'Listado de inventario por tipo',
               ''
        FROM public.consultas_sql
-       WHERE id=43;
+       WHERE id=44;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C80',
@@ -437,7 +447,7 @@ INSERT INTO consultas.consultas_actuaciones
               'Listado de travesías por tipo de suelo',
               ''
        FROM public.consultas_sql
-       WHERE id=44;
+       WHERE id=45;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C81',
@@ -447,7 +457,7 @@ INSERT INTO consultas.consultas_actuaciones
               'Listado de travesías por núcleo',
               ''
        FROM public.consultas_sql
-       WHERE id=45;
+       WHERE id=46;
 
 INSERT INTO consultas.consultas_actuaciones
        SELECT 'C90',
@@ -457,7 +467,7 @@ INSERT INTO consultas.consultas_actuaciones
               'Listado de vialidad',
               ''
        FROM public.consultas_sql
-       WHERE id=46;
+       WHERE id=47;
 
 DROP TABLE IF EXISTS public.consultas_sql;
 

@@ -360,9 +360,6 @@ public class PanelQueriesActuaciones extends gvWindow {
 		    carreteras.setEnabled(false);
 		    valor.setEnabled(false);
 		    break;
-		case 60:
-		    valor.setEnabled(false);
-		    break;
 		case 80:
 		    anho.setEnabled(false);
 		    break;

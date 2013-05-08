@@ -221,7 +221,12 @@ sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH D
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname -c "$sql_query"
 
-sql_query_path=`pwd`/funcions/consultas/actuaciones/c60-listado-incidencias.sql
+sql_query_path=`pwd`/funcions/consultas/actuaciones/c60-listado-incidencias-deteccion.sql
+sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
+psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
+    $viasobras_dbname -c "$sql_query"
+
+sql_query_path=`pwd`/funcions/consultas/actuaciones/c61-listado-incidencias-resolucion.sql
 sql_query="\COPY public.consultas_sql (sql_string) FROM '$sql_query_path' WITH DELIMITER ':'"
 psql -h $viasobras_server -p $viasobras_port -U $viasobras_user \
     $viasobras_dbname -c "$sql_query"

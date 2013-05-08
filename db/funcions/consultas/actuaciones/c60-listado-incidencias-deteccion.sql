@@ -9,7 +9,7 @@ SELECT mun_cod.nombre AS "Municipio", \
        actuaciones.incidencia_deteccion_fecha AS "Fecha detección", \
        actuaciones.incidencia_contratista_nombre AS "Contratista", \
        actuaciones.incidencia_contacto AS "Contacto", \
-       actuaciones.incidencia_deteccion_fecha AS "Fecha resolución", \
+       actuaciones.incidencia_deteccion_fecha AS "Fecha detección", \
        actuaciones.incidencia_observaciones AS "Observaciones" \
 FROM inventario.actuaciones actuaciones, \
      inventario.actuacion_municipio act_mun, \

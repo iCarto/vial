@@ -218,7 +218,14 @@ public class WhereFactory {
 	case 60:
 	    whereSQL = getWhereCarreteraActuaciones(whereSQL, carreteraCode);
 	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
+	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.incidencia_deteccion_fecha", anho);
+	    whereSQL = getWhereValorActuaciones(whereSQL, "actuaciones.incidencia_tipo", valor);
+	    break;
+	case 61:
+	    whereSQL = getWhereCarreteraActuaciones(whereSQL, carreteraCode);
+	    whereSQL = getWhereMunicipioActuaciones(whereSQL, municipioCode);
 	    whereSQL = getWhereAnhoActuaciones(whereSQL, "actuaciones.incidencia_resolucion_fecha", anho);
+	    whereSQL = getWhereValorActuaciones(whereSQL, "actuaciones.incidencia_tipo", valor);
 	    break;
 	case 70:
 	    whereSQL = getWhereCarreteraActuaciones(whereSQL, carreteraCode);
