@@ -18,6 +18,7 @@ CREATE TABLE inventario.carreteras (
        topografia text,
        tipo_suelo text,
        longitud integer,
+       longitud_antigua integer,
        observaciones text,
        PRIMARY KEY(gid)
 );
@@ -42,7 +43,8 @@ INSERT INTO inventario.carreteras(
               "topografia" AS topografia,
               "tipo_suelo" AS tipo_suelo,
               "longitud" AS longitud,
-              'LONG ANTIGUA ('||"long_ant"||')' AS observaciones,
+              "long_ant" AS longitud_antigua,
+              "observ" AS observaciones,
               "the_geom" AS the_geom
        FROM inventario.carreteras_tmp
 );

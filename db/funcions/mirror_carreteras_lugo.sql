@@ -20,6 +20,7 @@ BEGIN
                         topografia = NEW.topografia,
                         tipo_suelo = NEW.tipo_suelo,
                         longitud = NEW.longitud,
+                        longitud_antigua = NEW.longitud_antigua,
                         observaciones = NEW.observaciones,
                         the_geom = (SELECT ST_AddMeasure(NEW.the_geom,
                                               NEW.pk_inicial,
@@ -43,6 +44,7 @@ BEGIN
                          topografia,
                          tipo_suelo,
                          longitud,
+                         longitud_antigua,
                          observaciones,
                          the_geom)
                     VALUES(
@@ -60,6 +62,7 @@ BEGIN
                          NEW.topografia,
                          NEW.tipo_suelo,
                          NEW.longitud,
+                         NEW.longitud_antigua,
                          NEW.observaciones,
                          (SELECT ST_AddMeasure(NEW.the_geom,
                                               NEW.pk_inicial,
