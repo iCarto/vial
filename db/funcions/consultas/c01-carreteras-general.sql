@@ -61,6 +61,15 @@ SELECT m.nombre as "Municipio", \
                 'TRAMOS VIEJOS ('||i.longitud_variantes||'); '|| \
                 'INTERMUNICIPAL '|| trv_m_array.longitud_por_municipio||'; '|| \
                 COALESCE(c.observaciones, '') \
+       WHEN c.intermunicipal THEN \
+                'INTERMUNICIPAL '||trv_m_array.longitud_por_municipio||'; '|| \
+                COALESCE(c.observaciones, '') \
+       WHEN i.longitud_rampas <> 0 \
+            AND i.longitud_variantes <> 0 THEN \
+                'TRONCO ('||i.longitud_tronco||'), '|| \
+                'RAMPAS ('||i.longitud_rampas||'), '|| \
+                'TRAMOS VIEJOS ('||i.longitud_variantes||'); '|| \
+                COALESCE(c.observaciones, '') \
        WHEN i.longitud_rampas <> 0 THEN \
                 'TRONCO ('||i.longitud_tronco||'), '|| \
                 'RAMPAS ('||i.longitud_rampas||'); '|| \
@@ -68,9 +77,6 @@ SELECT m.nombre as "Municipio", \
        WHEN i.longitud_variantes <> 0 THEN \
                 'TRONCO('||i.longitud_tronco||'), '|| \
                 'TRAMOS VIEJOS ('||i.longitud_variantes||'); '|| \
-                COALESCE(c.observaciones, '') \
-       WHEN c.intermunicipal THEN \
-                'INTERMUNICIPAL '||trv_m_array.longitud_por_municipio||'; '|| \
                 COALESCE(c.observaciones, '') \
        ELSE COALESCE(c.observaciones, '') \
        END AS "Observaciones" \
