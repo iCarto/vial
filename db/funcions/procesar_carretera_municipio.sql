@@ -4,6 +4,15 @@ CREATE TRIGGER update_longitud_carretera_municipio
        ON inventario.carretera_municipio FOR EACH ROW
        EXECUTE PROCEDURE inventario.update_longitud_carretera_municipio();
 
+-- this trigger will be executed before update_pks_carreteras,
+-- as both are executed for AFTER UPDATE or INSERT events,
+-- alphabetical ordering sets the order of execution
+DROP TRIGGER IF EXISTS update_intermunicipal ON inventario.carretera_municipio;
+CREATE TRIGGER update_intermunicipal
+       AFTER UPDATE OR INSERT OR DELETE
+       ON inventario.carretera_municipio FOR EACH ROW
+       EXECUTE PROCEDURE inventario.update_intermunicipal();
+
 DROP TRIGGER IF EXISTS update_pks_carreteras ON inventario.carretera_municipio;
 CREATE TRIGGER update_pks_carreteras
        AFTER UPDATE OR INSERT OR DELETE
