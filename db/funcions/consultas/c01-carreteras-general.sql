@@ -2,32 +2,52 @@ WITH i AS ( \
      SELECT cmt.codigo_carretera, \
             cmt.codigo_municipio, \
             cmt.orden_tramo, \
-            COALESCE(cmt.longitud_tramo,0) AS longitud_tronco, \
-            COALESCE(SUM(CASE \
-                         WHEN r.estado = 'USO' THEN \
-                              r.longitud \
-                         ELSE 0 \
-                         END), \
-                     0) AS longitud_rampas, \
-            COALESCE(SUM(CASE \
-                         WHEN v.estado = 'USO' THEN \
-                              v.longitud \
-                         ELSE 0 \
-                         END), \
-                     0) AS longitud_variantes \
-     FROM inventario.carretera_municipio cmt \
-          LEFT OUTER JOIN inventario.rampas r ON \
-               cmt.codigo_municipio = r.codigo_municipio \
-               AND cmt.codigo_carretera = r.codigo_carretera \
-               AND cmt.orden_tramo = r.tramo \
-          LEFT OUTER JOIN inventario.variantes v ON \
-               cmt.codigo_municipio = v.codigo_municipio \
-               AND cmt.codigo_carretera = v.codigo_carretera \
-               AND cmt.orden_tramo = v.tramo \
-     GROUP BY cmt.codigo_municipio, \
-              cmt.codigo_carretera, \
-              cmt.orden_tramo, \
-              cmt.longitud_tramo \
+            COALESCE(cmt.longitud_tramo, 0) AS longitud_tronco, \
+            COALESCE(rampas.longitud_rampas, 0) AS longitud_rampas, \
+            COALESCE(variantes.longitud_variantes, 0) AS longitud_variantes \
+     FROM inventario.carretera_municipio cmt, \
+          (SELECT cmt_r.codigo_carretera, \
+                  cmt_r.codigo_municipio, \
+                  cmt_r.orden_tramo, \
+                  COALESCE(SUM(CASE \
+                                WHEN r.estado = 'USO' THEN \
+                                     r.longitud \
+                                ELSE 0 \
+                                END), \
+                           0) AS longitud_rampas \
+           FROM inventario.carretera_municipio cmt_r \
+                LEFT OUTER JOIN inventario.rampas r ON \
+                     cmt_r.codigo_municipio = r.codigo_municipio \
+                     AND cmt_r.codigo_carretera = r.codigo_carretera \
+                     AND cmt_r.orden_tramo = r.tramo \
+           GROUP BY cmt_r.codigo_carretera, \
+                    cmt_r.codigo_municipio, \
+                    cmt_r.orden_tramo) AS rampas, \
+          (SELECT cmt_v.codigo_carretera, \
+                  cmt_v.codigo_municipio, \
+                  cmt_v.orden_tramo, \
+                  COALESCE(SUM(CASE \
+                                WHEN v.estado = 'USO' THEN \
+                                     v.longitud \
+                                ELSE 0 \
+                                END), \
+                           0) AS longitud_variantes \
+           FROM inventario.carretera_municipio cmt_v \
+                LEFT OUTER JOIN inventario.variantes v ON \
+                     cmt_v.codigo_municipio = v.codigo_municipio \
+                     AND cmt_v.codigo_carretera = v.codigo_carretera \
+                     AND cmt_v.orden_tramo = v.tramo \
+           GROUP BY cmt_v.codigo_carretera, \
+                    cmt_v.codigo_municipio, \
+                    cmt_v.orden_tramo) AS variantes \
+     WHERE cmt.codigo_carretera = rampas.codigo_carretera \
+           AND cmt.codigo_municipio = rampas.codigo_municipio \
+           AND cmt.orden_tramo = rampas.orden_tramo \
+           AND cmt.codigo_municipio = variantes.codigo_municipio \
+           AND cmt.orden_tramo = variantes.orden_tramo \
+           AND rampas.codigo_carretera = variantes.codigo_carretera \
+           AND rampas.codigo_municipio = variantes.codigo_municipio \
+           AND rampas.orden_tramo = variantes.orden_tramo \
      ORDER BY cmt.codigo_carretera, \
               cmt.codigo_municipio, \
               cmt.orden_tramo, \
