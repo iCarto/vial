@@ -1,4 +1,5 @@
-SELECT m.nombre AS "Municipio", \
+SELECT m.codigo AS "CM", \
+       m.nombre AS "Municipio", \
        i.codigo_carretera AS "Código (LU-P)", \
        i.tramo AS "Tramo", \
        c.denominacion AS "Denominación", \
@@ -16,7 +17,8 @@ FROM inventario.rampas i, \
 WHERE i.codigo_carretera = c.numero \
       AND i.codigo_municipio = m.codigo \
       [[WHERE]] \
-ORDER BY m.nombre, \
+ORDER BY to_number(m.codigo, '99'), \
+         m.nombre, \
          i.codigo_carretera, \
          i.tramo, \
          i.orden_rampa, \

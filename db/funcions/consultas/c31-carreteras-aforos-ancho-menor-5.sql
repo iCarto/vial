@@ -11,7 +11,8 @@ WITH p AS ( \
               codigo_municipio, \
               tramo \
 ) \
-SELECT m.nombre AS "Municipio", \
+SELECT m.codigo AS "CM", \
+       m.nombre AS "Municipio", \
        i.codigo_carretera AS "Código (LU-P)", \
        i.tramo AS "Tramo", \
        c.denominacion AS "Denominación", \
@@ -44,8 +45,10 @@ WHERE i.codigo_carretera = p.codigo_carretera \
       AND i.pk >= tp.pk_inicial \
       AND i.pk <= tp.pk_final \
       [[WHERE]] \
-ORDER BY m.nombre, \
+ORDER BY to_number(m.codigo, '99'), \
+         m.nombre, \
          i.codigo_carretera, \
          i.tramo, \
          i.pk, \
-         i.fecha;
+         i.fecha \
+;

@@ -1,4 +1,5 @@
-SELECT i.nombre AS "Municipio", \
+SELECT i.codigo AS "CM", \
+       i.nombre AS "Municipio", \
        i.codigo_carretera AS "Código (LU-P)", \
        i.orden_tramo AS "Tramo", \
        i.denominacion AS "Denominación", \
@@ -7,7 +8,8 @@ SELECT i.nombre AS "Municipio", \
        i.pk_inicial "PK inicial", \
        i.pk_final "PK final", \
        i.longitud "Longitud" \
-FROM(SELECT m.nombre, \
+FROM(SELECT m.codigo, \
+            m.nombre, \
             f.codigo_carretera, \
             p.codigo_municipio, \
             f.orden_tramo, \
@@ -29,7 +31,8 @@ FROM(SELECT m.nombre, \
  \
      UNION ALL \
  \
-     SELECT m.nombre, \
+     SELECT m.codigo, \
+            m.nombre, \
             f.codigo_carretera, \
             r.codigo_municipio, \
             f.orden_tramo, \
@@ -49,9 +52,11 @@ FROM(SELECT m.nombre, \
            AND f.codigo_municipio = r.codigo_municipio \
            AND f.orden_tramo = r.tramo \
            AND r.estado = 'USO' \
+ \
      UNION ALL \
  \
-     SELECT m.nombre, \
+     SELECT m.codigo, \
+            m.nombre, \
             f.codigo_carretera, \
             v.codigo_municipio, \
             f.orden_tramo, \
@@ -73,11 +78,12 @@ FROM(SELECT m.nombre, \
            AND v.estado = 'USO' \
 ) AS i \
 WHERE i.valor = 'TS' \
-      [[WHERE]] \
-ORDER BY i.nombre, \
-      i.codigo_carretera, \
-      i.orden_tramo, \
-      i.tipo DESC, \
-      i.pk_inicial, \
-      i.pk_final \
+      -- [[WHERE]] \
+ORDER BY to_number(i.codigo, '99'), \
+         i.nombre, \
+         i.codigo_carretera, \
+         i.orden_tramo, \
+         i.tipo DESC, \
+         i.pk_inicial, \
+         i.pk_final \
 ;
