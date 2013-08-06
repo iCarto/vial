@@ -52,7 +52,8 @@ WITH i AS ( \
               cmt.codigo_municipio, \
               cmt.orden_tramo, \
               cmt.longitud_tramo) \
-SELECT m.nombre as "Municipio", \
+SELECT m.codigo AS "CM", \
+       m.nombre as "Municipio", \
        i.codigo_carretera AS "Código (LU-P)", \
        i.orden_tramo AS "Tramo", \
        c.denominacion AS "Denominación", \
@@ -129,7 +130,8 @@ WHERE i.codigo_carretera = c.numero \
       AND i.codigo_carretera = trv_c.codigo_carretera \
       AND i.codigo_carretera = trv_m_array.codigo_carretera \
       [[WHERE]] \
-GROUP BY "Municipio", \
+GROUP BY "CM", \
+         "Municipio", \
          "Código (LU-P)", \
          "Tramo", \
          "Denominación", \
@@ -138,4 +140,6 @@ GROUP BY "Municipio", \
          "Longitud tramo", \
          "Longitud total", \
          "Observaciones" \
-ORDER BY m.nombre, i.codigo_carretera, i.orden_tramo;
+ORDER BY to_number(m.codigo, '99'), \
+         i.codigo_carretera, \
+         i.orden_tramo;
