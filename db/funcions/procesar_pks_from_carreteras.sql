@@ -5,7 +5,7 @@ CREATE TABLE inventario.pks_1000(
         codigo_municipio text,
         pk float NOT NULL,
         PRIMARY KEY(gid),
-        FOREIGN KEY(codigo_carretera) REFERENCES inventario.carreteras(numero) ON DELETE CASCADE
+        FOREIGN KEY(codigo_carretera) REFERENCES inventario.carreteras(numero) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 SELECT inventario.create_pks_1000();

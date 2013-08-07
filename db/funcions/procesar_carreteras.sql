@@ -57,6 +57,7 @@ SELECT inventario.calibrate_carretera_all();
 -- constraints
 ALTER TABLE inventario.carreteras ADD FOREIGN KEY(numero)
       REFERENCES inventario.carreteras_lugo(numero)
+      ON UPDATE CASCADE
       ON DELETE CASCADE;
 
 -- indexes
