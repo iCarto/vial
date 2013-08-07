@@ -40,6 +40,7 @@ import es.icarto.gvsig.viasobras.domain.catalog.Carretera;
 import es.icarto.gvsig.viasobras.domain.catalog.Catalog;
 import es.icarto.gvsig.viasobras.domain.catalog.Concello;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.DBFacade;
+import es.icarto.gvsig.viasobras.queries.reports.ColumnWidthResolverEstado;
 import es.icarto.gvsig.viasobras.queries.reports.TableModelQueries;
 import es.icarto.gvsig.viasobras.queries.reports.TableModelResults;
 import es.udc.cartolab.gvsig.navtable.format.DoubleFormatNT;
@@ -207,64 +208,64 @@ public class PanelQueriesEstado extends gvWindow {
 
 	queriesTable.getSelectionModel().addListSelectionListener(
 		new ListSelectionListener() {
-	    public void valueChanged(ListSelectionEvent event)
-	    {
-		carreteras.setEnabled(true);
-		concellos.setEnabled(true);
-		mayor.setEnabled(true);
-		menor.setEnabled(true);
-		valor.setEnabled(true);
-		int viewRow = queriesTable.getSelectedRow();
-		String queryCode = queriesTable.getValueAt(viewRow, 0).toString();
-		disableComponents(Integer.parseInt(queryCode.substring(1)));
-	    }
+		    public void valueChanged(ListSelectionEvent event)
+		    {
+			carreteras.setEnabled(true);
+			concellos.setEnabled(true);
+			mayor.setEnabled(true);
+			menor.setEnabled(true);
+			valor.setEnabled(true);
+			int viewRow = queriesTable.getSelectedRow();
+			String queryCode = queriesTable.getValueAt(viewRow, 0).toString();
+			disableComponents(Integer.parseInt(queryCode.substring(1)));
+		    }
 
-	    private void disableComponents(int queryCode) {
-		switch (queryCode) {
-		case 01:
-		case 03:
-		case 04:
-		case 21:
-		case 22:
-		    mayor.setEnabled(false);
-		    menor.setEnabled(false);
-		    valor.setEnabled(false);
-		    break;
-		case 02:
-		    mayor.setEnabled(false);
-		    menor.setEnabled(false);
-		    break;
-		case 10:
-		    valor.setEnabled(false);
-		    break;
-		case 20:
-		    mayor.setEnabled(false);
-		    menor.setEnabled(false);
-		    break;
-		case 38:
-		    carreteras.setEnabled(false);
-		    concellos.setEnabled(false);
-		    mayor.setEnabled(false);
-		    menor.setEnabled(false);
-		    break;
-		case 40:
-		    valor.setEnabled(false);
-		    break;
-		case 41:
-		    valor.setEnabled(false);
-		    break;
-		case 50:
-		    mayor.setEnabled(false);
-		    menor.setEnabled(false);
-		    break;
-		case 51:
-		case 52:
-		    mayor.setEnabled(false);
-		    menor.setEnabled(false);
-		    break;
-		}
-	    }
-	});
+		    private void disableComponents(int queryCode) {
+			switch (queryCode) {
+			case 01:
+			case 03:
+			case 04:
+			case 21:
+			case 22:
+			    mayor.setEnabled(false);
+			    menor.setEnabled(false);
+			    valor.setEnabled(false);
+			    break;
+			case 02:
+			    mayor.setEnabled(false);
+			    menor.setEnabled(false);
+			    break;
+			case 10:
+			    valor.setEnabled(false);
+			    break;
+			case 20:
+			    mayor.setEnabled(false);
+			    menor.setEnabled(false);
+			    break;
+			case 38:
+			    carreteras.setEnabled(false);
+			    concellos.setEnabled(false);
+			    mayor.setEnabled(false);
+			    menor.setEnabled(false);
+			    break;
+			case 40:
+			    valor.setEnabled(false);
+			    break;
+			case 41:
+			    valor.setEnabled(false);
+			    break;
+			case 50:
+			    mayor.setEnabled(false);
+			    menor.setEnabled(false);
+			    break;
+			case 51:
+			case 52:
+			    mayor.setEnabled(false);
+			    menor.setEnabled(false);
+			    break;
+			}
+		    }
+		});
 
 	try {
 	    String[][] tableContent = dbs.getTable("consultas", "consultas",
@@ -358,6 +359,7 @@ public class PanelQueriesEstado extends gvWindow {
 		resultPanel.setResult(html);
 		resultPanel.setResultMap(resultsMap);
 		resultPanel.setFilters(getFilters());
+		resultPanel.setColumnWidth(new ColumnWidthResolverEstado());
 
 		PluginServices.getMDIManager().restoreCursor();
 

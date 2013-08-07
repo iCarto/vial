@@ -40,9 +40,6 @@ public class Report {
     private Font cellBoldStyle = FontFactory.getFont("arial", 6, Font.BOLD);
     private Font bodyBoldStyle = FontFactory.getFont("arial", 8, Font.BOLD);
 
-    private static final float DENOMINACION_COLUMN_WIDTH = 200f;
-    private static final float MUNICIPIOS_COLUMN_WIDTH = 200f;
-
     private static final String SEPARATOR_ROW = "\n";
     private static final String SEPARATOR_FIELD = ";";
 
@@ -142,18 +139,10 @@ public class Report {
 	if (columnsWidthResolver != null) {
 	    return columnsWidthResolver.getColumnsWidth(table, columnCount);
 	} else {
-	    // default values
+	    // default algorithm will set all width equals
 	    float[] columnsWidth = new float[columnCount];
 	    for (int i = 0; i < columnCount; i++) {
-		if (i == 3) {
-		    columnsWidth[i] = DENOMINACION_COLUMN_WIDTH;
-		} else if (i == 8) {
-		    columnsWidth[i] = MUNICIPIOS_COLUMN_WIDTH;
-		} else {
-		    columnsWidth[i] = (table.getTotalWidth()
-			    - DENOMINACION_COLUMN_WIDTH - MUNICIPIOS_COLUMN_WIDTH)
-			    / (columnCount - 2);
-		}
+		columnsWidth[i] = table.getTotalWidth() / columnCount;
 	    }
 	    return columnsWidth;
 	}
@@ -381,8 +370,7 @@ public class Report {
 	}
     }
 
-    public void toCSV(File f, TableModel model)
-	    throws FileNotFoundException {
+    public void toCSV(File f, TableModel model) throws FileNotFoundException {
 	FileOutputStream fos = null;
 	PrintStream ps = null;
 	fos = new FileOutputStream(f);
