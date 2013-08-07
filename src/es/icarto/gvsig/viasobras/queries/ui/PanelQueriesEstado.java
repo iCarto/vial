@@ -41,6 +41,7 @@ import es.icarto.gvsig.viasobras.domain.catalog.Catalog;
 import es.icarto.gvsig.viasobras.domain.catalog.Concello;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.DBFacade;
 import es.icarto.gvsig.viasobras.queries.reports.ColumnWidthResolverEstado;
+import es.icarto.gvsig.viasobras.queries.reports.ColumnWidthResolverEstadoC01;
 import es.icarto.gvsig.viasobras.queries.reports.TableModelQueries;
 import es.icarto.gvsig.viasobras.queries.reports.TableModelResults;
 import es.udc.cartolab.gvsig.navtable.format.DoubleFormatNT;
@@ -359,7 +360,15 @@ public class PanelQueriesEstado extends gvWindow {
 		resultPanel.setResult(html);
 		resultPanel.setResultMap(resultsMap);
 		resultPanel.setFilters(getFilters());
-		resultPanel.setColumnWidth(new ColumnWidthResolverEstado());
+		if (queryCode.equals("C50")) {
+		    // do nothing
+		    // will use default algorithm (all cols with same width)
+		} else if (queryCode.equals("C01")) {
+		    resultPanel.setColumnWidth(
+				    new ColumnWidthResolverEstadoC01());
+		} else {
+		    resultPanel.setColumnWidth(new ColumnWidthResolverEstado());
+		}
 
 		PluginServices.getMDIManager().restoreCursor();
 

@@ -15,7 +15,6 @@ public class ColumnWidthResolverEstado implements ColumnWidthResolver {
 	float widthCodigoLUP    = widthTotal * 0.08f;
 	float widthTramo        = widthTotal * 0.04f;
 	float widthDenominacion = widthTotal * 0.24f;
-	// float widthObservaciones = widthTotal * 0.1f;
 
 	float widthAvailable = widthTotal - widthCM - widthMunicipio
 		- widthCodigoLUP - widthTramo - widthDenominacion;
