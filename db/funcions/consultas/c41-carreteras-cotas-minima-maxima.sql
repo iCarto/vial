@@ -1,11 +1,12 @@
 WITH c AS (SELECT codigo_carretera, \
-                   codigo_municipio, \
-                   tramo, \
-                   MIN(valor) AS cota_minima, \
-                   MAX(valor) AS cota_maxima \
+                  codigo_municipio, \
+                  tramo, \
+                  MIN(valor) AS cota_minima, \
+                  MAX(valor) AS cota_maxima \
             FROM inventario.cotas \
             GROUP BY codigo_carretera, codigo_municipio, tramo) \
-SELECT ms.nombre AS "Municipio", \
+SELECT ms.codigo AS "CM", \
+       ms.nombre AS "Municipio", \
        c.codigo_carretera AS "Código (LU-P)", \
        c.tramo AS "Tramo", \
        cs.denominacion AS "Denominación", \
@@ -17,6 +18,7 @@ FROM c, \
 WHERE c.codigo_municipio = ms.codigo \
       AND c.codigo_carretera = cs.numero \
       [[WHERE]] \
-ORDER BY ms.nombre, \
+ORDER BY to_number(ms.codigo, '99'), \
+         ms.nombre, \
          c.codigo_carretera, \
          c.tramo;
