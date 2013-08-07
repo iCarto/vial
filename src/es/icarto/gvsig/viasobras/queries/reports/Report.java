@@ -1,4 +1,4 @@
-package es.icarto.gvsig.viasobras.queries.utils;
+package es.icarto.gvsig.viasobras.queries.reports;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -30,7 +30,6 @@ import com.lowagie.text.rtf.document.RtfDocumentSettings;
 import com.lowagie.text.rtf.style.RtfParagraphStyle;
 import com.lowagie.text.rtf.table.RtfCell;
 
-import es.icarto.gvsig.viasobras.queries.reports.columns.ColumnsWidthResolver;
 
 public class Report {
 
@@ -44,7 +43,7 @@ public class Report {
 
     private String[] tableHeader;
     private boolean startNewReport;
-    private ColumnsWidthResolver columnsWidthResolver;
+    private ColumnWidthResolver columnsWidthResolver;
 
     // private Image getHeaderImage() {
     // Image image = null;
@@ -343,7 +342,7 @@ public class Report {
 
     public void toRTF(String fileName,
 	    ArrayList<TableModelResults> resultMap,
-	    String[] filters, ColumnsWidthResolver columnsWidthResolver) {
+	    String[] filters, ColumnWidthResolver columnsWidthResolver) {
 	Document document = new Document(PageSize.A4.rotate());
 	this.columnsWidthResolver = columnsWidthResolver;
 	RtfWriter2 writer;
@@ -367,7 +366,7 @@ public class Report {
     }
 
     public void toPDF(String fileName, ArrayList<TableModelResults> resultMap,
-	    String[] filters, ColumnsWidthResolver columnsWidthResolver) {
+	    String[] filters, ColumnWidthResolver columnsWidthResolver) {
 	Document document = new Document(PageSize.A4.rotate());
 	this.columnsWidthResolver = columnsWidthResolver;
 	try {

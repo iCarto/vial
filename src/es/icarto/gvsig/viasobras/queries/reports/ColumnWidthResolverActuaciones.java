@@ -1,9 +1,9 @@
-package es.icarto.gvsig.viasobras.queries.reports.columns;
+package es.icarto.gvsig.viasobras.queries.reports;
 
 import com.lowagie.text.pdf.PdfPTable;
 
 
-public class ActuacionesColumnsWidthResolver implements ColumnsWidthResolver {
+public class ColumnWidthResolverActuaciones implements ColumnWidthResolver {
 
     private final static float MUNICIPIO = 60f;
     private final static float CODIGO_AND_PK_FIELDS = 40f;

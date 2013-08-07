@@ -1,4 +1,4 @@
-package es.icarto.gvsig.viasobras.queries.utils;
+package es.icarto.gvsig.viasobras.queries.ui;
 
 import java.awt.Component;
 import java.sql.SQLException;
@@ -9,7 +9,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
 @SuppressWarnings("serial")
-public class ActuacionesTooltipRenderer extends DefaultTableCellRenderer {
+public class TooltipRendererEstado extends DefaultTableCellRenderer {
     public Component getTableCellRendererComponent(JTable table,
 	    Object value,
 	    boolean isSelected,
@@ -18,12 +18,13 @@ public class ActuacionesTooltipRenderer extends DefaultTableCellRenderer {
 	super.getTableCellRendererComponent(table, value, isSelected,
 		hasFocus, row, column);
 	try {
-	    String[][] tableContent = DBSession.getCurrentSession().getTable("consultas_actuaciones", 
+	    String[][] tableContent = DBSession.getCurrentSession().getTable("consultas", 
 		    "consultas", "codigo = '" + table.getValueAt(row, 0).toString() + "'");
 	    setToolTipText(tableContent[0][1]);
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	}
 	return this;
-    }  
+    } 
+
 }

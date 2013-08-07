@@ -17,7 +17,7 @@ import org.junit.Test;
 
 import es.icarto.gvsig.viasobras.domain.catalog.Catalog;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.DBFacade;
-import es.icarto.gvsig.viasobras.queries.utils.WhereFactory;
+import es.icarto.gvsig.viasobras.queries.ui.WhereFactory;
 
 public class TestsQueriesActuaciones {
 

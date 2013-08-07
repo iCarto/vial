@@ -33,10 +33,10 @@ import net.miginfocom.swing.MigLayout;
 
 import com.iver.andami.messages.NotificationManager;
 
-import es.icarto.gvsig.viasobras.queries.reports.columns.ColumnsWidthResolver;
-import es.icarto.gvsig.viasobras.queries.utils.Report;
-import es.icarto.gvsig.viasobras.queries.utils.ResultsWriter;
-import es.icarto.gvsig.viasobras.queries.utils.TableModelResults;
+import es.icarto.gvsig.viasobras.queries.reports.ColumnWidthResolver;
+import es.icarto.gvsig.viasobras.queries.reports.Report;
+import es.icarto.gvsig.viasobras.queries.reports.ResultsWriter;
+import es.icarto.gvsig.viasobras.queries.reports.TableModelResults;
 
 public class PanelQueriesResult extends gvWindow {
 
@@ -50,7 +50,7 @@ public class PanelQueriesResult extends gvWindow {
     private ArrayList<TableModelResults> resultsMap;
     private String[] filters;
 
-    private ColumnsWidthResolver columnsWidthResolver;
+    private ColumnWidthResolver columnsWidthResolver;
 
     public PanelQueriesResult() {
 	this(null);
@@ -144,7 +144,7 @@ public class PanelQueriesResult extends gvWindow {
 	}
     }
 
-    public void setColumnsWidthResolver(ColumnsWidthResolver r) {
+    public void setColumnsWidthResolver(ColumnWidthResolver r) {
 	this.columnsWidthResolver = r;
     }
 

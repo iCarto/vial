@@ -40,10 +40,8 @@ import es.icarto.gvsig.viasobras.domain.catalog.Carretera;
 import es.icarto.gvsig.viasobras.domain.catalog.Catalog;
 import es.icarto.gvsig.viasobras.domain.catalog.Concello;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.DBFacade;
-import es.icarto.gvsig.viasobras.queries.utils.EstadoTooltipRenderer;
-import es.icarto.gvsig.viasobras.queries.utils.TableModelQueries;
-import es.icarto.gvsig.viasobras.queries.utils.TableModelResults;
-import es.icarto.gvsig.viasobras.queries.utils.WhereFactory;
+import es.icarto.gvsig.viasobras.queries.reports.TableModelQueries;
+import es.icarto.gvsig.viasobras.queries.reports.TableModelResults;
 import es.udc.cartolab.gvsig.navtable.format.DoubleFormatNT;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
@@ -204,7 +202,7 @@ public class PanelQueriesEstado extends gvWindow {
 
 	queriesTable.getColumnModel().getColumn(1).setHeaderValue("Consulta");
 
-	EstadoTooltipRenderer tooltipRenderer = new EstadoTooltipRenderer();
+	TooltipRendererEstado tooltipRenderer = new TooltipRendererEstado();
 	queriesTable.getColumnModel().getColumn(1).setCellRenderer(tooltipRenderer);
 
 	queriesTable.getSelectionModel().addListSelectionListener(

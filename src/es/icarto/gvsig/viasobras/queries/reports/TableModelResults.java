@@ -1,4 +1,4 @@
-package es.icarto.gvsig.viasobras.queries.utils;
+package es.icarto.gvsig.viasobras.queries.reports;
 
 /*
  * Copyright (c) 2010. Cartolab (Universidade da Coruña)

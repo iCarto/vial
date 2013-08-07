@@ -1,4 +1,4 @@
-package es.icarto.gvsig.viasobras.queries.utils;
+package es.icarto.gvsig.viasobras.queries.ui;
 
 import es.icarto.gvsig.viasobras.domain.catalog.Catalog;
 
