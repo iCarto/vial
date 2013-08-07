@@ -1,7 +1,6 @@
 package es.icarto.gvsig.viasobras.queries.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -39,9 +38,9 @@ import es.icarto.gvsig.viasobras.domain.catalog.Carretera;
 import es.icarto.gvsig.viasobras.domain.catalog.Catalog;
 import es.icarto.gvsig.viasobras.domain.catalog.Concello;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.DBFacade;
+import es.icarto.gvsig.viasobras.queries.utils.ActuacionesTooltipRenderer;
 import es.icarto.gvsig.viasobras.queries.utils.TableModelQueries;
 import es.icarto.gvsig.viasobras.queries.utils.TableModelResults;
-import es.icarto.gvsig.viasobras.queries.utils.ActuacionesTooltipRenderer;
 import es.icarto.gvsig.viasobras.queries.utils.WhereFactory;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
 
@@ -194,7 +193,8 @@ public class PanelQueriesActuaciones extends gvWindow {
 		    resultPanel.setResult(html);
 		    resultPanel.setResultMap(resultsMap);
 		    resultPanel.setFilters(getFilters());
-		    resultPanel.setQueryType(PanelQueriesResult.ACTUACIONES);
+		    resultPanel
+			    .setColumnsWidthResolver(new ActuacionesColumnsWidthResolver());
 
 		    PluginServices.getMDIManager().restoreCursor();
 
@@ -214,8 +214,8 @@ public class PanelQueriesActuaciones extends gvWindow {
 	    }
 	}
     }
-    
-    private String[] getFilters() {	
+
+    private String[] getFilters() {
 	String[] filters = new String[2];
 	filters[0] = Catalog.getCarreteraSelected();
 	filters[1] = Catalog.getConcelloSelected();
@@ -225,17 +225,17 @@ public class PanelQueriesActuaciones extends gvWindow {
     private String getWhereClause(boolean hasWhere) throws SQLException {
 	String anhoValue;
 	String textValue;
-	
+
 	anhoValue = anho.getText();
 	textValue = valor.getText();
-	
+
 	String[] filters = getFilters();
-	return WhereFactory.createActuaciones(hasWhere, 
-			Integer.parseInt(queryCode.substring(1)), 
-			filters[0], 
-			filters[1],
-			anhoValue,
-			textValue);
+	return WhereFactory.createActuaciones(hasWhere,
+		Integer.parseInt(queryCode.substring(1)),
+		filters[0],
+		filters[1],
+		anhoValue,
+		textValue);
     }
 
     private String[] getQueryContents() throws Exception {
@@ -300,8 +300,8 @@ public class PanelQueriesActuaciones extends gvWindow {
 	carreteras.requestFocusInWindow();
 	queriesTable.setFocusable(false);
     }
-    
-    
+
+
     private void fillQueriesTable() {
 	queriesModel = new TableModelQueries();
 	queriesTable.setModel(queriesModel);
@@ -324,7 +324,7 @@ public class PanelQueriesActuaciones extends gvWindow {
 	queriesTable.getSelectionModel().addListSelectionListener
 	(new ListSelectionListener() {
 	    public void valueChanged(ListSelectionEvent event)
-	    { 
+	    {
 		carreteras.setEnabled(true);
 		concellos.setEnabled(true);
 		anho.setEnabled(true);
@@ -372,10 +372,10 @@ public class PanelQueriesActuaciones extends gvWindow {
 		}
 	    }
 	});
-	       	
-	
+
+
 	queriesTable.getColumnModel().getColumn(1).setHeaderValue("Consulta");
-	
+
 	ActuacionesTooltipRenderer tooltipRenderer = new ActuacionesTooltipRenderer();
 	queriesTable.getColumnModel().getColumn(1).setCellRenderer(tooltipRenderer);
 

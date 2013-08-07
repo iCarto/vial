@@ -30,10 +30,9 @@ import com.lowagie.text.rtf.document.RtfDocumentSettings;
 import com.lowagie.text.rtf.style.RtfParagraphStyle;
 import com.lowagie.text.rtf.table.RtfCell;
 
-public class Report {
+import es.icarto.gvsig.viasobras.queries.reports.columns.ColumnsWidthResolver;
 
-    protected static final int RTF = 0;
-    protected static final int PDF = 1;
+public class Report {
 
     private Font cellBoldStyle = FontFactory.getFont("arial", 6, Font.BOLD);
     private Font bodyBoldStyle = FontFactory.getFont("arial", 8, Font.BOLD);
@@ -45,16 +44,7 @@ public class Report {
 
     private String[] tableHeader;
     private boolean startNewReport;
-
-    public Report(int reportType, String fileName,
-	    ArrayList<TableModelResults> resultMap, String[] filters) {
-	if (reportType == RTF) {
-	    writeRtfReport(fileName, resultMap, filters);
-	}
-	if (reportType == PDF) {
-	    writePdfReport(fileName, resultMap, filters);
-	}
-    }
+    private ColumnsWidthResolver columnsWidthResolver;
 
     // private Image getHeaderImage() {
     // Image image = null;
@@ -143,19 +133,24 @@ public class Report {
     }
 
     protected float[] getColumnsWidth(PdfPTable table, int columnCount) {
-	float[] columnsWidth = new float[columnCount];
-	for (int i = 0; i < columnCount; i++) {
-	    if (i == 3) {
-		columnsWidth[i] = DENOMINACION_COLUMN_WIDTH;
-	    } else if (i == 8) {
-		columnsWidth[i] = MUNICIPIOS_COLUMN_WIDTH;
-	    } else {
-		columnsWidth[i] = (table.getTotalWidth()
-			- DENOMINACION_COLUMN_WIDTH - MUNICIPIOS_COLUMN_WIDTH)
-			/ (columnCount - 2);
+	if (columnsWidthResolver != null) {
+	    return columnsWidthResolver.getColumnsWidth(table, columnCount);
+	} else {
+	    // default values
+	    float[] columnsWidth = new float[columnCount];
+	    for (int i = 0; i < columnCount; i++) {
+		if (i == 3) {
+		    columnsWidth[i] = DENOMINACION_COLUMN_WIDTH;
+		} else if (i == 8) {
+		    columnsWidth[i] = MUNICIPIOS_COLUMN_WIDTH;
+		} else {
+		    columnsWidth[i] = (table.getTotalWidth()
+			    - DENOMINACION_COLUMN_WIDTH - MUNICIPIOS_COLUMN_WIDTH)
+			    / (columnCount - 2);
+		}
 	    }
+	    return columnsWidth;
 	}
-	return columnsWidth;
     }
 
     protected void writeRtfReportContent(Document document,
@@ -346,9 +341,11 @@ public class Report {
 	}
     }
 
-    public void writeRtfReport(String fileName,
-	    ArrayList<TableModelResults> resultMap, String[] filters) {
+    public void toRTF(String fileName,
+	    ArrayList<TableModelResults> resultMap,
+	    String[] filters, ColumnsWidthResolver columnsWidthResolver) {
 	Document document = new Document(PageSize.A4.rotate());
+	this.columnsWidthResolver = columnsWidthResolver;
 	RtfWriter2 writer;
 	try {
 	    // Open RTF file and prepare it to write on
@@ -369,20 +366,17 @@ public class Report {
 	}
     }
 
-    public void writePdfReport(String fileName,
-	    ArrayList<TableModelResults> resultMap, String[] filters) {
+    public void toPDF(String fileName, ArrayList<TableModelResults> resultMap,
+	    String[] filters, ColumnsWidthResolver columnsWidthResolver) {
 	Document document = new Document(PageSize.A4.rotate());
+	this.columnsWidthResolver = columnsWidthResolver;
 	try {
 	    PdfWriter writer = PdfWriter.getInstance(document,
 		    new FileOutputStream(fileName));
 	    writer.setPageEvent(new MyPageEvent(writer, document, resultMap));
 	    document.open();
-
-	    // Write report into document
 	    writePdfReportContent(writer, document, resultMap, filters);
-	    // Close file
 	    document.close();
-
 	} catch (FileNotFoundException e) {
 	    e.printStackTrace();
 	} catch (DocumentException e) {

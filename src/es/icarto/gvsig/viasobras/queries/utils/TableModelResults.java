@@ -20,7 +20,6 @@ package es.icarto.gvsig.viasobras.queries.utils;
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -190,23 +189,4 @@ public class TableModelResults extends DefaultTableModel {
 	return html.toString();
     }
 
-    public static void writeResultTableToPdfReport(String filename,
-	    ArrayList<TableModelResults> resultMap, String[] filters) {
-	new Report(Report.PDF, filename, resultMap, filters);
-    }
-    
-    public static void writeResultTableToPdfActuacionesReport(String filename,
-	    ArrayList<TableModelResults> resultMap, String[] filters) {
-	new ActuacionesReport(Report.PDF, filename, resultMap, filters);
-    }
-
-    public static void writeResultTableToRtfReport(String filename,
-	    ArrayList<TableModelResults> resultMap, String[] filters) {
-	new Report(Report.RTF, filename, resultMap, filters);
-    }
-    
-    public static void writeResultTableToRtfActuacionesReport(String filename,
-	    ArrayList<TableModelResults> resultMap, String[] filters) {
-	new ActuacionesReport(Report.RTF, filename, resultMap, filters);
-    }
 }

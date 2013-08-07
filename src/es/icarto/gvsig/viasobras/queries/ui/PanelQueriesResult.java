@@ -33,11 +33,13 @@ import net.miginfocom.swing.MigLayout;
 
 import com.iver.andami.messages.NotificationManager;
 
-import es.icarto.gvsig.viasobras.queries.utils.TableModelResults;
+import es.icarto.gvsig.viasobras.queries.reports.columns.ColumnsWidthResolver;
+import es.icarto.gvsig.viasobras.queries.utils.Report;
 import es.icarto.gvsig.viasobras.queries.utils.ResultsWriter;
+import es.icarto.gvsig.viasobras.queries.utils.TableModelResults;
 
 public class PanelQueriesResult extends gvWindow {
-    
+
     public final static int ESTADO = 0;
     public final static int ACTUACIONES = 1;
 
@@ -47,8 +49,8 @@ public class PanelQueriesResult extends gvWindow {
     String[] fileFormats = { "CSV", "HTML", "PDF", "RTF" };
     private ArrayList<TableModelResults> resultsMap;
     private String[] filters;
-    
-    private int queryType;
+
+    private ColumnsWidthResolver columnsWidthResolver;
 
     public PanelQueriesResult() {
 	this(null);
@@ -113,26 +115,16 @@ public class PanelQueriesResult extends gvWindow {
 		File f = sfd.showDialog();
 		if (f != null) {
 		    String fileName = f.getAbsolutePath();
-		    if (queryType == ACTUACIONES) {
-			TableModelResults.writeResultTableToRtfActuacionesReport(fileName,
-			    resultsMap, filters);
-		    }else {
-			TableModelResults.writeResultTableToRtfReport(fileName,
-				    resultsMap, filters);
-		    }
+		    Report r = new Report();
+		    r.toRTF(fileName, resultsMap, filters, columnsWidthResolver);
 		}
 	    } else if (fileTypeCB.getSelectedItem().equals("PDF")) {
 		DialogSaveFile sfd = new DialogSaveFile("PDF files", "pdf");
 		File f = sfd.showDialog();
 		if (f != null) {
 		    String fileName = f.getAbsolutePath();
-		    if (queryType == ACTUACIONES) {
-			TableModelResults.writeResultTableToPdfActuacionesReport(fileName,
-				resultsMap, filters);
-		    }else {
-			TableModelResults.writeResultTableToPdfReport(fileName,
-				resultsMap, filters);
-		    }
+		    Report r = new Report();
+		    r.toPDF(fileName, resultsMap, filters, columnsWidthResolver);
 		}
 	    } else if (fileTypeCB.getSelectedItem().equals("CSV")) {
 		for (TableModelResults model : resultsMap) {
@@ -152,12 +144,8 @@ public class PanelQueriesResult extends gvWindow {
 	}
     }
 
-    public int getQueryType() {
-        return queryType;
+    public void setColumnsWidthResolver(ColumnsWidthResolver r) {
+	this.columnsWidthResolver = r;
     }
 
-    public void setQueryType(int queryType) {
-        this.queryType = queryType;
-    }
-    
 }// Class

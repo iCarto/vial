@@ -1,24 +1,17 @@
-package es.icarto.gvsig.viasobras.queries.utils;
-
-import java.util.ArrayList;
+package es.icarto.gvsig.viasobras.queries.reports.columns;
 
 import com.lowagie.text.pdf.PdfPTable;
 
-public class ActuacionesReport extends Report {
+
+public class ActuacionesColumnsWidthResolver implements ColumnsWidthResolver {
+
     private final static float MUNICIPIO = 60f;
     private final static float CODIGO_AND_PK_FIELDS = 40f;
     private final static float CODIGO_ACTUACION = 50f;
     private final static float TIPO = 80f;
     private final static float OBSERVACIONES = 120f;
 
-    public ActuacionesReport(int reportType, String fileName,
-	    ArrayList<TableModelResults> resultMap, String[] filters) {
-	super(reportType, fileName, resultMap, filters);
-	// TODO Auto-generated constructor stub
-    }
-    
-    @Override
-    protected float[] getColumnsWidth(PdfPTable table, int columnCount) {
+    public float[] getColumnsWidth(PdfPTable table, int columnCount) {
 	float[] columnsWidth = new float[columnCount];
 	for (int i = 0; i < columnCount; i++) {
 	    if (i == 0) {
