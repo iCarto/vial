@@ -38,6 +38,7 @@ import es.icarto.gvsig.viasobras.domain.catalog.Carretera;
 import es.icarto.gvsig.viasobras.domain.catalog.Catalog;
 import es.icarto.gvsig.viasobras.domain.catalog.Concello;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.DBFacade;
+import es.icarto.gvsig.viasobras.queries.reports.ColumnWidthResolverActuaciones;
 import es.icarto.gvsig.viasobras.queries.reports.TableModelQueries;
 import es.icarto.gvsig.viasobras.queries.reports.TableModelResults;
 import es.udc.cartolab.gvsig.users.utils.DBSession;
@@ -192,7 +193,7 @@ public class PanelQueriesActuaciones extends gvWindow {
 		    resultPanel.setResultMap(resultsMap);
 		    resultPanel.setFilters(getFilters());
 		    resultPanel
-			    .setColumnsWidthResolver(new ColumnWidthResolverActuaciones());
+			    .setColumnWidth(new ColumnWidthResolverActuaciones());
 
 		    PluginServices.getMDIManager().restoreCursor();
 

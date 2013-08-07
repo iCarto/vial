@@ -35,22 +35,19 @@ import com.iver.andami.messages.NotificationManager;
 
 import es.icarto.gvsig.viasobras.queries.reports.ColumnWidthResolver;
 import es.icarto.gvsig.viasobras.queries.reports.Report;
-import es.icarto.gvsig.viasobras.queries.reports.ResultsWriter;
 import es.icarto.gvsig.viasobras.queries.reports.TableModelResults;
 
 public class PanelQueriesResult extends gvWindow {
 
-    public final static int ESTADO = 0;
-    public final static int ACTUACIONES = 1;
-
     private JEditorPane resultTA;
     private JButton exportB;
     private JComboBox fileTypeCB;
-    String[] fileFormats = { "CSV", "HTML", "PDF", "RTF" };
+
+    private String[] fileFormats = { "CSV", "HTML", "PDF", "RTF" };
+
     private ArrayList<TableModelResults> resultsMap;
     private String[] filters;
-
-    private ColumnWidthResolver columnsWidthResolver;
+    private ColumnWidthResolver columnWidth;
 
     public PanelQueriesResult() {
 	this(null);
@@ -114,17 +111,25 @@ public class PanelQueriesResult extends gvWindow {
 		DialogSaveFile sfd = new DialogSaveFile("RTF files", "rtf");
 		File f = sfd.showDialog();
 		if (f != null) {
-		    String fileName = f.getAbsolutePath();
-		    Report r = new Report();
-		    r.toRTF(fileName, resultsMap, filters, columnsWidthResolver);
+		    try {
+			Report r = new Report();
+			r.toRTF(f, resultsMap, filters, columnWidth);
+		    } catch (FileNotFoundException e) {
+			NotificationManager.showMessageError(
+				"error_saving_file", e);
+		    }
 		}
 	    } else if (fileTypeCB.getSelectedItem().equals("PDF")) {
 		DialogSaveFile sfd = new DialogSaveFile("PDF files", "pdf");
 		File f = sfd.showDialog();
 		if (f != null) {
-		    String fileName = f.getAbsolutePath();
 		    Report r = new Report();
-		    r.toPDF(fileName, resultsMap, filters, columnsWidthResolver);
+		    try {
+			r.toPDF(f, resultsMap, filters, columnWidth);
+		    } catch (FileNotFoundException e) {
+			NotificationManager.showMessageError(
+				"error_saving_file", e);
+		    }
 		}
 	    } else if (fileTypeCB.getSelectedItem().equals("CSV")) {
 		for (TableModelResults model : resultsMap) {
@@ -132,11 +137,11 @@ public class PanelQueriesResult extends gvWindow {
 		    File f = sfd.showDialog();
 		    if (f != null) {
 			try {
-			    ResultsWriter.saveToFile(f, ResultsWriter.CSV,
-				    model);
-			} catch (FileNotFoundException e1) {
+			    Report r = new Report();
+			    r.toCSV(f, model);
+			} catch (FileNotFoundException e) {
 			    NotificationManager.showMessageError(
-				    "error_saving_file", e1);
+				    "error_saving_file", e);
 			}
 		    }
 		}
@@ -144,8 +149,8 @@ public class PanelQueriesResult extends gvWindow {
 	}
     }
 
-    public void setColumnsWidthResolver(ColumnWidthResolver r) {
-	this.columnsWidthResolver = r;
+    public void setColumnWidth(ColumnWidthResolver r) {
+	this.columnWidth = r;
     }
 
 }// Class

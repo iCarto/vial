@@ -1,13 +1,17 @@
 package es.icarto.gvsig.viasobras.queries.reports;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import javax.swing.table.TableModel;
 
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Document;
@@ -38,6 +42,9 @@ public class Report {
 
     private static final float DENOMINACION_COLUMN_WIDTH = 200f;
     private static final float MUNICIPIOS_COLUMN_WIDTH = 200f;
+
+    private static final String SEPARATOR_ROW = "\n";
+    private static final String SEPARATOR_FIELD = ";";
 
     private Locale loc = new Locale("es");
 
@@ -340,35 +347,28 @@ public class Report {
 	}
     }
 
-    public void toRTF(String fileName,
-	    ArrayList<TableModelResults> resultMap,
-	    String[] filters, ColumnWidthResolver columnsWidthResolver) {
+    public void toRTF(File f, ArrayList<TableModelResults> resultMap,
+	    String[] filters, ColumnWidthResolver columnsWidthResolver)
+		    throws FileNotFoundException {
+
 	Document document = new Document(PageSize.A4.rotate());
 	this.columnsWidthResolver = columnsWidthResolver;
-	RtfWriter2 writer;
-	try {
-	    // Open RTF file and prepare it to write on
-	    writer = RtfWriter2.getInstance(document, new FileOutputStream(
-		    fileName));
-	    document.open();
-	    RtfDocumentSettings settings = writer.getDocumentSettings();
-	    settings.setOutputTableRowDefinitionAfter(true);
-
-	    // Write report into document
-	    writeRtfReportContent(document, resultMap, filters);
-
-	    // Close file
-	    document.close();
-
-	} catch (FileNotFoundException e) {
-	    e.printStackTrace();
-	}
+	String fileName = f.getAbsolutePath();
+	RtfWriter2 writer = RtfWriter2.getInstance(document,
+		new FileOutputStream(fileName));
+	document.open();
+	RtfDocumentSettings settings = writer.getDocumentSettings();
+	settings.setOutputTableRowDefinitionAfter(true);
+	writeRtfReportContent(document, resultMap, filters);
+	document.close();
     }
 
-    public void toPDF(String fileName, ArrayList<TableModelResults> resultMap,
-	    String[] filters, ColumnWidthResolver columnsWidthResolver) {
+    public void toPDF(File f, ArrayList<TableModelResults> resultMap,
+	    String[] filters, ColumnWidthResolver columns)
+		    throws FileNotFoundException {
+	String fileName = f.getAbsolutePath();
 	Document document = new Document(PageSize.A4.rotate());
-	this.columnsWidthResolver = columnsWidthResolver;
+	this.columnsWidthResolver = columns;
 	try {
 	    PdfWriter writer = PdfWriter.getInstance(document,
 		    new FileOutputStream(fileName));
@@ -376,11 +376,37 @@ public class Report {
 	    document.open();
 	    writePdfReportContent(writer, document, resultMap, filters);
 	    document.close();
-	} catch (FileNotFoundException e) {
-	    e.printStackTrace();
 	} catch (DocumentException e) {
 	    e.printStackTrace();
 	}
+    }
+
+    public void toCSV(File f, TableModel model)
+	    throws FileNotFoundException {
+	FileOutputStream fos = null;
+	PrintStream ps = null;
+	fos = new FileOutputStream(f);
+	ps = new PrintStream(fos);
+	String csvFile = "";
+	csvFile = csvFile + model.getColumnName(0);
+	for (int col = 1; col < model.getColumnCount(); col++) {
+	    csvFile = csvFile + SEPARATOR_FIELD;
+	    csvFile = csvFile + model.getColumnName(col);
+	}
+	csvFile = csvFile + SEPARATOR_ROW;
+	for (int row = 0; row < model.getRowCount(); row++) {
+	    csvFile = csvFile + model.getValueAt(row, 0);
+	    for (int col = 1; col < model.getColumnCount(); col++) {
+		csvFile = csvFile + SEPARATOR_FIELD;
+		Object value = model.getValueAt(row, col);
+		if (value instanceof String) {
+		    value = ((String) value).replaceAll("(\\r|\\n)", "");
+		}
+		csvFile = csvFile + value;
+	    }
+	    csvFile = csvFile + SEPARATOR_ROW;
+	}
+	ps.print(csvFile);
     }
 
     public class MyPageEvent extends PdfPageEventHelper {
