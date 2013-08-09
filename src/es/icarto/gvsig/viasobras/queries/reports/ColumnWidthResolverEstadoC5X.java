@@ -3,25 +3,25 @@ package es.icarto.gvsig.viasobras.queries.reports;
 import com.lowagie.text.pdf.PdfPTable;
 
 
-public class ColumnWidthResolverEstado implements ColumnWidthResolver {
+public class ColumnWidthResolverEstadoC5X implements ColumnWidthResolver {
 
 
     public float[] getColumnsWidth(PdfPTable table, int columnCount) {
-	float[] columnsWidth = new float[columnCount];
-	float widthTotal        = table.getTotalWidth();
+	float[] columnsWidth     = new float[columnCount];
+	float widthTotal         = table.getTotalWidth();
 
-	float widthCM           = widthTotal * 0.03f;
-	float widthMunicipio    = widthTotal * 0.08f;
-	float widthCodigoLUP    = widthTotal * 0.08f;
-	float widthTramo        = widthTotal * 0.04f;
-	float widthDenominacion = widthTotal * 0.24f;
+	float widthCM            = widthTotal * 0.03f;
+	float widthMunicipio     = widthTotal * 0.08f;
+	float widthCodigoLUP     = widthTotal * 0.08f;
+	float widthTramo         = widthTotal * 0.04f;
+	float widthNroAccidentes = widthTotal * 0.08f;
 
-	float widthAvailable = widthTotal 
-		- widthCM 
+	float widthAvailable = widthTotal
+		- widthCM
 		- widthMunicipio
-		- widthCodigoLUP 
-		- widthTramo 
-		- widthDenominacion;
+		- widthCodigoLUP
+		- widthTramo
+		- widthNroAccidentes;
 	float widthAverage = widthAvailable / (columnCount - 5);
 
 	for (int i = 0; i < columnCount; i++) {
@@ -33,8 +33,8 @@ public class ColumnWidthResolverEstado implements ColumnWidthResolver {
 		columnsWidth[i] = widthCodigoLUP;
 	    } else if (i == 3) {
 		columnsWidth[i] = widthTramo;
-	    } else if (i == 4) {
-		columnsWidth[i] = widthDenominacion;
+	    } else if (i == (columnCount - 1)) {
+		columnsWidth[i] = widthNroAccidentes;
 	    } else {
 		columnsWidth[i] = widthAverage;
 	    }

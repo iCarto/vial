@@ -42,6 +42,8 @@ import es.icarto.gvsig.viasobras.domain.catalog.Concello;
 import es.icarto.gvsig.viasobras.domain.catalog.mappers.DBFacade;
 import es.icarto.gvsig.viasobras.queries.reports.ColumnWidthResolverEstado;
 import es.icarto.gvsig.viasobras.queries.reports.ColumnWidthResolverEstadoC01;
+import es.icarto.gvsig.viasobras.queries.reports.ColumnWidthResolverEstadoC03AndC04;
+import es.icarto.gvsig.viasobras.queries.reports.ColumnWidthResolverEstadoC5X;
 import es.icarto.gvsig.viasobras.queries.reports.TableModelQueries;
 import es.icarto.gvsig.viasobras.queries.reports.TableModelResults;
 import es.udc.cartolab.gvsig.navtable.format.DoubleFormatNT;
@@ -363,9 +365,15 @@ public class PanelQueriesEstado extends gvWindow {
 		if (queryCode.equals("C50")) {
 		    // do nothing
 		    // will use default algorithm (all cols with same width)
+		} else if (queryCode.equals("C51") || queryCode.equals("C52")) {
+		    resultPanel
+			    .setColumnWidth(new ColumnWidthResolverEstadoC5X());
 		} else if (queryCode.equals("C01")) {
-		    resultPanel.setColumnWidth(
-				    new ColumnWidthResolverEstadoC01());
+		    resultPanel
+			    .setColumnWidth(new ColumnWidthResolverEstadoC01());
+		} else if (queryCode.equals("C03") || queryCode.equals("C04")) {
+		    resultPanel
+			    .setColumnWidth(new ColumnWidthResolverEstadoC03AndC04());
 		} else {
 		    resultPanel.setColumnWidth(new ColumnWidthResolverEstado());
 		}
