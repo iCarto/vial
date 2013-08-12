@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JTable;
 
 import org.apache.log4j.Logger;
@@ -20,7 +19,6 @@ import es.icarto.gvsig.navtableforms.AbstractForm;
 import es.icarto.gvsig.navtableforms.gui.tables.JTableContextualMenu;
 import es.icarto.gvsig.navtableforms.gui.tables.TableModelAlphanumeric;
 import es.icarto.gvsig.navtableforms.gui.tables.TableModelFactory;
-import es.icarto.gvsig.navtableforms.ormlite.domainvalues.KeyValue;
 import es.icarto.gvsig.navtableforms.utils.AbeilleParser;
 import es.icarto.gvsig.navtableforms.utils.TOCLayerManager;
 import es.udc.cartolab.gvsig.navtable.listeners.PositionEvent;
@@ -29,7 +27,6 @@ public class FormCarreteras extends AbstractForm implements IWindow {
 
     private FormPanel form;
     private JTable ayuntamientos;
-    private JComboBox codigo;
     private FormCarreterasMunicipios carreterasConcellos;
     private JTableContextualMenu contextualMenu;
     private JButton rampas;
@@ -79,12 +76,12 @@ public class FormCarreteras extends AbstractForm implements IWindow {
 	try {
 	    model = TableModelFactory.createFromTable("carretera_municipio",
 		    "codigo_carretera",
-		    ((KeyValue) codigo.getSelectedItem()).getKey(), colNames,
+		    this.getValueFromLayer("numero"),
+		    colNames,
 		    colAliases);
 	    ayuntamientos.setModel(model);
 	    carreterasConcellos.setModel(model);
-	    carreterasConcellos.setCarretera(((KeyValue) codigo
-		    .getSelectedItem()).getKey());
+	    carreterasConcellos.setCarretera(this.getValueFromLayer("numero"));
 	    this.repaint(); // will force embedded tables to refresh
 	} catch (ReadDriverException e) {
 	    e.printStackTrace();
@@ -96,7 +93,6 @@ public class FormCarreteras extends AbstractForm implements IWindow {
     public void setListeners() {
 	super.setListeners();
 
-	codigo = (JComboBox) this.getWidgetComponents().get("numero");
 	ayuntamientos = (JTable) this.getWidgetComponents()
 		.get("ayuntamientos");
 	carreterasConcellos = new FormCarreterasMunicipios(this);
