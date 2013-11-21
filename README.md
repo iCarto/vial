@@ -1,4 +1,4 @@
-road-network-catalog
-====================
+VIAL
+====
 
 Road network catalog based on PostGIS and gvSIG.
