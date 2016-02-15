@@ -8,10 +8,10 @@ SELECT m.codigo AS "CM", \
        i.origen_via_pk AS "PK origen vía", \
        i.final_via_pk AS "PK final vía", \
        i.longitud AS "Longitud", \
-       i.estado AS "Estado", \
+       COALESCE(i.estado, '') AS "Estado", \
        i.ancho_plataforma AS "Ancho plataforma", \
-       i.tipo_pavimento AS "Tipo pavimento", \
-       i.observaciones AS "Observaciones" \
+       COALESCE(i.tipo_pavimento, '') AS "Tipo pavimento", \
+       COALESCE(i.observaciones, '') AS "Observaciones" \
 FROM inventario.variantes i, \
      inventario.carreteras c, \
      inventario.municipio_codigo m \

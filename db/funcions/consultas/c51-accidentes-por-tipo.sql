@@ -3,7 +3,7 @@ SELECT m.codigo AS "CM", \
        i.codigo_carretera AS "Código (LU-P)", \
        i.orden_tramo AS "Tramo", \
        c.denominacion AS "Denominación", \
-       p.tipo_accidente AS "Tipo de accidente", \
+       COALESCE(p.tipo_accidente, '') AS "Tipo de accidente", \
        COUNT(p.valor) AS "Número de accidentes" \
 FROM inventario.carretera_municipio i, \
      inventario.accidentes p, \

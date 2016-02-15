@@ -2,7 +2,7 @@ SELECT mun_cod.nombre AS "Municipio", \
        actuaciones.codigo_carretera AS "Código (LU-P)", \
        carreteras.denominacion AS "Denominación", \
        actuaciones.accidente_fecha AS "Fecha", \
-       actuaciones.accidente_tipo AS "Tipo" \
+       COALESCE(actuaciones.accidente_tipo, '') AS "Tipo" \
 FROM inventario.actuaciones actuaciones, \
      inventario.actuacion_municipio act_mun, \
      inventario.municipio_codigo mun_cod, \

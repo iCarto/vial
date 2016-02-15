@@ -4,7 +4,7 @@ SELECT i.codigo AS "CM", \
        i.orden_tramo AS "Tramo", \
        i.denominacion AS "Denominación", \
        i.tipo AS "Tipo vía", \
-       i.valor AS "Tipo pavimento", \
+       COALESCE(i.valor, '') AS "Tipo pavimento", \
        i.pk_inicial "PK inicial", \
        i.pk_final "PK final", \
        i.longitud "Longitud" \

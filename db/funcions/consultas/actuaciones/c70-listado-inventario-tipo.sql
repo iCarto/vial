@@ -3,13 +3,13 @@ SELECT mun_cod.nombre AS "Municipio", \
        actuaciones.pk_inicial AS "PK inicial", \
        actuaciones.pk_final AS "PK final", \
        actuaciones.codigo_actuacion AS "Código actuación", \
-       actuaciones.inventario_tipo AS "Tipo", \
-       actuaciones.inventario_margen AS "Margen", \
-       actuaciones.inventario_ano AS "Año", \
+       COALESCE(actuaciones.inventario_tipo, '') AS "Tipo", \
+       COALESCE(actuaciones.inventario_margen, '') AS "Margen", \
+       COALESCE(actuaciones.inventario_ano, '') AS "Año", \
        actuaciones.inventario_utm_x AS "UTM X", \
        actuaciones.inventario_utm_y AS "UTM Y", \
-       actuaciones.inventario_utm_Z AS "UTM Z", \
-       actuaciones.inventario_observaciones AS "Observaciones" \
+       actuaciones.inventario_utm_z AS "UTM Z", \
+       COALESCE(actuaciones.inventario_observaciones, '') AS "Observaciones" \
 FROM inventario.actuaciones actuaciones, \
      inventario.actuacion_municipio act_mun, \
      inventario.municipio_codigo mun_cod, \

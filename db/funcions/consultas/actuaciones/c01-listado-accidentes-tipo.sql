@@ -3,10 +3,10 @@ SELECT mun_cod.nombre AS "Municipio", \
        actuaciones.pk_inicial AS "PK inicial", \
        actuaciones.pk_final AS "PK final", \
        actuaciones.codigo_actuacion AS "Código actuación", \
-       actuaciones.accidente_tipo AS "Tipo", \
-       actuaciones.accidente_descripcion AS "Descripción", \
+       COALESCE(actuaciones.accidente_tipo, '') AS "Tipo", \
+       COALESCE(actuaciones.accidente_descripcion, '') AS "Descripción", \
        actuaciones.accidente_fecha AS "Fecha", \
-       actuaciones.accidente_observaciones AS "Observaciones" \
+       COALESCE(actuaciones.accidente_observaciones, '') AS "Observaciones" \
 FROM inventario.actuaciones actuaciones, \
      inventario.actuacion_municipio act_mun, \
      inventario.municipio_codigo mun_cod, \

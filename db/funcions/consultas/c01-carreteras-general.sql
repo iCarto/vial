@@ -57,8 +57,8 @@ SELECT m.codigo AS "CM", \
        i.codigo_carretera AS "Código (LU-P)", \
        i.orden_tramo AS "Tramo", \
        c.denominacion AS "Denominación", \
-       c.origen_via AS "Origen vía", \
-       c.final_via AS "Final vía", \
+       COALESCE(c.origen_via, '') AS "Origen vía", \
+       COALESCE(c.final_via, '') AS "Final vía", \
        i.longitud_tronco + i.longitud_rampas + i.longitud_variantes AS "Longitud tramo", \
        trv_c.longitud_tronco + trv_c.longitud_rampas + trv_c.longitud_variantes AS "Longitud total", \
        CASE \

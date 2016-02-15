@@ -3,14 +3,14 @@ SELECT mun_cod.nombre AS "Municipio", \
        actuaciones.pk_inicial AS "PK inicial", \
        actuaciones.pk_final AS "PK final", \
        actuaciones.codigo_actuacion AS "Código actuación", \
-       actuaciones.conservacion_tipo AS "Tipo", \
-       actuaciones.conservacion_titulo AS "Título", \
+       COALESCE(actuaciones.conservacion_tipo, '') AS "Tipo", \
+       COALESCE(actuaciones.conservacion_titulo, '') AS "Título", \
        actuaciones.conservacion_importe_proyecto AS "Importe proyecto", \
        actuaciones.conservacion_fecha_inicio AS "Fecha inicio", \
        actuaciones.conservacion_fecha_fin AS "Fecha fin", \
        actuaciones.conservacion_fecha_consignacion_aprobacion AS "Fecha aprobación presupuesto", \
-       actuaciones.conservacion_contratista_nombre AS "Contratista", \
-       actuaciones.conservacion_observaciones AS "Observaciones" \
+       COALESCE(actuaciones.conservacion_contratista_nombre, '') AS "Contratista", \
+       COALESCE(actuaciones.conservacion_observaciones, '') AS "Observaciones" \
 FROM inventario.actuaciones actuaciones, \
      inventario.actuacion_municipio act_mun, \
      inventario.municipio_codigo mun_cod, \

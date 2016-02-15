@@ -19,7 +19,7 @@ SELECT m.codigo AS "CM", \
        i.valor AS "Aforos", \
        i.pk AS "PK", \
        ap.valor AS "Ancho (m)", \
-       tp.valor AS "Tipo pavimento", \
+       COALESCE(tp.valor, '') AS "Tipo pavimento", \
        i.fecha AS "Fecha" \
 FROM inventario.aforos AS i, \
      inventario.municipio_codigo AS m, \

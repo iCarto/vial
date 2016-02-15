@@ -7,10 +7,10 @@ SELECT m.codigo AS "CM", \
        i.orden_rampa_tramo AS "Orden", \
        i.origen_via_pk AS "PK origen vía", \
        i.longitud AS "Longitud", \
-       i.estado AS "Estado", \
+       COALESCE(i.estado, '') AS "Estado", \
        i.ancho_plataforma AS "Ancho plataforma", \
-       i.tipo_pavimento AS "Tipo pavimento", \
-       i.observaciones AS "Observaciones" \
+       COALESCE(i.tipo_pavimento, '') AS "Tipo pavimento", \
+       COALESCE(i.observaciones, '') AS "Observaciones" \
 FROM inventario.rampas i, \
      inventario.carreteras c, \
      inventario.municipio_codigo m \
